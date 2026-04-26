@@ -629,8 +629,9 @@ function renderEditor() {
     <summary>SHOWCASE · 已完成作品</summary>
     <div class="panel-body">
       <div class="field"><label>標題</label><input type="text" data-path="showcase.headline"></div>
-      <div class="field"><label>說明文字</label><input type="text" data-path="showcase.intro"></div>
-      <div class="field"><label>YouTube playlist URL</label><input type="text" data-path="showcase.playlistUrl"></div>
+      <div class="field"><label>說明文字</label><input type="text" data-path="showcase.intro"><div class="hint">留空則 Spotify embed 上方不顯示文字。</div></div>
+      <div class="field"><label>Spotify playlist ID</label><input type="text" data-path="showcase.spotifyPlaylistId" placeholder="4RXBEgeJiThrAK4wvNJMxf"><div class="hint">控制 embed iframe 顯示哪個 playlist（從 Spotify 分享連結 `playlist/&lt;id&gt;` 抓 ID）。</div></div>
+      <div class="field"><label>完整 playlist URL（按鈕跳轉）</label><input type="text" data-path="showcase.playlistUrl"></div>
       <div class="field"><label>按鈕文字</label><input type="text" data-path="showcase.playlistLabel"></div>
     </div>
   </details>
@@ -696,6 +697,18 @@ function renderEditor() {
       <div class="field"><label>按鈕文字</label><input type="text" data-path="services[${i}].ctaLabel" placeholder="▶ 預約諮詢"></div>
       <div class="field"><label>Pre-order 提示文字</label><input type="text" data-path="services[${i}].preOrderText"></div>
       <div class="field"><label>Notion 詳細介紹 URL</label><input type="text" data-path="services[${i}].notionUrl"></div>
+      <div class="field"><label>價格底下小字（priceNote）</label><input type="text" data-path="services[${i}].priceNote" placeholder="實際金額依原檔長度與修整難度，諮詢後確認"><div class="hint">modal 內價格下方的淺灰斜體小字，留空就不顯示。</div></div>
+      <div class="field-row">
+        <div class="field"><label>狀態 badge 文字</label><input type="text" data-path="services[${i}].statusLabel" placeholder="可預約 / 諮詢報價"></div>
+        <div class="field">
+          <label>狀態 badge 顏色</label>
+          <select data-path="services[${i}].statusClass">
+            <option value="">綠色（可預約 / 預設）</option>
+            <option value="service-card__status--quote">米色（諮詢報價）</option>
+            <option value="service-card__status--soon">灰色（設定中）</option>
+          </select>
+        </div>
+      </div>
     `;
     servicesEditor.appendChild(blk);
   });
