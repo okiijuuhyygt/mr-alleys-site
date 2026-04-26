@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>巷弄管理後台 · Admin</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+@font-face {
+  font-family: "Cubic 11";
+  src: url("assets/Cubic_11_1.013_R.ttf") format("truetype");
+  font-display: swap;
+}
+
+:root {
+  --paper:        #f3ead4;
+  --paper-soft:   #ede2c4;
+  --paper-edge:   #c9b88c;
+  --ink:          #2a1f12;
+  --ink-soft:     #5e4a30;
+  --ink-mute:     #8a7556;
+  --brass:        #b8801f;
+  --brass-light:  #d4a13a;
+  --brass-deep:   #6e4d10;
+  --avail:        #4a8b3a;
+  --danger:       #b83a2a;
+  --rule:         #c9b88c;
+
+  --pixel-en: "Press Start 2P", monospace;
+  --pixel-tc: "Cubic 11", "Noto Sans TC", monospace;
+  --mono:     "VT323", monospace;
+  --sans:     "Noto Sans TC", "PingFang TC", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.7;
+  min-height: 100vh;
+  background-image: radial-gradient(circle, rgba(42,31,18,0.08) 1px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+/* Top bar */
+.top-bar {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--ink); color: var(--paper);
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--pixel-en);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  border-bottom: 4px solid var(--brass);
+}
+.top-bar .left { display: flex; align-items: center; gap: 12px; }
+.top-bar .logo { color: var(--brass-light); }
+.top-bar .badge {
+  background: var(--brass); color: var(--paper);
+  padding: 4px 8px; font-size: 9px;
+}
+.top-bar a, .top-bar button {
+  color: var(--paper); background: transparent; border: 1px solid var(--paper-edge);
+  padding: 5px 10px; font-family: var(--pixel-en); font-size: 9px;
+  cursor: pointer; text-decoration: none;
+  letter-spacing: 0.1em;
+}
+.top-bar a:hover, .top-bar button:hover { background: var(--brass); border-color: var(--brass); }
+.hidden { display: none !important; }
+
+.wrap { max-width: 800px; margin: 0 auto; padding: 32px 20px 120px; }
+
+h1 {
+  font-family: var(--pixel-tc);
+  font-size: 28px; font-weight: 400;
+  color: var(--ink); margin: 0 0 8px;
+  text-shadow: 3px 3px 0 var(--brass-light);
+  -webkit-font-smoothing: none;
+}
+.lead {
+  font-family: var(--mono);
+  font-size: 18px; color: var(--ink-soft);
+  margin: 0 0 28px;
+}
+
+/* Login */
+#sceneLogin .btn-link {
+  display: inline-block; margin-bottom: 18px;
+  padding: 10px 16px; background: var(--paper-soft);
+  border: 3px solid var(--ink); color: var(--ink);
+  text-decoration: none;
+  font-family: var(--pixel-en); font-size: 10px; letter-spacing: 0.1em;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+#sceneLogin .btn-link:hover { background: var(--brass); color: var(--paper); }
+
+#loginForm {
+  background: var(--paper-soft);
+  border: 4px solid var(--ink);
+  padding: 24px;
+  box-shadow: 6px 6px 0 var(--ink);
+  margin-top: 16px;
+}
+#loginForm label {
+  font-family: var(--pixel-en); font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--brass-deep); display: block; margin-bottom: 10px;
+}
+#loginForm input {
+  width: 100%; font-family: var(--mono); font-size: 18px;
+  padding: 12px 14px; border: 3px solid var(--ink); background: white;
+  margin-bottom: 14px;
+}
+#loginForm button {
+  font-family: var(--pixel-en); font-size: 11px; letter-spacing: 0.1em;
+  background: var(--brass); color: var(--paper);
+  border: 3px solid var(--ink);
+  padding: 12px 22px; cursor: pointer;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+#loginForm button:hover { background: var(--brass-light); }
+#loginForm button:disabled { background: var(--paper-edge); color: var(--ink-mute); cursor: not-allowed; }
+.error { color: var(--danger); font-family: var(--mono); font-size: 17px; margin-top: 8px; }
+.help-list { font-family: var(--mono); font-size: 16px; color: var(--ink-soft); padding-left: 20px; }
+.help-list li { margin: 4px 0; }
+code.tok-eg { background: var(--paper-soft); padding: 2px 6px; border: 1px solid var(--paper-edge); }
+
+/* Editor panels */
+.panel {
+  background: var(--paper-soft);
+  border: 3px solid var(--ink);
+  padding: 0;
+  margin-bottom: 18px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.panel summary {
+  list-style: none;
+  padding: 16px 22px;
+  cursor: pointer;
+  font-family: var(--pixel-en);
+  font-size: 11px; letter-spacing: 0.18em;
+  color: var(--ink); text-transform: uppercase;
+  background: var(--paper);
+  border-bottom: 2px solid var(--ink);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.panel summary::-webkit-details-marker { display: none; }
+.panel summary::after { content: "▼"; font-size: 10px; color: var(--brass); }
+.panel[open] summary::after { content: "▲"; }
+.panel summary:hover { background: var(--paper-edge); }
+.panel .panel-body { padding: 22px; }
+
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; margin-bottom: 6px;
+  font-family: var(--pixel-en); font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--brass-deep); text-transform: uppercase;
+}
+.field .hint {
+  font-family: var(--mono); font-size: 14px;
+  color: var(--ink-mute); margin-top: 4px;
+}
+.field input, .field textarea, .field select {
+  width: 100%;
+  font-family: var(--mono); font-size: 18px;
+  padding: 10px 12px;
+  border: 2px solid var(--ink); background: white;
+  color: var(--ink);
+}
+.field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+
+/* Service card editor */
+.service-block {
+  background: var(--paper);
+  border: 2px dashed var(--ink);
+  padding: 18px; margin-bottom: 16px;
+}
+.service-block-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--paper-edge);
+}
+.service-block-head .code {
+  font-family: var(--pixel-en); font-size: 9px;
+  letter-spacing: 0.2em; color: var(--brass);
+}
+.service-block-head .label {
+  font-family: var(--pixel-tc); font-size: 18px;
+  color: var(--ink); -webkit-font-smoothing: none;
+}
+
+/* Save bar (sticky bottom) */
+.save-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--ink); color: var(--paper);
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 4px solid var(--brass);
+  z-index: 30;
+}
+.save-bar #saveInfo { font-family: var(--mono); font-size: 17px; }
+.save-bar #btnSave {
+  font-family: var(--pixel-en); font-size: 11px; letter-spacing: 0.1em;
+  background: var(--brass); color: var(--paper);
+  border: 2px solid var(--brass-light);
+  padding: 12px 22px; cursor: pointer;
+  box-shadow: 3px 3px 0 var(--brass-deep);
+}
+.save-bar #btnSave:hover:not(:disabled) { background: var(--brass-light); color: var(--ink); }
+.save-bar #btnSave:disabled { background: #444; color: #777; cursor: not-allowed; box-shadow: none; }
+
+#loadingContent {
+  font-family: var(--mono); font-size: 18px;
+  color: var(--ink-soft); padding: 40px 20px; text-align: center;
+}
+
+/* Quick reference */
+.quick-ref {
+  background: var(--paper-soft);
+  border: 2px solid var(--brass);
+  padding: 14px 18px; margin-bottom: 18px;
+  font-family: var(--mono); font-size: 16px;
+}
+.quick-ref strong {
+  font-family: var(--pixel-en); font-size: 9px;
+  letter-spacing: 0.15em; color: var(--brass-deep);
+  text-transform: uppercase;
+}
+.quick-ref a {
+  color: var(--brass-deep); word-break: break-all;
+}
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="left">
+    <span class="logo">巷弄ADMIN</span>
+    <span class="badge" id="statusBadge">未登入</span>
+  </div>
+  <div>
+    <a href="index.html" target="_blank">↗ 看網站</a>
+    <button id="btnLogout" class="hidden">登出</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ LOGIN SCENE ============ -->
+  <section id="sceneLogin" class="hidden">
+    <h1>巷弄管理後台</h1>
+    <p class="lead">用 GitHub Personal Access Token (PAT) 登入。Token 等於密碼，存在這台瀏覽器。</p>
+
+    <div class="quick-ref">
+      <strong>第一次使用 — 怎麼產 PAT</strong>
+      <ol class="help-list">
+        <li>點下面藍色按鈕，會帶你去 GitHub 設定頁（已預填好權限）</li>
+        <li>scope 確認只勾「<code class="tok-eg">repo</code>」就好</li>
+        <li>Expiration 選「No expiration」最方便（自己保管好）</li>
+        <li>產出來的 <code class="tok-eg">ghp_...</code> 字串貼到下面</li>
+      </ol>
+    </div>
+
+    <a class="btn-link" href="https://github.com/settings/tokens/new?scopes=repo&description=mr-alleys-admin" target="_blank">▶ 產一個新的 Token</a>
+
+    <form id="loginForm">
+      <label>GitHub Personal Access Token</label>
+      <input type="password" id="tokenInput" autocomplete="current-password" placeholder="ghp_..." autofocus>
+      <button type="submit" id="btnLogin">▶ 登入</button>
+      <div class="error hidden" id="loginErr"></div>
+    </form>
+  </section>
+
+  <!-- ============ EDITOR SCENE ============ -->
+  <section id="sceneEditor" class="hidden">
+    <h1>編輯網站內容</h1>
+    <p class="lead">所有改動 commit 到 GitHub。GitHub Pages 1–3 分鐘後自動 deploy 到 <a href="https://okiijuuhyygt.github.io/mr-alleys-site/" target="_blank">live URL</a>。</p>
+
+    <div id="loadingContent">載入 content.json 中...</div>
+    <div id="editorBody" class="hidden"></div>
+  </section>
+
+</main>
+
+<!-- Save bar -->
+<div class="save-bar hidden" id="saveBar">
+  <span id="saveInfo">沒有變更</span>
+  <button id="btnSave" disabled>儲存到網站</button>
+</div>
+
+<script>
+// =======================================================
+// CONFIG
+// =======================================================
+const REPO_OWNER = 'okiijuuhyygt';
+const REPO_NAME  = 'mr-alleys-site';
+const CONTENT_PATH = 'content.json';
+const LS_TOKEN = 'alleys-admin-token-v1';
+
+// =======================================================
+// UTILS
+// =======================================================
+const $ = (id) => document.getElementById(id);
+function show(id) { $(id).classList.remove('hidden'); }
+function hide(id) { $(id).classList.add('hidden'); }
+function setStatus(text) { $('statusBadge').textContent = text; }
+function showScene(name) {
+  ['sceneLogin', 'sceneEditor'].forEach(s => $(s).classList.add('hidden'));
+  $(name).classList.remove('hidden');
+  if (name === 'sceneEditor') $('saveBar').classList.remove('hidden');
+  else $('saveBar').classList.add('hidden');
+}
+function getPath(obj, path) {
+  return path.split('.').reduce((o, k) => {
+    if (o == null) return o;
+    const m = k.match(/^(\w+)\[(\d+)\]$/);
+    if (m) return o[m[1]]?.[parseInt(m[2], 10)];
+    return o[k];
+  }, obj);
+}
+function setPath(obj, path, value) {
+  const keys = path.split('.');
+  const last = keys.pop();
+  let target = obj;
+  for (const k of keys) {
+    const m = k.match(/^(\w+)\[(\d+)\]$/);
+    if (m) {
+      target[m[1]] = target[m[1]] || [];
+      target = target[m[1]][parseInt(m[2], 10)] = target[m[1]][parseInt(m[2], 10)] || {};
+    } else {
+      target[k] = target[k] || {};
+      target = target[k];
+    }
+  }
+  const m = last.match(/^(\w+)\[(\d+)\]$/);
+  if (m) {
+    target[m[1]] = target[m[1]] || [];
+    target[m[1]][parseInt(m[2], 10)] = value;
+  } else {
+    target[last] = value;
+  }
+}
+function escapeHtml(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// =======================================================
+// ROUTER
+// =======================================================
+function route() {
+  const token = localStorage.getItem(LS_TOKEN);
+  if (token) {
+    setStatus('已登入');
+    $('btnLogout').classList.remove('hidden');
+    showScene('sceneEditor');
+    initEditor();
+  } else {
+    setStatus('未登入');
+    $('btnLogout').classList.add('hidden');
+    showScene('sceneLogin');
+  }
+}
+
+// =======================================================
+// LOGIN
+// =======================================================
+$('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const tok = $('tokenInput').value.trim();
+  const errEl = $('loginErr');
+  const btn = $('btnLogin');
+  errEl.classList.add('hidden');
+  if (!tok) return;
+  btn.disabled = true;
+  btn.textContent = '驗證中...';
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_PATH}`, {
+      headers: { 'Authorization': `Bearer ${tok}`, 'Accept': 'application/vnd.github+json' }
+    });
+    if (!res.ok) throw new Error('auth-failed');
+    localStorage.setItem(LS_TOKEN, tok);
+    route();
+  } catch {
+    errEl.textContent = '✗ Token 不對或沒 repo 權限';
+    errEl.classList.remove('hidden');
+    $('tokenInput').value = '';
+    $('tokenInput').focus();
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '▶ 登入';
+  }
+});
+
+$('btnLogout').addEventListener('click', () => {
+  if (!confirm('登出會清掉這台瀏覽器的 Token（GitHub 上的不受影響）。確定?')) return;
+  localStorage.removeItem(LS_TOKEN);
+  location.reload();
+});
+
+// =======================================================
+// EDITOR
+// =======================================================
+let contentData = null;
+let originalContent = null;
+
+async function initEditor() {
+  show('loadingContent');
+  hide('editorBody');
+  try {
+    const res = await fetch(`content.json?t=${Date.now()}`);
+    if (!res.ok) throw new Error('找不到 content.json');
+    contentData = await res.json();
+    originalContent = JSON.stringify(contentData);
+    renderEditor();
+    hide('loadingContent');
+    show('editorBody');
+  } catch (e) {
+    $('loadingContent').textContent = '讀取失敗:' + e.message;
+  }
+  updateSaveBar();
+}
+
+function bindInput(el, path, transform = (v) => v) {
+  const cur = getPath(contentData, path);
+  if (el.tagName === 'TEXTAREA' && Array.isArray(cur)) {
+    el.value = cur.join('\n');
+  } else {
+    el.value = cur ?? '';
+  }
+  el.addEventListener('input', () => {
+    let val = el.value;
+    if (el.tagName === 'TEXTAREA' && Array.isArray(getPath(contentData, path))) {
+      val = el.value.split('\n').filter(s => s.trim() !== '');
+    }
+    if (el.type === 'number') val = el.value === '' ? null : Number(el.value);
+    setPath(contentData, path, transform(val));
+    updateSaveBar();
+  });
+}
+
+function bindSelect(el, path) {
+  el.value = getPath(contentData, path) ?? '';
+  el.addEventListener('change', () => {
+    setPath(contentData, path, el.value);
+    updateSaveBar();
+  });
+}
+
+function renderEditor() {
+  const body = $('editorBody');
+  body.innerHTML = `
+
+  <!-- META / BRAND -->
+  <details class="panel" open>
+    <summary>BRAND · 品牌資訊</summary>
+    <div class="panel-body">
+      <div class="field-row">
+        <div class="field"><label>中文品牌</label><input type="text" data-path="meta.brandName"></div>
+        <div class="field"><label>英文品牌</label><input type="text" data-path="meta.brandNameEn"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>標語(短)</label><input type="text" data-path="meta.tagline"></div>
+        <div class="field"><label>副標語</label><input type="text" data-path="meta.subtagline"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>頂部代號</label><input type="text" data-path="meta.studioCode" placeholder="GUILD · 010"></div>
+        <div class="field"><label>建立年份</label><input type="text" data-path="meta.established" placeholder="EST. 2020"></div>
+      </div>
+      <div class="field"><label>版本標記</label><input type="text" data-path="meta.version" placeholder="v0.3 · MVP"></div>
+    </div>
+  </details>
+
+  <!-- HERO -->
+  <details class="panel">
+    <summary>HERO · 首屏</summary>
+    <div class="panel-body">
+      <div class="field">
+        <label>GUILD BOARD 三行訊號（一行一條）</label>
+        <textarea data-path="hero.consoleLines" rows="4"></textarea>
+        <div class="hint">每行一條訊號，建議 3 行內。</div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>主按鈕文字</label><input type="text" data-path="hero.ctaPrimary"></div>
+        <div class="field"><label>次按鈕文字</label><input type="text" data-path="hero.ctaSecondary"></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- SERVICES -->
+  <details class="panel" open>
+    <summary>SERVICES · 4 個服務 (重點區)</summary>
+    <div class="panel-body" id="servicesEditor"></div>
+  </details>
+
+  <!-- ABOUT / STATS -->
+  <details class="panel">
+    <summary>ABOUT · 關於 + 數字</summary>
+    <div class="panel-body">
+      <div class="field"><label>標題</label><input type="text" data-path="about.headline"></div>
+      <div class="field">
+        <label>Manifesto（一段一行）</label>
+        <textarea data-path="about.manifesto" rows="6"></textarea>
+        <div class="hint">每行一段，會自動分段顯示。</div>
+      </div>
+      <div id="statsEditor"></div>
+    </div>
+  </details>
+
+  <!-- PROCESS -->
+  <details class="panel">
+    <summary>SIGNAL FLOW · 製作流程 (5 步)</summary>
+    <div class="panel-body">
+      <div class="field"><label>標題</label><input type="text" data-path="process.headline"></div>
+      <div id="processEditor"></div>
+    </div>
+  </details>
+
+  <!-- SHOWCASE -->
+  <details class="panel">
+    <summary>SHOWCASE · 已完成作品</summary>
+    <div class="panel-body">
+      <div class="field"><label>標題</label><input type="text" data-path="showcase.headline"></div>
+      <div class="field"><label>說明文字</label><input type="text" data-path="showcase.intro"></div>
+      <div class="field"><label>YouTube playlist URL</label><input type="text" data-path="showcase.playlistUrl"></div>
+      <div class="field"><label>按鈕文字</label><input type="text" data-path="showcase.playlistLabel"></div>
+    </div>
+  </details>
+
+  <!-- CONTACT -->
+  <details class="panel">
+    <summary>CONTACT · 聯絡 + 社群</summary>
+    <div class="panel-body">
+      <div class="field"><label>標題</label><input type="text" data-path="contact.headline"></div>
+      <div class="field"><label>Email</label><input type="text" data-path="contact.email"></div>
+      <div id="socialsEditor"></div>
+    </div>
+  </details>
+
+  <!-- FOOTER -->
+  <details class="panel">
+    <summary>FOOTER · 頁尾</summary>
+    <div class="panel-body">
+      <div class="field"><label>版權字</label><input type="text" data-path="footer.credit"></div>
+      <div class="field"><label>Build 標記</label><input type="text" data-path="footer.buildNote"></div>
+    </div>
+  </details>
+  `;
+
+  // Render services
+  const servicesEditor = $('servicesEditor');
+  contentData.services.forEach((svc, i) => {
+    const blk = document.createElement('div');
+    blk.className = 'service-block';
+    blk.innerHTML = `
+      <div class="service-block-head">
+        <span class="code">${svc.code || '#' + (i+1)}</span>
+        <span class="label">${escapeHtml(svc.title || '(未命名)')}</span>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>代號</label><input type="text" data-path="services[${i}].code"></div>
+        <div class="field">
+          <label>模式</label>
+          <select data-path="services[${i}].mode">
+            <option value="paid">paid (有定價可結帳)</option>
+            <option value="pre-order">pre-order (預約候補,顯示 email 提示)</option>
+            <option value="quote">quote (走諮詢報價)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>服務名稱</label><input type="text" data-path="services[${i}].title"></div>
+      <div class="field"><label>副標</label><input type="text" data-path="services[${i}].subtitle"></div>
+      <div class="field"><label>完整描述</label><textarea data-path="services[${i}].description" rows="3"></textarea></div>
+      <div class="field">
+        <label>包含什麼（一行一項）</label>
+        <textarea data-path="services[${i}].includes" rows="5"></textarea>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>交期</label><input type="text" data-path="services[${i}].duration"></div>
+        <div class="field"><label>交付物</label><input type="text" data-path="services[${i}].deliverable"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>價格顯示</label><input type="text" data-path="services[${i}].priceLabel" placeholder="NT$ 1,000"></div>
+        <div class="field"><label>數值（金額）</label><input type="number" data-path="services[${i}].priceNumeric"></div>
+      </div>
+      <div class="field"><label>結帳 URL（綠界連結）</label><input type="text" data-path="services[${i}].checkoutUrl" placeholder="https://p.ecpay.com.tw/..."><div class="hint">paid 模式才會用到。從綠界後台「收款連結」複製。</div></div>
+      <div class="field"><label>報價表單 URL（quote 模式用）</label><input type="text" data-path="services[${i}].quoteFormUrl" placeholder="https://tally.so/r/..."></div>
+      <div class="field"><label>按鈕文字</label><input type="text" data-path="services[${i}].ctaLabel" placeholder="▶ 預約諮詢"></div>
+      <div class="field"><label>Pre-order 提示文字</label><input type="text" data-path="services[${i}].preOrderText"></div>
+      <div class="field"><label>Notion 詳細介紹 URL</label><input type="text" data-path="services[${i}].notionUrl"></div>
+    `;
+    servicesEditor.appendChild(blk);
+  });
+
+  // Render stats
+  const statsEditor = $('statsEditor');
+  (contentData.about.stats || []).forEach((st, i) => {
+    const row = document.createElement('div');
+    row.className = 'service-block';
+    row.style.padding = '12px';
+    row.innerHTML = `
+      <div class="field-row">
+        <div class="field"><label>欄位 ${i+1} 標籤</label><input type="text" data-path="about.stats[${i}].label"></div>
+        <div class="field"><label>數字</label><input type="text" data-path="about.stats[${i}].value"></div>
+      </div>
+      <div class="field"><label>單位</label><input type="text" data-path="about.stats[${i}].unit"></div>
+    `;
+    statsEditor.appendChild(row);
+  });
+
+  // Render process steps
+  const processEditor = $('processEditor');
+  (contentData.process.steps || []).forEach((s, i) => {
+    const row = document.createElement('div');
+    row.className = 'service-block';
+    row.style.padding = '12px';
+    row.innerHTML = `
+      <div class="field-row">
+        <div class="field"><label>編號</label><input type="text" data-path="process.steps[${i}].step"></div>
+        <div class="field"><label>標題</label><input type="text" data-path="process.steps[${i}].title"></div>
+      </div>
+      <div class="field"><label>說明</label><input type="text" data-path="process.steps[${i}].desc"></div>
+    `;
+    processEditor.appendChild(row);
+  });
+
+  // Render socials
+  const socialsEditor = $('socialsEditor');
+  (contentData.contact.socials || []).forEach((s, i) => {
+    const row = document.createElement('div');
+    row.className = 'service-block';
+    row.style.padding = '12px';
+    row.innerHTML = `
+      <div class="field-row">
+        <div class="field"><label>標籤 ${i+1}</label><input type="text" data-path="contact.socials[${i}].label"></div>
+        <div class="field"><label>URL</label><input type="text" data-path="contact.socials[${i}].url"></div>
+      </div>
+    `;
+    socialsEditor.appendChild(row);
+  });
+
+  // Bind everything
+  body.querySelectorAll('input[data-path], textarea[data-path]').forEach(el => {
+    bindInput(el, el.dataset.path);
+  });
+  body.querySelectorAll('select[data-path]').forEach(el => {
+    bindSelect(el, el.dataset.path);
+  });
+}
+
+function updateSaveBar() {
+  const changed = JSON.stringify(contentData) !== originalContent;
+  $('btnSave').disabled = !changed;
+  $('saveInfo').textContent = changed ? '有未儲存的變更' : '沒有變更';
+}
+
+// =======================================================
+// SAVE
+// =======================================================
+$('btnSave').addEventListener('click', async () => {
+  const tok = localStorage.getItem(LS_TOKEN);
+  if (!tok) { alert('Token 不見了，請重新登入'); showScene('sceneLogin'); return; }
+  $('btnSave').disabled = true;
+  $('saveInfo').textContent = '儲存中...';
+  try {
+    // Re-fetch SHA in case it changed
+    const shaRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_PATH}`, {
+      headers: { 'Authorization': `Bearer ${tok}`, 'Accept': 'application/vnd.github+json' }
+    });
+    if (!shaRes.ok) throw new Error('讀取舊檔失敗:' + shaRes.status);
+    const shaData = await shaRes.json();
+
+    const json = JSON.stringify(contentData, null, 2);
+    const b64 = btoa(unescape(encodeURIComponent(json)));
+
+    const putRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_PATH}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${tok}`,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'admin: update content.json',
+        content: b64,
+        sha: shaData.sha
+      })
+    });
+    if (!putRes.ok) {
+      const txt = await putRes.text();
+      throw new Error('寫入失敗:' + putRes.status + ' ' + txt.slice(0, 200));
+    }
+    originalContent = JSON.stringify(contentData);
+    $('saveInfo').textContent = '✓ 已儲存！1-3 分鐘內網站會更新';
+  } catch (e) {
+    $('saveInfo').textContent = '✗ ' + e.message;
+  } finally {
+    updateSaveBar();
+  }
+});
+
+// =======================================================
+// BOOT
+// =======================================================
+route();
+</script>
+
+</body>
+</html>
