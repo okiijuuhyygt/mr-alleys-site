@@ -36,7 +36,7 @@
     <span class="console-bar__sep">/</span>
     <span class="hit-counter" aria-label="訪客計數">
       <span class="hit-counter__label">訪客</span>
-      <span class="hit-counter__num" id="hitCounterNum">00000000</span>
+      <span class="hit-counter__num" id="visitorCount">----<span class="hit-counter__you" id="visitorYou"></span></span>
     </span>
   </div>
 </header>
@@ -168,13 +168,52 @@
 
 <script src="js/main.js"></script>
 <script>
+// Real visitor counter via abacus.jasoncameron.dev (free, no key).
+// Hits once per browser, then only fetches total. Shows YOU=XXXX = your visit number.
 (function () {
-  var KEY = 'mr-alleys-hits';
-  var BASE = 1024;
-  var n = parseInt(localStorage.getItem(KEY) || '0', 10) + 1;
-  localStorage.setItem(KEY, n);
-  var el = document.getElementById('hitCounterNum');
-  if (el) el.textContent = String(BASE + n).padStart(8, '0');
+  var NS = 'hao-mr-alleys-site';
+  var KEY = 'visits';
+  var COUNTED = 'mr-alleys-counted';
+  var MINE = 'mr-alleys-my-number';
+  var fmt = function (n) { return (n % 10000).toString().padStart(4, '0'); };
+  var numEl = document.getElementById('visitorCount');
+  var youEl = document.getElementById('visitorYou');
+  if (!numEl) return;
+
+  var myNumber = localStorage.getItem(MINE);
+  var endpoint = (localStorage.getItem(COUNTED) && myNumber)
+    ? 'https://abacus.jasoncameron.dev/get/' + NS + '/' + KEY
+    : 'https://abacus.jasoncameron.dev/hit/' + NS + '/' + KEY;
+
+  fetch(endpoint).then(function (r) {
+    if (!r.ok) throw new Error(r.status);
+    return r.json();
+  }).then(function (data) {
+    var total = data.value;
+    if (!localStorage.getItem(COUNTED)) {
+      localStorage.setItem(COUNTED, '1');
+      localStorage.setItem(MINE, String(total));
+      myNumber = total;
+    }
+    rollNumber(numEl, total, fmt);
+    if (myNumber && youEl) youEl.textContent = ' · YOU=' + fmt(Number(myNumber));
+  }).catch(function () {
+    if (numEl.firstChild) numEl.firstChild.nodeValue = '????';
+    if (youEl) youEl.textContent = '';
+  });
+
+  function rollNumber(el, finalNum, formatter) {
+    var duration = 900;
+    var start = Date.now();
+    function tick() {
+      var t = Math.min(1, (Date.now() - start) / duration);
+      var n = Math.floor(finalNum * (0.4 + 0.6 * t));
+      if (el.childNodes[0]) el.childNodes[0].nodeValue = formatter(n);
+      if (t < 1) requestAnimationFrame(tick);
+      else if (el.childNodes[0]) el.childNodes[0].nodeValue = formatter(finalNum);
+    }
+    tick();
+  }
 })();
 </script>
 </body>
