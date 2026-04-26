@@ -204,7 +204,7 @@
     "buildNote": "BUILD v0.2 · MVP · GUILD MODE · static site"
   },
   "bgm": {
-    "mode": "default",
+    "mode": "off",
     "defaultUrl": "assets/bgm/default-8bit.mp3",
     "customUrl": ""
   }
