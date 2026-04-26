@@ -1,8 +1,15 @@
 /* =========================================================
    巷弄故事館 · MR. ALLEYS — Production Guild (8-bit / RPG)
-   v0.2 — guild aesthetic
-   Sister vibe to artist-rpg-mvp, distinct accent palette.
+   v0.3 — Cubic 11 CJK pixel font integration
    ========================================================= */
+
+@font-face {
+  font-family: "Cubic 11";
+  src: url("../assets/Cubic_11_1.013_R.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* GameBoy adjacent palette but warmer, distinct from artist site */
@@ -28,8 +35,9 @@
   --px: 4px;       /* base pixel unit */
 
   /* Fonts */
-  --pixel-en: "Press Start 2P", "VT323", monospace;
-  --mono:     "VT323", "Courier New", monospace;
+  --pixel-en: "Press Start 2P", "Cubic 11", "VT323", monospace;
+  --pixel-tc: "Cubic 11", "Press Start 2P", "Noto Sans TC", monospace;
+  --mono:     "VT323", "Cubic 11", "Courier New", monospace;
   --sans:     "Cherry Cream Soda", "Noto Sans TC", "PingFang TC", sans-serif;
   --serif-tc: "Noto Sans TC", "PingFang TC", sans-serif;
 
@@ -171,16 +179,21 @@ body::before {
   gap: 6px;
 }
 .hero__title-zh {
-  font-family: var(--serif-tc);
-  font-weight: 700;
-  font-size: clamp(40px, 7vw, 72px);
+  font-family: var(--pixel-tc);
+  font-weight: 400;
+  /* Cubic 11 designed for 11px / 22px / 33px / 44px / 55px / 66px steps.
+     Lock to 66px for crispness on desktop, scale down on mobile. */
+  font-size: clamp(44px, 6.5vw, 66px);
   color: var(--ink);
-  letter-spacing: 0.04em;
-  line-height: 1.1;
-  /* layered offset for chunky pixel-feel without breaking CJK */
+  letter-spacing: 0.06em;
+  line-height: 1.15;
   text-shadow:
     3px 3px 0 var(--brass-light),
     6px 6px 0 var(--brass-deep);
+  /* prevent anti-aliasing — keep pixel edges crisp */
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  image-rendering: pixelated;
 }
 .hero__title-en {
   font-family: var(--pixel-en);
@@ -412,12 +425,14 @@ body::before {
 .service-card__status--soon::before { background: var(--ink-mute); }
 
 .service-card__title {
-  font-family: var(--serif-tc);
-  font-size: clamp(17px, 1.9vw, 19px);
-  font-weight: 700;
+  font-family: var(--pixel-tc);
+  font-size: 22px;
+  font-weight: 400;
   color: var(--ink);
-  margin: 0 0 8px;
-  line-height: 1.4;
+  margin: 0 0 10px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  -webkit-font-smoothing: none;
 }
 .service-card__sub {
   font-family: var(--mono);
@@ -529,11 +544,12 @@ body::before {
 }
 .about__manifesto p { margin: 0 0 14px; }
 .about__manifesto p:first-child::first-letter {
-  font-family: var(--pixel-en);
-  font-size: 1.4em;
+  font-family: var(--pixel-tc);
+  font-size: 1.6em;
   font-weight: 400;
   color: var(--brass);
   margin-right: 6px;
+  -webkit-font-smoothing: none;
 }
 
 .about__stats {
@@ -723,12 +739,14 @@ body::before {
   margin-bottom: 8px;
 }
 .modal__title {
-  font-family: var(--serif-tc);
-  font-size: 20px;
-  font-weight: 700;
+  font-family: var(--pixel-tc);
+  font-size: 22px;
+  font-weight: 400;
   color: var(--ink);
-  margin: 0 0 6px;
-  line-height: 1.4;
+  margin: 0 0 8px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  -webkit-font-smoothing: none;
 }
 .modal__sub {
   font-family: var(--mono);
