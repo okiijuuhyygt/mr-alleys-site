@@ -128,6 +128,32 @@ body::before {
 .console-bar__sep { color: var(--brass-deep); }
 .console-bar__ver { color: var(--brass-light); }
 
+/* 90s LCD-style hit counter */
+.hit-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 2px;
+}
+.hit-counter__label {
+  font-family: var(--pixel-en);
+  font-size: 7px;
+  color: var(--brass-deep);
+  letter-spacing: 0.12em;
+}
+.hit-counter__num {
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  background: #0d0d0d;
+  color: #2dd45a;
+  padding: 1px 6px 0;
+  border: 1px solid var(--brass-deep);
+  letter-spacing: 2px;
+  text-shadow: 0 0 3px rgba(45, 212, 90, 0.7);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.6);
+  line-height: 1.1;
+}
+
 .rec-dot {
   display: inline-block;
   width: 8px; height: 8px;
@@ -179,21 +205,16 @@ body::before {
   gap: 6px;
 }
 .hero__title-zh {
-  font-family: var(--pixel-tc);
-  font-weight: 400;
-  /* Cubic 11 designed for 11px / 22px / 33px / 44px / 55px / 66px steps.
-     Lock to 66px for crispness on desktop, scale down on mobile. */
+  font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+  font-weight: 700;
   font-size: clamp(44px, 6.5vw, 66px);
   color: var(--ink);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   line-height: 1.15;
   text-shadow:
-    3px 3px 0 var(--brass-light),
-    6px 6px 0 var(--brass-deep);
-  /* prevent anti-aliasing — keep pixel edges crisp */
-  -webkit-font-smoothing: none;
-  font-smooth: never;
-  image-rendering: pixelated;
+    2px 2px 0 var(--brass-light),
+    4px 4px 0 var(--brass-deep);
+  -webkit-font-smoothing: antialiased;
 }
 .hero__title-en {
   font-family: var(--pixel-en);
@@ -880,6 +901,8 @@ body::before {
   .btn { width: 100%; }
   .console-bar { font-size: 7px; padding: 10px 12px; }
   .console-bar__est, .console-bar__sep, .console-bar__ver { display: none; }
+  .hit-counter__label { display: none; }
+  .hit-counter__num { font-size: 11px; padding: 1px 5px 0; letter-spacing: 1.5px; }
   .signal-flow { font-size: 16px; }
   .service-card__sub, .modal__desc, .modal__includes li { font-size: 15px; }
 }

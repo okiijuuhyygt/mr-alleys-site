@@ -16,7 +16,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -34,7 +34,10 @@
   <div class="console-bar__right">
     <span class="console-bar__est" id="brandEst">EST. 2020</span>
     <span class="console-bar__sep">/</span>
-    <span class="console-bar__ver" id="brandVersion">v0.1</span>
+    <span class="hit-counter" aria-label="訪客計數">
+      <span class="hit-counter__label">訪客</span>
+      <span class="hit-counter__num" id="hitCounterNum">00000000</span>
+    </span>
   </div>
 </header>
 
@@ -164,5 +167,15 @@
 </div>
 
 <script src="js/main.js"></script>
+<script>
+(function () {
+  var KEY = 'mr-alleys-hits';
+  var BASE = 1024;
+  var n = parseInt(localStorage.getItem(KEY) || '0', 10) + 1;
+  localStorage.setItem(KEY, n);
+  var el = document.getElementById('hitCounterNum');
+  if (el) el.textContent = String(BASE + n).padStart(8, '0');
+})();
+</script>
 </body>
 </html>
