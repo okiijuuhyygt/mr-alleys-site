@@ -225,50 +225,76 @@ function renderFooter() {
 }
 
 // ---------------------------------------------------------
-// BGM (admin-controlled, off by default)
+// BGM (Web Audio API, bypasses iOS silent switch)
 // ---------------------------------------------------------
 function renderBgm() {
   const b = CONTENT.bgm || { mode: 'off' };
-  const audio = $('bgm');
   const toggle = $('bgmToggle');
-  if (!audio || !toggle || b.mode === 'off') return;
+  if (!toggle || b.mode === 'off') return;
 
   const url = b.mode === 'custom' ? (b.customUrl || '') : (b.defaultUrl || '');
   if (!url) return;
 
-  audio.src = url;
-  audio.volume = 0.4;
   toggle.classList.remove('hidden');
 
+  const VOL = 0.4;
+  let ctx = null;
+  let buffer = null;
+  let source = null;
+  let gainNode = null;
   let isPlaying = false;
-  let userMuted = false;
+  let heroVisible = true;
 
-  toggle.addEventListener('click', () => {
+  async function ensureBuffer() {
+    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') await ctx.resume();
+    if (buffer) return;
+    const res = await fetch(url);
+    const arr = await res.arrayBuffer();
+    buffer = await ctx.decodeAudioData(arr);
+  }
+
+  function startSource() {
+    if (!ctx || !buffer) return;
+    if (source) { try { source.stop(); } catch (_) {} }
+    gainNode = ctx.createGain();
+    gainNode.gain.value = heroVisible ? VOL : 0;
+    gainNode.connect(ctx.destination);
+    source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.loop = true;
+    source.connect(gainNode);
+    source.start(0);
+  }
+
+  function stopSource() {
+    if (source) { try { source.stop(); } catch (_) {} source = null; }
+  }
+
+  toggle.addEventListener('click', async () => {
     if (isPlaying) {
-      audio.pause();
+      stopSource();
       isPlaying = false;
       toggle.textContent = '♪';
-    } else {
-      audio.muted = false;
-      userMuted = false;
-      audio.play().then(() => {
-        isPlaying = true;
-        toggle.textContent = '⏸';
-      }).catch(() => {});
+      return;
+    }
+    try {
+      await ensureBuffer();
+      startSource();
+      isPlaying = true;
+      toggle.textContent = '⏸';
+    } catch (e) {
+      console.error('[bgm] play failed', e);
     }
   });
 
-  // Auto-mute when hero leaves viewport (BGM only plays on first screen)
+  // Hero in/out viewport → fade gain (mute bypass via Web Audio still works in silent mode)
   const hero = document.getElementById('hero');
   if (hero && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (!isPlaying) return;
-        if (e.isIntersecting) {
-          if (!userMuted) audio.muted = false;
-        } else {
-          audio.muted = true;
-        }
+        heroVisible = e.isIntersecting;
+        if (gainNode) gainNode.gain.value = heroVisible ? VOL : 0;
       });
     }, { threshold: 0.2 });
     observer.observe(hero);
