@@ -670,7 +670,7 @@ body::before {
 }
 .site-footer p { margin: 0 0 6px; }
 .site-footer__build,
-.site-footer__admin {
+.site-footer a.site-footer__admin {
   display: inline-block;
   font-family: var(--pixel-en);
   font-size: 9px;
@@ -680,7 +680,7 @@ body::before {
   margin-top: 6px;
   transition: color 0.4s ease;
 }
-.site-footer__admin:hover {
+.site-footer a.site-footer__admin:hover {
   color: var(--ink-mute);
 }
 

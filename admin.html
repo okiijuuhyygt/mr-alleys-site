@@ -490,7 +490,7 @@ $('loginForm').addEventListener('submit', async (e) => {
     localStorage.setItem(LS_TOKEN, tok);
     route();
   } catch {
-    errEl.textContent = '✗ Token 不對或沒 repo 權限';
+    errEl.textContent = '密碼錯誤';
     errEl.classList.remove('hidden');
     $('tokenInput').value = '';
     $('tokenInput').focus();
@@ -767,7 +767,7 @@ function updateSaveBar() {
 // =======================================================
 $('btnSave').addEventListener('click', async () => {
   const tok = localStorage.getItem(LS_TOKEN);
-  if (!tok) { alert('Token 不見了，請重新登入'); showScene('sceneLogin'); return; }
+  if (!tok) { alert('請重新登入'); showScene('sceneLogin'); return; }
   $('btnSave').disabled = true;
   $('saveInfo').textContent = '儲存中...';
   try {
