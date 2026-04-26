@@ -677,6 +677,28 @@ body::before {
   margin-top: 8px;
 }
 
+/* Discreet admin entry — guild master only */
+.admin-link-footer {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 6px 12px;
+  font-family: var(--pixel-en);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--ink-mute);
+  text-decoration: none;
+  border: 1px dashed var(--paper-edge);
+  background: transparent;
+  opacity: 0.55;
+  transition: all 0.2s ease;
+}
+.admin-link-footer:hover {
+  opacity: 1;
+  color: var(--brass-deep);
+  border-color: var(--brass);
+  background: var(--paper-soft);
+}
+
 /* =========================================================
    Quest detail modal (NPC dialog box)
    ========================================================= */
