@@ -14,7 +14,8 @@
       "▌ QUEST  — 接案 / 修整 / 製作",
       "▌ OUTPUT — 上架 ready 的成品"
     ],
-    "ctaPrimary": "▼ 看委託"
+    "ctaPrimary": "▼ 看委託",
+    "ctaSecondary": "♪ 聽作品"
   },
   "about": {
     "headline": "WORKSHOP NOTES — 關於巷弄",
