@@ -625,7 +625,13 @@ function renderEditor() {
         </select>
         <div class="hint">平日 off。節慶切「預設 8-bit」或「自訂 URL」→ 主站右下出現 ♪ button → 客戶 click 開。客戶滑到 Spotify 區會自動 mute。</div>
       </div>
-      <div class="field"><label>自訂 BGM URL</label><input type="text" data-path="bgm.customUrl" placeholder="https://...mp3"><div class="hint">mode = custom 才用。直接貼 hosted mp3 連結。</div></div>
+      <div class="field">
+        <label>上傳 BGM 檔（.mp3 / .wav / .ogg）</label>
+        <input type="file" id="bgmFileInput" accept="audio/*">
+        <button type="button" id="bgmUploadBtn" onclick="uploadBgmFile()" style="margin-top:8px;font-family:var(--pixel-en);font-size:11px;padding:10px 16px;background:var(--brass);color:var(--paper);border:2px solid var(--ink);cursor:pointer;box-shadow:3px 3px 0 var(--ink);">▶ 上傳並切自訂 mode</button>
+        <div class="hint">手機從「檔案」app 選音樂檔，按上傳。會 push 到 repo 的 assets/bgm/，並自動把 mode 切「自訂 URL」+ 填好 URL。**還是要按右下「儲存到網站」才會生效**。</div>
+      </div>
+      <div class="field"><label>自訂 BGM URL</label><input type="text" data-path="bgm.customUrl" placeholder="assets/bgm/your-file.mp3"><div class="hint">上傳後自動填這。也可手動貼 hosted mp3 URL。</div></div>
       <div class="field"><label>預設 BGM 路徑</label><input type="text" data-path="bgm.defaultUrl" placeholder="assets/bgm/default-8bit.mp3"><div class="hint">mode = default 用的檔案路徑。已預設 8-bit 在 assets/bgm/ 內。</div></div>
     </div>
   </details>
@@ -791,6 +797,82 @@ function updateSaveBar() {
   $('btnSave').disabled = !changed;
   $('saveInfo').textContent = changed ? '有未儲存的變更' : '沒有變更';
 }
+
+// =======================================================
+// BGM FILE UPLOAD (admin → GitHub API PUT to assets/bgm/)
+// =======================================================
+window.uploadBgmFile = async function () {
+  const fileInput = document.getElementById('bgmFileInput');
+  const btn = document.getElementById('bgmUploadBtn');
+  const file = fileInput && fileInput.files && fileInput.files[0];
+  if (!file) { alert('先選檔案'); return; }
+
+  const tok = localStorage.getItem(LS_TOKEN);
+  if (!tok) { alert('請重新登入'); return; }
+
+  const safeName = file.name.replace(/[^\w.-]/g, '_');
+  const path = 'assets/bgm/' + safeName;
+
+  const origText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '上傳中...';
+
+  try {
+    const buf = await file.arrayBuffer();
+    const bytes = new Uint8Array(buf);
+    let binary = '';
+    const chunk = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunk) {
+      binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+    }
+    const b64 = btoa(binary);
+
+    let sha = null;
+    const checkRes = await fetch('https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + path, {
+      headers: { 'Authorization': 'Bearer ' + tok, 'Accept': 'application/vnd.github+json' }
+    });
+    if (checkRes.ok) {
+      const data = await checkRes.json();
+      sha = data.sha;
+    }
+
+    const body = { message: 'admin: upload BGM ' + safeName, content: b64 };
+    if (sha) body.sha = sha;
+
+    const putRes = await fetch('https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + path, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + tok,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    if (!putRes.ok) {
+      const txt = await putRes.text();
+      throw new Error('上傳失敗: ' + putRes.status + ' ' + txt.slice(0, 100));
+    }
+
+    contentData.bgm = contentData.bgm || {};
+    contentData.bgm.customUrl = path;
+    contentData.bgm.mode = 'custom';
+    const cuInput = document.querySelector('input[data-path="bgm.customUrl"]');
+    if (cuInput) cuInput.value = path;
+    const modeSel = document.querySelector('select[data-path="bgm.mode"]');
+    if (modeSel) modeSel.value = 'custom';
+    if (typeof updateSaveBar === 'function') updateSaveBar();
+
+    btn.textContent = '✓ 完成,按右下「儲存到網站」';
+  } catch (e) {
+    btn.textContent = '✗ ' + e.message;
+  } finally {
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = origText;
+      if (fileInput) fileInput.value = '';
+    }, 6000);
+  }
+};
 
 // =======================================================
 // SAVE
