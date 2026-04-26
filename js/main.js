@@ -271,13 +271,8 @@ function renderBgm() {
     if (source) { try { source.stop(); } catch (_) {} source = null; }
   }
 
-  toggle.addEventListener('click', async () => {
-    if (isPlaying) {
-      stopSource();
-      isPlaying = false;
-      toggle.textContent = '♪';
-      return;
-    }
+  async function startBgm() {
+    if (isPlaying) return;
     try {
       await ensureBuffer();
       startSource();
@@ -286,7 +281,28 @@ function renderBgm() {
     } catch (e) {
       console.error('[bgm] play failed', e);
     }
+  }
+
+  toggle.addEventListener('click', async () => {
+    if (isPlaying) {
+      stopSource();
+      isPlaying = false;
+      toggle.textContent = '♪';
+    } else {
+      await startBgm();
+    }
   });
+
+  // Auto-start on first user interaction (任意 click / touch / scroll → 自動開,不必刻意點 ♪)
+  const autoStart = () => {
+    document.removeEventListener('pointerdown', autoStart);
+    document.removeEventListener('touchstart', autoStart);
+    document.removeEventListener('scroll', autoStart);
+    startBgm();
+  };
+  document.addEventListener('pointerdown', autoStart, { once: true, passive: true });
+  document.addEventListener('touchstart', autoStart, { once: true, passive: true });
+  document.addEventListener('scroll', autoStart, { once: true, passive: true });
 
   // Hero in/out viewport → fade gain (mute bypass via Web Audio still works in silent mode)
   const hero = document.getElementById('hero');
