@@ -206,7 +206,6 @@
   "bgm": {
     "mode": "default",
     "defaultUrl": "assets/bgm/default-8bit.mp3",
-    "customUrl": "",
-    "muteOnShowcase": true
+    "customUrl": ""
   }
 }
