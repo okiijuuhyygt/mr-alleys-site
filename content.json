@@ -202,5 +202,11 @@
   "footer": {
     "credit": "© 2026 巷弄故事館 · MR. ALLEYS · 音樂製作 / 詞曲 / 全流程",
     "buildNote": "BUILD v0.2 · MVP · GUILD MODE · static site"
+  },
+  "bgm": {
+    "mode": "off",
+    "defaultUrl": "assets/bgm/default-8bit.mp3",
+    "customUrl": "",
+    "muteOnShowcase": true
   }
 }

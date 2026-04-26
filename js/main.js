@@ -26,6 +26,7 @@ async function boot() {
   renderShowcase();
   renderContact();
   renderFooter();
+  renderBgm();
   bindModal();
   bindReveal();
 }
@@ -221,6 +222,59 @@ function renderFooter() {
   const f = CONTENT.footer || {};
   setText('footerCredit', f.credit || '');
   setText('footerBuild', f.buildNote || '');
+}
+
+// ---------------------------------------------------------
+// BGM (admin-controlled, off by default)
+// ---------------------------------------------------------
+function renderBgm() {
+  const b = CONTENT.bgm || { mode: 'off' };
+  const audio = $('bgm');
+  const toggle = $('bgmToggle');
+  if (!audio || !toggle || b.mode === 'off') return;
+
+  const url = b.mode === 'custom' ? (b.customUrl || '') : (b.defaultUrl || '');
+  if (!url) return;
+
+  audio.src = url;
+  audio.volume = 0.4;
+  toggle.classList.remove('hidden');
+
+  let isPlaying = false;
+  let userMuted = false;
+
+  toggle.addEventListener('click', () => {
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      toggle.textContent = '♪';
+    } else {
+      audio.muted = false;
+      userMuted = false;
+      audio.play().then(() => {
+        isPlaying = true;
+        toggle.textContent = '⏸';
+      }).catch(() => {});
+    }
+  });
+
+  // Auto-mute when showcase (Spotify embed) enters viewport
+  if (b.muteOnShowcase !== false) {
+    const showcase = document.getElementById('showcase');
+    if (showcase && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (!isPlaying) return;
+          if (e.isIntersecting) {
+            audio.muted = true;
+          } else if (!userMuted) {
+            audio.muted = false;
+          }
+        });
+      }, { threshold: 0.3 });
+      observer.observe(showcase);
+    }
+  }
 }
 
 // ---------------------------------------------------------
