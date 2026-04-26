@@ -128,35 +128,18 @@ body::before {
 .console-bar__sep { color: var(--brass-deep); }
 .console-bar__ver { color: var(--brass-light); }
 
-/* 90s LCD-style hit counter */
+/* hit counter — inherits console-bar pixel font, just colors */
 .hit-counter {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  margin-left: 2px;
 }
 .hit-counter__label {
-  font-family: var(--pixel-en);
-  font-size: 7px;
-  color: var(--brass-deep);
-  letter-spacing: 0.12em;
+  color: var(--ink-mute);
 }
 .hit-counter__num {
-  font-family: "VT323", monospace;
-  font-size: 13px;
-  background: #0d0d0d;
-  color: #2dd45a;
-  padding: 1px 6px 0;
-  border: 1px solid var(--brass-deep);
-  letter-spacing: 1px;
-  text-shadow: 0 0 3px rgba(45, 212, 90, 0.7);
-  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.6);
-  line-height: 1.1;
-}
-.hit-counter__you {
-  font-size: 0.88em;
-  opacity: 0.85;
-  letter-spacing: 0.5px;
+  color: var(--brass-light);
+  letter-spacing: 0.15em;
 }
 
 .rec-dot {
@@ -904,7 +887,6 @@ body::before {
   .console-bar { font-size: 7px; padding: 10px 12px; }
   .console-bar__est, .console-bar__sep, .console-bar__ver { display: none; }
   .hit-counter__label { display: none; }
-  .hit-counter__num { font-size: 11px; padding: 1px 5px 0; letter-spacing: 1.5px; }
   .signal-flow { font-size: 16px; }
   .service-card__sub, .modal__desc, .modal__includes li { font-size: 15px; }
 }
