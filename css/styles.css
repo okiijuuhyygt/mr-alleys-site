@@ -897,7 +897,6 @@ body::before {
   .btn { width: 100%; }
   .console-bar { font-size: 7px; padding: 10px 12px; }
   .console-bar__est, .console-bar__sep, .console-bar__ver { display: none; }
-  .hit-counter__label { display: none; }
   .signal-flow { font-size: 16px; }
   .service-card__sub, .modal__desc, .modal__includes li { font-size: 15px; }
 }
