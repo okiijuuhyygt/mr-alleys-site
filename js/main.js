@@ -127,9 +127,16 @@ function renderServices() {
 // ---------------------------------------------------------
 // Process steps
 // ---------------------------------------------------------
+function setSubFromHeadline(id, headline) {
+  const parts = (headline || '').split('—');
+  const zh = (parts[1] || '').trim();
+  setText(id, zh ? '— ' + zh + ' —' : '');
+}
+
 function renderProcess() {
   const p = CONTENT.process || {};
   setText('processHeadline', (p.headline || 'SIGNAL FLOW').split('—')[0].trim());
+  setSubFromHeadline('processSub', p.headline);
   const wrap = $('processSteps');
   wrap.innerHTML = '';
   (p.steps || []).forEach(s => {
@@ -151,6 +158,7 @@ function renderAbout() {
   const a = CONTENT.about || {};
   const headline = (a.headline || 'WORKSHOP NOTES').split('—')[0].trim();
   setText('aboutHeadline', headline);
+  setSubFromHeadline('aboutSub', a.headline);
 
   const m = $('aboutManifesto');
   m.innerHTML = '';
@@ -182,6 +190,7 @@ function renderAbout() {
 function renderShowcase() {
   const s = CONTENT.showcase || {};
   setText('showcaseHeadline', (s.headline || 'ALREADY ON AIR').split('—')[0].trim());
+  setSubFromHeadline('showcaseSub', s.headline);
   setText('showcaseIntro', s.intro || '');
   const cta = $('showcaseCta');
   if (s.playlistUrl) {
@@ -197,6 +206,7 @@ function renderShowcase() {
 // ---------------------------------------------------------
 function renderContact() {
   const c = CONTENT.contact || {};
+  setSubFromHeadline('contactSub', c.headline);
   setText('contactHeadline', (c.headline || 'TRANSMIT').split('—')[0].trim());
   const email = $('contactEmail');
   if (c.email) {
