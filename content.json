@@ -64,7 +64,7 @@
       "checkoutUrl": "https://tally.so/r/mVX4vM",
       "ctaLabel": "▶ 預約諮詢",
       "preOrderText": "預約系統建置中，留 email 等通知。",
-      "notionUrl": "https://www.notion.so/25450bfb34308056b5fee711d99d677c"
+      "notionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb34308056b5fee711d99d677c"
     },
     {
       "id": "vocal-edit",
@@ -88,7 +88,7 @@
       "checkoutUrl": "https://tally.so/r/mVX4vM",
       "ctaLabel": "→ 透過諮詢預約",
       "preOrderText": "排程已滿，留 email 候補。",
-      "notionUrl": "https://www.notion.so/Vocal-Editing-25450bfb343080bda59fd02b51e7f8b0"
+      "notionUrl": "https://sleet-arithmetic-fcf.notion.site/Vocal-Editing-25450bfb343080bda59fd02b51e7f8b0"
     },
     {
       "id": "workshop",
@@ -112,7 +112,7 @@
       "checkoutUrl": "https://tally.so/r/mVX4vM",
       "ctaLabel": "→ 透過諮詢預約",
       "preOrderText": "下一場排定中，留 email 通知。",
-      "notionUrl": "https://www.notion.so/25450bfb3430801db6c6eedb65914f28"
+      "notionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb3430801db6c6eedb65914f28"
     },
     {
       "id": "full-prod",
@@ -137,7 +137,7 @@
       "ctaLabel": "→ 索取報價",
       "quoteFormUrl": "https://tally.so/r/mVX4vM",
       "preOrderText": "",
-      "notionUrl": "https://www.notion.so/25450bfb343080faa97ff4226a12be50"
+      "notionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb343080faa97ff4226a12be50"
     }
   ],
   "showcase": {
