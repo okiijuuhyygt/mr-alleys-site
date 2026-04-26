@@ -620,6 +620,7 @@ body::before {
   box-shadow: 6px 6px 0 var(--paper-edge);
   overflow: hidden;
   line-height: 0;
+  border-radius: 12px;
 }
 .showcase__player iframe {
   display: block;
