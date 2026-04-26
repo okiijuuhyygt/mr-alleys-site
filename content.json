@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "brandName": "巷弄故事館",
+    "brandNameEn": "MR. ALLEYS",
+    "tagline": "音樂製作工作室",
+    "subtagline": "從 demo 到母帶，一條龍陪你做完",
+    "studioCode": "GUILD · 010",
+    "established": "EST. 2020",
+    "version": "v0.2 · MVP"
+  },
+  "hero": {
+    "consoleLines": [
+      "▌ INPUT  — 帶 demo / 想法 / 宅錄 來",
+      "▌ QUEST  — 接案 / 修整 / 製作",
+      "▌ OUTPUT — 上架 ready 的成品"
+    ],
+    "ctaPrimary": "▶ 接一個任務",
+    "ctaSecondary": "▼ 看委託"
+  },
+  "about": {
+    "headline": "WORKSHOP NOTES — 關於巷弄",
+    "manifesto": [
+      "我是陳則皞，台中人，做音樂製作十年。",
+      "巷弄故事館不是錄音室也不是工作室——是一條把你的想法接到上架那一天的路。",
+      "做的範圍：從 demo 給意見、人聲修整、配唱製作、編曲、混音、母帶、發行上架。",
+      "服務的範圍：100 位創作者完成屬於自己的歌。已經完成 60+ 首。"
+    ],
+    "stats": [
+      {"label": "完成製作", "value": "60+", "unit": "首"},
+      {"label": "現役客戶", "value": "12", "unit": "位"},
+      {"label": "目標", "value": "100", "unit": "位創作者"}
+    ]
+  },
+  "services": [
+    {
+      "id": "consult",
+      "code": "CH-01",
+      "title": "諮詢｜服務入口",
+      "subtitle": "從想法、demo、宅錄，拆解音樂難題",
+      "description": "你不確定要從哪裡開始、現在的 demo 到底缺什麼、市場走向在哪——一小時把它釐清，帶走一份建議報告。",
+      "includes": [
+        "60 分鐘線上會議（Google Meet）",
+        "會前資料審閱（demo / 詞 / 想法）",
+        "會後客製化建議書（PDF）",
+        "後續優惠券（折抵 NT$1,000）"
+      ],
+      "duration": "60 分鐘",
+      "deliverable": "建議書 + 後續折抵",
+      "priceLabel": "NT$ 1,000",
+      "priceNumeric": 1000,
+      "mode": "paid",
+      "checkoutUrl": "PLACEHOLDER_CONSULT_URL",
+      "ctaLabel": "▶ 預約諮詢",
+      "preOrderText": "預約系統建置中，留 email 等通知。",
+      "notionUrl": "https://www.notion.so/25450bfb34308056b5fee711d99d677c"
+    },
+    {
+      "id": "vocal-edit",
+      "code": "CH-02",
+      "title": "人聲修整｜Vocal Editing",
+      "subtitle": "原創、翻唱、影像配唱的人聲音準與拍子",
+      "description": "把錄好的人聲修到專業上架等級——音準、拍子、氣口、起伏一條一條來，不用換錄音室。",
+      "includes": [
+        "音準調整（Melodyne / Auto-Tune）",
+        "拍子對齊（手動修正）",
+        "氣口、雜音清理",
+        "Comp（多軌挑選最佳片段）",
+        "交付混音 ready 的乾聲檔"
+      ],
+      "duration": "3-7 個工作天",
+      "deliverable": "WAV 乾聲檔 + 工程檔",
+      "priceLabel": "NT$ 3,000",
+      "priceNumeric": 3000,
+      "mode": "paid",
+      "checkoutUrl": "PLACEHOLDER_VOCAL_URL",
+      "ctaLabel": "▶ 送修人聲",
+      "preOrderText": "排程已滿，留 email 候補。",
+      "notionUrl": "https://www.notion.so/Vocal-Editing-25450bfb343080bda59fd02b51e7f8b0"
+    },
+    {
+      "id": "workshop",
+      "code": "CH-03",
+      "title": "一日工作坊｜製作體驗",
+      "subtitle": "從零到有，一天完成一首可上架的作品",
+      "description": "你不會編曲、不會混音也沒關係——一整天我陪你從一句話寫到上架 ready 的 demo。帶走的不是教學影片，是你自己的歌。",
+      "includes": [
+        "8 小時陪伴製作（線下 / 錄音室）",
+        "詞曲方向引導 + Suno 協作",
+        "編曲、錄音、簡易混音",
+        "成品 WAV + Spotify 上架輔助",
+        "後續一週 follow-up"
+      ],
+      "duration": "1 天（8 小時）",
+      "deliverable": "可上架成品 + 工程檔",
+      "priceLabel": "NT$ 8,000",
+      "priceNumeric": 8000,
+      "mode": "paid",
+      "checkoutUrl": "PLACEHOLDER_WORKSHOP_URL",
+      "ctaLabel": "▶ 報名工作坊",
+      "preOrderText": "下一場排定中，留 email 通知。",
+      "notionUrl": "https://www.notion.so/25450bfb3430801db6c6eedb65914f28"
+    },
+    {
+      "id": "full-prod",
+      "code": "CH-04",
+      "title": "完整製作｜詞曲・編曲・錄音・混音・母帶",
+      "subtitle": "全製作流程，從 0 到上架",
+      "description": "你有一個想法、一段旋律、一個故事——我接手，做到上架。一條龍，全程同一位製作人，不轉包不掉球。",
+      "includes": [
+        "詞曲協作（Suno + 人寫）",
+        "編曲（Logic / 真人樂手）",
+        "錄音（合作錄音室）",
+        "混音 + 母帶",
+        "Spotify / Apple Music 上架",
+        "MV 製作（選配）"
+      ],
+      "duration": "依案件規模 1-3 個月",
+      "deliverable": "上架 ready + 工程備份",
+      "priceLabel": "依規模報價",
+      "priceNumeric": null,
+      "mode": "quote",
+      "checkoutUrl": null,
+      "ctaLabel": "→ 索取報價",
+      "quoteFormUrl": "https://tally.so/r/mVX4vM",
+      "preOrderText": "",
+      "notionUrl": "https://www.notion.so/25450bfb343080faa97ff4226a12be50"
+    }
+  ],
+  "showcase": {
+    "headline": "ALREADY ON AIR — 已完成案件",
+    "intro": "60+ 首已上架。這是部分作品的 playlist。",
+    "playlistUrl": "https://youtube.com/playlist?list=PLMDDlXKidQ7Dxdm9wJfUm9sd73J2X4Zoj",
+    "playlistLabel": "▶ 開啟 YouTube playlist"
+  },
+  "process": {
+    "headline": "SIGNAL FLOW — 製作流程",
+    "steps": [
+      {"step": "01", "title": "INPUT", "desc": "你寄來 demo / 想法 / 宅錄"},
+      {"step": "02", "title": "PRE-CHECK", "desc": "我評估範圍 + 報價"},
+      {"step": "03", "title": "PRODUCTION", "desc": "依服務項目進行製作"},
+      {"step": "04", "title": "REVIEW", "desc": "你聽 → 提修改 → 我修"},
+      {"step": "05", "title": "MASTER", "desc": "成品交付 / 上架"}
+    ]
+  },
+  "contact": {
+    "headline": "TRANSMIT — 聯絡",
+    "email": "mr.alleysmusic@gmail.com",
+    "socials": [
+      {"label": "Threads", "url": "https://www.threads.com/@mr.alleys"},
+      {"label": "Instagram", "url": "https://www.instagram.com/mr.alleys"},
+      {"label": "Notion 詳細介紹", "url": "https://www.notion.so/25450bfb34308056b5fee711d99d677c"}
+    ]
+  },
+  "footer": {
+    "credit": "© 2026 巷弄故事館 · MR. ALLEYS · 音樂製作 / 詞曲 / 全流程",
+    "buildNote": "BUILD v0.2 · MVP · GUILD MODE · static site"
+  }
+}

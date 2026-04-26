@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>巷弄故事館 · MR. ALLEYS · 音樂製作工作室</title>
+<meta name="description" content="從 demo 到母帶的一條龍音樂製作。諮詢、人聲修整、一日工作坊、完整製作流程。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="巷弄故事館 · MR. ALLEYS">
+<meta property="og:description" content="音樂製作工作室 · 從 demo 到母帶">
+<meta property="og:locale" content="zh_TW">
+<meta name="theme-color" content="#1a1410">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-scene="loading">
+
+<!-- ============ Console top bar ============ -->
+<header class="console-bar" id="consoleBar">
+  <div class="console-bar__left">
+    <span class="rec-dot" aria-hidden="true"></span>
+    <span class="console-bar__label" id="brandCode">STUDIO · 010</span>
+  </div>
+  <div class="console-bar__center">
+    <span class="console-bar__brand" id="brandNameEn">MR. ALLEYS</span>
+  </div>
+  <div class="console-bar__right">
+    <span class="console-bar__est" id="brandEst">EST. 2020</span>
+    <span class="console-bar__sep">/</span>
+    <span class="console-bar__ver" id="brandVersion">v0.1</span>
+  </div>
+</header>
+
+<!-- ============ Hero ============ -->
+<section class="hero" id="hero">
+  <div class="hero__inner">
+    <p class="hero__eyebrow" id="heroEyebrow">— 音樂製作工作室 —</p>
+    <h1 class="hero__title">
+      <span class="hero__title-zh" id="heroTitleZh">巷弄故事館</span>
+      <span class="hero__title-en" id="heroTitleEn">MR. ALLEYS</span>
+    </h1>
+    <p class="hero__sub" id="heroSub">從 demo 到母帶，一條龍陪你做完</p>
+
+    <div class="signal-flow" id="signalFlow"></div>
+
+    <div class="hero__cta">
+      <a href="#services" class="btn btn--primary" id="heroCtaPrimary">▶ 開始一個製作</a>
+      <a href="#services" class="btn btn--ghost" id="heroCtaSecondary">↓ 看服務</a>
+    </div>
+  </div>
+
+  <!-- Decorative VU meter -->
+  <div class="vu-rack" aria-hidden="true">
+    <div class="vu-meter"><div class="vu-bar"></div></div>
+    <div class="vu-meter"><div class="vu-bar"></div></div>
+    <div class="vu-meter"><div class="vu-bar"></div></div>
+    <div class="vu-meter"><div class="vu-bar"></div></div>
+  </div>
+</section>
+
+<!-- ============ Services / Production Desk ============ -->
+<section class="section section--desk" id="services">
+  <div class="section__head">
+    <span class="section__rule"></span>
+    <h2 class="section__title">PRODUCTION DESK</h2>
+    <p class="section__sub">— 服務項目 —</p>
+  </div>
+
+  <div class="services" id="servicesGrid">
+    <!-- Cards rendered by JS -->
+  </div>
+</section>
+
+<!-- ============ Process / Signal Flow ============ -->
+<section class="section section--process" id="process">
+  <div class="section__head">
+    <span class="section__rule"></span>
+    <h2 class="section__title" id="processHeadline">SIGNAL FLOW</h2>
+    <p class="section__sub">— 製作流程 —</p>
+  </div>
+  <div class="process" id="processSteps">
+    <!-- Steps rendered by JS -->
+  </div>
+</section>
+
+<!-- ============ About / Workshop Notes ============ -->
+<section class="section section--about" id="about">
+  <div class="section__head">
+    <span class="section__rule"></span>
+    <h2 class="section__title" id="aboutHeadline">WORKSHOP NOTES</h2>
+    <p class="section__sub">— 關於巷弄 —</p>
+  </div>
+  <div class="about">
+    <div class="about__manifesto" id="aboutManifesto"></div>
+    <div class="about__stats" id="aboutStats"></div>
+  </div>
+</section>
+
+<!-- ============ Showcase ============ -->
+<section class="section section--showcase" id="showcase">
+  <div class="section__head">
+    <span class="section__rule"></span>
+    <h2 class="section__title" id="showcaseHeadline">ALREADY ON AIR</h2>
+    <p class="section__sub">— 已完成案件 —</p>
+  </div>
+  <div class="showcase">
+    <p class="showcase__intro" id="showcaseIntro"></p>
+    <a class="btn btn--primary" id="showcaseCta" target="_blank" rel="noopener"></a>
+  </div>
+</section>
+
+<!-- ============ Contact ============ -->
+<section class="section section--contact" id="contact">
+  <div class="section__head">
+    <span class="section__rule"></span>
+    <h2 class="section__title" id="contactHeadline">TRANSMIT</h2>
+    <p class="section__sub">— 聯絡 —</p>
+  </div>
+  <div class="contact">
+    <a class="contact__email" id="contactEmail"></a>
+    <ul class="contact__socials" id="contactSocials"></ul>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer class="site-footer">
+  <p id="footerCredit"></p>
+  <p class="site-footer__build" id="footerBuild"></p>
+</footer>
+
+<!-- ============ Service detail modal ============ -->
+<div class="modal" id="serviceModal" aria-hidden="true">
+  <div class="modal__card" role="dialog" aria-modal="true">
+    <button class="modal__close" id="modalClose" aria-label="關閉">×</button>
+    <div class="modal__head">
+      <div class="modal__code" id="modalCode">CH-00</div>
+      <h3 class="modal__title" id="modalTitle">—</h3>
+      <p class="modal__sub" id="modalSub">—</p>
+    </div>
+    <div class="modal__body">
+      <p class="modal__desc" id="modalDesc"></p>
+      <div class="modal__meta">
+        <div class="modal__meta-row"><span>交期</span><span id="modalDuration">—</span></div>
+        <div class="modal__meta-row"><span>交付</span><span id="modalDeliverable">—</span></div>
+        <div class="modal__meta-row"><span>金額</span><span id="modalPrice">—</span></div>
+      </div>
+      <h4 class="modal__includes-title">包含什麼</h4>
+      <ul class="modal__includes" id="modalIncludes"></ul>
+      <p class="modal__soon" id="modalSoon" hidden></p>
+    </div>
+    <div class="modal__foot">
+      <button class="btn btn--primary btn--lg" id="modalCheckout">▶ 前往結帳</button>
+      <a class="modal__notion" id="modalNotionLink" target="_blank" rel="noopener" hidden>↗ 看完整介紹</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
