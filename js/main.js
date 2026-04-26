@@ -258,22 +258,20 @@ function renderBgm() {
     }
   });
 
-  // Auto-mute when showcase (Spotify embed) enters viewport
-  if (b.muteOnShowcase !== false) {
-    const showcase = document.getElementById('showcase');
-    if (showcase && 'IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (!isPlaying) return;
-          if (e.isIntersecting) {
-            audio.muted = true;
-          } else if (!userMuted) {
-            audio.muted = false;
-          }
-        });
-      }, { threshold: 0.3 });
-      observer.observe(showcase);
-    }
+  // Auto-mute when hero leaves viewport (BGM only plays on first screen)
+  const hero = document.getElementById('hero');
+  if (hero && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!isPlaying) return;
+        if (e.isIntersecting) {
+          if (!userMuted) audio.muted = false;
+        } else {
+          audio.muted = true;
+        }
+      });
+    }, { threshold: 0.2 });
+    observer.observe(hero);
   }
 }
 
