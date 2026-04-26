@@ -601,17 +601,32 @@ function renderEditor() {
     <div class="panel-body" id="servicesEditor"></div>
   </details>
 
-  <!-- ABOUT / STATS -->
+  <!-- SHOWCASE -->
   <details class="panel">
-    <summary>ABOUT · 關於 + 數字</summary>
+    <summary>SHOWCASE · 已完成作品</summary>
     <div class="panel-body">
-      <div class="field"><label>標題</label><input type="text" data-path="about.headline"></div>
-      <div class="field">
-        <label>Manifesto（一段一行）</label>
-        <textarea data-path="about.manifesto" rows="6"></textarea>
-        <div class="hint">每行一段，會自動分段顯示。</div>
+      <div class="field"><label>標題</label><input type="text" data-path="showcase.headline"></div>
+      <div class="field"><label>說明文字</label><input type="text" data-path="showcase.intro"><div class="hint">留空則 Spotify embed 上方不顯示文字。</div></div>
+      <div class="field"><label>Spotify playlist ID</label><input type="text" data-path="showcase.spotifyPlaylistId" placeholder="4RXBEgeJiThrAK4wvNJMxf"><div class="hint">控制 embed iframe 顯示哪個 playlist。從 Spotify 分享連結 playlist/ 後面那串字就是 ID。</div></div>
+      <div class="field"><label>完整 playlist URL（按鈕跳轉）</label><input type="text" data-path="showcase.playlistUrl"></div>
+      <div class="field"><label>按鈕文字</label><input type="text" data-path="showcase.playlistLabel"></div>
+    </div>
+  </details>
+
+  <!-- BGM (獨立 section、預設展開) -->
+  <details class="panel" open>
+    <summary>BGM · 背景音樂（節慶用）</summary>
+    <div class="panel-body">
+      <div class="field"><label>背景音樂模式</label>
+        <select data-path="bgm.mode">
+          <option value="off">無音樂（預設、平日用）</option>
+          <option value="default">預設 8-bit（節慶用）</option>
+          <option value="custom">自訂 URL</option>
+        </select>
+        <div class="hint">平日 off。節慶切「預設 8-bit」或「自訂 URL」→ 主站右下出現 ♪ button → 客戶 click 開。客戶滑到 Spotify 區會自動 mute。</div>
       </div>
-      <div id="statsEditor"></div>
+      <div class="field"><label>自訂 BGM URL</label><input type="text" data-path="bgm.customUrl" placeholder="https://...mp3"><div class="hint">mode = custom 才用。直接貼 hosted mp3 連結。</div></div>
+      <div class="field"><label>預設 BGM 路徑</label><input type="text" data-path="bgm.defaultUrl" placeholder="assets/bgm/default-8bit.mp3"><div class="hint">mode = default 用的檔案路徑。已預設 8-bit 在 assets/bgm/ 內。</div></div>
     </div>
   </details>
 
@@ -624,25 +639,17 @@ function renderEditor() {
     </div>
   </details>
 
-  <!-- SHOWCASE -->
+  <!-- ABOUT / STATS -->
   <details class="panel">
-    <summary>SHOWCASE · 已完成作品</summary>
+    <summary>ABOUT · 關於 + 數字</summary>
     <div class="panel-body">
-      <div class="field"><label>標題</label><input type="text" data-path="showcase.headline"></div>
-      <div class="field"><label>說明文字</label><input type="text" data-path="showcase.intro"><div class="hint">留空則 Spotify embed 上方不顯示文字。</div></div>
-      <div class="field"><label>背景音樂模式（BGM）</label>
-        <select data-path="bgm.mode">
-          <option value="off">無音樂（預設、平日用）</option>
-          <option value="default">預設 8-bit（節慶用）</option>
-          <option value="custom">自訂 URL</option>
-        </select>
-        <div class="hint">想做節慶氛圍才開。客戶滑到 Spotify 區會自動 mute。</div>
+      <div class="field"><label>標題</label><input type="text" data-path="about.headline"></div>
+      <div class="field">
+        <label>Manifesto（一段一行）</label>
+        <textarea data-path="about.manifesto" rows="6"></textarea>
+        <div class="hint">每行一段，會自動分段顯示。</div>
       </div>
-      <div class="field"><label>自訂 BGM URL</label><input type="text" data-path="bgm.customUrl" placeholder="https://...mp3"></div>
-      <div class="field"><label>預設 BGM 路徑</label><input type="text" data-path="bgm.defaultUrl" placeholder="assets/bgm/default-8bit.mp3"><div class="hint">「預設 8-bit」mode 用的檔案路徑。需先把 .mp3 上傳到 repo 對應位置。</div></div>
-      <div class="field"><label>Spotify playlist ID</label><input type="text" data-path="showcase.spotifyPlaylistId" placeholder="4RXBEgeJiThrAK4wvNJMxf"><div class="hint">控制 embed iframe 顯示哪個 playlist。從 Spotify 分享連結 playlist/ 後面那串字就是 ID。</div></div>
-      <div class="field"><label>完整 playlist URL（按鈕跳轉）</label><input type="text" data-path="showcase.playlistUrl"></div>
-      <div class="field"><label>按鈕文字</label><input type="text" data-path="showcase.playlistLabel"></div>
+      <div id="statsEditor"></div>
     </div>
   </details>
 
