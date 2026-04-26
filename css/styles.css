@@ -206,14 +206,11 @@ body::before {
 }
 .hero__title-zh {
   font-family: "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
-  font-weight: 700;
+  font-weight: 500;
   font-size: clamp(44px, 6.5vw, 66px);
   color: var(--ink);
-  letter-spacing: 0.04em;
-  line-height: 1.15;
-  text-shadow:
-    2px 2px 0 var(--brass-light),
-    4px 4px 0 var(--brass-deep);
+  letter-spacing: 0.06em;
+  line-height: 1.2;
   -webkit-font-smoothing: antialiased;
 }
 .hero__title-en {
