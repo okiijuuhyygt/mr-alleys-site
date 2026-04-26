@@ -49,7 +49,7 @@
       "priceLabel": "NT$ 1,000",
       "priceNumeric": 1000,
       "mode": "paid",
-      "checkoutUrl": "PLACEHOLDER_CONSULT_URL",
+      "checkoutUrl": "https://p.ecpay.com.tw/A48B179",
       "ctaLabel": "▶ 預約諮詢",
       "preOrderText": "預約系統建置中，留 email 等通知。",
       "notionUrl": "https://www.notion.so/25450bfb34308056b5fee711d99d677c"
@@ -72,7 +72,7 @@
       "priceLabel": "NT$ 3,000",
       "priceNumeric": 3000,
       "mode": "paid",
-      "checkoutUrl": "PLACEHOLDER_VOCAL_URL",
+      "checkoutUrl": "https://p.ecpay.com.tw/31DCBDD",
       "ctaLabel": "▶ 送修人聲",
       "preOrderText": "排程已滿，留 email 候補。",
       "notionUrl": "https://www.notion.so/Vocal-Editing-25450bfb343080bda59fd02b51e7f8b0"
@@ -95,7 +95,7 @@
       "priceLabel": "NT$ 8,000",
       "priceNumeric": 8000,
       "mode": "paid",
-      "checkoutUrl": "PLACEHOLDER_WORKSHOP_URL",
+      "checkoutUrl": "https://p.ecpay.com.tw/8404A26",
       "ctaLabel": "▶ 報名工作坊",
       "preOrderText": "下一場排定中，留 email 通知。",
       "notionUrl": "https://www.notion.so/25450bfb3430801db6c6eedb65914f28"
