@@ -910,8 +910,9 @@ body::before {
 @media (max-width: 600px) {
   .hero__cta { flex-direction: column; align-items: stretch; }
   .btn { width: 100%; }
-  .console-bar { font-size: 7px; padding: 10px 12px; }
-  .console-bar__est, .console-bar__sep, .console-bar__ver { display: none; }
+  .console-bar { font-size: 6px; padding: 9px 10px; gap: 6px; }
+  .console-bar__left, .console-bar__right { gap: 6px; }
+  .console-bar__ver { display: none; }
   .signal-flow { font-size: 16px; }
   .service-card__sub, .modal__desc, .modal__includes li { font-size: 15px; }
 }
