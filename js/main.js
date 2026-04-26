@@ -38,18 +38,22 @@ function setText(id, text) { const el = $(id); if (el) el.textContent = text; }
 function setAttr(id, attr, value) { const el = $(id); if (el) el.setAttribute(attr, value); }
 
 function statusForService(svc) {
-  // returns { label, className } based on service mode + checkout url presence
+  // per-service override wins
+  if (svc.statusLabel) {
+    return { label: svc.statusLabel, className: svc.statusClass || '' };
+  }
+  // mode-based fallback (中文化)
   if (svc.mode === 'paid' && svc.checkoutUrl && !String(svc.checkoutUrl).startsWith('PLACEHOLDER')) {
-    return { label: 'AVAILABLE', className: '' };
+    return { label: '可預約', className: '' };
   }
   if (svc.mode === 'paid') {
-    return { label: 'CONFIG PENDING', className: 'service-card__status--soon' };
+    return { label: '設定中', className: 'service-card__status--soon' };
   }
   if (svc.mode === 'pre-order') {
-    return { label: 'PRE-ORDER', className: 'service-card__status--quote' };
+    return { label: '預售中', className: 'service-card__status--quote' };
   }
   if (svc.mode === 'quote') {
-    return { label: 'BY QUOTE', className: 'service-card__status--quote' };
+    return { label: '諮詢報價', className: 'service-card__status--quote' };
   }
   return { label: '—', className: 'service-card__status--soon' };
 }

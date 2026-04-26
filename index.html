@@ -50,8 +50,7 @@
     <div class="signal-flow" id="signalFlow"></div>
 
     <div class="hero__cta">
-      <a href="#services" class="btn btn--primary" id="heroCtaPrimary">▶ 開始一個製作</a>
-      <a href="#services" class="btn btn--ghost" id="heroCtaSecondary">↓ 看服務</a>
+      <a href="#services" class="btn btn--primary" id="heroCtaPrimary">▼ 看服務</a>
     </div>
   </div>
 
@@ -111,7 +110,15 @@
   </div>
   <div class="showcase">
     <p class="showcase__intro" id="showcaseIntro"></p>
-    <a class="btn btn--primary" id="showcaseCta" target="_blank" rel="noopener"></a>
+    <div class="showcase__player">
+      <iframe id="showcasePlayer"
+              src="https://open.spotify.com/embed/playlist/4RXBEgeJiThrAK4wvNJMxf?utm_source=generator&theme=0"
+              width="100%" height="380"
+              frameborder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"></iframe>
+    </div>
+    <a class="btn btn--ghost" id="showcaseCta" target="_blank" rel="noopener"></a>
   </div>
 </section>
 

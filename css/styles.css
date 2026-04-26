@@ -612,6 +612,20 @@ body::before {
   margin: 0;
   max-width: 520px;
 }
+.showcase__player {
+  width: 100%;
+  max-width: 560px;
+  border: 3px solid var(--ink);
+  background: var(--ink);
+  box-shadow: 6px 6px 0 var(--paper-edge);
+  overflow: hidden;
+  line-height: 0;
+}
+.showcase__player iframe {
+  display: block;
+  width: 100%;
+  border: none;
+}
 
 /* =========================================================
    Contact (傳訊)
