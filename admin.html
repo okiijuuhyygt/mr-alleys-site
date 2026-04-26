@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>巷弄管理後台 · Admin</title>
+<title>· · ·</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -104,31 +104,10 @@ h1 {
 #sceneLogin .btn-link:hover { background: var(--brass); color: var(--paper); }
 
 #loginForm {
-  background: var(--paper-soft);
-  border: 4px solid var(--ink);
-  padding: 24px;
-  box-shadow: 6px 6px 0 var(--ink);
-  margin-top: 16px;
+  display: block;
+  background: transparent; border: none; box-shadow: none;
+  padding: 0; margin: 0;
 }
-#loginForm label {
-  font-family: var(--pixel-en); font-size: 10px;
-  letter-spacing: 0.15em;
-  color: var(--brass-deep); display: block; margin-bottom: 10px;
-}
-#loginForm input {
-  width: 100%; font-family: var(--mono); font-size: 18px;
-  padding: 12px 14px; border: 3px solid var(--ink); background: white;
-  margin-bottom: 14px;
-}
-#loginForm button {
-  font-family: var(--pixel-en); font-size: 11px; letter-spacing: 0.1em;
-  background: var(--brass); color: var(--paper);
-  border: 3px solid var(--ink);
-  padding: 12px 22px; cursor: pointer;
-  box-shadow: 4px 4px 0 var(--ink);
-}
-#loginForm button:hover { background: var(--brass-light); }
-#loginForm button:disabled { background: var(--paper-edge); color: var(--ink-mute); cursor: not-allowed; }
 .error { color: var(--danger); font-family: var(--mono); font-size: 17px; margin-top: 8px; }
 .help-list { font-family: var(--mono); font-size: 16px; color: var(--ink-soft); padding-left: 20px; }
 .help-list li { margin: 4px 0; }
@@ -241,54 +220,181 @@ code.tok-eg { background: var(--paper-soft); padding: 2px 6px; border: 1px solid
 .quick-ref a {
   color: var(--brass-deep); word-break: break-all;
 }
+
+/* ============ Dialog frame (login card, mr-alleys palette) ============ */
+#sceneLogin { display: flex; justify-content: center; align-items: flex-start; }
+.dialog-frame {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 56px auto 24px;
+  padding: 40px 28px 32px;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--paper-edge);
+  text-align: center;
+}
+.dialog-frame__deco {
+  position: absolute;
+  top: -18px; left: 50%;
+  transform: translateX(-50%);
+  width: 32px; height: 32px;
+  background: var(--brass-light);
+  border: 3px solid var(--ink);
+  display: block;
+  image-rendering: pixelated;
+}
+.dialog-frame__deco::before,
+.dialog-frame__deco::after {
+  content: "";
+  position: absolute;
+  background: var(--ink);
+}
+.dialog-frame__deco::before {
+  top: 28%; left: 36%;
+  width: 28%; height: 18%;
+}
+.dialog-frame__deco::after {
+  bottom: 22%; left: 42%;
+  width: 16%; height: 28%;
+}
+.dialog-frame__title {
+  font-family: var(--pixel-tc);
+  font-weight: 400;
+  font-size: 26px;
+  color: var(--ink);
+  letter-spacing: 6px;
+  padding-left: 6px;
+  margin: 14px 0 6px;
+  line-height: 1.4;
+  -webkit-font-smoothing: none;
+  text-shadow: 3px 3px 0 var(--brass-light);
+}
+.dialog-frame__sub {
+  font-family: var(--pixel-en);
+  font-size: 9px;
+  color: var(--ink-soft);
+  letter-spacing: 2px;
+  margin: 0 0 28px;
+}
+.dialog-frame__field {
+  display: block;
+  margin-bottom: 18px;
+  text-align: left;
+}
+.dialog-frame__label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--pixel-en);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--brass-deep);
+  text-transform: uppercase;
+}
+.dialog-frame__field input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--mono);
+  font-size: 18px;
+  letter-spacing: 2px;
+  background: var(--paper-soft);
+  border: 2px solid var(--ink);
+  color: var(--ink);
+}
+.dialog-frame__field input:focus {
+  outline: none;
+  background: white;
+  box-shadow: 3px 3px 0 var(--brass-deep);
+}
+.dialog-frame__submit {
+  font-family: var(--pixel-en);
+  font-size: 12px;
+  padding: 16px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  letter-spacing: 3px;
+  width: 100%;
+  transition: all 0.15s;
+  margin-top: 4px;
+}
+.dialog-frame__submit:hover:not(:disabled) {
+  background: var(--brass-deep);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--brass-light);
+}
+.dialog-frame__submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.dialog-frame__hint {
+  margin-top: 24px;
+  border-top: 1px dashed var(--paper-edge);
+  padding-top: 16px;
+  text-align: left;
+}
+.dialog-frame__hint > summary {
+  cursor: pointer;
+  font-family: var(--pixel-en);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--brass-deep);
+  text-transform: uppercase;
+  list-style: none;
+  padding: 4px 0;
+}
+.dialog-frame__hint > summary::-webkit-details-marker { display: none; }
+.dialog-frame__hint > summary::before { content: "▶  "; color: var(--brass); }
+.dialog-frame__hint[open] > summary::before { content: "▼  "; }
 </style>
 </head>
 <body>
 
 <header class="top-bar">
   <div class="left">
-    <span class="logo">巷弄ADMIN</span>
+    <span class="logo">系統後台</span>
     <span class="badge" id="statusBadge">未登入</span>
   </div>
   <div>
-    <a href="index.html" target="_blank">↗ 看網站</a>
+    <a href="index.html" target="_blank">← 回前台</a>
     <button id="btnLogout" class="hidden">登出</button>
   </div>
 </header>
 
 <main class="wrap">
 
-  <!-- ============ LOGIN SCENE ============ -->
+  <!-- ============ LOGIN SCENE — framed dialog ============ -->
   <section id="sceneLogin" class="hidden">
-    <h1>巷弄管理後台</h1>
-    <p class="lead">用 GitHub Personal Access Token (PAT) 登入。Token 等於密碼，存在這台瀏覽器。</p>
-
-    <div class="quick-ref">
-      <strong>第一次使用 — 怎麼產 PAT</strong>
-      <ol class="help-list">
-        <li>點下面藍色按鈕，會帶你去 GitHub 設定頁（已預填好權限）</li>
-        <li>scope 確認只勾「<code class="tok-eg">repo</code>」就好</li>
-        <li>Expiration 選「No expiration」最方便（自己保管好）</li>
-        <li>產出來的 <code class="tok-eg">ghp_...</code> 字串貼到下面</li>
-      </ol>
+    <div class="dialog-frame">
+      <span class="dialog-frame__deco" aria-hidden="true"></span>
+      <h1 class="dialog-frame__title">系統登入</h1>
+      <p class="dialog-frame__sub">mr-alleys</p>
+      <form id="loginForm">
+        <label class="dialog-frame__field">
+          <span class="dialog-frame__label">PASSWORD</span>
+          <input type="password" id="tokenInput" autocomplete="current-password" autofocus>
+        </label>
+        <button type="submit" id="btnLogin" class="dialog-frame__submit">▶ 登入</button>
+        <div class="error hidden" id="loginErr"></div>
+      </form>
+      <details class="dialog-frame__hint">
+        <summary>沒鑰匙？</summary>
+        <ol class="help-list">
+          <li>點下面按鈕去 GitHub 產一張（scope 預填 <code class="tok-eg">repo</code>）</li>
+          <li>Expiration 選「No expiration」最方便</li>
+          <li>產出來的 <code class="tok-eg">ghp_...</code> 整串貼上面</li>
+        </ol>
+        <a class="btn-link" href="https://github.com/settings/tokens/new?scopes=repo&description=mr-alleys-admin" target="_blank">▶ 去 GitHub 產一張</a>
+      </details>
     </div>
-
-    <a class="btn-link" href="https://github.com/settings/tokens/new?scopes=repo&description=mr-alleys-admin" target="_blank">▶ 產一個新的 Token</a>
-
-    <form id="loginForm">
-      <label>GitHub Personal Access Token</label>
-      <input type="password" id="tokenInput" autocomplete="current-password" placeholder="ghp_..." autofocus>
-      <button type="submit" id="btnLogin">▶ 登入</button>
-      <div class="error hidden" id="loginErr"></div>
-    </form>
   </section>
 
   <!-- ============ EDITOR SCENE ============ -->
   <section id="sceneEditor" class="hidden">
-    <h1>編輯網站內容</h1>
-    <p class="lead">所有改動 commit 到 GitHub。GitHub Pages 1–3 分鐘後自動 deploy 到 <a href="https://okiijuuhyygt.github.io/mr-alleys-site/" target="_blank">live URL</a>。</p>
-
-    <div id="loadingContent">載入 content.json 中...</div>
+    <h1>內容編輯</h1>
+    <p class="lead">改完任一欄位 → 按底部「儲存到網站」。改動會 commit 到 GitHub，網站約 1-3 分鐘後自動更新。</p>
+    <div id="loadingContent">讀取中...</div>
     <div id="editorBody" class="hidden"></div>
   </section>
 

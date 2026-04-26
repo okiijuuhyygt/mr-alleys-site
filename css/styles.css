@@ -670,33 +670,18 @@ body::before {
 }
 .site-footer p { margin: 0 0 6px; }
 .site-footer__build {
+  display: inline-block;
   font-family: var(--pixel-en);
   font-size: 9px;
   letter-spacing: 0.2em;
-  color: var(--ink-mute);
-  margin-top: 8px;
-}
-
-/* Discreet admin entry — guild master only */
-.admin-link-footer {
-  display: inline-block;
-  margin-top: 16px;
-  padding: 6px 12px;
-  font-family: var(--pixel-en);
-  font-size: 8px;
-  letter-spacing: 0.2em;
-  color: var(--ink-mute);
+  color: var(--paper-edge);
   text-decoration: none;
-  border: 1px dashed var(--paper-edge);
-  background: transparent;
-  opacity: 0.55;
-  transition: all 0.2s ease;
+  margin-top: 8px;
+  cursor: text;
+  transition: color 0.4s ease;
 }
-.admin-link-footer:hover {
-  opacity: 1;
-  color: var(--brass-deep);
-  border-color: var(--brass);
-  background: var(--paper-soft);
+.site-footer__build:hover {
+  color: var(--ink-mute);
 }
 
 /* =========================================================
