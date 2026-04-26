@@ -14,8 +14,7 @@
       "▌ QUEST  — 接案 / 修整 / 製作",
       "▌ OUTPUT — 上架 ready 的成品"
     ],
-    "ctaPrimary": "▶ 接一個任務",
-    "ctaSecondary": "▼ 看委託"
+    "ctaPrimary": "▼ 看服務"
   },
   "about": {
     "headline": "WORKSHOP NOTES — 關於巷弄",
@@ -146,7 +145,7 @@
   ],
   "showcase": {
     "headline": "ALREADY ON AIR — 已完成案件",
-    "intro": "60+ 首已上架。點任一首聽 30 秒 preview。",
+    "intro": "",
     "spotifyPlaylistId": "4RXBEgeJiThrAK4wvNJMxf",
     "playlistUrl": "https://open.spotify.com/playlist/4RXBEgeJiThrAK4wvNJMxf",
     "playlistLabel": "→ 在 Spotify 開啟完整 playlist"
