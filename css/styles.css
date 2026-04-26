@@ -805,6 +805,15 @@ body::before {
   color: var(--brass-deep);
   font-weight: 600;
 }
+.modal__price-note {
+  margin: 6px 0 18px;
+  font-size: 12px;
+  color: var(--ink-mute);
+  text-align: right;
+  line-height: 1.5;
+  font-style: italic;
+}
+.modal__price-note:empty { display: none; }
 
 .modal__includes-title {
   font-family: var(--pixel-en);

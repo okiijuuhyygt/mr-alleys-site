@@ -234,6 +234,7 @@ function openServiceModal(id) {
   setText('modalDuration', svc.duration || '—');
   setText('modalDeliverable', svc.deliverable || '—');
   setText('modalPrice', svc.priceLabel || '—');
+  setText('modalPriceNote', svc.priceNote || '');
 
   const list = $('modalIncludes');
   list.innerHTML = '';
