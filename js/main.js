@@ -225,23 +225,16 @@ function renderFooter() {
 }
 
 // ---------------------------------------------------------
-// BGM (Web Audio API, bypasses iOS silent switch)
+// BGM (Web Audio API, bypasses iOS silent switch, no UI button)
 // ---------------------------------------------------------
 function renderBgm() {
   const b = CONTENT.bgm || { mode: 'off' };
-  const toggle = $('bgmToggle');
-  if (!toggle || b.mode === 'off') return;
-
+  if (b.mode === 'off') return;
   const url = b.mode === 'custom' ? (b.customUrl || '') : (b.defaultUrl || '');
   if (!url) return;
 
-  toggle.classList.remove('hidden');
-
   const VOL = 0.4;
-  let ctx = null;
-  let buffer = null;
-  let source = null;
-  let gainNode = null;
+  let ctx = null, buffer = null, source = null, gainNode = null;
   let isPlaying = false;
   let heroVisible = true;
 
@@ -256,7 +249,6 @@ function renderBgm() {
 
   function startSource() {
     if (!ctx || !buffer) return;
-    if (source) { try { source.stop(); } catch (_) {} }
     gainNode = ctx.createGain();
     gainNode.gain.value = heroVisible ? VOL : 0;
     gainNode.connect(ctx.destination);
@@ -267,33 +259,18 @@ function renderBgm() {
     source.start(0);
   }
 
-  function stopSource() {
-    if (source) { try { source.stop(); } catch (_) {} source = null; }
-  }
-
   async function startBgm() {
     if (isPlaying) return;
     try {
       await ensureBuffer();
       startSource();
       isPlaying = true;
-      toggle.textContent = '⏸';
     } catch (e) {
       console.error('[bgm] play failed', e);
     }
   }
 
-  toggle.addEventListener('click', async () => {
-    if (isPlaying) {
-      stopSource();
-      isPlaying = false;
-      toggle.textContent = '♪';
-    } else {
-      await startBgm();
-    }
-  });
-
-  // Auto-start on first user interaction (任意 click / touch / scroll → 自動開,不必刻意點 ♪)
+  // Auto-start on any first user interaction
   const autoStart = () => {
     document.removeEventListener('pointerdown', autoStart);
     document.removeEventListener('touchstart', autoStart);
@@ -304,7 +281,7 @@ function renderBgm() {
   document.addEventListener('touchstart', autoStart, { once: true, passive: true });
   document.addEventListener('scroll', autoStart, { once: true, passive: true });
 
-  // Hero in/out viewport → fade gain (mute bypass via Web Audio still works in silent mode)
+  // Hero in/out viewport → mute via gain
   const hero = document.getElementById('hero');
   if (hero && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
