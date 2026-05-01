@@ -203,7 +203,7 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
   pointer-events: none;
   width: 96px;
   height: 96px;
-  background-image: url('../assets/mascot-hao.png');
+  background-image: url('../assets/mascot-hao.png?v=20260502walk');
   background-size: 384px 96px;        /* 4 frames × 96px (3x upscale from 32px) */
   background-repeat: no-repeat;
   background-position: 0 0;
