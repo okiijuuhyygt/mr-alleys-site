@@ -101,6 +101,44 @@ body::before {
 }
 
 /* =========================================================
+   Marquee — 頂部跑馬燈 (admin 可開關 via content.json)
+   ========================================================= */
+.marquee {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  height: 32px;
+  line-height: 32px;
+  background: var(--brass-deep);
+  color: var(--paper);
+  font-family: var(--pixel-en);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 2px solid var(--brass-light);
+}
+.marquee[hidden] { display: none !important; }
+.marquee__track {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee-scroll var(--marquee-speed, 28s) linear infinite;
+  will-change: transform;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+/* 當 marquee 顯示時, console-bar 自動 stack 往下 32px (mobile 28px) */
+body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
+@media (max-width: 760px) {
+  .marquee { height: 28px; line-height: 28px; font-size: 8px; }
+  body:has(.marquee:not([hidden])) .console-bar { top: 28px; }
+}
+
+/* =========================================================
    Console / status bar at top
    ========================================================= */
 .console-bar {
@@ -152,6 +190,39 @@ body::before {
 @keyframes rec-blink {
   0%, 50% { opacity: 1; }
   50.01%, 100% { opacity: 0.2; }
+}
+
+/* =========================================================
+   Mascot — 製作人 Hao 像素小人 (hero 右下角 idle bob)
+   ========================================================= */
+.mascot {
+  position: absolute;
+  right: clamp(20px, 5vw, 60px);
+  bottom: clamp(20px, 4vh, 50px);
+  z-index: 5;
+  pointer-events: none;
+  width: 96px;
+  height: 96px;
+  background-image: url('../assets/mascot-hao.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  animation: mascot-bob 2.4s ease-in-out infinite;
+}
+@keyframes mascot-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+@media (max-width: 760px) {
+  /* Mobile: 縮小 + 移到 CTA 上方 (避開 ♪ 聽作品 button 重疊) */
+  .mascot { width: 48px; height: 48px; right: 12px; bottom: 110px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mascot { animation: none; }
+  .marquee__track { animation: none; }
 }
 
 /* =========================================================

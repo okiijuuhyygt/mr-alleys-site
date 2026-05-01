@@ -207,5 +207,13 @@
     "mode": "off",
     "defaultUrl": "assets/bgm/default-8bit.mp3",
     "customUrl": ""
+  },
+  "marquee": {
+    "enabled": false,
+    "speed": 28,
+    "items": [
+      "從 demo 到上架，陪你一起完成",
+      "完成製作 60+ 首 / 製作中 8 位 / 目標 100 位創作者"
+    ]
   }
 }

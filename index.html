@@ -35,6 +35,11 @@
 </head>
 <body data-scene="loading">
 
+<!-- ============ Marquee top bar (admin toggleable) ============ -->
+<div class="marquee" id="marquee" hidden>
+  <div class="marquee__track" id="marqueeTrack"></div>
+</div>
+
 <!-- ============ Console top bar ============ -->
 <header class="console-bar" id="consoleBar">
   <div class="console-bar__left">
@@ -68,13 +73,16 @@
     </div>
   </div>
 
-  <!-- Decorative VU meter -->
+  <!-- Decorative VU meter (kept hidden via CSS, dead element) -->
   <div class="vu-rack" aria-hidden="true">
     <div class="vu-meter"><div class="vu-bar"></div></div>
     <div class="vu-meter"><div class="vu-bar"></div></div>
     <div class="vu-meter"><div class="vu-bar"></div></div>
     <div class="vu-meter"><div class="vu-bar"></div></div>
   </div>
+
+  <!-- 8-bit mascot (製作人 Hao, hero 右下角 idle bob) -->
+  <div class="mascot" id="mascot" aria-hidden="true"></div>
 </section>
 
 <!-- ============ Services / Production Desk ============ -->

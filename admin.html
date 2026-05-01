@@ -636,6 +636,31 @@ function renderEditor() {
     </div>
   </details>
 
+  <!-- MARQUEE -->
+  <details class="panel">
+    <summary>MARQUEE · 頂部跑馬燈（節慶 / 限時公告用）</summary>
+    <div class="panel-body">
+      <div class="field"><label>啟用狀態</label>
+        <select data-path="marquee.enabled">
+          <option value="true">on（顯示在最上方）</option>
+          <option value="false">off（不顯示）</option>
+        </select>
+        <div class="hint">平日 off。節慶 / 限時優惠 / 重要公告時切 on，網站最頂端會出現一條深銅黃跑馬燈。</div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>滾動速度（秒）</label>
+          <input type="number" data-path="marquee.speed" min="10" max="120" placeholder="28">
+          <div class="hint">28 秒 default。短內容縮短，長內容加長。hover 暫停。</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>顯示文字（一行一條）</label>
+        <textarea data-path="marquee.items" rows="5" placeholder="限時優惠 NT$800 諮詢方案&#10;5/15 工作坊新增名額&#10;近期上架 ..."></textarea>
+        <div class="hint">每行一條，會用「●」串接循環跑。</div>
+      </div>
+    </div>
+  </details>
+
   <!-- PROCESS -->
   <details class="panel">
     <summary>SIGNAL FLOW · 製作流程 (5 步)</summary>

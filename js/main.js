@@ -19,6 +19,7 @@ async function boot() {
     return;
   }
   renderConsoleBar();
+  renderMarquee();
   renderHero();
   renderServices();
   renderProcess();
@@ -302,6 +303,38 @@ function renderBgm() {
     }, { threshold: 0.2 });
     observer.observe(hero);
   }
+}
+
+// ---------------------------------------------------------
+// Marquee top bar (admin toggleable via content.json)
+// ---------------------------------------------------------
+function renderMarquee() {
+  const m = CONTENT.marquee || {};
+  const el = $('marquee');
+  const track = $('marqueeTrack');
+  if (!el || !track) return;
+
+  // items: support array or newline-string (admin textarea may save either)
+  let items = m.items;
+  if (typeof items === 'string') items = items.split(/\r?\n/);
+  items = (Array.isArray(items) ? items : []).map(s => String(s || '').trim()).filter(Boolean);
+
+  // enabled accepts true / "true"
+  const enabled = m.enabled === true || m.enabled === 'true';
+
+  if (!enabled || items.length === 0) {
+    el.hidden = true;
+    return;
+  }
+
+  el.hidden = false;
+  // Repeat 2x for seamless loop coverage on wide screens
+  const sep = '  ●  ';
+  const text = items.join(sep) + sep + items.join(sep) + sep;
+  track.textContent = text;
+
+  const speed = parseInt(m.speed) || 28;
+  track.style.setProperty('--marquee-speed', `${speed}s`);
 }
 
 // ---------------------------------------------------------
