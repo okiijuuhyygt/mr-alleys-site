@@ -193,7 +193,7 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 }
 
 /* =========================================================
-   Mascot — 製作人 Hao 像素小人 (hero 右下角 idle bob)
+   Mascot — 巷弄黃狗 (hero 角落 慵懶 walk cycle, sprite sheet 4 frames)
    ========================================================= */
 .mascot {
   position: absolute;
@@ -204,22 +204,38 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
   width: 96px;
   height: 96px;
   background-image: url('../assets/mascot-hao.png');
-  background-size: contain;
+  background-size: 384px 96px;        /* 4 frames × 96px (3x upscale from 32px) */
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: 0 0;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
-  animation: mascot-bob 2.4s ease-in-out infinite;
+  animation:
+    mascot-walk 1.0s steps(4) infinite,
+    mascot-path 18s linear infinite;
 }
-@keyframes mascot-bob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-3px); }
+
+/* Walk cycle: scroll background-position-x through 4 frames */
+@keyframes mascot-walk {
+  from { background-position-x: 0; }
+  to   { background-position-x: -384px; }
 }
+
+/* Walking path: 慵懶 left → pause → right → pause, with scaleX flip 換方向 */
+@keyframes mascot-path {
+  0%   { transform: translateX(0)      scaleX(-1); animation-timing-function: ease-in-out; }
+  45%  { transform: translateX(-160px) scaleX(-1); animation-timing-function: step-end; }
+  55%  { transform: translateX(-160px) scaleX(1);  animation-timing-function: ease-in-out; }
+  95%  { transform: translateX(0)      scaleX(1);  animation-timing-function: step-end; }
+  100% { transform: translateX(0)      scaleX(-1); }
+}
+
+/* Mobile: 隱藏 mascot (空間擠 + 不擋客戶閱讀) */
 @media (max-width: 760px) {
-  /* Mobile: 縮小 + 移到 CTA 上方 (避開 ♪ 聽作品 button 重疊) */
-  .mascot { width: 48px; height: 48px; right: 12px; bottom: 110px; }
+  .mascot { display: none; }
 }
+
+/* Reduced motion: stop all animation */
 @media (prefers-reduced-motion: reduce) {
   .mascot { animation: none; }
   .marquee__track { animation: none; }
