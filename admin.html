@@ -757,6 +757,24 @@ function renderEditor() {
           </select>
         </div>
       </div>
+      <div class="field" style="border-top:1px dashed var(--ink-mute);padding-top:12px;margin-top:14px;">
+        <label style="font-weight:bold;">🎟️ 優惠碼設定（可空白）</label>
+        <div class="hint">設定後 modal 會出現「我有優惠碼」按鈕，客戶輸入有效碼會跳到優惠版 URL。沒設定就不顯示按鈕。</div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>啟用優惠碼</label>
+          <select data-path="services[${i}].discount.enabled">
+            <option value="false">off（不啟用）</option>
+            <option value="true">on（啟用）</option>
+          </select>
+        </div>
+        <div class="field"><label>優惠碼</label><input type="text" data-path="services[${i}].discount.code" placeholder="FIRST500"><div class="hint">大小寫不分。客戶輸入會自動轉大寫比對。</div></div>
+      </div>
+      <div class="field"><label>優惠版結帳 URL</label><input type="text" data-path="services[${i}].discount.discountedUrl" placeholder="https://p.ecpay.com.tw/..."><div class="hint">綠界後台另建一個便宜版商品，URL 貼這。</div></div>
+      <div class="field-row">
+        <div class="field"><label>按鈕文字</label><input type="text" data-path="services[${i}].discount.buttonLabel" placeholder="🎟️ 我有優惠碼"></div>
+        <div class="field"><label>優惠價顯示</label><input type="text" data-path="services[${i}].discount.discountedPriceLabel" placeholder="NT$ 500"></div>
+      </div>
     `;
     servicesEditor.appendChild(blk);
   });

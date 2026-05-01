@@ -187,6 +187,7 @@
     </div>
     <div class="modal__foot">
       <button class="btn btn--primary btn--lg" id="modalCheckout">▶ 前往結帳</button>
+      <button class="btn btn--coupon" id="modalCoupon" hidden>🎟️ 我有優惠碼</button>
       <a class="modal__notion" id="modalNotionLink" target="_blank" rel="noopener" hidden>↗ 看完整介紹</a>
     </div>
   </div>
@@ -242,5 +243,20 @@
   }
 })();
 </script>
+
+<!-- Coupon dialog (優惠碼輸入 → 跳優惠版 ECPay 結帳) -->
+<dialog id="couponDialog" class="coupon-dialog" aria-labelledby="couponDialogTitle">
+  <div class="coupon-dialog__inner">
+    <h3 id="couponDialogTitle" class="coupon-dialog__title">輸入優惠碼</h3>
+    <p class="coupon-dialog__hint">輸入有效碼，跳到優惠價結帳。</p>
+    <input type="text" id="couponInput" class="coupon-dialog__input" placeholder="例如 FIRST500" autocomplete="off" autocapitalize="characters">
+    <div class="coupon-dialog__feedback" id="couponFeedback" role="status" aria-live="polite"></div>
+    <div class="coupon-dialog__actions">
+      <button type="button" class="coupon-dialog__btn coupon-dialog__btn--cancel" id="couponCancel">取消</button>
+      <button type="button" class="coupon-dialog__btn coupon-dialog__btn--apply" id="couponApply">套用</button>
+    </div>
+  </div>
+</dialog>
+
 </body>
 </html>

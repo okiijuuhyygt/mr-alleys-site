@@ -397,10 +397,81 @@ function openServiceModal(id) {
     notionLink.hidden = true;
   }
 
+  // Coupon button (only show if service.discount is configured)
+  const couponBtn = $('modalCoupon');
+  if (couponBtn) {
+    const d = svc.discount;
+    const enabled = d && (d.enabled === true || d.enabled === 'true');
+    if (enabled && d.code && d.discountedUrl) {
+      couponBtn.hidden = false;
+      couponBtn.textContent = d.buttonLabel || '🎟️ 我有優惠碼';
+      couponBtn.onclick = () => openCouponDialog(svc);
+    } else {
+      couponBtn.hidden = true;
+      couponBtn.onclick = null;
+    }
+  }
+
   const modal = $('serviceModal');
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+}
+
+// ---------------------------------------------------------
+// Coupon dialog (優惠碼輸入 → 對碼後跳優惠版 ECPay URL)
+// ---------------------------------------------------------
+function openCouponDialog(svc) {
+  const dialog = $('couponDialog');
+  const input = $('couponInput');
+  const feedback = $('couponFeedback');
+  const apply = $('couponApply');
+  const cancel = $('couponCancel');
+  if (!dialog || !input || !feedback) return;
+
+  const d = (svc && svc.discount) || {};
+  input.value = '';
+  feedback.textContent = '';
+  feedback.className = 'coupon-dialog__feedback';
+
+  if (typeof dialog.showModal === 'function') {
+    try { dialog.showModal(); } catch (e) { dialog.setAttribute('open', ''); }
+  } else {
+    dialog.setAttribute('open', '');
+  }
+  setTimeout(() => input.focus(), 50);
+
+  const closeIt = () => {
+    if (typeof dialog.close === 'function') dialog.close();
+    else dialog.removeAttribute('open');
+  };
+
+  const tryApply = () => {
+    const userCode = input.value.trim().toUpperCase();
+    const validCode = String(d.code || '').trim().toUpperCase();
+    if (!userCode) {
+      feedback.textContent = '請輸入優惠碼';
+      feedback.className = 'coupon-dialog__feedback';
+      return;
+    }
+    if (userCode === validCode) {
+      feedback.textContent = d.successMessage || '優惠碼有效，跳到優惠價結帳...';
+      feedback.className = 'coupon-dialog__feedback is-success';
+      setTimeout(() => {
+        closeIt();
+        window.open(d.discountedUrl, '_blank', 'noopener');
+      }, 700);
+    } else {
+      feedback.textContent = d.wrongCodeMessage || '優惠碼無效，請確認後再試';
+      feedback.className = 'coupon-dialog__feedback';
+    }
+  };
+
+  apply.onclick = tryApply;
+  cancel.onclick = closeIt;
+  input.onkeydown = (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); tryApply(); }
+  };
 }
 
 function closeServiceModal() {

@@ -64,7 +64,16 @@
       "checkoutUrl": "https://tally.so/r/mVX4vM",
       "ctaLabel": "▶ 預約諮詢",
       "preOrderText": "預約系統建置中，留 email 等通知。",
-      "notionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb34308056b5fee711d99d677c"
+      "notionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb34308056b5fee711d99d677c",
+      "discount": {
+        "enabled": true,
+        "code": "FIRST500",
+        "buttonLabel": "🎟️ 我有優惠碼",
+        "discountedUrl": "https://p.ecpay.com.tw/15F5890",
+        "discountedPriceLabel": "NT$ 500",
+        "wrongCodeMessage": "優惠碼無效，請確認後再試",
+        "successMessage": "優惠碼有效，跳到優惠價結帳..."
+      }
     },
     {
       "id": "vocal-edit",
