@@ -193,18 +193,23 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 }
 
 /* =========================================================
-   Mascot — 巷弄黃狗 (hero 角落 慵懶 walk cycle, sprite sheet 4 frames)
+   Mascot — 巷弄黃狗 chibi blob (hero 角落 慵懶 walk cycle 4 frames)
    ========================================================= */
 .mascot {
+  --mascot-size: 96px;
+  --mascot-sheet-w: 384px;          /* 4 × mascot-size */
+  --mascot-walk-distance: 160px;
+  --mascot-speed: 18s;
+
   position: absolute;
   right: clamp(20px, 5vw, 60px);
   bottom: clamp(20px, 4vh, 50px);
   z-index: 5;
   pointer-events: none;
-  width: 96px;
-  height: 96px;
-  background-image: url('../assets/mascot-hao.png?v=20260502walk');
-  background-size: 384px 96px;        /* 4 frames × 96px (3x upscale from 32px) */
+  width: var(--mascot-size);
+  height: var(--mascot-size);
+  background-image: url('../assets/mascot-hao.png?v=20260502walk2');
+  background-size: var(--mascot-sheet-w) var(--mascot-size);
   background-repeat: no-repeat;
   background-position: 0 0;
   image-rendering: pixelated;
@@ -212,27 +217,34 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
   image-rendering: crisp-edges;
   animation:
     mascot-walk 1.0s steps(4) infinite,
-    mascot-path 18s linear infinite;
+    mascot-path var(--mascot-speed) linear infinite;
 }
+.mascot[hidden] { display: none !important; }
 
 /* Walk cycle: scroll background-position-x through 4 frames */
 @keyframes mascot-walk {
   from { background-position-x: 0; }
-  to   { background-position-x: -384px; }
+  to   { background-position-x: calc(-1 * var(--mascot-sheet-w, 384px)); }
 }
 
 /* Walking path: 慵懶 left → pause → right → pause, with scaleX flip 換方向 */
 @keyframes mascot-path {
-  0%   { transform: translateX(0)      scaleX(-1); animation-timing-function: ease-in-out; }
-  45%  { transform: translateX(-160px) scaleX(-1); animation-timing-function: step-end; }
-  55%  { transform: translateX(-160px) scaleX(1);  animation-timing-function: ease-in-out; }
-  95%  { transform: translateX(0)      scaleX(1);  animation-timing-function: step-end; }
-  100% { transform: translateX(0)      scaleX(-1); }
+  0%   { transform: translateX(0)                                                  scaleX(-1); animation-timing-function: ease-in-out; }
+  45%  { transform: translateX(calc(-1 * var(--mascot-walk-distance, 160px)))      scaleX(-1); animation-timing-function: step-end; }
+  55%  { transform: translateX(calc(-1 * var(--mascot-walk-distance, 160px)))      scaleX(1);  animation-timing-function: ease-in-out; }
+  95%  { transform: translateX(0)                                                  scaleX(1);  animation-timing-function: step-end; }
+  100% { transform: translateX(0)                                                  scaleX(-1); }
 }
 
-/* Mobile: 隱藏 mascot (空間擠 + 不擋客戶閱讀) */
+/* Mobile: NOT hidden — 縮小 24×24 在角落底部走 (耗耗: 9 成客戶手機, 不擋閱讀就好) */
 @media (max-width: 760px) {
-  .mascot { display: none; }
+  .mascot {
+    --mascot-size: 24px;
+    --mascot-sheet-w: 96px;          /* 4 × 24 */
+    --mascot-walk-distance: 80px;
+    right: 8px;
+    bottom: 6px;
+  }
 }
 
 /* Reduced motion: stop all animation */

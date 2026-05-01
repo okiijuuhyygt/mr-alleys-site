@@ -661,6 +661,24 @@ function renderEditor() {
     </div>
   </details>
 
+  <!-- MASCOT (巷弄黃狗) -->
+  <details class="panel">
+    <summary>MASCOT · 巷弄黃狗（hero 角落走來走去）</summary>
+    <div class="panel-body">
+      <div class="field"><label>啟用顯示</label>
+        <select data-path="mascot.enabled">
+          <option value="true">on（顯示在 hero 角落走路）</option>
+          <option value="false">off（隱藏）</option>
+        </select>
+        <div class="hint">desktop 顯示 96×96 像素黃狗在 hero 右下角慢慢走 / mobile 縮成 24×24 在底部小範圍走（不擋閱讀）。覺得太花就 off。</div>
+      </div>
+      <div class="field"><label>走路速度（秒，越大越慢）</label>
+        <input type="number" data-path="mascot.speed" min="8" max="40" placeholder="18">
+        <div class="hint">18 秒走一個 round trip（左 → 暫停 → 右 → 暫停）。慵懶感建議 18-25。</div>
+      </div>
+    </div>
+  </details>
+
   <!-- PROCESS -->
   <details class="panel">
     <summary>SIGNAL FLOW · 製作流程 (5 步)</summary>

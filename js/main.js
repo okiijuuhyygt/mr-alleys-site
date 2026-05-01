@@ -20,6 +20,7 @@ async function boot() {
   }
   renderConsoleBar();
   renderMarquee();
+  renderMascot();
   renderHero();
   renderServices();
   renderProcess();
@@ -303,6 +304,29 @@ function renderBgm() {
     }, { threshold: 0.2 });
     observer.observe(hero);
   }
+}
+
+// ---------------------------------------------------------
+// Mascot — 巷弄黃狗 (hero 角落 walk cycle, admin toggleable)
+// ---------------------------------------------------------
+function renderMascot() {
+  const m = CONTENT.mascot || {};
+  const el = $('mascot');
+  if (!el) return;
+
+  // Default to enabled if undefined (backward-compat); explicit false / "false" → hide
+  const enabled = m.enabled === undefined
+    ? true
+    : (m.enabled === true || m.enabled === 'true');
+
+  if (!enabled) {
+    el.hidden = true;
+    return;
+  }
+  el.hidden = false;
+
+  const speed = parseInt(m.speed) || 18;
+  el.style.setProperty('--mascot-speed', `${speed}s`);
 }
 
 // ---------------------------------------------------------
