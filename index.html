@@ -70,6 +70,7 @@
     <div class="hero__cta">
       <a href="#services" class="btn btn--primary" id="heroCtaPrimary">▼ 看委託</a>
       <a href="#showcase" class="btn btn--ghost" id="heroCtaSecondary">♪ 聽作品</a>
+      <a href="#qr-card" class="btn btn--ghost" id="heroCtaQR">▦ 掃掃我</a>
     </div>
   </div>
 
@@ -158,29 +159,28 @@
 </section>
 
 <!-- ============ Footer ============ -->
+<!-- QR-CARD START (整塊可移除以還原) -->
+<section class="qr-card" id="qr-card">
+  <div class="qr-card__inner">
+    <span class="qr-card__tag">[ EXCHANGE · 交換名片 ]</span>
+    <img class="qr-card__img" src="assets/qr-card.png?v=20260621b" alt="巷弄故事館 QR" width="200" height="200">
+    <p class="qr-card__hint">相機掃我 → Safari 開 → 分享 → 加到主畫面</p>
+  </div>
+</section>
+<style>
+.qr-card{padding:40px 16px 4px;text-align:center}
+.qr-card__inner{display:inline-block;background:var(--paper-soft);border:3px solid var(--ink);border-radius:10px;padding:16px 20px 14px;box-shadow:5px 5px 0 var(--ink);transform:scale(.97);transition:transform .2s}
+.qr-card:target .qr-card__inner{animation:qrpop .5s ease}
+@keyframes qrpop{0%{transform:scale(.55);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.qr-card__tag{display:block;font-family:var(--mono);font-size:1rem;letter-spacing:.12em;color:var(--brass-deep);margin-bottom:10px}
+.qr-card__img{width:200px;height:200px;image-rendering:pixelated;display:block;margin:0 auto 8px;border:2px solid var(--ink)}
+.qr-card__hint{font-family:var(--mono);font-size:1.05rem;color:var(--ink-soft);margin:0;letter-spacing:.02em}
+</style>
+<!-- QR-CARD END -->
 <footer class="site-footer">
   <p id="footerCredit"></p>
   <p class="site-footer__build" id="footerBuild"></p>
   <p><a href="admin.html" class="site-footer__admin">系統登入</a></p>
-<!-- QR-CARD START (整塊可移除以還原,移除這段 = 功能消失) -->
-<style>
-.qr-card{margin:30px auto 4px;max-width:320px;text-align:center}
-.qr-card__btn{display:inline-block;cursor:pointer;list-style:none;font-family:'VT323',monospace;font-size:1.15rem;letter-spacing:.04em;color:var(--paper);background:var(--brass-deep);border:2px solid var(--ink);border-radius:8px;padding:8px 20px;box-shadow:3px 3px 0 var(--ink)}
-.qr-card__btn::-webkit-details-marker{display:none}
-.qr-card[open] .qr-card__btn{background:var(--brass)}
-.qr-card__btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
-.qr-card__panel{margin-top:16px;background:var(--paper);border:2px solid var(--ink);border-radius:10px;padding:18px;box-shadow:4px 4px 0 var(--ink)}
-.qr-card__img{width:240px;height:240px;image-rendering:pixelated;display:block;margin:0 auto 10px}
-.qr-card__hint{font-family:'Noto Sans TC',sans-serif;font-size:.82rem;line-height:1.55;color:var(--ink-soft);margin:0}
-</style>
-<details class="qr-card">
-  <summary class="qr-card__btn">交換名片 · 掃掃我</summary>
-  <div class="qr-card__panel">
-    <img class="qr-card__img" src="assets/qr-card.png?v=20260621" alt="巷弄故事館 QR" width="240" height="240">
-    <p class="qr-card__hint">相機掃我 → 用 Safari 開 → 分享 → 加到主畫面，巷弄故事館就在你手機上了。</p>
-  </div>
-</details>
-<!-- QR-CARD END -->
 </footer>
 
 <!-- ============ Service detail modal ============ -->
