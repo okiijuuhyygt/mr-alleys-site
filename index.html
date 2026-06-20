@@ -162,6 +162,25 @@
   <p id="footerCredit"></p>
   <p class="site-footer__build" id="footerBuild"></p>
   <p><a href="admin.html" class="site-footer__admin">系統登入</a></p>
+<!-- QR-CARD START (整塊可移除以還原,移除這段 = 功能消失) -->
+<style>
+.qr-card{margin:30px auto 4px;max-width:320px;text-align:center}
+.qr-card__btn{display:inline-block;cursor:pointer;list-style:none;font-family:'VT323',monospace;font-size:1.15rem;letter-spacing:.04em;color:var(--paper);background:var(--brass-deep);border:2px solid var(--ink);border-radius:8px;padding:8px 20px;box-shadow:3px 3px 0 var(--ink)}
+.qr-card__btn::-webkit-details-marker{display:none}
+.qr-card[open] .qr-card__btn{background:var(--brass)}
+.qr-card__btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.qr-card__panel{margin-top:16px;background:var(--paper);border:2px solid var(--ink);border-radius:10px;padding:18px;box-shadow:4px 4px 0 var(--ink)}
+.qr-card__img{width:240px;height:240px;image-rendering:pixelated;display:block;margin:0 auto 10px}
+.qr-card__hint{font-family:'Noto Sans TC',sans-serif;font-size:.82rem;line-height:1.55;color:var(--ink-soft);margin:0}
+</style>
+<details class="qr-card">
+  <summary class="qr-card__btn">交換名片 · 掃掃我</summary>
+  <div class="qr-card__panel">
+    <img class="qr-card__img" src="assets/qr-card.png?v=20260621" alt="巷弄故事館 QR" width="240" height="240">
+    <p class="qr-card__hint">相機掃我 → 用 Safari 開 → 分享 → 加到主畫面，巷弄故事館就在你手機上了。</p>
+  </div>
+</details>
+<!-- QR-CARD END -->
 </footer>
 
 <!-- ============ Service detail modal ============ -->
