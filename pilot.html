@@ -76,6 +76,12 @@ footer{text-align:center;color:var(--ink-mute);font-size:.78rem;padding:16px 0}
     <li><b>搬家自由</b><span class="why">Anthropic(Claude Code)↔ OpenAI(Codex)可以互搬,記憶放檔案就不怕被綁死</span></li>
     <li><b>Skill 與串接 API</b><span class="why">把常做的事寫成技能,接上各種服務,越用越強</span></li>
   </ul>
+  <h3>實戰踩過的坑(血淚版)</h3>
+  <ul>
+    <li><b>網路斷掉怎麼辦</b><span class="why">設一個「哨兵」小程式每分鐘看 Agent 活著沒,斷線/死機自動重啟;離線期間漏掉的訊息,重啟後要補巡一輪</span></li>
+    <li><b>回覆一定要走通訊工具</b><span class="why">Agent 在電腦終端機打字=你手機上看不到!必須強制它用 Discord 回覆工具回話,一次都不能漏——這條我們踩過五次以上</span></li>
+    <li><b>時間要用台灣時間</b><span class="why">系統跟 API 的時間戳幾乎都是 UTC(慢 8 小時),不換算就會把晚上八點當中午——鬧過笑話才學會</span></li>
+  </ul>
 </section>
 </div>
 
