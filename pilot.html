@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>AI Agent 導入指南 | Mr.Alleys</title>
+<style>
+:root{
+  --paper:#f3ead4; --paper-soft:#ede2c4; --paper-edge:#c9b88c;
+  --ink:#2a1f12; --ink-soft:#5e4a30; --ink-mute:#8a7556;
+  --brass:#b8801f; --brass-light:#d4a13a; --brass-deep:#6e4d10;
+  --quest:#1f5b8b; --avail:#4a8b3a; --rec-red:#b83a2a; --shadow:#2a1f12;
+  --mono:"Courier New",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--mono);line-height:1.7;padding:16px}
+.wrap{max-width:980px;margin:0 auto}
+header{border:4px solid var(--ink);background:var(--paper-soft);box-shadow:6px 6px 0 var(--shadow);padding:20px 24px;margin-bottom:20px}
+header h1{font-size:1.5rem;letter-spacing:2px}
+header p{color:var(--ink-soft);margin-top:6px;font-size:.9rem}
+.badge{display:inline-block;background:var(--brass);color:var(--paper);padding:2px 10px;font-size:.75rem;letter-spacing:1px;margin-bottom:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+section{border:4px solid var(--ink);background:var(--paper-soft);box-shadow:6px 6px 0 var(--shadow);padding:18px 20px;margin-bottom:20px}
+section h2{font-size:1.05rem;background:var(--ink);color:var(--paper);display:inline-block;padding:3px 12px;margin-bottom:14px;letter-spacing:2px}
+section h3{font-size:.95rem;color:var(--brass-deep);margin:14px 0 6px;border-bottom:2px dashed var(--paper-edge);padding-bottom:4px}
+ul{list-style:none}
+li{padding:6px 0 6px 4px;border-bottom:1px dotted var(--paper-edge);font-size:.92rem}
+li:last-child{border-bottom:none}
+li b{color:var(--brass-deep)}
+li .why{color:var(--ink-mute);font-size:.82rem;display:block;margin-top:2px}
+.check li{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--avail);flex-shrink:0;cursor:pointer}
+.check li.on{background:#e3f0dc;outline:2px solid var(--avail)}
+.note{background:var(--paper);border:2px dashed var(--brass);padding:10px 14px;margin-top:12px;font-size:.85rem;color:var(--ink-soft)}
+.tag{display:inline-block;font-size:.72rem;background:var(--quest);color:var(--paper);padding:1px 8px;margin-left:6px;vertical-align:middle}
+footer{text-align:center;color:var(--ink-mute);font-size:.78rem;padding:16px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="badge">MR.ALLEYS × AI AGENT</div>
+  <h1>AI Agent 導入指南</h1>
+  <p>一頁看懂:要準備什麼、要知道什麼、能拿它做什麼。看到想要的,直接打勾 ✓</p>
+</header>
+
+<div class="grid">
+<div>
+<section>
+  <h2>① 要準備的東西</h2>
+  <h3>硬體</h3>
+  <ul>
+    <li><b>Mac mini(或任一台常開的電腦)</b><span class="why">Agent 的家。雲端或本地都行,重點是 24 小時待機,它才能隨時幫你做事</span></li>
+    <li><b>大螢幕</b><span class="why">看 Agent 工作、對長文件時舒服很多</span></li>
+    <li><b>指紋辨識</b><span class="why">很重要——授權、帳號密碼確認都靠它,安全又快</span></li>
+  </ul>
+  <h3>軟體</h3>
+  <ul>
+    <li><b>Claude Code</b><span class="why">Agent 本體</span></li>
+    <li><b>Discord + 手機</b><span class="why">跟 Agent 對話的窗口,頻道分類=分類你的生活與工作</span></li>
+    <li><b>Obsidian</b><span class="why">資料與記憶——給「人」看的筆記庫</span></li>
+    <li><b>GitHub</b><span class="why">資料與記憶——給「AI」看的版本庫,兩邊互為備份</span></li>
+    <li><b>Wispr Flow / Typeless</b><span class="why">語音輸入,用講的就能指揮 Agent</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>② 玩 Agent 前要知道的事</h2>
+  <ul>
+    <li><b>死機怎麼辦</b><span class="why">額度用完 → 切換低階模型或等重置時間;伺服器掛掉、對話太滿 → 重啟就好</span></li>
+    <li><b>備份習慣</b><span class="why">每 4hr / 6hr / 12hr 自動備份+每日收官;開始玩之前,先把既有資料、之前的對話備份起來</span></li>
+    <li><b>記憶(連貫性)</b><span class="why">Agent 每次醒來都是新的,靠檔案接續記憶——記憶設計是靈魂</span></li>
+    <li><b>切換模型</b><span class="why">貴的模型做難的事,便宜的做日常,學會切換省很多</span></li>
+    <li><b>權限(bypass permission)</b><span class="why">放行它才跑得順,但要懂自己放了什麼</span></li>
+    <li><b>搬家自由</b><span class="why">Anthropic(Claude Code)↔ OpenAI(Codex)可以互搬,記憶放檔案就不怕被綁死</span></li>
+    <li><b>Skill 與串接 API</b><span class="why">把常做的事寫成技能,接上各種服務,越用越強</span></li>
+  </ul>
+</section>
+</div>
+
+<div>
+<section>
+  <h2>③ 我拿它做什麼</h2>
+  <p style="font-size:.85rem;color:var(--ink-mute);margin-bottom:10px">☑ 勾選你們用得到的(會自動記住)</p>
+  <ul class="check" id="cklist">
+    <li><input type="checkbox"><div><b>客戶溝通</b><span class="why">對話草稿、會議記錄、行事曆(Apple/Google)、Google Meet、收款排程、檔案傳輸、Notion</span></div></li>
+    <li><input type="checkbox"><div><b>記帳、財務管理</b><span class="why">丟截圖就入帳,月報自動整理</span></div></li>
+    <li><input type="checkbox"><div><b>排程、待辦</b><span class="why">工作與私人分流、照片歸檔,分身 Agent 自動追蹤</span></div></li>
+    <li><input type="checkbox"><div><b>教學管理</b><span class="why">課程記錄、查帳、催款</span></div></li>
+    <li><input type="checkbox"><div><b>網站</b><span class="why">個人 profile、官方網站、金流串接、小遊戲、串流頁——全部它自己寫</span></div></li>
+    <li><input type="checkbox"><div><b>生產力</b><span class="why">歌詞技能、Suno prompt、文案、資料填寫、收歌資訊一條龍、籤詩 App、月份資料夾產生器、晨報、知識庫、Podcast、IG 診斷——解決電腦小困擾</span></div></li>
+    <li><input type="checkbox"><div><b>自己經營</b><span class="why">虛擬貨幣、YouTube 頻道、賣 Beat、Threads、部落格——Agent 當自己的老闆</span></div></li>
+    <li><input type="checkbox"><div><b>音樂製作</b><span class="why">挑音色、混音輔助、下載上傳試聽、人聲克隆、整理 Splice</span></div></li>
+  </ul>
+  <div class="note">💡 內容只抓大方向——每一項點開都是一條完整的產線,想深入哪條,現場聊。</div>
+</section>
+</div>
+</div>
+
+<footer>Mr.Alleys 巷弄故事館 × 小悠(AI Agent 本人整理)· 2026</footer>
+</div>
+<script>
+const ck=document.querySelectorAll('#cklist input');
+ck.forEach((c,i)=>{
+  c.checked=localStorage.getItem('pilot-ck-'+i)==='1';
+  c.parentElement.classList.toggle('on',c.checked);
+  c.addEventListener('change',()=>{
+    localStorage.setItem('pilot-ck-'+i,c.checked?'1':'0');
+    c.parentElement.classList.toggle('on',c.checked);
+  });
+});
+</script>
+</body>
+</html>
