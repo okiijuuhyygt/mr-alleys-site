@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>廢歌店・試聽牆 | 巷弄故事館 MR. ALLEYS</title>
+<meta name="description" content="老闆用不到的歌,43 首。每首 30 秒試聽,聽到喜歡的 NT$30 帶走。伴奏 Backing Track 與 AI 人聲版。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
+<meta property="og:title" content="廢歌店・試聽牆 — 43 首歌,一路按播放鍵逛街">
+<meta property="og:description" content="每首 30 秒試聽,聽到喜歡的 NT$30 帶走。">
+<meta property="og:url" content="https://okiijuuhyygt.github.io/mr-alleys-site/store/">
+<meta property="og:locale" content="zh_TW">
+<meta name="theme-color" content="#f3ead4">
+<link rel="icon" type="image/png" href="../favicon.png?v=20260621d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: "Cubic 11";
+  src: url("../assets/Cubic_11_1.013_R.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+:root {
+  --paper: #f3ead4; --paper-soft: #ede2c4; --paper-edge: #c9b88c;
+  --ink: #2a1f12; --ink-soft: #5e4a30; --ink-mute: #8a7556;
+  --brass: #b8801f; --brass-light: #d4a13a; --brass-deep: #6e4d10;
+  --quest: #1f5b8b; --avail: #4a8b3a; --rec-red: #b83a2a;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: "Cubic 11", "Noto Sans TC", sans-serif;
+  padding-bottom: 90px;
+}
+.wrap { max-width: 720px; margin: 0 auto; padding: 28px 16px; }
+header { text-align: center; padding: 18px 0 10px; }
+header .en {
+  font-family: "Press Start 2P", monospace; font-size: 10px; color: var(--brass);
+  letter-spacing: 1px; margin-bottom: 14px;
+}
+header h1 { font-size: 34px; letter-spacing: 4px; }
+header .sub { margin-top: 12px; color: var(--ink-soft); font-size: 16px; line-height: 1.7; }
+header .sub b { color: var(--rec-red); }
+.tip {
+  margin: 18px auto 0; max-width: 460px; border: 3px solid var(--ink);
+  background: var(--paper-soft); box-shadow: 4px 4px 0 var(--paper-edge);
+  padding: 10px 14px; font-size: 15px; color: var(--ink-soft);
+}
+.filters { display: flex; gap: 10px; justify-content: center; margin: 26px 0 18px; flex-wrap: wrap; }
+.filters button {
+  font-family: inherit; font-size: 16px; cursor: pointer;
+  border: 3px solid var(--ink); background: var(--paper); color: var(--ink);
+  padding: 8px 16px; box-shadow: 3px 3px 0 var(--paper-edge);
+}
+.filters button.on { background: var(--ink); color: var(--paper); box-shadow: 3px 3px 0 var(--brass); }
+.list { display: flex; flex-direction: column; gap: 10px; }
+.track {
+  border: 3px solid var(--ink); background: #fbf5e6;
+  box-shadow: 4px 4px 0 var(--paper-edge);
+  padding: 10px 12px; display: flex; align-items: center; gap: 12px; position: relative;
+}
+.track.playing { background: #fff3d0; box-shadow: 4px 4px 0 var(--brass-light); }
+.pbtn {
+  flex: 0 0 auto; width: 46px; height: 46px; cursor: pointer;
+  border: 3px solid var(--ink); background: var(--brass-light); color: var(--ink);
+  font-size: 18px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  box-shadow: 2px 2px 0 var(--brass-deep); font-family: "Press Start 2P", monospace;
+}
+.pbtn:active { transform: translate(2px, 2px); box-shadow: none; }
+.track.playing .pbtn { background: var(--rec-red); color: #fff; }
+.meta { flex: 1 1 auto; min-width: 0; }
+.meta .zh { font-size: 19px; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.meta .en {
+  font-family: "VT323", monospace; font-size: 15px; color: var(--ink-mute); letter-spacing: 1px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.badge {
+  flex: 0 0 auto; font-size: 12px; padding: 3px 8px; border: 2px solid;
+}
+.badge.inst { color: var(--quest); border-color: var(--quest); }
+.badge.full { color: var(--rec-red); border-color: var(--rec-red); }
+.buy {
+  flex: 0 0 auto; text-decoration: none; font-size: 15px; white-space: nowrap;
+  border: 3px solid var(--ink); background: var(--avail); color: #fff;
+  padding: 8px 12px; box-shadow: 2px 2px 0 var(--ink);
+}
+.buy:active { transform: translate(2px, 2px); box-shadow: none; }
+.bar { position: absolute; left: 0; bottom: -3px; height: 3px; background: var(--rec-red); width: 0%; }
+footer { text-align: center; margin-top: 34px; color: var(--ink-mute); font-size: 14px; line-height: 1.8; }
+footer a { color: var(--brass-deep); }
+.disclose { font-size: 13px; }
+@media (max-width: 480px) {
+  header h1 { font-size: 26px; }
+  .meta .zh { font-size: 17px; }
+  .badge { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="en">THE GHOST SONG SHOP</div>
+    <h1>🏪 廢歌店・試聽牆</h1>
+    <div class="sub">老闆用不到的歌,43 首。<br>每首 30 秒試聽,聽到喜歡的 <b>NT$30</b> 帶走。</div>
+    <div class="tip">▶ 按播放鍵逛街,一首播完自動接下一首。買了拿到的是完整 WAV+MP3。</div>
+  </header>
+
+  <div class="filters">
+    <button class="on" data-f="all">全部 43</button>
+    <button data-f="inst">伴奏 33</button>
+    <button data-f="full">人聲版 10</button>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <footer>
+    <div class="disclose">全部歌曲由 AI 協作產生・購買含商用授權(詳見商品頁)</div>
+    <div><a href="../">← 回巷弄故事館</a> · <a href="https://mralleys.gumroad.com/">Gumroad 店面</a></div>
+  </footer>
+</div>
+
+<script>
+const CAT = [
+{"slug":"skdmf","en":"Migratory Bird","zh":"候鳥","type":"full"},
+{"slug":"cfcvvf","en":"RED OVERRIDE","zh":"RED OVERRIDE","type":"full"},
+{"slug":"wueus","en":"APEX","zh":"APEX","type":"full"},
+{"slug":"hmlze","en":"Tidal Lock","zh":"潮汐鎖定","type":"full"},
+{"slug":"pperqd","en":"Static","zh":"靜電","type":"full"},
+{"slug":"trryc","en":"Allergen","zh":"過敏原","type":"full"},
+{"slug":"hasnrb","en":"Jet Lag","zh":"時差","type":"full"},
+{"slug":"gqxflm","en":"Night Mode","zh":"夜行模式","type":"full"},
+{"slug":"ddrxpj","en":"Half Sugar, No Ice","zh":"半糖去冰","type":"full"},
+{"slug":"yrezqx","en":"Instant Reply","zh":"秒回","type":"full"},
+{"slug":"xrxfkv","en":"Migratory Bird","zh":"候鳥","type":"inst"},
+{"slug":"bvoww","en":"RED OVERRIDE","zh":"RED OVERRIDE","type":"inst"},
+{"slug":"ouaxt","en":"APEX","zh":"APEX","type":"inst"},
+{"slug":"hoflzp","en":"Tidal Lock","zh":"潮汐鎖定","type":"inst"},
+{"slug":"cjzxp","en":"Static","zh":"靜電","type":"inst"},
+{"slug":"modcdj","en":"Allergen","zh":"過敏原","type":"inst"},
+{"slug":"oevyld","en":"Jet Lag","zh":"時差","type":"inst"},
+{"slug":"hpvogk","en":"Night Mode","zh":"夜行模式","type":"inst"},
+{"slug":"ojayue","en":"Half Sugar, No Ice","zh":"半糖去冰","type":"inst"},
+{"slug":"dpaalj","en":"Instant Reply","zh":"秒回","type":"inst"},
+{"slug":"fcvug","en":"Feels Like","zh":"體感溫度","type":"inst"},
+{"slug":"avefw","en":"Muted","zh":"靜音","type":"inst"},
+{"slug":"lftwvi","en":"Soft Landing","zh":"軟著陸","type":"inst"},
+{"slug":"rlqquw","en":"Feather","zh":"羽毛","type":"inst"},
+{"slug":"tedbhd","en":"Falling For Love","zh":"為愛墜落","type":"inst"},
+{"slug":"oqyuf","en":"Light Sleeper","zh":"淺眠","type":"inst"},
+{"slug":"hymlb","en":"Buoyancy","zh":"浮力","type":"inst"},
+{"slug":"mmjllk","en":"All I Needed to Hear","zh":"有你這句","type":"inst"},
+{"slug":"dzgody","en":"Sunbathe","zh":"曬曬太陽","type":"inst"},
+{"slug":"ohspou","en":"Wave Hello","zh":"招招手","type":"inst"},
+{"slug":"euracn","en":"Stitches Out","zh":"拆線","type":"inst"},
+{"slug":"zfiroi","en":"No Rush","zh":"慢一點沒關係","type":"inst"},
+{"slug":"rpmtie","en":"Born A Team","zh":"天生一隊","type":"inst"},
+{"slug":"hkrfq","en":"Night Drive","zh":"夜行模式 (原版)","type":"inst"},
+{"slug":"enfzw","en":"Just the Right Breeze","zh":"剛剛好的風","type":"inst"},
+{"slug":"sfchyj","en":"Don't Tell","zh":"別說出去","type":"inst"},
+{"slug":"rgxwnq","en":"Unsheathed","zh":"出鞘","type":"inst"},
+{"slug":"iljznv","en":"Five More Minutes","zh":"再五分鐘","type":"inst"},
+{"slug":"qmxfb","en":"Next Time Home","zh":"下次回家","type":"inst"},
+{"slug":"sfctyx","en":"Counting Stars Together","zh":"一起數星星","type":"inst"},
+{"slug":"imfctv","en":"NO OFF SWITCH","zh":"NO OFF SWITCH","type":"inst"},
+{"slug":"uvvegn","en":"LAST LIGHT","zh":"LAST LIGHT","type":"inst"},
+{"slug":"upkbu","en":"FORGED","zh":"FORGED","type":"inst"}
+];
+
+const list = document.getElementById('list');
+const audio = new Audio();
+audio.preload = 'none';
+let cur = null;   // current slug
+let filter = 'all';
+
+function rowHTML(t) {
+  const badge = t.type === 'inst' ? '<span class="badge inst">伴奏</span>' : '<span class="badge full">人聲版</span>';
+  return `
+  <div class="track" data-slug="${t.slug}" data-type="${t.type}">
+    <button class="pbtn" aria-label="試聽 ${t.zh}">▶</button>
+    <div class="meta">
+      <div class="zh">${t.zh}</div>
+      <div class="en">${t.en}${t.type === 'inst' ? ' — Backing Track' : ' — Full Song'}</div>
+    </div>
+    ${badge}
+    <a class="buy" href="https://mralleys.gumroad.com/l/${t.slug}" target="_blank" rel="noopener"
+       onclick="window.goatcounter && goatcounter.count({path:'store-buy-${t.slug}', event:true})">NT$30 →</a>
+    <div class="bar"></div>
+  </div>`;
+}
+
+function render() {
+  list.innerHTML = CAT.filter(t => filter === 'all' || t.type === filter).map(rowHTML).join('');
+}
+render();
+
+function rowOf(slug) { return list.querySelector(`.track[data-slug="${slug}"]`); }
+
+function stopUI() {
+  list.querySelectorAll('.track.playing').forEach(r => {
+    r.classList.remove('playing');
+    r.querySelector('.pbtn').textContent = '▶';
+    r.querySelector('.bar').style.width = '0%';
+  });
+}
+
+function play(slug) {
+  stopUI();
+  cur = slug;
+  audio.src = `previews/${slug}.mp3`;
+  audio.play();
+  const r = rowOf(slug);
+  if (r) { r.classList.add('playing'); r.querySelector('.pbtn').textContent = '❚❚'; }
+  if (window.goatcounter) goatcounter.count({path: 'store-play-' + slug, event: true});
+}
+
+function pause() {
+  audio.pause();
+  const r = cur && rowOf(cur);
+  if (r) r.querySelector('.pbtn').textContent = '▶';
+  if (r) r.classList.remove('playing');
+}
+
+list.addEventListener('click', e => {
+  const btn = e.target.closest('.pbtn');
+  if (!btn) return;
+  const slug = btn.closest('.track').dataset.slug;
+  if (cur === slug && !audio.paused) { pause(); cur = null; return; }
+  play(slug);
+});
+
+audio.addEventListener('timeupdate', () => {
+  const r = cur && rowOf(cur);
+  if (r && audio.duration) r.querySelector('.bar').style.width = (audio.currentTime / audio.duration * 100) + '%';
+});
+
+audio.addEventListener('ended', () => {
+  // 逛街模式:自動接下一首(照目前篩選的順序)
+  const rows = Array.from(list.querySelectorAll('.track'));
+  const i = rows.findIndex(r => r.dataset.slug === cur);
+  stopUI();
+  if (i >= 0 && i + 1 < rows.length) play(rows[i + 1].dataset.slug);
+  else cur = null;
+});
+
+document.querySelectorAll('.filters button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.filters button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    filter = b.dataset.f;
+    pause(); cur = null;
+    render();
+  });
+});
+</script>
+
+<!-- GoatCounter 訪客追蹤(與主站同帳號,path 區分) -->
+<script data-goatcounter="https://haohao.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

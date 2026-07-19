@@ -1,0 +1,260 @@
+[
+ {
+  "slug": "skdmf",
+  "en": "Migratory Bird",
+  "zh": "候鳥",
+  "type": "full"
+ },
+ {
+  "slug": "cfcvvf",
+  "en": "RED OVERRIDE",
+  "zh": "RED OVERRIDE",
+  "type": "full"
+ },
+ {
+  "slug": "wueus",
+  "en": "APEX",
+  "zh": "APEX",
+  "type": "full"
+ },
+ {
+  "slug": "hmlze",
+  "en": "Tidal Lock",
+  "zh": "潮汐鎖定",
+  "type": "full"
+ },
+ {
+  "slug": "pperqd",
+  "en": "Static",
+  "zh": "靜電",
+  "type": "full"
+ },
+ {
+  "slug": "trryc",
+  "en": "Allergen",
+  "zh": "過敏原",
+  "type": "full"
+ },
+ {
+  "slug": "hasnrb",
+  "en": "Jet Lag",
+  "zh": "時差",
+  "type": "full"
+ },
+ {
+  "slug": "gqxflm",
+  "en": "Night Mode",
+  "zh": "夜行模式",
+  "type": "full"
+ },
+ {
+  "slug": "ddrxpj",
+  "en": "Half Sugar, No Ice",
+  "zh": "半糖去冰",
+  "type": "full"
+ },
+ {
+  "slug": "yrezqx",
+  "en": "Instant Reply",
+  "zh": "秒回",
+  "type": "full"
+ },
+ {
+  "slug": "xrxfkv",
+  "en": "Migratory Bird",
+  "zh": "候鳥",
+  "type": "inst"
+ },
+ {
+  "slug": "bvoww",
+  "en": "RED OVERRIDE",
+  "zh": "RED OVERRIDE",
+  "type": "inst"
+ },
+ {
+  "slug": "ouaxt",
+  "en": "APEX",
+  "zh": "APEX",
+  "type": "inst"
+ },
+ {
+  "slug": "hoflzp",
+  "en": "Tidal Lock",
+  "zh": "潮汐鎖定",
+  "type": "inst"
+ },
+ {
+  "slug": "cjzxp",
+  "en": "Static",
+  "zh": "靜電",
+  "type": "inst"
+ },
+ {
+  "slug": "modcdj",
+  "en": "Allergen",
+  "zh": "過敏原",
+  "type": "inst"
+ },
+ {
+  "slug": "oevyld",
+  "en": "Jet Lag",
+  "zh": "時差",
+  "type": "inst"
+ },
+ {
+  "slug": "hpvogk",
+  "en": "Night Mode",
+  "zh": "夜行模式",
+  "type": "inst"
+ },
+ {
+  "slug": "ojayue",
+  "en": "Half Sugar, No Ice",
+  "zh": "半糖去冰",
+  "type": "inst"
+ },
+ {
+  "slug": "dpaalj",
+  "en": "Instant Reply",
+  "zh": "秒回",
+  "type": "inst"
+ },
+ {
+  "slug": "fcvug",
+  "en": "Feels Like",
+  "zh": "體感溫度",
+  "type": "inst"
+ },
+ {
+  "slug": "avefw",
+  "en": "Muted",
+  "zh": "靜音",
+  "type": "inst"
+ },
+ {
+  "slug": "lftwvi",
+  "en": "Soft Landing",
+  "zh": "軟著陸",
+  "type": "inst"
+ },
+ {
+  "slug": "rlqquw",
+  "en": "Feather",
+  "zh": "羽毛",
+  "type": "inst"
+ },
+ {
+  "slug": "tedbhd",
+  "en": "Falling For Love",
+  "zh": "為愛墜落",
+  "type": "inst"
+ },
+ {
+  "slug": "oqyuf",
+  "en": "Light Sleeper",
+  "zh": "淺眠",
+  "type": "inst"
+ },
+ {
+  "slug": "hymlb",
+  "en": "Buoyancy",
+  "zh": "浮力",
+  "type": "inst"
+ },
+ {
+  "slug": "mmjllk",
+  "en": "All I Needed to Hear",
+  "zh": "有你這句",
+  "type": "inst"
+ },
+ {
+  "slug": "dzgody",
+  "en": "Sunbathe",
+  "zh": "曬曬太陽",
+  "type": "inst"
+ },
+ {
+  "slug": "ohspou",
+  "en": "Wave Hello",
+  "zh": "招招手",
+  "type": "inst"
+ },
+ {
+  "slug": "euracn",
+  "en": "Stitches Out",
+  "zh": "拆線",
+  "type": "inst"
+ },
+ {
+  "slug": "zfiroi",
+  "en": "No Rush",
+  "zh": "慢一點沒關係",
+  "type": "inst"
+ },
+ {
+  "slug": "rpmtie",
+  "en": "Born A Team",
+  "zh": "天生一隊",
+  "type": "inst"
+ },
+ {
+  "slug": "hkrfq",
+  "en": "Night Drive",
+  "zh": "夜行模式 (原版)",
+  "type": "inst"
+ },
+ {
+  "slug": "enfzw",
+  "en": "Just the Right Breeze",
+  "zh": "剛剛好的風",
+  "type": "inst"
+ },
+ {
+  "slug": "sfchyj",
+  "en": "Don't Tell",
+  "zh": "別說出去",
+  "type": "inst"
+ },
+ {
+  "slug": "rgxwnq",
+  "en": "Unsheathed",
+  "zh": "出鞘",
+  "type": "inst"
+ },
+ {
+  "slug": "iljznv",
+  "en": "Five More Minutes",
+  "zh": "再五分鐘",
+  "type": "inst"
+ },
+ {
+  "slug": "qmxfb",
+  "en": "Next Time Home",
+  "zh": "下次回家",
+  "type": "inst"
+ },
+ {
+  "slug": "sfctyx",
+  "en": "Counting Stars Together",
+  "zh": "一起數星星",
+  "type": "inst"
+ },
+ {
+  "slug": "imfctv",
+  "en": "NO OFF SWITCH",
+  "zh": "NO OFF SWITCH",
+  "type": "inst"
+ },
+ {
+  "slug": "uvvegn",
+  "en": "LAST LIGHT",
+  "zh": "LAST LIGHT",
+  "type": "inst"
+ },
+ {
+  "slug": "upkbu",
+  "en": "FORGED",
+  "zh": "FORGED",
+  "type": "inst"
+ }
+]
