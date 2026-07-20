@@ -103,7 +103,7 @@ footer a { color: var(--brass-deep); }
   <header>
     <div class="en">THE GHOST SONG SHOP</div>
     <h1>🏪 廢歌店・試聽牆</h1>
-    <div class="sub">老闆用不到的歌,43 首。<br>每首 30 秒試聽,聽到喜歡的 <b>NT$30</b> 帶走。</div>
+    <div class="sub">老闆用不到的歌,精選 <span id="cnt">43</span> 首。<br>每首 30 秒試聽,聽到喜歡的 <b>NT$30</b> 帶走。</div>
     <div class="tip">▶ 按播放鍵逛街,一首播完自動接下一首。買了拿到的是完整 WAV+MP3。</div>
   </header>
 
@@ -173,6 +173,43 @@ const audio = new Audio();
 audio.preload = 'none';
 let cur = null;   // current slug
 let filter = 'all';
+let CFG = {tabs: {all: true, inst: true, full: true}, visible: CAT.map(t => t.slug)};
+
+function activeList() {
+  const map = Object.fromEntries(CAT.map(t => [t.slug, t]));
+  return CFG.visible.map(s => map[s]).filter(Boolean);
+}
+
+function applyCfg() {
+  const L = activeList();
+  document.getElementById('cnt').textContent = L.length;
+  const nInst = L.filter(t => t.type === 'inst').length;
+  const nFull = L.filter(t => t.type === 'full').length;
+  const btns = document.querySelectorAll('.filters button');
+  const show = {
+    all: CFG.tabs.all !== false && nInst > 0 && nFull > 0,
+    inst: CFG.tabs.inst !== false && nInst > 0,
+    full: CFG.tabs.full !== false && nFull > 0
+  };
+  btns[0].style.display = show.all ? '' : 'none'; btns[0].textContent = '全部 ' + L.length;
+  btns[1].style.display = show.inst ? '' : 'none'; btns[1].textContent = '伴奏 ' + nInst;
+  btns[2].style.display = show.full ? '' : 'none'; btns[2].textContent = '人聲版 ' + nFull;
+  const vis = ['all', 'inst', 'full'].filter(k => show[k]);
+  document.querySelector('.filters').style.display = vis.length >= 2 ? '' : 'none';
+  if (!vis.includes(filter)) filter = vis[0] || 'all';
+  btns.forEach(x => x.classList.remove('on'));
+  ({all: btns[0], inst: btns[1], full: btns[2]})[filter]?.classList.add('on');
+  pause(); cur = null;
+  render();
+}
+
+async function loadCfg() {
+  try {
+    const r = await fetch('visible.json?t=' + Date.now());
+    if (r.ok) { const c = await r.json(); if (c && Array.isArray(c.visible)) CFG = Object.assign({tabs: {}}, c); }
+  } catch (e) {}
+  applyCfg();
+}
 
 function rowHTML(t) {
   const badge = t.type === 'inst' ? '<span class="badge inst">伴奏</span>' : '<span class="badge full">人聲版</span>';
@@ -191,9 +228,9 @@ function rowHTML(t) {
 }
 
 function render() {
-  list.innerHTML = CAT.filter(t => filter === 'all' || t.type === filter).map(rowHTML).join('');
+  list.innerHTML = activeList().filter(t => filter === 'all' || t.type === filter).map(rowHTML).join('');
 }
-render();
+loadCfg();
 
 function rowOf(slug) { return list.querySelector(`.track[data-slug="${slug}"]`); }
 
@@ -246,11 +283,8 @@ audio.addEventListener('ended', () => {
 
 document.querySelectorAll('.filters button').forEach(b => {
   b.addEventListener('click', () => {
-    document.querySelectorAll('.filters button').forEach(x => x.classList.remove('on'));
-    b.classList.add('on');
     filter = b.dataset.f;
-    pause(); cur = null;
-    render();
+    applyCfg();
   });
 });
 </script>

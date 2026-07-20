@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>廢歌店・店長後台</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: "Cubic 11"; src: url("../assets/Cubic_11_1.013_R.ttf") format("truetype"); font-display: swap; }
+:root { --paper:#f3ead4; --paper-soft:#ede2c4; --paper-edge:#c9b88c; --ink:#2a1f12; --ink-soft:#5e4a30;
+  --brass:#b8801f; --brass-light:#d4a13a; --avail:#4a8b3a; --rec-red:#b83a2a; --quest:#1f5b8b; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--paper); color:var(--ink); font-family:"Cubic 11","Noto Sans TC",sans-serif; padding-bottom:120px; }
+.wrap { max-width:640px; margin:0 auto; padding:26px 16px; }
+h1 { text-align:center; font-size:26px; letter-spacing:3px; margin-bottom:6px; }
+.en { text-align:center; font-family:"Press Start 2P",monospace; font-size:9px; color:var(--brass); margin-bottom:20px; }
+.card { border:3px solid var(--ink); background:#fbf5e6; box-shadow:4px 4px 0 var(--paper-edge); padding:14px; margin-bottom:14px; }
+input[type="password"] { width:100%; font-family:inherit; font-size:18px; padding:10px; border:3px solid var(--ink); background:#fff; }
+button.px { font-family:inherit; font-size:16px; cursor:pointer; border:3px solid var(--ink); background:var(--brass-light);
+  color:var(--ink); padding:10px 18px; box-shadow:3px 3px 0 var(--ink); }
+button.px:active { transform:translate(2px,2px); box-shadow:none; }
+#panel { display:none; }
+.sec { font-size:18px; letter-spacing:2px; margin:18px 0 8px; border-bottom:3px solid var(--ink); padding-bottom:4px; }
+.row { display:flex; align-items:center; gap:10px; padding:9px 10px; border:3px solid var(--ink); background:#fbf5e6;
+  box-shadow:3px 3px 0 var(--paper-edge); margin-bottom:8px; }
+.row .meta { flex:1; min-width:0; }
+.row .zh { font-size:17px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.row .en2 { font-size:12px; color:var(--ink-soft); }
+.badge { font-size:11px; padding:2px 6px; border:2px solid; flex:0 0 auto; }
+.badge.inst { color:var(--quest); border-color:var(--quest); }
+.badge.full { color:var(--rec-red); border-color:var(--rec-red); }
+.sw { flex:0 0 auto; width:64px; height:30px; border:3px solid var(--ink); cursor:pointer; position:relative;
+  background:#c9b88c; transition:background .1s; }
+.sw::after { content:"隱"; position:absolute; top:0; left:0; width:28px; height:24px; background:#fff;
+  border-right:3px solid var(--ink); display:flex; align-items:center; justify-content:center; font-size:13px; transition:left .1s; }
+.sw.on { background:var(--avail); }
+.sw.on::after { content:"開"; left:30px; border-right:none; border-left:3px solid var(--ink); }
+.toolbar { display:flex; gap:8px; margin:8px 0 14px; flex-wrap:wrap; }
+.toolbar button { font-size:13px; padding:6px 10px; }
+#savebar { position:fixed; left:0; right:0; bottom:0; background:var(--ink); padding:12px 16px; display:none; }
+#savebar .inner { max-width:640px; margin:0 auto; display:flex; align-items:center; gap:12px; }
+#savebar .msg { color:var(--paper); font-size:14px; flex:1; }
+#savebar button { background:var(--avail); color:#fff; }
+#status { font-size:14px; color:var(--ink-soft); margin-top:8px; min-height:20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏪 店長後台</h1>
+  <div class="en">GHOST SONG SHOP — MANAGER ONLY</div>
+
+  <div class="card" id="gate">
+    <div style="margin-bottom:8px">通關碼:</div>
+    <input type="password" id="pass" placeholder="輸入通關碼" autocomplete="off">
+    <div style="margin-top:10px"><button class="px" id="unlock">開門</button></div>
+    <div id="gateStatus" style="margin-top:8px;font-size:14px;color:var(--rec-red)"></div>
+  </div>
+
+  <div id="panel">
+    <div class="sec">分類 tab 開關</div>
+    <div class="row"><div class="meta"><div class="zh">「全部」tab</div></div><div class="sw" data-tab="all"></div></div>
+    <div class="row"><div class="meta"><div class="zh">「伴奏」tab</div></div><div class="sw" data-tab="inst"></div></div>
+    <div class="row"><div class="meta"><div class="zh">「人聲版」tab</div></div><div class="sw" data-tab="full"></div></div>
+    <div style="font-size:13px;color:var(--ink-soft);margin:6px 0 0">tab 關掉=牆上不出現那個分類鈕;只剩一類時整排 tab 自動隱藏。</div>
+
+    <div class="sec">歌曲開關(開=牆上看得到)</div>
+    <div class="toolbar">
+      <button class="px" id="allon">全開</button>
+      <button class="px" id="alloff">全關</button>
+      <button class="px" id="softon">只開精選軟歌</button>
+    </div>
+    <div id="tracks"></div>
+  </div>
+</div>
+
+<div id="savebar"><div class="inner">
+  <div class="msg" id="saveMsg">有未儲存的變更</div>
+  <button class="px" id="save">儲存(約 2-3 分鐘生效)</button>
+</div></div>
+
+<script>
+const ENC = {salt:"PBqd+XjKxU87H368LgRGGg==", iv:"YgnqrbaoBCYG+Yh9", ct:"ul4t/GbSnvfN/Ove6IYKjl+5eXTaM1HqHwlwHeo/gXJyg3NiFMNHt4HlVGx8zhvenSNKewPDOuJoZ/WUCaPsoZMtj48yMGPGLPAFE5KvEtoax6LmTMKbJUzYfKELhGlfQTnoQD/ohtlf4Vm7d7yuvxUcIk86Qlm7f4T4kgZdDZDdY0zu7PUox/4="};
+const SOFT = ["ojayue","fcvug","dzgody","enfzw","ohspou","oqyuf","rlqquw","zfiroi"];
+let CAT = [], CFG = {tabs:{all:true,inst:true,full:true}, visible:[]}, HOOK = null, dirty = false;
+
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+
+async function unlock() {
+  const pass = document.getElementById('pass').value.trim();
+  if (!pass) return;
+  try {
+    const keyMat = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey({name:'PBKDF2', salt:b64(ENC.salt), iterations:100000, hash:'SHA-256'},
+      keyMat, {name:'AES-GCM', length:256}, false, ['decrypt']);
+    const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:b64(ENC.iv)}, key, b64(ENC.ct));
+    HOOK = new TextDecoder().decode(pt);
+  } catch (e) { document.getElementById('gateStatus').textContent = '通關碼不對'; return; }
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('panel').style.display = 'block';
+  await load();
+}
+
+async function load() {
+  CAT = await (await fetch('catalog.json?t=' + Date.now())).json();
+  try { const c = await (await fetch('visible.json?t=' + Date.now())).json(); if (c && c.visible) CFG = Object.assign({tabs:{}}, c); } catch(e) {}
+  renderPanel();
+}
+
+function renderPanel() {
+  document.querySelectorAll('.sw[data-tab]').forEach(sw => {
+    sw.classList.toggle('on', CFG.tabs[sw.dataset.tab] !== false);
+  });
+  const box = document.getElementById('tracks');
+  box.innerHTML = CAT.map(t => `
+    <div class="row">
+      <div class="meta"><div class="zh">${t.zh}</div><div class="en2">${t.en}</div></div>
+      <span class="badge ${t.type}">${t.type === 'inst' ? '伴奏' : '人聲'}</span>
+      <div class="sw ${CFG.visible.includes(t.slug) ? 'on' : ''}" data-slug="${t.slug}"></div>
+    </div>`).join('');
+}
+
+function markDirty() { dirty = true; document.getElementById('savebar').style.display = 'block'; document.getElementById('saveMsg').textContent = '有未儲存的變更'; }
+
+document.addEventListener('click', e => {
+  const sw = e.target.closest('.sw');
+  if (!sw) return;
+  sw.classList.toggle('on');
+  if (sw.dataset.tab) CFG.tabs[sw.dataset.tab] = sw.classList.contains('on');
+  else {
+    const s = sw.dataset.slug;
+    if (sw.classList.contains('on')) { if (!CFG.visible.includes(s)) CFG.visible.push(s); }
+    else CFG.visible = CFG.visible.filter(x => x !== s);
+  }
+  markDirty();
+});
+
+document.getElementById('unlock').addEventListener('click', unlock);
+document.getElementById('pass').addEventListener('keydown', e => { if (e.key === 'Enter') unlock(); });
+document.getElementById('allon').addEventListener('click', () => { CFG.visible = CAT.map(t => t.slug); renderPanel(); markDirty(); });
+document.getElementById('alloff').addEventListener('click', () => { CFG.visible = []; renderPanel(); markDirty(); });
+document.getElementById('softon').addEventListener('click', () => { CFG.visible = SOFT.slice(); CFG.tabs = {all:false, inst:true, full:false}; renderPanel(); markDirty(); });
+
+document.getElementById('save').addEventListener('click', async () => {
+  // 依 catalog 順序整理 visible(保持牆上排序穩定)
+  const order = CAT.map(t => t.slug);
+  CFG.visible.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+  const payload = '🏪 STOREWALL-CONFIG ' + JSON.stringify({tabs: CFG.tabs, visible: CFG.visible});
+  const msg = document.getElementById('saveMsg');
+  msg.textContent = '送出中…';
+  try {
+    const r = await fetch(HOOK, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({content: payload, username: '廢歌店後台'})});
+    if (!r.ok) throw new Error(r.status);
+    dirty = false;
+    msg.textContent = '✅ 已送出,約 2-3 分鐘後生效(牆重新整理就看得到)';
+  } catch (e) { msg.textContent = '❌ 送出失敗,再按一次;還是不行叫小悠'; }
+});
+</script>
+</body>
+</html>
