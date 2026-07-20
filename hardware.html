@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>設備準備清單 | Mr.Alleys AI Agent</title>
+<style>
+:root{
+  --paper:#f3ead4; --paper-soft:#ede2c4; --paper-edge:#c9b88c;
+  --ink:#2a1f12; --ink-soft:#5e4a30; --ink-mute:#8a7556;
+  --brass:#b8801f; --brass-light:#d4a13a; --brass-deep:#6e4d10;
+  --quest:#1f5b8b; --avail:#4a8b3a; --rec-red:#b83a2a; --shadow:#2a1f12;
+  --mono:"Courier New",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--mono);line-height:1.7;padding:16px}
+.wrap{max-width:720px;margin:0 auto}
+header{border:4px solid var(--ink);background:var(--paper-soft);box-shadow:6px 6px 0 var(--shadow);padding:20px 24px;margin-bottom:20px}
+header h1{font-size:1.5rem;letter-spacing:2px}
+header p{color:var(--ink-soft);margin-top:6px;font-size:.9rem}
+.badge{display:inline-block;background:var(--brass);color:var(--paper);padding:2px 10px;font-size:.75rem;letter-spacing:1px;margin-bottom:8px}
+.back{display:inline-block;margin-bottom:16px;color:var(--quest);font-size:.85rem;text-decoration:none;border-bottom:2px solid var(--quest)}
+section{border:4px solid var(--ink);background:var(--paper-soft);box-shadow:6px 6px 0 var(--shadow);padding:18px 20px;margin-bottom:20px}
+section h2{font-size:1.05rem;background:var(--ink);color:var(--paper);display:inline-block;padding:3px 12px;margin-bottom:14px;letter-spacing:2px}
+.item{border-bottom:2px dashed var(--paper-edge);padding:12px 0}
+.item:last-child{border-bottom:none}
+.item .name{font-size:1rem;color:var(--brass-deep);font-weight:bold}
+.item .spec{font-size:.9rem;margin-top:4px}
+.item .why{color:var(--ink-mute);font-size:.82rem;display:block;margin-top:3px}
+.item a.buy{display:inline-block;margin-top:8px;background:var(--brass);color:var(--paper);padding:4px 14px;font-size:.82rem;text-decoration:none;box-shadow:3px 3px 0 var(--shadow)}
+.item a.buy:active{transform:translate(3px,3px);box-shadow:none}
+.pick{margin-top:8px;padding:8px 12px;background:var(--paper);border:2px solid var(--paper-edge)}
+.pick .opt{padding:4px 0;font-size:.88rem}
+.pick .opt b{color:var(--quest)}
+.tag{display:inline-block;font-size:.72rem;background:var(--quest);color:var(--paper);padding:1px 8px;margin-left:6px;vertical-align:middle}
+.tag.rec{background:var(--avail)}
+.tag.skip{background:var(--ink-mute)}
+.note{background:var(--paper);border:2px dashed var(--brass);padding:10px 14px;margin-top:12px;font-size:.85rem;color:var(--ink-soft)}
+.warn{background:#f6e4df;border-color:var(--rec-red)}
+footer{text-align:center;color:var(--ink-mute);font-size:.78rem;padding:16px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="pilot.html">← 回導入指南</a>
+<header>
+  <div class="badge">MR.ALLEYS × AI AGENT</div>
+  <h1>🖥 設備準備清單</h1>
+  <p>買硬體可以先開始,軟體帳號安裝當天再一起弄。價格都以官網即時為準,連結點進去就是購買頁。</p>
+</header>
+
+<section>
+  <h2>硬體</h2>
+
+  <div class="item">
+    <div class="name">Mac mini <span class="tag rec">主機</span></div>
+    <div class="spec">現行款 <b>M4 晶片</b> · 記憶體 <b>16GB</b> · 儲存 <b>512GB SSD</b></div>
+    <span class="why">Agent 的家,要 24 小時開著。16GB/512GB 是跑音樂軟體 + Agent 同時運作的舒適下限,256GB 會太緊。買的時候記憶體選 16GB、儲存選 512GB。官網通常有現貨、標準配置出貨快。</span>
+    <a class="buy" href="https://www.apple.com/tw/shop/buy-mac/mac-mini" target="_blank" rel="noopener">Apple 官網選購 →</a>
+  </div>
+
+  <div class="item">
+    <div class="name">外接螢幕 <span class="tag">看畫面</span></div>
+    <div class="spec">建議 <b>27 吋 4K</b> 新品,不用太貴</div>
+    <span class="why">初期設定、驗證身份會常盯螢幕,太小很辛苦。不一定要買下面這款,任何 27 吋 4K 的新螢幕都可以取代,挑順眼的就好。</span>
+    <div class="pick">
+      <div class="opt"><b>順手選</b>:市售 27 吋 4K 螢幕(BenQ / Dell / LG 都有,約 8,000–15,000)</div>
+      <div class="opt"><b>高階選</b>:Apple Studio Display(質感統一,但較貴,非必要)</div>
+    </div>
+    <a class="buy" href="https://24h.pchome.com.tw/region/index/DYAA?q=27%E5%90%8B%204K%20%E8%9E%A2%E5%B9%95" target="_blank" rel="noopener">看 27 吋 4K 螢幕 →</a>
+  </div>
+
+  <div class="item">
+    <div class="name">鍵盤 <span class="tag rec">必備</span></div>
+    <div class="spec">巧控鍵盤 <b>含 Touch ID</b> 版本</div>
+    <span class="why">Touch ID(指紋)很關鍵——授權、帳號確認、密碼都靠它一按就過,又快又安全。選有指紋辨識的那款。</span>
+    <a class="buy" href="https://www.apple.com/tw/shop/mac/mac-accessories/keyboards-mouse-trackpad" target="_blank" rel="noopener">Apple 官網鍵盤 →</a>
+  </div>
+
+  <div class="item">
+    <div class="name">滑鼠 或 觸控板 <span class="tag">二選一</span></div>
+    <div class="spec">看習慣挑一個就好</div>
+    <span class="why">兩個都能用,不用都買。</span>
+    <div class="pick">
+      <div class="opt"><b>巧控滑鼠 Magic Mouse</b>:傳統滑鼠操作,長輩通常比較習慣</div>
+      <div class="opt"><b>巧控板 Magic Trackpad</b>:手勢操作、面積大,製作人 Hao 自己用這個,但要適應</div>
+    </div>
+    <a class="buy" href="https://www.apple.com/tw/shop/mac/mac-accessories/keyboards-mouse-trackpad" target="_blank" rel="noopener">Apple 官網滑鼠/觸控板 →</a>
+  </div>
+</section>
+
+<section>
+  <h2>軟體與帳號</h2>
+  <div class="note">下面這些安裝當天再一起弄就好,先不用急著辦。列出來只是讓你心裡有底。</div>
+
+  <div class="item">
+    <div class="name">Apple ID <span class="tag rec">共用</span></div>
+    <span class="why">用現有的 Apple ID 即可、共用一個。因為 Agent 的資料庫(Obsidian)會放在 iCloud 裡,共用同一個 Apple ID,手機才能跟主機完整整合、隨時看到同一份資料。</span>
+  </div>
+  <div class="item">
+    <div class="name">iCloud 儲存空間</div>
+    <div class="spec">安裝當天再訂閱 · 建議 <b>NT$100/月(200GB)</b> 方案</div>
+    <span class="why">放資料庫用,200GB 很夠。當天開通就好。</span>
+  </div>
+  <div class="item">
+    <div class="name">需要先辦好的帳號</div>
+    <div class="spec"><b>Discord</b> · <b>GitHub</b> · <b>Obsidian</b></div>
+    <span class="why">這三個註冊一下(免費),安裝當天會用到。Discord=之後跟 Agent 對話的窗口;GitHub=AI 看的備份庫;Obsidian=人看的筆記庫。</span>
+  </div>
+  <div class="item">
+    <div class="name">Google 帳號</div>
+    <span class="why">延用你現有的就好。日曆的部分安裝時再確認你習慣用 Google 還是 Apple 行事曆。</span>
+  </div>
+  <div class="item">
+    <div class="name">暫時不需要 <span class="tag skip">跳過</span></div>
+    <div class="spec">Tailscale · ChatGPT</div>
+    <span class="why">這兩個目前先不用辦,之後有需要再說。</span>
+  </div>
+</section>
+
+<div class="note warn">⚠️ <b>開工前務必做一件事</b>:把現有的工作檔案完整備份一份(外接硬碟或雲端都可以)。這是鐵則——Agent 有獨立工作區、跟你原本的檔案分開,但先備份最安全。</div>
+
+<footer>Mr.Alleys 音樂工作室 · AI Agent 導入服務 · 設備到位後聯絡安排安裝</footer>
+</div>
+</body>
+</html>
