@@ -1,0 +1,42 @@
+# mralleys.com — 巷弄故事館
+# 2026-07-27:明確放行 AI 爬蟲。GEO 的第一件事就是「不要自我隱形」。
+# (Google 2026 官方指南:llms.txt 不必做,但要確認沒擋掉這些 bot。)
+
+User-agent: *
+Allow: /
+# 後台不需要被索引(驗證在後端,不是安全問題,只是沒必要出現在搜尋結果)
+Disallow: /admin.html
+Disallow: /store/admin.html
+
+# AI / 生成式搜尋引擎 —— 逐一明確放行,免得哪天預設政策改了被誤擋
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://mralleys.com/sitemap.xml

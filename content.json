@@ -54,7 +54,7 @@
         "60 分鐘線上會議（Google Meet）",
         "會前資料審閱（demo / 詞 / 想法）",
         "會後客製化建議書（PDF）",
-        "後續優惠券（折抵 NT$1,000）"
+        "後續優惠券（可全額折抵）"
       ],
       "duration": "60 分鐘",
       "deliverable": "建議書 + 後續折抵",
@@ -90,7 +90,7 @@
       ],
       "duration": "3-7 個工作天",
       "deliverable": "WAV 乾聲檔 + 工程檔",
-      "priceLabel": "基礎方案 NT$ 3,000",
+      "priceLabel": "NT$ 3,000 – 4,000",
       "priceNote": "實際金額依原檔長度與修整難度，諮詢後確認",
       "priceNumeric": 3000,
       "mode": "paid",
@@ -116,7 +116,7 @@
       ],
       "duration": "1 天（8 小時）",
       "deliverable": "可上架成品 + 工程檔",
-      "priceLabel": "基礎方案 NT$ 8,000",
+      "priceLabel": "NT$ 8,000 – 12,000",
       "priceNote": "實際內容依你目前程度與檔期，諮詢後確認",
       "priceNumeric": 8000,
       "mode": "paid",
