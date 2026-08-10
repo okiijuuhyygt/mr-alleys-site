@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://mralleys.com/</loc><lastmod>2026-07-27</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://mralleys.com/store/</loc><lastmod>2026-07-27</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://mralleys.com/pilot.html</loc><lastmod>2026-07-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://mralleys.com/hardware.html</loc><lastmod>2026-07-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://mralleys.com/store/</loc><lastmod>2026-08-10</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <!--
+    2026-08-10 拿掉 pilot.html 與 hardware.html。
+    那兩頁本身寫著 <meta name="robots" content="noindex">(是 AI Agent 導入 Pilot 的客戶頁,
+    刻意不公開),卻同時被 sitemap 送給 Google 說「請收錄」——
+    這個矛盾 Google 會回報成「已提交的網址標示為 noindex」,是雜訊也是誤導。
+    🔴 要放回來之前,先把那兩頁的 noindex 拿掉,不然放回來一樣是錯的。
+  -->
 </urlset>
