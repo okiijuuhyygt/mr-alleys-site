@@ -844,6 +844,48 @@ function renderEditor() {
     socialsEditor.appendChild(row);
   });
 
+  // ── 服務說明子頁（/services/<slug>/）2026-08-11 加 ──────────────
+  // 這四頁的內容原本掛在 Notion，搬進 content.json 之後 Notion 就退場了。
+  // 用既有的 data-path 機制，所以存檔路徑完全沿用，沒有第二套要維護。
+  if (Array.isArray(contentData.servicePages)) {
+    const wrap = document.createElement('details');
+    wrap.className = 'panel';
+    const esc = (x) => String(x ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+    let inner = '<summary>SERVICE PAGES · 服務說明子頁</summary><div class="panel-body">'
+      + '<p class="lead" style="margin-bottom:12px">這四頁就是首頁彈窗裡「完整介紹」點進去看到的內容。'
+      + '改完存檔，網站一到三分鐘後自動更新。<br>'
+      + '<b>段落</b>欄位一行是一段；<b>項目</b>欄位一行是一個項目符號；<b>提醒</b>是黃色虛線框那塊，不用就留空。</p>';
+    contentData.servicePages.forEach((p, i) => {
+      inner += '<details class="panel" style="margin-bottom:10px"><summary>' + esc(p.title)
+        + '　<span style="opacity:.6">/services/' + esc(p.slug) + '/</span></summary><div class="panel-body">'
+        + '<div class="field"><label>頁面標題</label><input type="text" data-path="servicePages[' + i + '].title"></div>'
+        + '<div class="field"><label>Google 搜尋結果那兩行（建議 80–120 字）</label>'
+        + '<textarea rows="2" data-path="servicePages[' + i + '].metaDescription"></textarea></div>'
+        + '<div class="field"><label>開場白（黃線那塊，不用就留空）</label>'
+        + '<textarea rows="2" data-path="servicePages[' + i + '].lead"></textarea></div>';
+      (p.sections || []).forEach((sec, j) => {
+        inner += '<div class="service-block" style="padding:12px;margin-top:10px">'
+          + '<div class="field-row">'
+          + '<div class="field" style="max-width:90px"><label>圖示</label>'
+          + '<input type="text" data-path="servicePages[' + i + '].sections[' + j + '].icon"></div>'
+          + '<div class="field"><label>小標題</label>'
+          + '<input type="text" data-path="servicePages[' + i + '].sections[' + j + '].heading"></div>'
+          + '</div>'
+          + '<div class="field"><label>段落（一行一段）</label>'
+          + '<textarea rows="3" data-path="servicePages[' + i + '].sections[' + j + '].paras"></textarea></div>'
+          + '<div class="field"><label>項目（一行一項）</label>'
+          + '<textarea rows="4" data-path="servicePages[' + i + '].sections[' + j + '].list"></textarea></div>'
+          + '<div class="field"><label>提醒（黃色虛線框，不用就留空）</label>'
+          + '<textarea rows="2" data-path="servicePages[' + i + '].sections[' + j + '].note"></textarea></div>'
+          + '</div>';
+      });
+      inner += '</div></details>';
+    });
+    inner += '</div>';
+    wrap.innerHTML = inner;
+    body.appendChild(wrap);
+  }
+
   // Bind everything
   body.querySelectorAll('input[data-path], textarea[data-path]').forEach(el => {
     bindInput(el, el.dataset.path);
