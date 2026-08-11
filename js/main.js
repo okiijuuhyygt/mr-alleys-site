@@ -411,11 +411,12 @@ function openServiceModal(id) {
     soon.textContent = svc.preOrderText || '結帳設定中，請先 email 預約：' + (CONTENT.contact?.email || '');
   }
 
-  // Notion link
+  // 完整介紹連結（2026-08-11 從 Notion 切成站內子頁 /services/<slug>/，同頁跳轉）
   const notionLink = $('modalNotionLink');
-  if (svc.notionUrl) {
-    notionLink.href = svc.notionUrl;
-    notionLink.textContent = '↗ Notion 完整介紹';
+  const detailUrl = svc.detailUrl || svc.notionUrl;
+  if (detailUrl) {
+    notionLink.href = detailUrl;
+    notionLink.textContent = '看完整介紹 →';
     notionLink.hidden = false;
   } else {
     notionLink.hidden = true;

@@ -64,7 +64,6 @@
       "checkoutUrl": "https://tally.so/r/mVX4vM",
       "ctaLabel": "▶ 預約諮詢",
       "preOrderText": "預約系統建置中，留 email 等通知。",
-      "notionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb34308056b5fee711d99d677c",
       "discount": {
         "enabled": true,
         "code": "FIRST500",
@@ -73,7 +72,9 @@
         "discountedPriceLabel": "NT$ 500",
         "wrongCodeMessage": "優惠碼無效，請確認後再試",
         "successMessage": "優惠碼有效，跳到優惠價結帳..."
-      }
+      },
+      "detailUrl": "/services/consult/",
+      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb34308056b5fee711d99d677c"
     },
     {
       "id": "vocal-edit",
@@ -99,7 +100,8 @@
       "statusLabel": "諮詢報價",
       "statusClass": "service-card__status--quote",
       "preOrderText": "排程已滿，留 email 候補。",
-      "notionUrl": "https://sleet-arithmetic-fcf.notion.site/Vocal-Editing-25450bfb343080bda59fd02b51e7f8b0"
+      "detailUrl": "/services/vocal/",
+      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/Vocal-Editing-25450bfb343080bda59fd02b51e7f8b0"
     },
     {
       "id": "workshop",
@@ -125,7 +127,8 @@
       "statusLabel": "諮詢報價",
       "statusClass": "service-card__status--quote",
       "preOrderText": "下一場排定中，留 email 通知。",
-      "notionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb3430801db6c6eedb65914f28"
+      "detailUrl": "/services/workshop/",
+      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb3430801db6c6eedb65914f28"
     },
     {
       "id": "full-prod",
@@ -150,7 +153,8 @@
       "ctaLabel": "→ 索取報價",
       "quoteFormUrl": "https://tally.so/r/mVX4vM",
       "preOrderText": "",
-      "notionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb343080faa97ff4226a12be50"
+      "detailUrl": "/services/production/",
+      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb343080faa97ff4226a12be50"
     }
   ],
   "showcase": {
@@ -203,8 +207,8 @@
         "url": "https://www.instagram.com/mr.alleys"
       },
       {
-        "label": "Notion 詳細介紹",
-        "url": "https://www.notion.so/25450bfb34308056b5fee711d99d677c"
+        "label": "服務說明",
+        "url": "/services/consult/"
       },
       {
         "label": "StreetVoice 街聲",
@@ -566,5 +570,5 @@
       ]
     }
   ],
-  "_servicePagesNote": "四個服務子頁的內容(/services/<slug>/)。2026-08-11 從 Notion 搬進來，Notion 已退場，這裡是唯一來源。後台可編輯。"
+  "_servicePagesNote": "四個服務子頁的內容(/services/<slug>/)。2026-08-11 從 Notion 搬進來，Notion 已退場，這裡是唯一來源。後台可編輯。 首頁彈窗那顆按鈕 2026-08-11 已從 Notion 切成站內 detailUrl，同頁跳轉。"
 }
