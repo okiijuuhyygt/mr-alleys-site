@@ -416,7 +416,7 @@ function openServiceModal(id) {
   const detailUrl = svc.detailUrl || svc.notionUrl;
   if (detailUrl) {
     notionLink.href = detailUrl;
-    notionLink.textContent = '看完整介紹 →';
+    notionLink.textContent = '📖 看完整介紹';
     notionLink.hidden = false;
   } else {
     notionLink.hidden = true;
