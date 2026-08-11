@@ -74,7 +74,8 @@
         "successMessage": "優惠碼有效，跳到優惠價結帳..."
       },
       "detailUrl": "/services/consult/",
-      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb34308056b5fee711d99d677c"
+      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb34308056b5fee711d99d677c",
+      "notionUrl": "/services/consult/"
     },
     {
       "id": "vocal-edit",
@@ -101,7 +102,8 @@
       "statusClass": "service-card__status--quote",
       "preOrderText": "排程已滿，留 email 候補。",
       "detailUrl": "/services/vocal/",
-      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/Vocal-Editing-25450bfb343080bda59fd02b51e7f8b0"
+      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/Vocal-Editing-25450bfb343080bda59fd02b51e7f8b0",
+      "notionUrl": "/services/vocal/"
     },
     {
       "id": "workshop",
@@ -128,7 +130,8 @@
       "statusClass": "service-card__status--quote",
       "preOrderText": "下一場排定中，留 email 通知。",
       "detailUrl": "/services/workshop/",
-      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb3430801db6c6eedb65914f28"
+      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb3430801db6c6eedb65914f28",
+      "notionUrl": "/services/workshop/"
     },
     {
       "id": "full-prod",
@@ -154,7 +157,8 @@
       "quoteFormUrl": "https://tally.so/r/mVX4vM",
       "preOrderText": "",
       "detailUrl": "/services/production/",
-      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb343080faa97ff4226a12be50"
+      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb343080faa97ff4226a12be50",
+      "notionUrl": "/services/production/"
     }
   ],
   "showcase": {
