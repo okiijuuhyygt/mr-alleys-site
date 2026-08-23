@@ -78,31 +78,8 @@
       "notionUrl": "/services/consult/"
     },
     {
-      "id": "course",
-      "code": "CH-02",
-      "title": "寫歌課｜從零開始：寫出人生第一首歌",
-      "subtitle": "愛唱歌的你，也想要一首自己的歌嗎？",
-      "description": "你唱過幾百首別人的歌，總有一句話只有你能唱。一對一課程、一期四堂制：從你的故事到你的旋律，結業帶走一首自己寫、自己唱的 Demo。每個人都需要創作——方法我們準備好了，你帶你自己來。",
-      "includes": [
-        "一期四堂一對一（可追加第二期四堂）",
-        "課後作業批改",
-        "兩期完整走完：含一次修音＋完整 Demo",
-        "兩期一次帶走 NT$9,800（限 3 名）",
-        "體驗課 NT$1,000＝第一堂正規課"
-      ],
-      "duration": "八週（時間彈性喬）",
-      "deliverable": "你人生第一首歌的 Demo",
-      "priceLabel": "NT$ 5,800／一期四堂",
-      "priceNumeric": 5800,
-      "mode": "paid",
-      "checkoutUrl": "https://line.me/R/oaMessage/%40285qszgm/?%E5%AF%AB%E6%AD%8C%E8%AA%B2",
-      "ctaLabel": "▶ 了解課程",
-      "preOrderText": "",
-      "detailUrl": "/course/"
-    },
-    {
       "id": "vocal-edit",
-      "code": "CH-03",
+      "code": "CH-02",
       "title": "人聲修整｜Vocal Editing",
       "subtitle": "原創、翻唱、影像配唱的人聲音準與拍子",
       "description": "把錄好的人聲修到專業上架等級——音準、拍子、氣口、起伏一條一條來，不用換錄音室。",
@@ -127,6 +104,34 @@
       "detailUrl": "/services/vocal/",
       "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/Vocal-Editing-25450bfb343080bda59fd02b51e7f8b0",
       "notionUrl": "/services/vocal/"
+    },
+    {
+      "id": "workshop",
+      "code": "CH-03",
+      "title": "一日工作坊｜製作體驗",
+      "subtitle": "從零到有，一天完成一首可上架的作品",
+      "description": "你不會編曲、不會混音也沒關係——一整天我陪你從一句話寫到上架 ready 的 demo。帶走的不是教學影片，是你自己的歌。",
+      "includes": [
+        "8 小時陪伴製作（線下 / 錄音室）",
+        "詞曲方向引導 + Suno 協作",
+        "編曲、錄音、簡易混音",
+        "成品 WAV + Spotify 上架輔助",
+        "後續一週 follow-up"
+      ],
+      "duration": "1 天（8 小時）",
+      "deliverable": "可上架成品 + 工程檔",
+      "priceLabel": "NT$ 8,000 起",
+      "priceNote": "實際內容依你目前程度與檔期，諮詢後確認",
+      "priceNumeric": 8000,
+      "mode": "paid",
+      "checkoutUrl": "https://tally.so/r/mVX4vM",
+      "ctaLabel": "→ 透過諮詢預約",
+      "statusLabel": "諮詢報價",
+      "statusClass": "service-card__status--quote",
+      "preOrderText": "下一場排定中，留 email 通知。",
+      "detailUrl": "/services/workshop/",
+      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb3430801db6c6eedb65914f28",
+      "notionUrl": "/services/workshop/"
     },
     {
       "id": "full-prod",
@@ -154,6 +159,29 @@
       "detailUrl": "/services/production/",
       "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb343080faa97ff4226a12be50",
       "notionUrl": "/services/production/"
+    },
+    {
+      "id": "course",
+      "code": "CH-05",
+      "title": "寫歌課｜從零開始：寫出人生第一首歌",
+      "subtitle": "愛唱歌的你，也想要一首自己的歌嗎？",
+      "description": "你唱過幾百首別人的歌，總有一句話只有你能唱。一對一課程、一期四堂制：從你的故事到你的旋律，結業帶走一首自己寫、自己唱的 Demo。每個人都需要創作——方法我們準備好了，你帶你自己來。",
+      "includes": [
+        "一期四堂一對一（可追加第二期四堂）",
+        "課後作業批改",
+        "兩期完整走完：含一次修音＋完整 Demo",
+        "兩期一次帶走 NT$9,800（限 3 名）",
+        "體驗課 NT$1,000＝第一堂正規課"
+      ],
+      "duration": "八週（時間彈性喬）",
+      "deliverable": "你人生第一首歌的 Demo",
+      "priceLabel": "NT$ 5,800／一期四堂",
+      "priceNumeric": 5800,
+      "mode": "paid",
+      "checkoutUrl": "https://line.me/R/oaMessage/%40285qszgm/?%E5%AF%AB%E6%AD%8C%E8%AA%B2",
+      "ctaLabel": "▶ 了解課程",
+      "preOrderText": "",
+      "detailUrl": "/course/"
     }
   ],
   "showcase": {
@@ -569,36 +597,5 @@
       ]
     }
   ],
-  "_servicePagesNote": "四個服務子頁的內容(/services/<slug>/)。2026-08-11 從 Notion 搬進來，Notion 已退場，這裡是唯一來源。後台可編輯。 首頁彈窗那顆按鈕 2026-08-11 已從 Notion 切成站內 detailUrl，同頁跳轉。",
-  "servicesHidden": [
-    {
-      "id": "workshop",
-      "code": "CH-03",
-      "title": "一日工作坊｜製作體驗",
-      "subtitle": "從零到有，一天完成一首可上架的作品",
-      "description": "你不會編曲、不會混音也沒關係——一整天我陪你從一句話寫到上架 ready 的 demo。帶走的不是教學影片，是你自己的歌。",
-      "includes": [
-        "8 小時陪伴製作（線下 / 錄音室）",
-        "詞曲方向引導 + Suno 協作",
-        "編曲、錄音、簡易混音",
-        "成品 WAV + Spotify 上架輔助",
-        "後續一週 follow-up"
-      ],
-      "duration": "1 天（8 小時）",
-      "deliverable": "可上架成品 + 工程檔",
-      "priceLabel": "NT$ 8,000 起",
-      "priceNote": "實際內容依你目前程度與檔期，諮詢後確認",
-      "priceNumeric": 8000,
-      "mode": "paid",
-      "checkoutUrl": "https://tally.so/r/mVX4vM",
-      "ctaLabel": "→ 透過諮詢預約",
-      "statusLabel": "諮詢報價",
-      "statusClass": "service-card__status--quote",
-      "preOrderText": "下一場排定中，留 email 通知。",
-      "detailUrl": "/services/workshop/",
-      "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb3430801db6c6eedb65914f28",
-      "notionUrl": "/services/workshop/"
-    }
-  ],
-  "_servicesOrderNote": "2026-08-24 耗耗核定：推課期排法（諮詢→寫歌課→人聲修整→完整製作）。一日工作坊移入 servicesHidden（資料保留，要開回來把它移回 services 並重排 code）。開賣結束後可換回價格階梯排法：諮詢→人聲修整→寫歌課→完整製作。"
+  "_servicePagesNote": "四個服務子頁的內容(/services/<slug>/)。2026-08-11 從 Notion 搬進來，Notion 已退場，這裡是唯一來源。後台可編輯。 首頁彈窗那顆按鈕 2026-08-11 已從 Notion 切成站內 detailUrl，同頁跳轉。"
 }
