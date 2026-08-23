@@ -28,12 +28,12 @@
     "stats": [
       {
         "label": "完成製作",
-        "value": "78",
+        "value": "60+",
         "unit": "首"
       },
       {
         "label": "製作中",
-        "value": "6",
+        "value": "12",
         "unit": "位"
       },
       {
@@ -159,29 +159,6 @@
       "detailUrl": "/services/production/",
       "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb343080faa97ff4226a12be50",
       "notionUrl": "/services/production/"
-    },
-    {
-      "id": "course",
-      "code": "CH-05",
-      "title": "寫歌課｜從零開始：八週寫出人生第一首歌",
-      "subtitle": "不懂樂理、不會樂器，八週帶走你的第一首歌",
-      "description": "用理性分析創作法把寫歌拆成可執行的步驟：文字運鏡、朗讀即旋律、視覺化點譜、AI 伴奏、手機出 Demo。一對一陪跑，結業帶走一首自己寫、自己唱的歌。",
-      "includes": [
-        "八堂一對一（線上，可約面對面）",
-        "課後作業批改",
-        "一次專業修音",
-        "結業帶走完整 Demo",
-        "實體團班意願登記中"
-      ],
-      "duration": "八週（時間彈性喬）",
-      "deliverable": "你人生第一首歌的 Demo",
-      "priceLabel": "首期 NT$ 9,800",
-      "priceNumeric": 9800,
-      "mode": "paid",
-      "checkoutUrl": "https://line.me/R/ti/p/@285qszgm",
-      "ctaLabel": "▶ 了解課程",
-      "preOrderText": "",
-      "detailUrl": "/course/"
     }
   ],
   "showcase": {
