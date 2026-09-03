@@ -46,6 +46,20 @@ figure{margin:18px 0}figure img{max-width:100%;border:2px solid var(--paper-edge
 .list a{color:var(--ink);text-decoration:none}
 .list a:hover{color:var(--brass-deep)}
 .list .d{font-size:.78rem;color:var(--ink-mute);margin-left:8px;white-space:nowrap}
+/* feed（2026-09-04 耗耗：像痞客邦一篇一篇往下滑，目錄另開） */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.btn--sm{font-size:.78rem;padding:6px 12px;margin:0}
+.feed{display:flex;flex-direction:column;gap:18px;margin-top:8px}
+.card{background:#fbf6ea;border:2px solid var(--paper-edge);box-shadow:4px 4px 0 var(--paper-edge);padding:18px 18px 14px}
+.card__meta{display:flex;justify-content:space-between;gap:10px;font-size:.78rem;color:var(--ink-mute);margin-bottom:6px}
+.card__series{color:var(--brass-deep);text-decoration:none;letter-spacing:.04em}
+.card__title{font-size:1.22rem;line-height:1.4;margin:0 0 8px;text-wrap:balance}
+.card__title a{color:var(--ink);text-decoration:none}
+.card__title a:hover{color:var(--brass-deep)}
+.card__ex{margin:0 0 10px;color:var(--ink-soft);font-size:.95rem}
+.card__more{color:var(--quest);text-decoration:none;font-size:.9rem;border-bottom:2px solid var(--quest)}
+.feed__all{margin:26px 0 0;text-align:center}
+.intro a{color:var(--quest)}
 /* 讀者浮動鈕（耗耗 9/4 定：只放一個動作＝LINE 聊聊；滑下縮起、滑上出現） */
 .chat-fab{position:fixed;right:14px;bottom:16px;z-index:9;font-family:"Cubic 11","Press Start 2P",monospace;font-size:.86rem;letter-spacing:.06em;color:var(--ink);background:var(--paper-soft);border:2px solid var(--brass);box-shadow:3px 3px 0 var(--brass-deep);padding:9px 14px;text-decoration:none;transition:transform .25s,opacity .25s}
 .chat-fab:hover{background:var(--brass-light)}

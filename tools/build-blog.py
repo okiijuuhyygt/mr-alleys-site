@@ -160,6 +160,20 @@ figure{margin:18px 0}figure img{max-width:100%;border:2px solid var(--paper-edge
 .list a{color:var(--ink);text-decoration:none}
 .list a:hover{color:var(--brass-deep)}
 .list .d{font-size:.78rem;color:var(--ink-mute);margin-left:8px;white-space:nowrap}
+/* feed（2026-09-04 耗耗：像痞客邦一篇一篇往下滑，目錄另開） */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.btn--sm{font-size:.78rem;padding:6px 12px;margin:0}
+.feed{display:flex;flex-direction:column;gap:18px;margin-top:8px}
+.card{background:#fbf6ea;border:2px solid var(--paper-edge);box-shadow:4px 4px 0 var(--paper-edge);padding:18px 18px 14px}
+.card__meta{display:flex;justify-content:space-between;gap:10px;font-size:.78rem;color:var(--ink-mute);margin-bottom:6px}
+.card__series{color:var(--brass-deep);text-decoration:none;letter-spacing:.04em}
+.card__title{font-size:1.22rem;line-height:1.4;margin:0 0 8px;text-wrap:balance}
+.card__title a{color:var(--ink);text-decoration:none}
+.card__title a:hover{color:var(--brass-deep)}
+.card__ex{margin:0 0 10px;color:var(--ink-soft);font-size:.95rem}
+.card__more{color:var(--quest);text-decoration:none;font-size:.9rem;border-bottom:2px solid var(--quest)}
+.feed__all{margin:26px 0 0;text-align:center}
+.intro a{color:var(--quest)}
 /* 讀者浮動鈕（耗耗 9/4 定：只放一個動作＝LINE 聊聊；滑下縮起、滑上出現） */
 .chat-fab{position:fixed;right:14px;bottom:16px;z-index:9;font-family:"Cubic 11","Press Start 2P",monospace;font-size:.86rem;letter-spacing:.06em;color:var(--ink);background:var(--paper-soft);border:2px solid var(--brass);box-shadow:3px 3px 0 var(--brass-deep);padding:9px 14px;text-decoration:none;transition:transform .25s,opacity .25s}
 .chat-fab:hover{background:var(--brass-light)}
@@ -186,9 +200,9 @@ def head(title, desc, url, extra=''):
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="{BASE}/blog/feed.xml">
-<link rel="stylesheet" href="/css/blog.css?v=20260904c">
+<link rel="stylesheet" href="/css/blog.css?v=20260904d">
 {extra}</head>'''
-FOOT = f'<footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專欄目錄</a></footer>'
+FOOT = f'<footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專欄</a> ｜ <a href="/blog/all/">目錄</a></footer>'
 def article_page(p, prev, nxt):
     url = f'{BASE}/blog/{p["id"]}/'
     ld = {"@context":"https://schema.org","@graph":[
@@ -209,10 +223,10 @@ def article_page(p, prev, nxt):
     return head(f'{p["title"]}｜巷弄故事館音樂製作專欄', p['desc'], url, f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>\n') + f'''
 <body>
 <div class="wrap">
-  <a class="back" href="/blog/">← 專欄目錄</a>
+  <a class="back" href="/blog/">← 專欄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · {html.escape(p['series'])}</div>
   <h1>{html.escape(p['title'])}</h1>
-  <div class="meta"><span>陳則皞</span><span>{p['date']}</span><span><a href="/blog/#{p['pref']}">{html.escape(p['series'])}</a></span></div>
+  <div class="meta"><span>陳則皞</span><span>{p['date']}</span><span><a href="/blog/all/#{p['pref']}">{html.escape(p['series'])}</a></span></div>
   <article>
 {p['html']}
 {figs}
@@ -226,8 +240,8 @@ def article_page(p, prev, nxt):
 <script>(function(){{var f=document.getElementById('chatFab'),y=window.scrollY||0;window.addEventListener('scroll',function(){{var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;}},{{passive:true}});}})();</script>
 </body>
 </html>'''
-def index_page(posts):
-    url = f'{BASE}/blog/'
+def all_page(posts):
+    url = f'{BASE}/blog/all/'
     groups = {}
     for p in posts: groups.setdefault(p['pref'] if p['pref'] != 'ins' else 'se08', []).append(p)
     secs = ''
@@ -236,13 +250,13 @@ def index_page(posts):
         items = sorted(groups[k], key=lambda x: (x['date'], x['id']), reverse=True)
         secs += f'<section class="series" id="{k}"><h2>{html.escape(SERIES[k])} <span class="d">{len(items)} 篇</span></h2><ul class="list">' + ''.join(f'<li><a href="/blog/{p["id"]}/">{html.escape(p["title"])}</a><span class="d">{p["date"]}</span></li>' for p in items) + '</ul></section>'
     ld = {"@context":"https://schema.org","@type":"CollectionPage","name":"巷弄故事館 音樂製作專欄","url":url,"inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"巷弄故事館 · MR. ALLEYS","url":BASE+"/"},"about":"音樂製作、編曲、混音、錄音、詞曲創作、AI 音樂、客製化歌曲"}
-    return head('音樂製作專欄｜巷弄故事館 MR. ALLEYS', f'製作人陳則皞的 {len(posts)} 篇音樂製作文章：編曲、混音、錄音、詞曲創作、Logic Pro、AI 音樂、客製化歌曲怎麼做。', url, f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>\n') + f'''
+    return head('專欄目錄｜巷弄故事館音樂製作專欄', f'{len(posts)} 篇音樂製作文章的完整分類目錄：常見問題、編曲混音、錄音、詞曲創作、Logic Pro、AI 音樂、客製化歌曲。', url, f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>\n') + f'''
 <body>
 <div class="wrap">
-  <a class="back" href="/">← 回巷弄故事館</a>
-  <div class="badge">MR.ALLEYS · 音樂製作專欄</div>
-  <h1>音樂製作專欄</h1>
-  <p class="intro">製作人陳則皞寫的 {len(posts)} 篇：編曲、混音、錄音、詞曲創作、Logic Pro、AI 音樂、客製化歌曲。每一篇都是做歌時真的會碰到的問題。</p>
+  <a class="back" href="/blog/">← 回專欄</a>
+  <div class="badge">MR.ALLEYS · 音樂製作專欄 · 目錄</div>
+  <h1>專欄目錄</h1>
+  <p class="intro">全部 {len(posts)} 篇，照主題分。不知道從哪讀起，回<a href="/blog/">專欄首頁</a>一篇一篇往下滑。</p>
 {secs}
   {FOOT}
 </div>
@@ -250,6 +264,39 @@ def index_page(posts):
 <script>(function(){{var f=document.getElementById('chatFab'),y=window.scrollY||0;window.addEventListener('scroll',function(){{var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;}},{{passive:true}});}})();</script>
 </body>
 </html>'''
+
+def index_page(posts):
+    url = f'{BASE}/blog/'
+    newest = sorted(posts, key=lambda x: (x['date'], x['id']), reverse=True)
+    N = 30
+    cards = ''
+    for p in newest[:N]:
+        ex = p['desc'] if len(p['desc']) < 110 else p['desc'][:108].rstrip('，。、；：') + '…'
+        cards += f'''<article class="card">
+  <div class="card__meta"><a class="card__series" href="/blog/all/#{p["pref"]}">{html.escape(p["series"])}</a><span class="card__date">{p["date"]}</span></div>
+  <h2 class="card__title"><a href="/blog/{p["id"]}/">{html.escape(p["title"])}</a></h2>
+  <p class="card__ex">{html.escape(ex)}</p>
+  <a class="card__more" href="/blog/{p["id"]}/">繼續閱讀 →</a>
+</article>
+'''
+    ld = {"@context":"https://schema.org","@type":"Blog","name":"巷弄故事館 音樂製作專欄","url":url,"inLanguage":"zh-Hant","author":{"@type":"Person","name":"陳則皞"},"publisher":{"@type":"Organization","name":"巷弄故事館 Mr.Alleys","url":BASE+"/"},"blogPost":[{"@type":"BlogPosting","headline":p["title"],"url":f"{BASE}/blog/{p['id']}/","datePublished":p["date"]} for p in newest[:N]]}
+    return head('音樂製作專欄｜巷弄故事館 MR. ALLEYS', f'製作人陳則皞的 {len(posts)} 篇音樂製作文章：編曲、混音、錄音、詞曲創作、Logic Pro、AI 音樂、客製化歌曲怎麼做。', url, f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>\n') + f'''
+<body>
+<div class="wrap">
+  <div class="topbar"><a class="back" href="/">← 回巷弄故事館</a><a class="btn btn--sm" href="/blog/all/">▤ 目錄</a></div>
+  <div class="badge">MR.ALLEYS · 音樂製作專欄</div>
+  <h1>音樂製作專欄</h1>
+  <p class="intro">製作人陳則皞寫的，編曲、混音、錄音、詞曲創作、AI 音樂、客製化歌曲。每一篇都是做歌時真的會碰到的問題。</p>
+  <div class="feed">
+{cards}  </div>
+  <p class="feed__all"><a class="btn" href="/blog/all/">看全部 {len(posts)} 篇的目錄 →</a></p>
+  {FOOT}
+</div>
+<a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>
+<script>(function(){{var f=document.getElementById('chatFab'),y=window.scrollY||0;window.addEventListener('scroll',function(){{var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;}},{{passive:true}});}})();</script>
+</body>
+</html>'''
+
 def rss(posts):
     items = sorted(posts, key=lambda x: (x['date'], x['id']), reverse=True)[:30]
     def it(p):
@@ -283,10 +330,12 @@ for i, p in enumerate(ordered):
     os.makedirs(f'{SITE}/blog/{p["id"]}', exist_ok=True)
     open(f'{SITE}/blog/{p["id"]}/index.html', 'w').write(article_page(p, ordered[i-1] if i > 0 else None, ordered[i+1] if i+1 < len(ordered) else None))
 open(f'{SITE}/blog/index.html', 'w').write(index_page(posts))
+os.makedirs(f'{SITE}/blog/all', exist_ok=True)
+open(f'{SITE}/blog/all/index.html', 'w').write(all_page(posts))
 open(f'{SITE}/blog/feed.xml', 'w').write(rss(posts))
 sm = open(f'{SITE}/sitemap.xml').read()
 sm = re.sub(r'\n\s*<!-- blog:start.*?<!-- blog:end -->', '', sm, flags=re.S)
-blk = '\n  <!-- blog:start（tools/build-blog.py 產生，勿手改）-->\n' + f'  <url><loc>{BASE}/blog/</loc><lastmod>{TODAY}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>\n' + ''.join(f'  <url><loc>{BASE}/blog/{p["id"]}/</loc><lastmod>{p["date"]}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>\n' for p in ordered) + '  <!-- blog:end -->'
+blk = '\n  <!-- blog:start（tools/build-blog.py 產生，勿手改）-->\n' + f'  <url><loc>{BASE}/blog/</loc><lastmod>{TODAY}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>\n  <url><loc>{BASE}/blog/all/</loc><lastmod>{TODAY}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>\n' + ''.join(f'  <url><loc>{BASE}/blog/{p["id"]}/</loc><lastmod>{p["date"]}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>\n' for p in ordered) + '  <!-- blog:end -->'
 sm = sm.replace('</urlset>', blk + '\n</urlset>')
 open(f'{SITE}/sitemap.xml', 'w').write(sm)
 print(f'built {len(ordered)} articles')
