@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>為什麼歌上傳串流後變小聲？搞懂 LUFS 響度｜巷弄故事館音樂製作專欄</title>
-<meta name="description" content="你把歌拉到最大聲做完母帶，上傳 Spotify、YouTube 後卻發現比別人的歌還小聲——這是因為串流平台會統一響度。它用一個叫 LUFS 的單位量你整首歌的平均響度，超過它的標準（大約 14 LUFS）就自動把你調小">
+<title>為什麼歌上傳串流後變小聲？LUFS 是什麼、母帶該做到多少｜巷弄故事館音樂製作專欄</title>
+<meta name="description" content="先講答案：你把歌拉到最大聲做完母帶，上傳 Spotify、YouTube 後卻發現比別人的歌還小聲，這是因為串流平台會統一響度。它用一個叫 LUFS 的單位量你整首歌的平均響度，超過它的標準（大約 −14 LUFS）就自">
 <link rel="canonical" href="https://mralleys.com/blog/se01-012/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
-<meta property="og:title" content="為什麼歌上傳串流後變小聲？搞懂 LUFS 響度｜巷弄故事館音樂製作專欄">
-<meta property="og:description" content="你把歌拉到最大聲做完母帶，上傳 Spotify、YouTube 後卻發現比別人的歌還小聲——這是因為串流平台會統一響度。它用一個叫 LUFS 的單位量你整首歌的平均響度，超過它的標準（大約 14 LUFS）就自動把你調小">
+<meta property="og:title" content="為什麼歌上傳串流後變小聲？LUFS 是什麼、母帶該做到多少｜巷弄故事館音樂製作專欄">
+<meta property="og:description" content="先講答案：你把歌拉到最大聲做完母帶，上傳 Spotify、YouTube 後卻發現比別人的歌還小聲，這是因為串流平台會統一響度。它用一個叫 LUFS 的單位量你整首歌的平均響度，超過它的標準（大約 −14 LUFS）就自">
 <meta property="og:url" content="https://mralleys.com/blog/se01-012/">
 <meta property="og:image" content="https://mralleys.com/assets/og-image-v3.png?v=20260429c">
 <meta property="og:locale" content="zh_TW">
@@ -18,28 +18,33 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="https://mralleys.com/blog/feed.xml">
 <link rel="stylesheet" href="/css/blog.css?v=20260904d">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se01-012/#article", "headline": "為什麼歌上傳串流後變小聲？搞懂 LUFS 響度", "description": "你把歌拉到最大聲做完母帶，上傳 Spotify、YouTube 後卻發現比別人的歌還小聲——這是因為串流平台會統一響度。它用一個叫 LUFS 的單位量你整首歌的平均響度，超過它的標準（大約 14 LUFS）就自動把你調小", "inLanguage": "zh-Hant", "datePublished": "2026-07-20", "dateModified": "2026-09-03", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se01-012/"}, "keywords": "LUFS, 串流 響度, 母帶 響度, 陳則皞, 音樂製作, 母帶, 響度", "articleSection": "編曲與混音基礎", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "為什麼歌上傳串流後變小聲？搞懂 LUFS 響度", "item": "https://mralleys.com/blog/se01-012/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se01-012/#article", "headline": "為什麼歌上傳串流後變小聲？LUFS 是什麼、母帶該做到多少", "description": "先講答案：你把歌拉到最大聲做完母帶，上傳 Spotify、YouTube 後卻發現比別人的歌還小聲，這是因為串流平台會統一響度。它用一個叫 LUFS 的單位量你整首歌的平均響度，超過它的標準（大約 −14 LUFS）就自", "inLanguage": "zh-Hant", "datePublished": "2026-07-20", "dateModified": "2026-09-03", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se01-012/"}, "keywords": "LUFS 是什麼, 串流 響度 標準, -14 LUFS, 歌 上傳 變小聲, 陳則皞, 音樂製作, 母帶, 響度", "articleSection": "編曲與混音基礎", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "為什麼歌上傳串流後變小聲？LUFS 是什麼、母帶該做到多少", "item": "https://mralleys.com/blog/se01-012/"}]}]}</script>
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="/blog/">← 專欄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · 編曲與混音基礎</div>
-  <h1>為什麼歌上傳串流後變小聲？搞懂 LUFS 響度</h1>
+  <h1>為什麼歌上傳串流後變小聲？LUFS 是什麼、母帶該做到多少</h1>
   <div class="meta"><span>陳則皞</span><span>2026-07-20</span><span><a href="/blog/all/#se01">編曲與混音基礎</a></span></div>
   <article>
-<p>你把歌拉到最大聲做完母帶，上傳 Spotify、YouTube 後卻發現比別人的歌還小聲——這是因為串流平台會統一響度。它用一個叫 LUFS 的單位量你整首歌的平均響度，超過它的標準（大約 -14 LUFS）就自動把你調小聲。所以硬把峰值推到頂，不但沒用，還可能把歌推爆、推扁。</p>
+<p>先講答案：你把歌拉到最大聲做完母帶，上傳 Spotify、YouTube 後卻發現比別人的歌還小聲，這是因為串流平台會統一響度。它用一個叫 LUFS 的單位量你整首歌的平均響度，超過它的標準（大約 −14 LUFS）就自動把你調小聲。所以硬把峰值推到頂，不但沒用，還可能把歌推爆、推扁。</p>
+<p>搞懂三件事就夠：LUFS 量的是平均不是峰值、硬推音量是打不贏的、真正該追的目標是什麼。</p>
 <h3>LUFS 量的是「整體平均」，不是瞬間峰值</h3>
-<p>有個比喻我很愛：LUFS 像在一張紙上塗色，塗得越滿、越黑，LUFS 越大。你只有幾個瞬間很大聲（峰值高），但整首歌留白很多，那張紙整體還是偏白——LUFS 不會大。這解釋了一件事：為什麼有些現代 R&amp;B、Lo-Fi 聽起來明明很有氛圍卻不吵。像電鋼琴（Rhodes）那種音色，聽感清楚但其實不占音量；現代歌的打擊越做越花俏，高頻的敲擊聽起來大聲，實際上很省空間。</p>
+<p>有個比喻我很愛：LUFS 像在一張紙上塗色，塗得越滿、越黑，LUFS 越大。你只有幾個瞬間很大聲（峰值高），但整首歌留白很多，那張紙整體還是偏白，LUFS 不會大。這解釋了一件事：為什麼有些現代 R&amp;B、Lo-Fi 聽起來明明很有氛圍卻不吵。像電鋼琴（Rhodes）那種音色，聽感清楚但其實不占音量；現代歌的打擊越做越花俏，高頻的敲擊聽起來大聲，實際上很省空間。</p>
 <h3>硬推音量是打不贏的</h3>
-<p>既然平台會統一調整，把 limiter（把峰值硬壓在天花板下的工具）催到底只會讓歌變扁、失去力度，調小聲之後聽起來反而更沒勁。真正決定「聽起來大不大聲」的，是感知響度（perceived loudness），它跟中頻很有關係——800Hz 到 4kHz 這段是人耳判斷音量的核心。與其猛壓，我寧可把中頻整理乾淨、用飽和加一點泛音，那個「大聲的感覺」比壓縮有效得多。</p>
+<p>既然平台會統一調整，把 limiter（把峰值硬壓在天花板下的工具）催到底只會讓歌變扁、失去力度，調小聲之後聽起來反而更沒勁。真正決定「聽起來大不大聲」的，是感知響度（perceived loudness），它跟中頻很有關係，800Hz 到 4kHz 這段是人耳判斷音量的核心。與其猛壓，我寧可把中頻整理乾淨、用飽和加一點泛音，那個「大聲的感覺」比壓縮有效得多（<a href="/blog/se01-019/">Saturation 是什麼</a>）。別人的歌又大聲又好聽、你的一推就爛，差別就在這裡（<a href="/blog/se09-003/">為什麼別人的歌又大聲又好聽</a>）。</p>
 <h3>該追的目標</h3>
-<p>實務上，母帶做到大約 -14 LUFS 附近就對齊了主流串流的標準，峰值留個安全邊界（真峰值壓在 -0.3dB 以下，避免轉檔失真）。做參考比對的時候，一定要把兩首歌的音量先對齊（level-match）再聽，不然你永遠覺得比較大聲的那首「比較好」，其實只是比較大聲。搞懂 LUFS，你就不會再做白工把歌推爆了。</p>
-<p>寫這篇的人白天在做編曲混音、晚上在寫歌。客製化歌曲、製作、寫歌課都接。</p><p class="btn-row"><a class="btn" href="/services/consult/">找我聊聊 →</a></p>
+<p>實務上，母帶做到大約 −14 LUFS 附近就對齊了主流串流的標準，峰值留個安全邊界（真峰值壓在 −0.3dB 以下，避免轉檔失真）。做參考比對的時候，一定要把兩首歌的音量先對齊（level-match）再聽，不然你永遠覺得比較大聲的那首「比較好」，其實只是比較大聲。搞懂 LUFS，你就不會再做白工把歌推爆了。母帶那一關整體在做什麼，另一篇有講（<a href="/blog/se01-013/">母帶到底在做什麼</a>）。</p>
+<h3>常見問答</h3>
+<p><strong>Spotify、YouTube、Apple Music 的標準一樣嗎？</strong><br>大致都落在 −14 LUFS 附近，各家差一兩個 dB。做到 −14 上下，到哪個平台都不會被大幅調整。</p>
+<p><strong>做到 −14 之後，我的歌會比別人小聲嗎？</strong><br>不會，平台會把大家拉齊。之後的差別在感知響度：中頻乾不乾淨、泛音夠不夠，不在你推了幾 dB。</p>
+<p><strong>真峰值為什麼要留 −0.3dB？</strong><br>轉成 MP3、AAC 這些有損格式時，峰值會長出來一點。不留邊界，上架後那些最大聲的地方就會破。伴奏檔也適用同一套（<a href="/blog/se08-011/">−14 LUFS 是什麼，為什麼伴奏該做響度正規化</a>）。</p>
+<p>---<br>我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。歌上架後覺得比別人小聲、不確定母帶該不該重做，從 <a href="/services/consult/">45 分鐘諮詢</a> 開始最省時間；要從頭做整首，看 <a href="/services/production/">完整製作流程</a>。</p>
 
   </article>
-  <div class="tags"><span>LUFS</span><span>串流 響度</span><span>母帶 響度</span><span>陳則皞</span><span>音樂製作</span><span>母帶</span><span>響度</span></div>
+  <div class="tags"><span>LUFS 是什麼</span><span>串流 響度 標準</span><span>-14 LUFS</span><span>歌 上傳 變小聲</span><span>陳則皞</span><span>音樂製作</span><span>母帶</span><span>響度</span></div>
   <div class="cta"><span>看完想把自己的歌做出來？從 45 分鐘諮詢開始，把現況跟下一步一次講清楚。</span><a class="btn" href="/services/consult/">預約諮詢 →</a></div>
-  <nav class="nav2"><a href="/blog/se01-011/">← 歌用手機喇叭聽起來很單薄？低音的處理是關鍵</a><a href="/blog/se01-013/">母帶 mastering 到底在做什麼？混音 →</a></nav>
+  <nav class="nav2"><a href="/blog/se01-011/">← 歌用手機喇叭聽起來很單薄？低音要這樣「翻譯」</a><a href="/blog/se01-013/">母帶 mastering 到底在做什麼？混音 →</a></nav>
   <footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專欄</a> ｜ <a href="/blog/all/">目錄</a></footer>
 </div>
 <a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>
