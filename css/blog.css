@@ -1,0 +1,44 @@
+/* blog.css — 專欄頁，顏色字體沿用首頁（羊皮紙＋黃銅＋像素字），2026-09-04 建 */
+:root{--paper:#f3ead4;--paper-soft:#ede2c4;--paper-edge:#c9b88c;--ink:#2a1f12;--ink-soft:#5e4a30;--ink-mute:#8a7556;--brass:#b8801f;--brass-light:#d4a13a;--brass-deep:#6e4d10;--quest:#1f5b8b;--shadow:#2a1f12}
+@font-face{font-family:"Cubic 11";src:url("../assets/Cubic_11_1.013_R.ttf") format("truetype");font-weight:400;font-display:swap}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Heiti TC",sans-serif;line-height:1.9;padding:16px;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto}
+.back{display:inline-block;margin-bottom:14px;color:var(--quest);font-size:.9rem;text-decoration:none;border-bottom:2px solid var(--quest)}
+.back:hover{color:var(--brass-deep);border-color:var(--brass-deep)}
+.badge{display:inline-block;font-family:"Cubic 11","Press Start 2P",monospace;font-size:.72rem;letter-spacing:.06em;color:var(--brass-deep);background:var(--paper-soft);border:2px solid var(--paper-edge);padding:4px 10px;margin-bottom:12px}
+h1{font-size:1.65rem;line-height:1.35;margin:0 0 8px;letter-spacing:.01em;text-wrap:balance}
+.meta{font-size:.82rem;color:var(--ink-mute);margin-bottom:22px;display:flex;flex-wrap:wrap;gap:6px 14px}
+.meta a{color:var(--quest);text-decoration:none}
+article h2{font-size:1.18rem;margin:30px 0 10px;padding-left:10px;border-left:4px solid var(--brass)}
+article h3{font-size:1.02rem;margin:22px 0 8px;color:var(--brass-deep)}
+article h4{font-size:.98rem;margin:16px 0 6px}
+article p{margin:0 0 14px}
+article ul,article ol{margin:0 0 14px 1.4em}
+article li{margin:4px 0}
+article blockquote{margin:0 0 14px;padding:8px 14px;border-left:4px solid var(--paper-edge);background:var(--paper-soft);color:var(--ink-soft)}
+article code{font-family:"VT323","Courier New",monospace;font-size:1.02em;background:var(--paper-soft);padding:0 4px}
+article strong{color:var(--brass-deep)}
+article a{color:var(--quest)}
+.tbl{overflow-x:auto;margin:0 0 14px}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{border:1px solid var(--paper-edge);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:var(--paper-soft)}
+figure{margin:18px 0}figure img{max-width:100%;border:2px solid var(--paper-edge);background:#fff}figcaption{font-size:.8rem;color:var(--ink-mute);margin-top:4px}
+.tags{margin:26px 0 0;font-size:.82rem;color:var(--ink-mute)}
+.tags span{display:inline-block;background:var(--paper-soft);border:1px solid var(--paper-edge);padding:1px 8px;margin:0 6px 6px 0}
+.cta{margin:34px 0 0;padding:16px 18px;border:2px solid var(--brass);background:var(--paper-soft)}
+.cta a{color:var(--brass-deep);font-weight:700}
+.nav2{display:flex;justify-content:space-between;gap:12px;margin:26px 0 0;font-size:.9rem}
+.nav2 a{color:var(--quest);text-decoration:none;max-width:48%}
+.foot{margin-top:40px;padding-top:14px;border-top:2px solid var(--paper-edge);font-size:.82rem;color:var(--ink-mute)}
+.foot a{color:var(--quest);text-decoration:none}
+/* 目錄 */
+.intro{margin:0 0 22px;color:var(--ink-soft)}
+.series{margin:26px 0 0}
+.series h2{font-size:1.08rem;margin:0 0 8px;padding-left:10px;border-left:4px solid var(--brass)}
+.list{list-style:none;margin:0}
+.list li{padding:7px 0;border-bottom:1px dashed var(--paper-edge)}
+.list a{color:var(--ink);text-decoration:none}
+.list a:hover{color:var(--brass-deep)}
+.list .d{font-size:.78rem;color:var(--ink-mute);margin-left:8px;white-space:nowrap}

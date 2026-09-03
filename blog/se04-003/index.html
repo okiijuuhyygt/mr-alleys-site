@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Suno 的歌總有一層毛毛的雜訊？它從哪來、怎麼清｜巷弄故事館音樂製作專欄</title>
+<meta name="description" content="Suno 生出來的歌，高頻常有一層毛毛的、沙沙的東西。它跟傳統白噪音的來頭不一樣，學名叫擴散模型的頻譜殘渣（spectral artifacts，模型在高頻隨機填音訊、假裝很亮留下的碎渣）。它麻煩在會跟人聲一起呼吸，所以">
+<link rel="canonical" href="https://mralleys.com/blog/se04-003/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
+<meta property="og:title" content="Suno 的歌總有一層毛毛的雜訊？它從哪來、怎麼清｜巷弄故事館音樂製作專欄">
+<meta property="og:description" content="Suno 生出來的歌，高頻常有一層毛毛的、沙沙的東西。它跟傳統白噪音的來頭不一樣，學名叫擴散模型的頻譜殘渣（spectral artifacts，模型在高頻隨機填音訊、假裝很亮留下的碎渣）。它麻煩在會跟人聲一起呼吸，所以">
+<meta property="og:url" content="https://mralleys.com/blog/se04-003/">
+<meta property="og:image" content="https://mralleys.com/assets/og-image-v3.png?v=20260429c">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="https://mralleys.com/blog/feed.xml">
+<link rel="stylesheet" href="/css/blog.css?v=20260904">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se04-003/#article", "headline": "Suno 的歌總有一層毛毛的雜訊？它從哪來、怎麼清", "description": "Suno 生出來的歌，高頻常有一層毛毛的、沙沙的東西。它跟傳統白噪音的來頭不一樣，學名叫擴散模型的頻譜殘渣（spectral artifacts，模型在高頻隨機填音訊、假裝很亮留下的碎渣）。它麻煩在會跟人聲一起呼吸，所以", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-04", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se04-003/"}, "keywords": "Suno 雜訊, AI 音樂 音質, Suno 去噪, 陳則皞, 音樂製作, Suno, AI音樂, 混音", "articleSection": "AI 音樂製作", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Suno 的歌總有一層毛毛的雜訊？它從哪來、怎麼清", "item": "https://mralleys.com/blog/se04-003/"}]}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/blog/">← 專欄目錄</a>
+  <div class="badge">MR.ALLEYS · 音樂製作專欄 · AI 音樂製作</div>
+  <h1>Suno 的歌總有一層毛毛的雜訊？它從哪來、怎麼清</h1>
+  <div class="meta"><span>陳則皞</span><span>2026-09-04</span><span><a href="/blog/#se04">AI 音樂製作</a></span></div>
+  <article>
+<p>Suno 生出來的歌，高頻常有一層毛毛的、沙沙的東西。它跟傳統白噪音的來頭不一樣，學名叫擴散模型的頻譜殘渣（spectral artifacts，模型在高頻隨機填音訊、假裝很亮留下的碎渣）。它麻煩在會跟人聲一起呼吸，所以硬砍高頻只會讓歌變悶。下面講三種我實際在用的清法，由細到快排。</p>
+<h3>首選：SpectraLayers 拆出噪音層</h3>
+<p>我最常用 SpectraLayers 的 Unmix Components（把聲音拆成三種成分，不是拆樂器）。它會分成 Tonal（旋律類）、Transient（打擊瞬態）、Noise（噪音）三層。我只動 Noise 那層，把它音量拉低約 -10dB，或對它的高頻做 EQ 衰減，鼓和樂器那兩層原封不動。這樣清得乾淨，又不會傷到主體。</p>
+<h3>次選：iZotope RX 精修</h3>
+<p>要更細就上 iZotope RX 的 Spectral De-noise（頻譜降噪），模式切 Adaptive（自動適應，不用 Learn 抓樣本）。Threshold（觸發門檻）抓 -10 到 -20dB,Reduction（衰減量）6 到 8dB 就好。下手太重會出現「水底音」，那種咕嚕咕嚕的假象比雜訊還難聽，寧可留一點也別過。</p>
+<h3>最快：高頻置換術</h3>
+<p>趕件時我會用這招。伴奏掛一個 LPF（低通濾波器，把某個頻率以上切掉）砍在 10 到 12kHz，聲音會變悶但瞬間乾淨，然後疊一層乾淨的 shaker 或 hi-hat 把高頻補回來。人耳對高頻的解析度本來就低，大腦會自動忽略底下那些瑕疵。</p>
+<p>補一個常被忘記的收尾：清完噪音，人聲高頻會「死」掉，聽起來悶悶的。這時掛一點 saturation（飽和，加好聽的泛音），輕推 presence 那段，用漂亮的諧波把質感填回去，人聲就活過來了。</p>
+<p>這些東西我每天都在做。想把你的故事做成一首歌，或編曲混音卡關想找人看一眼，我在這：<a href="https://mralleys.com/" target="_blank" rel="noopener">https://mralleys.com/</a></p>
+
+  </article>
+  <div class="tags"><span>Suno 雜訊</span><span>AI 音樂 音質</span><span>Suno 去噪</span><span>陳則皞</span><span>音樂製作</span><span>Suno</span><span>AI音樂</span><span>混音</span></div>
+  <div class="cta">看完想把自己的歌做出來？從 <a href="/services/consult/">45 分鐘諮詢</a> 開始，把現況跟下一步一次講清楚。</div>
+  <nav class="nav2"><a href="/blog/se04-002/">← Suno 生出來的曲風跟你想的不一樣？三個常</a><a href="/blog/se04-004/">AI 音樂為什麼分軌拆不乾淨？聊聊它的「基因 →</a></nav>
+  <footer class="foot">巷弄故事館 · MR. ALLEYS ｜ <a href="/">回首頁</a> ｜ <a href="/blog/">專欄目錄</a> ｜ <a href="/services/consult/">諮詢</a> ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
+</div>
+</body>
+</html>

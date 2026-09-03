@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Suno 做的歌上架後音質變弱？上架前先做這件事｜巷弄故事館音樂製作專欄</title>
+<meta name="description" content="很多人用 Suno 生成的歌，傳上 Spotify 後覺得「怎麼比原本悶、比別人的歌小聲、沒力」。原因是 Suno 輸出的檔案通常已經被壓過一輪母帶（mastering），動態被壓得死死的，你再直接上架，只會更沒空間。解">
+<link rel="canonical" href="https://mralleys.com/blog/se06-006/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
+<meta property="og:title" content="Suno 做的歌上架後音質變弱？上架前先做這件事｜巷弄故事館音樂製作專欄">
+<meta property="og:description" content="很多人用 Suno 生成的歌，傳上 Spotify 後覺得「怎麼比原本悶、比別人的歌小聲、沒力」。原因是 Suno 輸出的檔案通常已經被壓過一輪母帶（mastering），動態被壓得死死的，你再直接上架，只會更沒空間。解">
+<meta property="og:url" content="https://mralleys.com/blog/se06-006/">
+<meta property="og:image" content="https://mralleys.com/assets/og-image-v3.png?v=20260429c">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="https://mralleys.com/blog/feed.xml">
+<link rel="stylesheet" href="/css/blog.css?v=20260904">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se06-006/#article", "headline": "Suno 做的歌上架後音質變弱？上架前先做這件事", "description": "很多人用 Suno 生成的歌，傳上 Spotify 後覺得「怎麼比原本悶、比別人的歌小聲、沒力」。原因是 Suno 輸出的檔案通常已經被壓過一輪母帶（mastering），動態被壓得死死的，你再直接上架，只會更沒空間。解", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-04", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se06-006/"}, "keywords": "Suno 上架, Suno 母帶, Suno 音質, AI 音樂 上架, de-master, 陳則皞, 音樂製作, Suno, AI音樂, 母帶", "articleSection": "製作觀念", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Suno 做的歌上架後音質變弱？上架前先做這件事", "item": "https://mralleys.com/blog/se06-006/"}]}]}</script>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/blog/">← 專欄目錄</a>
+  <div class="badge">MR.ALLEYS · 音樂製作專欄 · 製作觀念</div>
+  <h1>Suno 做的歌上架後音質變弱？上架前先做這件事</h1>
+  <div class="meta"><span>陳則皞</span><span>2026-09-04</span><span><a href="/blog/#se06">製作觀念</a></span></div>
+  <article>
+<p>很多人用 Suno 生成的歌，傳上 Spotify 後覺得「怎麼比原本悶、比別人的歌小聲、沒力」。原因是 Suno 輸出的檔案通常已經被壓過一輪母帶（mastering），動態被壓得死死的，你再直接上架，只會更沒空間。解法是先幫它「鬆綁」——業界叫 de-master——再重新處理一次。</p>
+<h3>一、為什麼要先 de-master</h3>
+<p>Suno 給你的音檔，音量已經頂到接近母帶成品的滿格。你直接拿去混音或轉母帶，壓縮器一進來就過載，會出現 pumping（音量一抽一抽、像在喘氣）的怪感覺。先把它鬆開，恢復一點處理彈性，後面才有空間重新調。</p>
+<h3>二、我自己的處理順序</h3>
+<p>簡單版是這樣：先用 Gain 把峰值降到 -10dBFS 以下（留出空間，避免一進來就壓爆），接一個多頻段壓縮器（Pro-MB 這類，對各頻段重新做動態，把硬邦邦的母帶鬆開），再用 EQ（Pro-Q 這類）修頻率，最後才視需要補一顆 limiter（限制器）把音量拉回商業水準。</p>
+<p>懶得自己弄的話，線上也有免費工具像 sunomaster、eMastered 可以先過一輪。sunomaster 甚至是在你瀏覽器本機端跑、檔案不會上傳到別人的伺服器，對還沒公開的作品比較安全。過完之後，音量跟清晰度的差別通常很明顯。</p>
+<p>寫這篇的人白天在做編曲混音、晚上在寫歌。客製化歌曲、製作、寫歌課都接：<a href="https://mralleys.com/" target="_blank" rel="noopener">https://mralleys.com/</a></p>
+
+  </article>
+  <div class="tags"><span>Suno 上架</span><span>Suno 母帶</span><span>Suno 音質</span><span>AI 音樂 上架</span><span>de-master</span><span>陳則皞</span><span>音樂製作</span><span>Suno</span><span>AI音樂</span><span>母帶</span></div>
+  <div class="cta">看完想把自己的歌做出來？從 <a href="/services/consult/">45 分鐘諮詢</a> 開始，把現況跟下一步一次講清楚。</div>
+  <nav class="nav2"><a href="/blog/se06-005/">← 為什麼這幾年串流音樂的音質變好了？跟「水印」</a><a href="/blog/se06-008/">多人合唱、大和聲怎麼修音？別把每個人都對到一 →</a></nav>
+  <footer class="foot">巷弄故事館 · MR. ALLEYS ｜ <a href="/">回首頁</a> ｜ <a href="/blog/">專欄目錄</a> ｜ <a href="/services/consult/">諮詢</a> ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
+</div>
+</body>
+</html>
