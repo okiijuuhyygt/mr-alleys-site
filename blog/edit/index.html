@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>編輯文章｜巷弄故事館專欄</title>
+<link rel="stylesheet" href="/css/blog.css?v=20260904b">
+<style>
+label{display:block;font-size:.85rem;color:var(--ink-soft);margin:14px 0 6px}
+input[type=text],textarea{width:100%;font-size:16px;line-height:1.7;padding:12px;border:2px solid var(--ink);background:#fff;font-family:"Noto Sans TC","PingFang TC",sans-serif}
+textarea{min-height:62vh;resize:vertical}
+.bar{position:sticky;bottom:0;background:var(--paper);padding:10px 0;border-top:2px solid var(--paper-edge);display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.msg{font-size:.9rem;color:var(--ink-soft)}
+.err{color:#b83a2a}
+.hint{font-size:.8rem;color:var(--ink-mute);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/blog/admin/">← 後台</a>
+  <div class="badge">MR.ALLEYS · 編輯這篇</div>
+  <h1 id="h" style="font-size:1.2rem">載入中…</h1>
+  <div id="editor" hidden>
+    <label for="title">標題</label>
+    <input type="text" id="title">
+    <label for="body">內文（Markdown：## 小標、- 清單、**粗體**、[文字](/連結)）</label>
+    <textarea id="body" spellcheck="false"></textarea>
+    <div class="hint">存檔後約一到兩分鐘網站會自己重建，重新整理文章頁就看得到。標點會在重建時自動轉全形。</div>
+    <div class="bar">
+      <button class="btn" id="save">儲存並發布</button>
+      <a class="btn" id="view" target="_blank" rel="noopener">看這篇 →</a>
+      <span class="msg" id="msg"></span>
+    </div>
+  </div>
+  <div id="need" hidden class="msg">還沒登入後台。<a href="/blog/admin/">先去登入</a>。</div>
+</div>
+<script>
+const OWNER='okiijuuhyygt', REPO='mr-alleys-site', LS='alleys-admin-token-v1';
+const API='https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/';
+const $=s=>document.querySelector(s);
+const id=new URLSearchParams(location.search).get('id'); const tok=localStorage.getItem(LS);
+let sha=null, fmHead='', fmLines=[];
+const b64dec=s=>new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g,'')),c=>c.charCodeAt(0)));
+const b64enc=s=>btoa(String.fromCharCode(...new TextEncoder().encode(s)));
+async function load(){
+  if(!tok){ $('#need').hidden=false; $('#h').textContent='需要登入'; return; }
+  if(!id){ $('#h').textContent='沒有指定文章'; return; }
+  const r=await fetch(API+'blog-src/'+id+'.md?ref=main',{headers:{Authorization:'Bearer '+tok,Accept:'application/vnd.github+json'}});
+  if(!r.ok){ $('#h').textContent='讀不到這篇（'+r.status+'）'; return; }
+  const j=await r.json(); sha=j.sha; const raw=b64dec(j.content);
+  const m=raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/); if(!m){ $('#h').textContent='檔案格式不對'; return; }
+  fmLines=m[1].split('\n'); const t=fmLines.find(l=>l.startsWith('title:'));
+  $('#title').value=t?t.slice(6).trim():''; $('#body').value=m[2].replace(/\n$/,'');
+  $('#h').textContent=$('#title').value; $('#view').href='/blog/'+id+'/'; $('#editor').hidden=false;
+}
+$('#save').onclick=async()=>{
+  const title=$('#title').value.trim(); const body=$('#body').value.replace(/\s+$/,'')+'\n';
+  if(!title||!body.trim()){ $('#msg').innerHTML='<span class="err">標題跟內文不能空。</span>'; return; }
+  const fm=fmLines.map(l=>l.startsWith('title:')?'title: '+title:l).join('\n');
+  const content='---\n'+fm+'\n---\n'+body;
+  $('#msg').textContent='儲存中…'; $('#save').disabled=true;
+  const r=await fetch(API+'blog-src/'+id+'.md',{method:'PUT',headers:{Authorization:'Bearer '+tok,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:'blog: 後台編輯 '+id,content:b64enc(content),sha,branch:'main'})});
+  $('#save').disabled=false;
+  if(r.ok){ const j=await r.json(); sha=j.content.sha; $('#msg').textContent='已儲存，網站約一到兩分鐘後更新。'; $('#h').textContent=title; }
+  else { const e=await r.text(); $('#msg').innerHTML='<span class="err">儲存失敗（'+r.status+'）。'+(r.status===409?'這篇剛被別處改過，重新整理再改一次。':'')+'</span>'; console.error(e); }
+};
+load();
+</script>
+</body>
+</html>

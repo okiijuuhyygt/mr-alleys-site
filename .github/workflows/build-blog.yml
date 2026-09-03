@@ -1,0 +1,24 @@
+name: build-blog
+on:
+  push:
+    branches: [main]
+    paths: ['blog-src/**', 'tools/build-blog.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: build-blog, cancel-in-progress: true }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: python tools/build-blog.py
+      - name: commit built pages
+        run: |
+          git config user.name "blog-builder"
+          git config user.email "blog-builder@mralleys.com"
+          git add blog css/blog.css sitemap.xml
+          git diff --cached --quiet && echo "no changes" || git commit -m "blog: rebuild from blog-src [skip ci]"
+          git push
