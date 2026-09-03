@@ -148,9 +148,48 @@ function renderProcess() {
       <div class="process-step__num">${s.step}</div>
       <h4 class="process-step__title">${s.title}</h4>
       <p class="process-step__desc">${s.desc}</p>
+      ${s.detail ? '<span class="process-step__more">點一下看說明 ▸</span>' : ''}
     `;
+    if (s.detail) {
+      div.classList.add('process-step--clickable');
+      div.setAttribute('role', 'button'); div.setAttribute('tabindex', '0');
+      const open = () => openFlowCard(s);
+      div.addEventListener('click', open);
+      div.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+    }
     wrap.appendChild(div);
   });
+}
+
+// 製作流程說明卡（2026-09-04 耗耗：五格太像按鈕，點了要有東西）
+function ensureFlowCard() {
+  let el = document.getElementById('flowCard');
+  if (el) return el;
+  el = document.createElement('div');
+  el.id = 'flowCard'; el.className = 'flow-card'; el.setAttribute('aria-hidden', 'true');
+  el.innerHTML = `
+    <div class="flow-card__box" role="dialog" aria-modal="true" aria-labelledby="flowCardTitle">
+      <button class="flow-card__close" type="button" aria-label="關閉">✕</button>
+      <div class="flow-card__num" id="flowCardNum"></div>
+      <h4 class="flow-card__title" id="flowCardTitle"></h4>
+      <p class="flow-card__desc" id="flowCardDesc"></p>
+      <p class="flow-card__detail" id="flowCardDetail"></p>
+    </div>`;
+  document.body.appendChild(el);
+  const close = () => { el.classList.remove('open'); el.setAttribute('aria-hidden', 'true'); };
+  el.querySelector('.flow-card__close').addEventListener('click', close);
+  el.addEventListener('click', (e) => { if (e.target === el) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && el.classList.contains('open')) close(); });
+  return el;
+}
+function openFlowCard(s) {
+  const el = ensureFlowCard();
+  el.querySelector('#flowCardNum').textContent = 'STEP ' + s.step;
+  el.querySelector('#flowCardTitle').textContent = s.title;
+  el.querySelector('#flowCardDesc').textContent = s.desc || '';
+  el.querySelector('#flowCardDetail').textContent = s.detail || '';
+  el.classList.add('open'); el.setAttribute('aria-hidden', 'false');
+  el.querySelector('.flow-card__close').focus();
 }
 
 // ---------------------------------------------------------
@@ -380,9 +419,18 @@ function openServiceModal(id) {
 
   const list = $('modalIncludes');
   list.innerHTML = '';
-  (svc.includes || []).forEach(item => {
+  const incDetails = svc.includesDetails || [];
+  (svc.includes || []).forEach((item, idx) => {
     const li = document.createElement('li');
-    li.textContent = item;
+    const detail = incDetails[idx];
+    if (detail) {
+      li.classList.add('has-detail');
+      li.innerHTML = '<details><summary></summary><p class="inc-detail"></p></details>';
+      li.querySelector('summary').textContent = item;
+      li.querySelector('.inc-detail').textContent = detail;
+    } else {
+      li.textContent = item;
+    }
     list.appendChild(li);
   });
 

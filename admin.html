@@ -761,6 +761,8 @@ function renderEditor() {
       <div class="field">
         <label>包含什麼（一行一項）</label>
         <textarea data-path="services[${i}].includes" rows="5"></textarea>
+        <label style="margin-top:8px;display:block">包含什麼的展開說明（一行對上面一項，順序一樣；留空＝那項不展開）</label>
+        <textarea data-path="services[${i}].includesDetails" rows="6"></textarea>
       </div>
       <div class="field-row">
         <div class="field"><label>交期</label><input type="text" data-path="services[${i}].duration"></div>
@@ -837,6 +839,7 @@ function renderEditor() {
         <div class="field"><label>標題</label><input type="text" data-path="process.steps[${i}].title"></div>
       </div>
       <div class="field"><label>說明</label><input type="text" data-path="process.steps[${i}].desc"></div>
+      <div class="field"><label>點開的說明（首頁那格點一下會跳出來的文字）</label><textarea data-path="process.steps[${i}].detail" rows="3"></textarea></div>
     `;
     processEditor.appendChild(row);
   });

@@ -1110,3 +1110,22 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
   box-shadow: 3px 3px 0 var(--ink);
 }
 .coupon-dialog__btn--apply:hover { background: var(--brass-light); }
+
+
+/* ── 製作流程說明卡＋包含什麼可展開（2026-09-04）── */
+.process-step--clickable { cursor: pointer; }
+.process-step--clickable:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--shadow); }
+.process-step__more { display:block; margin-top:8px; font-family: var(--mono); font-size: 13px; color: var(--brass-deep); letter-spacing:.04em; }
+.flow-card { position: fixed; inset: 0; background: rgba(42,31,18,0.7); display: none; align-items: center; justify-content: center; z-index: 120; padding: 20px; }
+.flow-card.open { display: flex; }
+.flow-card__box { position: relative; background: var(--paper); border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--shadow); padding: 26px 24px 22px; max-width: 520px; width: 100%; }
+.flow-card__close { position: absolute; top: 10px; right: 10px; background: var(--paper-soft); border: 2px solid var(--ink); font-family: var(--mono); font-size: 16px; width: 34px; height: 34px; cursor: pointer; }
+.flow-card__num { font-family: var(--pixel-en); font-size: 11px; color: var(--brass-deep); letter-spacing: .12em; margin-bottom: 8px; }
+.flow-card__title { font-family: var(--pixel-en); font-size: 18px; margin: 0 0 8px; color: var(--ink); }
+.flow-card__desc { font-family: var(--pixel-tc); font-size: 15px; color: var(--ink-soft); margin: 0 0 12px; }
+.flow-card__detail { font-family: "Noto Sans TC", "PingFang TC", sans-serif; font-size: 15px; line-height: 1.85; color: var(--ink); margin: 0; }
+.modal__includes li.has-detail details summary { list-style: none; cursor: pointer; }
+.modal__includes li.has-detail details summary::-webkit-details-marker { display: none; }
+.modal__includes li.has-detail::before { transition: transform .15s; }
+.modal__includes li.has-detail:has(details[open])::before { transform: rotate(90deg); }
+.modal__includes .inc-detail { margin: 6px 0 4px; font-family: "Noto Sans TC", "PingFang TC", sans-serif; font-size: 14px; line-height: 1.8; color: var(--ink-soft); }

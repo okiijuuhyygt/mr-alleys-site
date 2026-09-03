@@ -75,8 +75,7 @@
       },
       "detailUrl": "/services/consult/",
       "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb34308056b5fee711d99d677c",
-      "notionUrl": "/services/consult/",
-      "includesDetails": []
+      "notionUrl": "/services/consult/"
     },
     {
       "id": "course",
@@ -99,8 +98,7 @@
       "checkoutUrl": "https://line.me/R/oaMessage/%40285qszgm/?%E5%AF%AB%E6%AD%8C%E8%AA%B2",
       "ctaLabel": "▶ 了解課程",
       "preOrderText": "",
-      "detailUrl": "/course/",
-      "includesDetails": []
+      "detailUrl": "/course/"
     },
     {
       "id": "vocal-edit",
@@ -128,8 +126,7 @@
       "preOrderText": "排程已滿，留 email 候補。",
       "detailUrl": "/services/vocal/",
       "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/Vocal-Editing-25450bfb343080bda59fd02b51e7f8b0",
-      "notionUrl": "/services/vocal/",
-      "includesDetails": []
+      "notionUrl": "/services/vocal/"
     },
     {
       "id": "full-prod",
@@ -156,15 +153,7 @@
       "preOrderText": "",
       "detailUrl": "/services/production/",
       "_oldNotionUrl": "https://sleet-arithmetic-fcf.notion.site/25450bfb343080faa97ff4226a12be50",
-      "notionUrl": "/services/production/",
-      "includesDetails": [
-        "你有旋律或歌詞，就從你的開始；沒有的話，先用 AI 把方向草出來，再由人把它寫成一首真的歌。署名怎麼寫，開始前談清楚。",
-        "在 Logic 裡把歌鋪成完整的伴奏；需要真實質感的段落，找真人樂手錄。曲風跟編制在諮詢時定。",
-        "人聲在合作錄音室錄，台北由我親自配唱、旁邊有錄音師；在家錄也可以，我會先告訴你要注意什麼。",
-        "混音把每一軌擺平衡、擺出空間；母帶讓整首歌在各平台聽感一致、音量站得住。兩關都由我做，交接是零。",
-        "透過發行商把歌送到各平台，封面、歌名、作詞作曲資料一起處理，提早兩到四週送件。發行後版權跟收益是你的。",
-        "要影像的話另外談：從簡單的歌詞影片到實拍 MV 都有合作對象，依預算配。"
-      ]
+      "notionUrl": "/services/production/"
     }
   ],
   "showcase": {
@@ -180,32 +169,27 @@
       {
         "step": "01",
         "title": "INPUT",
-        "desc": "你寄來 demo / 想法 / 宅錄",
-        "detail": "把你手上有的丟過來就好：手機錄的哼唱、一段歌詞、一個故事，或已經宅錄好的分軌都行，不用整理成什麼格式。我會先聽完，再回你這首歌現在卡在哪一關。"
+        "desc": "你寄來 demo / 想法 / 宅錄"
       },
       {
         "step": "02",
         "title": "PRE-CHECK",
-        "desc": "我評估範圍 + 報價",
-        "detail": "我評估要做到哪一關、大概多久，然後給你一份只含你需要項目的報價。這一步通常從 45 分鐘諮詢開始，你可以先聽我做過的東西再決定。"
+        "desc": "我評估範圍 + 報價"
       },
       {
         "step": "03",
         "title": "PRODUCTION",
-        "desc": "依服務項目進行製作",
-        "detail": "照你選的服務做：編曲、錄音、混音、母帶，一關一關來。每一關做完你都會先聽到，不會做到最後才給你看。"
+        "desc": "依服務項目進行製作"
       },
       {
         "step": "04",
         "title": "REVIEW",
-        "desc": "你聽 → 提修改 → 我修",
-        "detail": "你聽、提修改、我修。修改次數在報價裡寫清楚，超過再另計；有參考歌的話，來回會少很多。"
+        "desc": "你聽 → 提修改 → 我修"
       },
       {
         "step": "05",
         "title": "MASTER",
-        "desc": "成品交付 / 上架",
-        "detail": "交付你要的版本：上架用的高解析檔、工程備份。要發行就走 Spotify、Apple Music 上架，要拍 MV 另外談。做完之後，歌是你的。"
+        "desc": "成品交付 / 上架"
       }
     ]
   },
