@@ -188,7 +188,7 @@ def head(title, desc, url, extra=''):
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="{BASE}/blog/feed.xml">
 <link rel="stylesheet" href="/css/blog.css?v=20260904c">
 {extra}</head>'''
-FOOT = f'<footer class="foot">巷弄故事館 · MR. ALLEYS ｜ <a href="/">回首頁</a> ｜ <a href="/blog/">專欄目錄</a> ｜ <a href="/services/consult/">諮詢</a> ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>'
+FOOT = f'<footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專欄目錄</a></footer>'
 def article_page(p, prev, nxt):
     url = f'{BASE}/blog/{p["id"]}/'
     ld = {"@context":"https://schema.org","@graph":[
