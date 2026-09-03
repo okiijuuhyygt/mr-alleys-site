@@ -150,7 +150,6 @@ figure{margin:18px 0}figure img{max-width:100%;border:2px solid var(--paper-edge
 .nav2 a{color:var(--quest);text-decoration:none;max-width:48%}
 .foot{margin-top:40px;padding-top:14px;border-top:2px solid var(--paper-edge);font-size:.82rem;color:var(--ink-mute)}
 .foot a{color:var(--quest);text-decoration:none}
-.edit-fab{position:fixed;right:14px;bottom:14px;z-index:9;font-family:"Cubic 11",monospace;font-size:.82rem;background:var(--brass);color:#fff;border:2px solid var(--brass-deep);box-shadow:3px 3px 0 var(--brass-deep);padding:9px 12px;text-decoration:none}
 /* 目錄 */
 .intro{margin:0 0 22px;color:var(--ink-soft)}
 .series{margin:26px 0 0}
@@ -217,7 +216,6 @@ def article_page(p, prev, nxt):
   {nav}
   {FOOT}
 </div>
-<script>(function(){{try{{if(localStorage.getItem('alleys-admin-token-v1')){{var a=document.createElement('a');a.href='/blog/edit/?id={p["id"]}';a.className='edit-fab';a.textContent='✎ 編輯這篇';document.body.appendChild(a);}}}}catch(e){{}}}})();</script>
 </body>
 </html>'''
 def index_page(posts):
@@ -240,7 +238,6 @@ def index_page(posts):
 {secs}
   {FOOT}
 </div>
-<script>(function(){{try{{if(localStorage.getItem('alleys-admin-token-v1')){{var a=document.createElement('a');a.href='/blog/admin/';a.className='edit-fab';a.textContent='✎ 後台';document.body.appendChild(a);}}}}catch(e){{}}}})();</script>
 </body>
 </html>'''
 def rss(posts):

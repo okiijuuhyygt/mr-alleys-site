@@ -382,7 +382,17 @@ code.tok-eg { background: var(--paper-soft); padding: 2px 6px; border: 1px solid
   </section>
 
   <!-- ============ EDITOR SCENE ============ -->
+  <section id="sceneChooser" class="hidden">
+    <div class="dialog-frame" style="max-width:520px;margin:40px auto;padding:24px">
+      <h2 style="margin:0 0 14px">要改哪裡？</h2>
+      <div style="display:grid;gap:12px">
+        <button type="button" id="chooseHome" class="btn-primary" style="padding:16px;font-size:16px">🏠 主頁編輯</button>
+        <a href="/blog/admin/" class="btn-primary" style="display:block;text-align:center;padding:16px;font-size:16px;text-decoration:none">📝 專欄編輯</a>
+      </div>
+    </div>
+  </section>
   <section id="sceneEditor" class="hidden">
+    <p style="margin:0 0 10px"><a href="#" id="backToChooser">← 回選單</a></p>
     <h1>內容編輯</h1>
     <p class="lead">改完任一欄位 → 按底部「儲存到網站」。改動會 commit 到 GitHub，網站約 1-3 分鐘後自動更新。</p>
     <div id="loadingContent">讀取中...</div>
@@ -414,7 +424,7 @@ function show(id) { $(id).classList.remove('hidden'); }
 function hide(id) { $(id).classList.add('hidden'); }
 function setStatus(text) { $('statusBadge').textContent = text; }
 function showScene(name) {
-  ['sceneLogin', 'sceneEditor'].forEach(s => $(s).classList.add('hidden'));
+  ['sceneLogin', 'sceneChooser', 'sceneEditor'].forEach(s => $(s).classList.add('hidden'));
   $(name).classList.remove('hidden');
   if (name === 'sceneEditor') $('saveBar').classList.remove('hidden');
   else $('saveBar').classList.add('hidden');
@@ -461,8 +471,8 @@ function route() {
   if (token) {
     setStatus('已登入');
     $('btnLogout').classList.remove('hidden');
-    showScene('sceneEditor');
-    initEditor();
+    if (location.hash === '#home') { showScene('sceneEditor'); initEditor(); }
+    else showScene('sceneChooser');
   } else {
     setStatus('未登入');
     $('btnLogout').classList.add('hidden');
@@ -500,6 +510,8 @@ $('loginForm').addEventListener('submit', async (e) => {
   }
 });
 
+$('chooseHome').addEventListener('click', () => { location.hash = '#home'; showScene('sceneEditor'); initEditor(); });
+$('backToChooser').addEventListener('click', (e) => { e.preventDefault(); location.hash = ''; showScene('sceneChooser'); });
 $('btnLogout').addEventListener('click', () => {
   if (!confirm('登出會清掉這台瀏覽器的 Token（GitHub 上的不受影響）。確定?')) return;
   localStorage.removeItem(LS_TOKEN);
