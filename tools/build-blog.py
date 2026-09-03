@@ -221,7 +221,7 @@ def article_page(p, prev, nxt):
   {nav}
   {FOOT}
 </div>
-<a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">聊聊</a>
+<a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>
 <script>(function(){{var f=document.getElementById('chatFab'),y=window.scrollY||0;window.addEventListener('scroll',function(){{var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;}},{{passive:true}});}})();</script>
 </body>
 </html>'''
@@ -245,7 +245,7 @@ def index_page(posts):
 {secs}
   {FOOT}
 </div>
-<a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">聊聊</a>
+<a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>
 <script>(function(){{var f=document.getElementById('chatFab'),y=window.scrollY||0;window.addEventListener('scroll',function(){{var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;}},{{passive:true}});}})();</script>
 </body>
 </html>'''
