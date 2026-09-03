@@ -6,7 +6,8 @@
 import re, os, sys, json, glob, html, shutil, datetime
 SITE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = 'https://mralleys.com'; TODAY = datetime.date.today().isoformat()
-SERIES_ORDER = ['se01','se09','se02','se03','se05','se06','se04','se07','se10','se08']
+SERIES_ORDER = ['qa','se01','se09','se02','se03','se05','se06','se04','se07','se10','se08']
+HIDE_SERIES = set()  # 目錄不列但頁面仍產（例：'se08'）
 CJK = r'[一-鿿　-〿＀-￯]'
 CJKL = r'[一-鿿　-〿＀-￯」』）]'   # 左鄰：含收尾全形括號
 CJKR = r'[一-鿿　-〿＀-￯「『（]'   # 右鄰：含起始全形括號
@@ -231,7 +232,7 @@ def index_page(posts):
     for p in posts: groups.setdefault(p['pref'] if p['pref'] != 'ins' else 'se08', []).append(p)
     secs = ''
     for k in SERIES_ORDER:
-        if k not in groups: continue
+        if k not in groups or k in HIDE_SERIES: continue
         items = sorted(groups[k], key=lambda x: (x['date'], x['id']), reverse=True)
         secs += f'<section class="series" id="{k}"><h2>{html.escape(SERIES[k])} <span class="d">{len(items)} 篇</span></h2><ul class="list">' + ''.join(f'<li><a href="/blog/{p["id"]}/">{html.escape(p["title"])}</a><span class="d">{p["date"]}</span></li>' for p in items) + '</ul></section>'
     ld = {"@context":"https://schema.org","@type":"CollectionPage","name":"巷弄故事館 音樂製作專欄","url":url,"inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"巷弄故事館 · MR. ALLEYS","url":BASE+"/"},"about":"音樂製作、編曲、混音、錄音、詞曲創作、AI 音樂、客製化歌曲"}
