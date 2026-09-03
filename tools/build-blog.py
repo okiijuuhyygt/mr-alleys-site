@@ -159,6 +159,11 @@ figure{margin:18px 0}figure img{max-width:100%;border:2px solid var(--paper-edge
 .list a{color:var(--ink);text-decoration:none}
 .list a:hover{color:var(--brass-deep)}
 .list .d{font-size:.78rem;color:var(--ink-mute);margin-left:8px;white-space:nowrap}
+/* 讀者浮動鈕（耗耗 9/4 定：只放一個動作＝LINE 聊聊；滑下縮起、滑上出現） */
+.chat-fab{position:fixed;right:14px;bottom:16px;z-index:9;font-family:"Cubic 11","Press Start 2P",monospace;font-size:.86rem;letter-spacing:.06em;color:var(--ink);background:var(--paper-soft);border:2px solid var(--brass);box-shadow:3px 3px 0 var(--brass-deep);padding:9px 14px;text-decoration:none;transition:transform .25s,opacity .25s}
+.chat-fab:hover{background:var(--brass-light)}
+.chat-fab.hide{transform:translateY(80px);opacity:0;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.chat-fab{transition:none}}
 '''
 def head(title, desc, url, extra=''):
     return f'''<!DOCTYPE html>
@@ -180,7 +185,7 @@ def head(title, desc, url, extra=''):
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="{BASE}/blog/feed.xml">
-<link rel="stylesheet" href="/css/blog.css?v=20260904b">
+<link rel="stylesheet" href="/css/blog.css?v=20260904c">
 {extra}</head>'''
 FOOT = f'<footer class="foot">巷弄故事館 · MR. ALLEYS ｜ <a href="/">回首頁</a> ｜ <a href="/blog/">專欄目錄</a> ｜ <a href="/services/consult/">諮詢</a> ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>'
 def article_page(p, prev, nxt):
@@ -216,6 +221,8 @@ def article_page(p, prev, nxt):
   {nav}
   {FOOT}
 </div>
+<a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">聊聊</a>
+<script>(function(){{var f=document.getElementById('chatFab'),y=window.scrollY||0;window.addEventListener('scroll',function(){{var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;}},{{passive:true}});}})();</script>
 </body>
 </html>'''
 def index_page(posts):
@@ -238,6 +245,8 @@ def index_page(posts):
 {secs}
   {FOOT}
 </div>
+<a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">聊聊</a>
+<script>(function(){{var f=document.getElementById('chatFab'),y=window.scrollY||0;window.addEventListener('scroll',function(){{var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;}},{{passive:true}});}})();</script>
 </body>
 </html>'''
 def rss(posts):
