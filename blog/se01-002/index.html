@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>混音第一步先把音量調對：gain staging 到底在調什麼、為什麼是 -18 dBFS｜巷弄故事館音樂製作專欄</title>
-<meta name="description" content="混音第一步該做的，不是急著掛一堆 plugin，是把每軌的音量關係先擺對。地基疊穩，後面 EQ、壓縮才有意義。很多人卡在「混出來就是糊」，以為是 plugin 不夠貴、外掛買不夠多——十次有八次，問題其實在最不起眼的那一">
+<title>為什麼混音要先把音量調對？gain staging、−18 dBFS、疊軌順序一次講清楚｜巷弄故事館音樂製作專欄</title>
+<meta name="description" content="先講答案：混音第一步不是掛 plugin，是把每一軌的音量關係擺對。每軌進 plugin 前的峰值落在 −12 到 −18 dBFS，處理完把音量調回跟處理前一樣大，然後照「鼓、貝斯、其他打擊、人聲、旋律樂器」的順序一軌">
 <link rel="canonical" href="https://mralleys.com/blog/se01-002/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
-<meta property="og:title" content="混音第一步先把音量調對：gain staging 到底在調什麼、為什麼是 -18 dBFS｜巷弄故事館音樂製作專欄">
-<meta property="og:description" content="混音第一步該做的，不是急著掛一堆 plugin，是把每軌的音量關係先擺對。地基疊穩，後面 EQ、壓縮才有意義。很多人卡在「混出來就是糊」，以為是 plugin 不夠貴、外掛買不夠多——十次有八次，問題其實在最不起眼的那一">
+<meta property="og:title" content="為什麼混音要先把音量調對？gain staging、−18 dBFS、疊軌順序一次講清楚｜巷弄故事館音樂製作專欄">
+<meta property="og:description" content="先講答案：混音第一步不是掛 plugin，是把每一軌的音量關係擺對。每軌進 plugin 前的峰值落在 −12 到 −18 dBFS，處理完把音量調回跟處理前一樣大，然後照「鼓、貝斯、其他打擊、人聲、旋律樂器」的順序一軌">
 <meta property="og:url" content="https://mralleys.com/blog/se01-002/">
 <meta property="og:image" content="https://mralleys.com/assets/og-image-v3.png?v=20260429c">
 <meta property="og:locale" content="zh_TW">
@@ -18,47 +18,46 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="https://mralleys.com/blog/feed.xml">
 <link rel="stylesheet" href="/css/blog.css?v=20260904">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se01-002/#article", "headline": "混音第一步先把音量調對：gain staging 到底在調什麼、為什麼是 -18 dBFS", "description": "混音第一步該做的，不是急著掛一堆 plugin，是把每軌的音量關係先擺對。地基疊穩，後面 EQ、壓縮才有意義。很多人卡在「混出來就是糊」，以為是 plugin 不夠貴、外掛買不夠多——十次有八次，問題其實在最不起眼的那一", "inLanguage": "zh-Hant", "datePublished": "2026-07-10", "dateModified": "2026-09-04", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se01-002/"}, "keywords": "混音 入門, gain staging, 音量平衡, dBFS, 疊軌順序, 陳則皞, 音樂製作, 混音, 宅錄, gain staging", "articleSection": "編曲與混音基礎", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "混音第一步先把音量調對：gain staging 到底在調什麼、為什麼是 -18 dBFS", "item": "https://mralleys.com/blog/se01-002/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se01-002/#article", "headline": "為什麼混音要先把音量調對？gain staging、−18 dBFS、疊軌順序一次講清楚", "description": "先講答案：混音第一步不是掛 plugin，是把每一軌的音量關係擺對。每軌進 plugin 前的峰值落在 −12 到 −18 dBFS，處理完把音量調回跟處理前一樣大，然後照「鼓、貝斯、其他打擊、人聲、旋律樂器」的順序一軌", "inLanguage": "zh-Hant", "datePublished": "2026-07-10", "dateModified": "2026-09-04", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se01-002/"}, "keywords": "混音 入門, gain staging, 音量平衡, dBFS, 疊軌順序, 混音 糊, 陳則皞, 音樂製作, 混音, 宅錄, gain staging", "articleSection": "編曲與混音基礎", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "為什麼混音要先把音量調對？gain staging、−18 dBFS、疊軌順序一次講清楚", "item": "https://mralleys.com/blog/se01-002/"}]}]}</script>
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="/blog/">← 專欄目錄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · 編曲與混音基礎</div>
-  <h1>混音第一步先把音量調對：gain staging 到底在調什麼、為什麼是 -18 dBFS</h1>
+  <h1>為什麼混音要先把音量調對？gain staging、−18 dBFS、疊軌順序一次講清楚</h1>
   <div class="meta"><span>陳則皞</span><span>2026-07-10</span><span><a href="/blog/#se01">編曲與混音基礎</a></span></div>
   <article>
-<p>混音第一步該做的，不是急著掛一堆 plugin，是把每軌的音量關係先擺對。地基疊穩，後面 EQ、壓縮才有意義。很多人卡在「混出來就是糊」，以為是 plugin 不夠貴、外掛買不夠多——十次有八次，問題其實在最不起眼的那一關：音量根本沒排好。</p>
-<p>這篇把「先調音量」這件事拆開講清楚：gain staging 到底在調什麼、為什麼大家都講 -18 dBFS、各軌音量大概落在哪、還有疊軌要照什麼順序。都是我每天在做的事。</p>
-<h3>gain staging 是什麼？為什麼偏偏是 -18 dBFS</h3>
-<p>gain staging 講白了就是：控制「進到每一個 plugin 的音量」，別太大、也別太小。我的習慣是讓每一軌的訊號峰值落在 -12 到 -18 dBFS 之間，原因有三個，一個一個講。</p>
-<p>第一，-18 這個數字不是拍腦袋來的。數位世界裡 0 dBFS 是絕對天花板，過了就是硬破音（clipping）。而類比時代的參考電平 0 VU（≈ +4 dBu），換算到數位大約就落在 -18 dBFS 附近——這是很多錄音室、很多硬體的校準點。你把訊號放在這裡，等於站在類比器材「原本被設計來工作」的位置上。</p>
-<p>第二，甜蜜點。大多數 plugin，尤其是模擬類比硬體的那種（壓縮器、飽和、EQ），它們的演算法是針對某個輸入電平調校的。訊號太大，plugin 一進去就已經在硬拗；太小，它抓不到你要的細節，反而把底噪一起放大。-12 到 -18 這個區間，就是讓 plugin 工作在它最舒服、最像原廠設計的地方。</p>
-<p>第三，也是最實際的：留 headroom。你把每軌都塞到接近 0 dBFS，總和疊起來一定爆，而且完全沒空間留給之後的 bus 壓縮、母帶處理。峰值壓在 -15 上下，上面那十幾 dB 的空間，是留給後製和母帶用的。</p>
+<p>先講答案：混音第一步不是掛 plugin，是把每一軌的音量關係擺對。每軌進 plugin 前的峰值落在 −12 到 −18 dBFS，處理完把音量調回跟處理前一樣大，然後照「鼓、貝斯、其他打擊、人聲、旋律樂器」的順序一軌一軌疊。很多人卡在「混出來就是糊」，以為是 plugin 不夠貴、外掛買不夠多，十次有八次，問題其實在最不起眼的那一關：音量根本沒排好。</p>
+<h3>gain staging 是什麼？為什麼偏偏是 −18 dBFS</h3>
+<p>gain staging 講白了就是控制「進到每一個 plugin 的音量」，別太大、也別太小。我的習慣是讓每一軌的訊號峰值落在 −12 到 −18 dBFS 之間，原因有三個。</p>
+<p>第一，−18 這個數字不是拍腦袋來的。數位世界裡 0 dBFS 是絕對天花板，過了就是硬破音。而類比時代的參考電平 0 VU，換算到數位大約就落在 −18 dBFS 附近，這是很多錄音室、很多硬體的校準點。你把訊號放在這裡，等於站在類比器材原本被設計來工作的位置上。</p>
+<p>第二，甜蜜點。大多數 plugin，尤其是模擬類比硬體的那種，它們的演算法是針對某個輸入電平調校的。訊號太大，plugin 一進去就已經在硬拗；太小，它抓不到你要的細節，反而把底噪一起放大。</p>
+<p>第三，也是最實際的：留 headroom。你把每軌都塞到接近 0 dBFS，總和疊起來一定爆，而且完全沒空間留給之後的 bus 壓縮、母帶處理（[母帶在做什麼](/blog/se01-013/））。</p>
 <figure><img src="/blog/assets/se01-002-gain-staging-ladder.png" alt="dBFS 音量表、甜蜜區、headroom 示意" loading="lazy"><figcaption>dBFS 音量表、甜蜜區、headroom 示意</figcaption></figure>
-<p>還有一個習慣，比選數字更重要：<strong>一軌經過 plugin 處理後，把音量調回跟處理前一樣大。</strong> 為什麼？因為人耳天生覺得「大聲=比較好」。你掛一個 EQ、順手把整體推大了 1、2 dB,A/B 切換的時候就會誤判成「哇這 plugin 有效」——其實它只是變大聲而已。這叫 level-match（電平對齊），做母帶比對、比較 plugin 前後，一定要先做這步，不然你整晚都在被自己的耳朵騙。</p>
+<h3>比選數字更重要的習慣：處理完把音量調回去</h3>
+<p>一軌經過 plugin 處理後，把音量調回跟處理前一樣大。為什麼？因為人耳天生覺得「大聲＝比較好」。你掛一個 EQ、順手把整體推大了 1、2 dB，A/B 切換的時候就會誤判成「哇這 plugin 有效」，其實它只是變大聲而已。這叫 level-match，做母帶比對、比較 plugin 前後，一定要先做這步，不然你整晚都在被自己的耳朵騙。</p>
 <h3>各軌音量大概落在哪：一張參考表</h3>
-<p>下面這張是流行歌常見的音量平衡落點。注意：這是「混音平衡時各軌在整首歌裡的相對位置」，跟上面 gain staging 講的「進 plugin 前的峰值」是兩件事，別搞混。這張表也不是聖經，不同曲風、不同編制都會動——真正重要的是<strong>相對關係</strong>（誰該比誰大聲），不是把每個數字對死。</p>
-<div class="tbl"><table><thead><tr><th>樂器</th><th>音量（dB）</th><th>一句話定位</th></tr></thead><tbody><tr><td>Vocal</td><td>-18</td><td>主角，整首歌的台積電</td></tr><tr><td>Bass</td><td>-15</td><td>撐住低頻地基</td></tr><tr><td>Kick</td><td>-19</td><td>節奏骨架，跟 Bass 分工低頻</td></tr><tr><td>Snare</td><td>-19</td><td>節奏骨架，給拍點</td></tr><tr><td>Melody</td><td>-20</td><td>旋律樂器，配角</td></tr><tr><td>Perc</td><td>-25</td><td>點綴，加律動</td></tr><tr><td>Hi-hat</td><td>-25</td><td>高頻律動</td></tr><tr><td>FX</td><td>-28</td><td>氣氛、殘響尾巴</td></tr></tbody></table></div>
-<p>一個判斷心法（康小白講的，我覺得很準）：混音跟一檔 ETF 的成分股很像。人聲是台積電，佔了一半以上的權重；第二到第五大是 Kick、Snare、Bass、主旋律樂器；第三條線之後，一般人的耳朵已經聽不太到，再堆下去就接近雜訊了。所以<strong>不要貪心愈編愈多</strong>——耳朵好的人也就同時聽得到兩三條線。</p>
+<p>下面這張是流行歌常見的音量平衡落點。注意，這是混音平衡時各軌在整首歌裡的相對位置，跟上面 gain staging 講的「進 plugin 前的峰值」是兩件事。這張表也不是聖經，真正重要的是相對關係，不是把每個數字對死。</p>
+<div class="tbl"><table><thead><tr><th>樂器</th><th>音量（dB）</th><th>一句話定位</th></tr></thead><tbody><tr><td>Vocal</td><td>−18</td><td>主角，整首歌的台積電</td></tr><tr><td>Bass</td><td>−15</td><td>撐住低頻地基</td></tr><tr><td>Kick</td><td>−19</td><td>節奏骨架，跟 Bass 分工低頻</td></tr><tr><td>Snare</td><td>−19</td><td>節奏骨架，給拍點</td></tr><tr><td>Melody</td><td>−20</td><td>旋律樂器，配角</td></tr><tr><td>Perc</td><td>−25</td><td>點綴，加律動</td></tr><tr><td>Hi-hat</td><td>−25</td><td>高頻律動</td></tr><tr><td>FX</td><td>−28</td><td>氣氛、殘響尾巴</td></tr></tbody></table></div>
+<p>一個判斷心法：混音跟一檔 ETF 的成分股很像。人聲是台積電，佔了一半以上的權重；第二到第五大是 Kick、Snare、Bass、主旋律樂器；第三條線之後，一般人的耳朵已經聽不太到，再堆下去就接近雜訊了。所以不要貪心愈編愈多，耳朵好的人也就同時聽得到兩三條線。這其實是編曲的事（[混音跟編曲差在哪](/blog/se01-001/））。</p>
 <h3>疊軌順序：先蓋地基，再放主角，配角最後</h3>
-<p>我混歌的順序是固定的，這個順序本身就是一種 workflow:</p>
 <figure><img src="/blog/assets/se01-002-mix-order-flow.png" alt="疊軌順序流程圖" loading="lazy"><figcaption>疊軌順序流程圖</figcaption></figure>
 <div class="tbl"><table><thead><tr><th>順序</th><th>這一軌</th><th>為什麼是這個位置</th></tr></thead><tbody><tr><td>1</td><td>大鼓 + 小鼓</td><td>節奏地基，先讓骨架出來</td></tr><tr><td>2</td><td>貝斯</td><td>貼著鼓進，鎖住低頻</td></tr><tr><td>3</td><td>其他打擊</td><td>貼上去跟前兩者一起聽，確認律動</td></tr><tr><td>4</td><td>人聲</td><td>主角，先把它在空間裡的位置卡好</td></tr><tr><td>5</td><td>旋律樂器</td><td>配角，等人聲定位確認後再擺</td></tr></tbody></table></div>
-<p>這個順序的邏輯是：<strong>先把整首歌的骨架跟主角定位，配角才知道自己該站哪、該多大聲。</strong> 鼓和貝斯是地基；人聲是主角，一定要先卡好它的位置（乾濕比、空間、前後距離）；旋律樂器是配角，它的音量和空間都是相對人聲來調的。</p>
-<p>反過來做就是災難：人聲位置都還沒定，你就先把弦樂、鋼琴調得滿滿的，等人聲一進來，發現整個中頻打架、空間也不對，前面調的全部要重來。先蓋地基、先立主角，是為了少走這種回頭路。</p>
+<p>邏輯是先把整首歌的骨架跟主角定位，配角才知道自己該站哪、該多大聲。反過來做就是災難：人聲位置都還沒定，你就先把弦樂、鋼琴調得滿滿的，等人聲一進來，發現整個中頻打架、空間也不對，前面調的全部要重來。</p>
 <h3>三個最常見的錯誤</h3>
-<p><strong>一、沒對齊音量就判斷 plugin 有沒有效。</strong> 前面講過的 level-match。你沒把處理前後的音量拉齊，聽到「變好了」很可能只是「變大聲了」。養成習慣：每動一個 plugin，回頭把 output 調回原本的響度再判斷。</p>
-<p><strong>二、一次全開、配角先調滿。</strong> 新手很容易一開場就每軌掛滿 plugin、每軌都推很大聲。結果就是總和一疊起來全部打架、爆頻。正確做法是照順序一軌一軌疊，每加一軌都跟已經在場的一起聽。</p>
-<p><strong>三、以為「糊」是 plugin 不夠貴。</strong> 這是最花冤枉錢的誤會。很多聽起來糊、混濁的歌，問題不在外掛不夠高級，是音量根本沒排好、低頻兩三軌在同一個區間打架。先把音量平衡和頻率分工做對，再談要不要換更貴的 plugin。</p>
-<h3>又快又準，靠的是流程不是靈感</h3>
-<p>早期我混一首歌可以耗一整天，東調西調沒個章法，調到最後耳朵也累了、判斷也歪了。後來養成固定的 workflow——先 gain staging、照順序疊軌、每步 level-match——速度跟穩定度就一起上來了。</p>
-<p>音量平衡這關看起來最不起眼，卻是決定一首歌「聽起來乾不乾淨」的分水嶺。它不需要靈感，它需要的是每次都照同一套流程走。把這關做穩，你會發現後面 EQ、壓縮要動的東西，比想像中少很多。</p>
-<p>這些東西我每天都在做。想把你的故事做成一首歌，或編曲、混音卡關想找人看一眼，我在這：<a href="https://mralleys.com/" target="_blank" rel="noopener">https://mralleys.com/</a></p>
+<p><strong>沒對齊音量就判斷 plugin 有沒有效。</strong> 你沒把處理前後的音量拉齊，聽到「變好了」很可能只是「變大聲了」。</p>
+<p><strong>一次全開、配角先調滿。</strong> 新手很容易一開場就每軌掛滿 plugin、每軌都推很大聲，總和一疊起來全部打架。正確做法是照順序一軌一軌疊。</p>
+<p><strong>以為「糊」是 plugin 不夠貴。</strong> 這是最花冤枉錢的誤會。先把音量平衡和頻率分工做對，再談要不要換更貴的 plugin。</p>
+<h3>常見問答</h3>
+<p><strong>一定要 −18 嗎？−12 或 −20 可以嗎？</strong><br>可以，那是一個區間不是一個點。重點是每一軌都在差不多的區間、留得住 headroom。</p>
+<p><strong>我用的是全數位 plugin，還需要管 gain staging 嗎？</strong><br>純數位的容忍度高很多，但 headroom 跟 level-match 這兩件事一樣要做，那跟類比無關。</p>
+<p><strong>音量都排好了還是糊，下一步看什麼？</strong><br>看低頻有沒有兩三軌在同一個區間打架，通常是貝斯跟大鼓，還有編曲是不是太滿。</p>
+<p>---<br>這些東西我每天都在做。想把你的故事做成一首歌，或編曲、混音卡關想找人看一眼，從 <a href="/services/consult/">45 分鐘諮詢</a> 開始；要從頭做整首，看 [完整製作流程](/services/production/）。</p>
 
   </article>
-  <div class="tags"><span>混音 入門</span><span>gain staging</span><span>音量平衡</span><span>dBFS</span><span>疊軌順序</span><span>陳則皞</span><span>音樂製作</span><span>混音</span><span>宅錄</span></div>
+  <div class="tags"><span>混音 入門</span><span>gain staging</span><span>音量平衡</span><span>dBFS</span><span>疊軌順序</span><span>混音 糊</span><span>陳則皞</span><span>音樂製作</span><span>混音</span><span>宅錄</span></div>
   <div class="cta">看完想把自己的歌做出來？從 <a href="/services/consult/">45 分鐘諮詢</a> 開始，把現況跟下一步一次講清楚。</div>
-  <nav class="nav2"><a href="/blog/se01-001/">← 混音是什麼？跟編曲差在哪——一個製作人的白話</a><a href="/blog/se01-003/">樂器越疊越難聽？編曲要學會做減法 →</a></nav>
+  <nav class="nav2"><a href="/blog/se01-001/">← 混音跟編曲差在哪？搞懂誰負責哪一關，你就知道</a><a href="/blog/se01-003/">樂器越疊越難聽？編曲要學會做減法 →</a></nav>
   <footer class="foot">巷弄故事館 · MR. ALLEYS ｜ <a href="/">回首頁</a> ｜ <a href="/blog/">專欄目錄</a> ｜ <a href="/services/consult/">諮詢</a> ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
 </div>
 </body>
