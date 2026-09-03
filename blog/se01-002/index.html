@@ -32,14 +32,14 @@
 <p>gain staging 講白了就是控制「進到每一個 plugin 的音量」，別太大、也別太小。我的習慣是讓每一軌的訊號峰值落在 −12 到 −18 dBFS 之間，原因有三個。</p>
 <p>第一，−18 這個數字不是拍腦袋來的。數位世界裡 0 dBFS 是絕對天花板，過了就是硬破音。而類比時代的參考電平 0 VU，換算到數位大約就落在 −18 dBFS 附近，這是很多錄音室、很多硬體的校準點。你把訊號放在這裡，等於站在類比器材原本被設計來工作的位置上。</p>
 <p>第二，甜蜜點。大多數 plugin，尤其是模擬類比硬體的那種，它們的演算法是針對某個輸入電平調校的。訊號太大，plugin 一進去就已經在硬拗；太小，它抓不到你要的細節，反而把底噪一起放大。</p>
-<p>第三，也是最實際的：留 headroom。你把每軌都塞到接近 0 dBFS，總和疊起來一定爆，而且完全沒空間留給之後的 bus 壓縮、母帶處理（[母帶在做什麼](/blog/se01-013/））。</p>
+<p>第三，也是最實際的：留 headroom。你把每軌都塞到接近 0 dBFS，總和疊起來一定爆，而且完全沒空間留給之後的 bus 壓縮、母帶處理（<a href="/blog/se01-013/">母帶在做什麼</a>）。</p>
 <figure><img src="/blog/assets/se01-002-gain-staging-ladder.png" alt="dBFS 音量表、甜蜜區、headroom 示意" loading="lazy"><figcaption>dBFS 音量表、甜蜜區、headroom 示意</figcaption></figure>
 <h3>比選數字更重要的習慣：處理完把音量調回去</h3>
 <p>一軌經過 plugin 處理後，把音量調回跟處理前一樣大。為什麼？因為人耳天生覺得「大聲＝比較好」。你掛一個 EQ、順手把整體推大了 1、2 dB，A/B 切換的時候就會誤判成「哇這 plugin 有效」，其實它只是變大聲而已。這叫 level-match，做母帶比對、比較 plugin 前後，一定要先做這步，不然你整晚都在被自己的耳朵騙。</p>
 <h3>各軌音量大概落在哪：一張參考表</h3>
 <p>下面這張是流行歌常見的音量平衡落點。注意，這是混音平衡時各軌在整首歌裡的相對位置，跟上面 gain staging 講的「進 plugin 前的峰值」是兩件事。這張表也不是聖經，真正重要的是相對關係，不是把每個數字對死。</p>
 <div class="tbl"><table><thead><tr><th>樂器</th><th>音量（dB）</th><th>一句話定位</th></tr></thead><tbody><tr><td>Vocal</td><td>−18</td><td>主角，整首歌的台積電</td></tr><tr><td>Bass</td><td>−15</td><td>撐住低頻地基</td></tr><tr><td>Kick</td><td>−19</td><td>節奏骨架，跟 Bass 分工低頻</td></tr><tr><td>Snare</td><td>−19</td><td>節奏骨架，給拍點</td></tr><tr><td>Melody</td><td>−20</td><td>旋律樂器，配角</td></tr><tr><td>Perc</td><td>−25</td><td>點綴，加律動</td></tr><tr><td>Hi-hat</td><td>−25</td><td>高頻律動</td></tr><tr><td>FX</td><td>−28</td><td>氣氛、殘響尾巴</td></tr></tbody></table></div>
-<p>一個判斷心法：混音跟一檔 ETF 的成分股很像。人聲是台積電，佔了一半以上的權重；第二到第五大是 Kick、Snare、Bass、主旋律樂器；第三條線之後，一般人的耳朵已經聽不太到，再堆下去就接近雜訊了。所以不要貪心愈編愈多，耳朵好的人也就同時聽得到兩三條線。這其實是編曲的事（[混音跟編曲差在哪](/blog/se01-001/））。</p>
+<p>一個判斷心法：混音跟一檔 ETF 的成分股很像。人聲是台積電，佔了一半以上的權重；第二到第五大是 Kick、Snare、Bass、主旋律樂器；第三條線之後，一般人的耳朵已經聽不太到，再堆下去就接近雜訊了。所以不要貪心愈編愈多，耳朵好的人也就同時聽得到兩三條線。這其實是編曲的事（<a href="/blog/se01-001/">混音跟編曲差在哪</a>）。</p>
 <h3>疊軌順序：先蓋地基，再放主角，配角最後</h3>
 <figure><img src="/blog/assets/se01-002-mix-order-flow.png" alt="疊軌順序流程圖" loading="lazy"><figcaption>疊軌順序流程圖</figcaption></figure>
 <div class="tbl"><table><thead><tr><th>順序</th><th>這一軌</th><th>為什麼是這個位置</th></tr></thead><tbody><tr><td>1</td><td>大鼓 + 小鼓</td><td>節奏地基，先讓骨架出來</td></tr><tr><td>2</td><td>貝斯</td><td>貼著鼓進，鎖住低頻</td></tr><tr><td>3</td><td>其他打擊</td><td>貼上去跟前兩者一起聽，確認律動</td></tr><tr><td>4</td><td>人聲</td><td>主角，先把它在空間裡的位置卡好</td></tr><tr><td>5</td><td>旋律樂器</td><td>配角，等人聲定位確認後再擺</td></tr></tbody></table></div>
@@ -52,7 +52,7 @@
 <p><strong>一定要 −18 嗎？−12 或 −20 可以嗎？</strong><br>可以，那是一個區間不是一個點。重點是每一軌都在差不多的區間、留得住 headroom。</p>
 <p><strong>我用的是全數位 plugin，還需要管 gain staging 嗎？</strong><br>純數位的容忍度高很多，但 headroom 跟 level-match 這兩件事一樣要做，那跟類比無關。</p>
 <p><strong>音量都排好了還是糊，下一步看什麼？</strong><br>看低頻有沒有兩三軌在同一個區間打架，通常是貝斯跟大鼓，還有編曲是不是太滿。</p>
-<p>---<br>這些東西我每天都在做。想把你的故事做成一首歌，或編曲、混音卡關想找人看一眼，從 <a href="/services/consult/">45 分鐘諮詢</a> 開始；要從頭做整首，看 [完整製作流程](/services/production/）。</p>
+<p>---<br>這些東西我每天都在做。想把你的故事做成一首歌，或編曲、混音卡關想找人看一眼，從 <a href="/services/consult/">45 分鐘諮詢</a> 開始；要從頭做整首，看 <a href="/services/production/">完整製作流程</a>。</p>
 
   </article>
   <div class="tags"><span>混音 入門</span><span>gain staging</span><span>音量平衡</span><span>dBFS</span><span>疊軌順序</span><span>混音 糊</span><span>陳則皞</span><span>音樂製作</span><span>混音</span><span>宅錄</span></div>

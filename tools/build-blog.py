@@ -38,7 +38,11 @@ def normalize_punct(line):
         out.append(_fw(line[i:m.start()])); out.append(m.group(0)); i = m.end()
     out.append(_fw(line[i:]))
     s = ''.join(out)
-    s = _fw(s)  # 第二趟：括號轉全形後，鄰接的逗號才看得到全形鄰居
+    # 第二趟（同樣避開受保護區段）：括號轉全形後，鄰接的逗號才看得到全形鄰居
+    out2, j = [], 0
+    for m in PROTECT.finditer(s):
+        out2.append(_fw(s[j:m.start()])); out2.append(m.group(0)); j = m.end()
+    out2.append(_fw(s[j:])); s = ''.join(out2)
     s = re.sub(r'（\s+', '（', s); s = re.sub(r'\s+）', '）', s)
     return s
 
