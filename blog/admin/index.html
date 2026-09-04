@@ -51,7 +51,8 @@ async function showPanel(tok){
   $('#loginBox').hidden=true; $('#panel').hidden=false;
   const mds=items.filter(x=>x.name.endsWith('.md')).map(x=>x.name.replace(/\.md$/,''));
   // 標題從 feed 拿不到全部，直接列 id，並抓 blog/index.html 的標題對照
-  let titles={}; try{ const h=await (await fetch('/blog/index.html?t='+Date.now())).text(); for(const m of h.matchAll(/href="\/blog\/([^/"]+)\/">([^<]+)</g)) titles[m[1]]=m[2]; }catch(e){}
+  // 標題來源：完整目錄頁 /blog/all/（9/4 專欄首頁改成 30 篇 feed 之後，/blog/ 只剩 30 篇且一篇兩個連結，對不到標題→列表全變成 id）。先讀 all，讀不到才退回首頁。
+  let titles={}; for(const src of ['/blog/all/index.html','/blog/index.html']){ try{ const h=await (await fetch(src+'?t='+Date.now())).text(); for(const m of h.matchAll(/href="\/blog\/([^/"]+)\/"[^>]*>([\s\S]*?)<\/a>/g)){ const id=m[1], t=m[2].replace(/<[^>]+>/g,'').trim(); if(id==='all'||!t||titles[id]) continue; titles[id]=t; } if(Object.keys(titles).length>50) break; }catch(e){} }
   const render=(q='')=>{ $('#list').innerHTML=mds.filter(id=>!q||(titles[id]||id).includes(q)||id.includes(q)).map(id=>`<li><a href="/blog/edit/?id=${id}">${titles[id]||id}<span class="d">${id}</span></a></li>`).join(''); };
   render(); $('#q').addEventListener('input',e=>render(e.target.value.trim()));
 }
