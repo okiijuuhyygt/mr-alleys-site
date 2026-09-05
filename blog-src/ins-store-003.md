@@ -7,7 +7,6 @@ date: 2026-09-04
 keywords: [synth-pop 伴奏, 影片配樂 伴奏, 有情緒張力的伴奏, backing track 短影音, 伴奏 WAV MP3]
 tags: [Mr.Alleys, 伴奏, backing track, synth-pop, 宅錄, 影片配樂]
 assets: []
-cover: ins-store-003-cover.jpg
 ---
 先講答案：想找一條有點緊、有點壓抑，但底下一直在跳的伴奏拍影片或錄 demo，〈Muted〉是一條 tense synth-pop（緊繃的合成器流行）底軌，玻璃質感的 arpeggio（琶音，把和弦一顆一顆彈出來）配上剁得很短的節奏，全長三分三十八秒，WAV 跟 MP3 都給，一首不到 1 美金（99 美分）。拍 vlog、錄 demo、練唱都能拿去用。
 

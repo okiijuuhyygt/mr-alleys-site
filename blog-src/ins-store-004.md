@@ -7,7 +7,6 @@ date: 2026-09-04
 keywords: [neo-soul 伴奏 推薦, 放鬆伴奏 錄 demo, 影片配樂 伴奏, AI 伴奏 能商用嗎]
 tags: [Mr.Alleys, 伴奏, backing track, neo-soul, 宅錄, 翻唱]
 assets: []
-cover: ins-store-004-cover.jpg
 ---
 先講答案：想要慢的、軟的、聽起來像慢慢降落的 neo-soul 伴奏，拿去錄 demo、拍影片或練唱，〈Soft Landing〉這條就是為這個用途做的。慢動作 neo-soul（把 R&B 跟靈魂樂再放軟一階的路子），貝斯墊得厚厚的，Rhodes（聲音圓圓的電鋼琴）彈得很輕，全長三分五十一秒，WAV 跟 MP3 都給，一首 99 美分，商用開放。連結在文末。
 
