@@ -7,6 +7,7 @@ date: 2026-08-29
 keywords: [一首歌 兩個版本 怎麼改, demo A版 B版 差在哪, 編曲 版本 差異, type beat 雙版本, 華語 R&B demo]
 tags: [Mr.Alleys, 編曲, demo, type beat, R&B, 寫歌]
 assets: []
+cover: ins-store-008-cover.jpg
 ---
 先講答案：一首歌要做兩個版本，真正該動的只有三件事，長度、編曲密度、情緒的出口擺在哪一段。只換個音色、換一輪 preset（效果器的預設參數）那種微調，聽的人根本分不出來，那只是把同一個版本存成兩個檔名而已。
 

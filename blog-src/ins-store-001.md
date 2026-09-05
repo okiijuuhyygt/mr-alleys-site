@@ -7,6 +7,7 @@ date: 2026-09-04
 keywords: [R&B 慢歌 伴奏, 翻唱伴奏 哪裡找, type beat 怎麼用, 伴奏 商用授權]
 tags: [Mr.Alleys, 伴奏, backing track, 翻唱, R&B, 宅錄]
 assets: []
+cover: ins-store-001-cover.jpg
 ---
 先講答案：如果你手上有一段旋律想直接哼上去（top-line，在現成伴奏上唱出主旋律），或想拍一支翻唱影片、錄一版求婚或紀念日的歌送人，這條〈Migratory Bird〉可以直接開唱。72 BPM 的老派華語 R&B slow jam，電鋼琴（Rhodes，一種音色偏暖偏圓的鍵盤）配指彈吉他，全長四分零四秒，WAV 跟 MP3 都給，一首 7 美金。
 

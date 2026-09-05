@@ -7,6 +7,7 @@ date: 2026-08-15
 keywords: [chill pop 編曲, 夏天的歌 怎麼編, type beat 挑選, BPM 抓多少, 夏日 pop demo]
 tags: [Mr.Alleys, chill pop, type beat, 編曲, 伴奏, 寫歌]
 assets: []
+cover: ins-store-006-cover.jpg
 ---
 先講答案：一首歌聽起來像夏天，關鍵是幾個編曲上的小動作，速度壓在走路的節奏、鼓打得鬆、和弦帶一點漂浮的延伸音、高頻留一層亮亮的空氣感。歌詞裡有沒有出現海，反而是最後才輪到的事。這篇把這幾個動作拆開講，順便講一條我自己做的夏日 chill pop type beat 拿來幹嘛。
 

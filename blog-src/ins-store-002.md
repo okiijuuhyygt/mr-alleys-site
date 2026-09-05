@@ -7,6 +7,7 @@ date: 2026-09-04
 keywords: [慢板 R&B 伴奏, 錄 demo 伴奏, slow jam 伴奏, R&B 伴奏推薦, backing track]
 tags: [Mr.Alleys, 伴奏, backing track, R&B, 宅錄, 翻唱]
 assets: []
+cover: ins-store-002-cover.jpg
 ---
 先講答案：〈Feels Like〉是一條慢板 R&B 底軌，低頻濕黏、和弦帶一層霧，全長三分五十七秒，WAV 跟 MP3 都給，一首 7 美金。想錄 demo、拍翻唱、練唱，開了就能唱，不用另外找人編。
 

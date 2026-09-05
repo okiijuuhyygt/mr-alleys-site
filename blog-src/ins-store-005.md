@@ -7,6 +7,7 @@ date: 2026-08-08
 keywords: [type beat 是什麼, 華語抒情 伴奏, type beat 授權, 參考 demo 怎麼用]
 tags: [Mr.Alleys, type beat, 華語抒情, 伴奏, 寫歌, demo]
 assets: []
+cover: ins-store-005-cover.jpg
 ---
 先講答案：type beat 是一條「照某種風格先做好、等你來填詞填旋律的底」，你買的是編曲，人聲自己補。〈浮力〉這條走華語抒情 ballad，三分四十五秒的完整 demo，連導唱都留在裡面，那個唱的人是 AI，先講清楚，免得你以為店裡藏了個歌手。一條 15 美金，拿到一個 mp3 乾淨檔。
 
