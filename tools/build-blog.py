@@ -180,7 +180,7 @@ figure{margin:18px 0}figure img{max-width:100%;border:2px solid var(--paper-edge
 .chat-fab.hide{transform:translateY(80px);opacity:0;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.chat-fab{transition:none}}
 '''
-def head(title, desc, url, extra=''):
+def head(title, desc, url, extra='', image=None):
     return f'''<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -194,7 +194,7 @@ def head(title, desc, url, extra=''):
 <meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{BASE}/assets/og-image-v3.png?v=20260429c">
+<meta property="og:image" content="{image or (BASE + "/assets/og-image-v3.png?v=20260429c")}">
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.png">
@@ -209,6 +209,13 @@ def article_page(p, prev, nxt):
         {"@type":"Article","@id":url+"#article","headline":p['title'],"description":p['desc'],"inLanguage":"zh-Hant","datePublished":p['date'],"dateModified":TODAY,"mainEntityOfPage":{"@type":"WebPage","@id":url},"keywords":", ".join(p['keywords']+p['tags']),"articleSection":p['series'],
          "author":{"@type":"Person","name":"陳則皞","url":BASE+"/"},"publisher":{"@type":"Organization","name":"巷弄故事館 Mr.Alleys","url":BASE+"/","logo":{"@type":"ImageObject","url":BASE+"/apple-touch-icon.png"}},"image":BASE+"/assets/og-image-v3.png"},
         {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"巷弄故事館","item":BASE+"/"},{"@type":"ListItem","position":2,"name":"音樂製作專欄","item":BASE+"/blog/"},{"@type":"ListItem","position":3,"name":p['title'],"item":url}]}]}
+    # 2026-09-06 耗耗定：每篇分享縮圖用痞客邦那張（frontmatter cover:），只進 og:image，不進頁面
+    cover_url = None
+    if p.get('cover'):
+        csrc = f'{SITE}/blog-src/assets/{p["cover"]}'
+        if os.path.exists(csrc):
+            os.makedirs(f'{SITE}/blog/assets', exist_ok=True); shutil.copy2(csrc, f'{SITE}/blog/assets/{p["cover"]}')
+            cover_url = f'{BASE}/blog/assets/{p["cover"]}'
     figs = ''
     for a in p['assets']:
         src = f'{SITE}/blog-src/assets/{a}'
@@ -220,7 +227,7 @@ def article_page(p, prev, nxt):
             figs += f'<figure><img src="/blog/assets/{a}" alt="{html.escape(cap)}" loading="lazy"><figcaption>{html.escape(cap)}</figcaption></figure>'
     tags = ''.join(f'<span>{html.escape(t)}</span>' for t in dict.fromkeys(p['keywords'] + p['tags']))
     nav = '<nav class="nav2">' + (f'<a href="/blog/{prev["id"]}/">← {html.escape(prev["title"][:22])}</a>' if prev else '<span></span>') + (f'<a href="/blog/{nxt["id"]}/">{html.escape(nxt["title"][:22])} →</a>' if nxt else '<span></span>') + '</nav>'
-    return head(f'{p["title"]}｜巷弄故事館音樂製作專欄', p['desc'], url, f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>\n') + f'''
+    return head(f'{p["title"]}｜巷弄故事館音樂製作專欄', p['desc'], url, f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>\n', image=cover_url) + f'''
 <body>
 <div class="wrap">
   <a class="back" href="/blog/">← 專欄</a>
@@ -318,7 +325,7 @@ for f in sorted(glob.glob(f'{SITE}/blog-src/*.md')):
     pid = fm['id']; pref = fm.get('series_key') or re.match(r'([a-z]+\d*)', pid).group(1)
     title = normalize_punct(fm['title'])
     desc = normalize_punct(re.sub(r'\s+', ' ', re.sub(r'[#*`>|\-]', '', body.strip().split('\n\n')[0])))[:110]
-    posts.append(dict(id=pid, pref=pref, series=fm.get('series', '其他'), title=title, date=fm.get('date', TODAY), keywords=listval(fm.get('keywords')), tags=listval(fm.get('tags')), assets=listval(fm.get('assets')), desc=desc, html=md_to_html(body.strip())))
+    posts.append(dict(id=pid, pref=pref, series=fm.get('series', '其他'), title=title, date=fm.get('date', TODAY), keywords=listval(fm.get('keywords')), tags=listval(fm.get('tags')), assets=listval(fm.get('assets')), cover=(fm.get('cover') or '').strip() or None, desc=desc, html=md_to_html(body.strip())))
 SERIES = {p['pref']: p['series'] for p in posts}
 ids = [p['id'] for p in posts]; assert len(set(ids)) == len(ids), '重複 id'
 
