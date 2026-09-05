@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AI 音樂為什麼分軌拆不乾淨？聊聊它的「基因缺陷」｜巷弄故事館音樂製作專欄</title>
-<meta name="description" content="想把 AI 生成的歌拆成一軌一軌重混，常常拆出來就是糊的。原因很根本：AI 生成聲音的方式比較像在畫一張圖，它一次把整張聲波畫出來，各個聲部從一開始就黏在同一張紙上。這個特性叫頻率黏著感（spectral smearin">
+<title>AI 音樂為什麼分軌拆不乾淨？是工具沒選對，還是天生就這樣？｜巷弄故事館音樂製作專欄</title>
+<meta name="description" content="先講答案：AI 生成的歌拆出來的分軌會糊，這是它天生的毛病，跟你工具選得對不對關係不大。AI 生成聲音的方式比較像在畫一張圖，一次把整張聲波畫出來，各個聲部從一開始就黏在同一張紙上。這個特性叫頻率黏著感（spectral">
 <link rel="canonical" href="https://mralleys.com/blog/se04-004/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
-<meta property="og:title" content="AI 音樂為什麼分軌拆不乾淨？聊聊它的「基因缺陷」｜巷弄故事館音樂製作專欄">
-<meta property="og:description" content="想把 AI 生成的歌拆成一軌一軌重混，常常拆出來就是糊的。原因很根本：AI 生成聲音的方式比較像在畫一張圖，它一次把整張聲波畫出來，各個聲部從一開始就黏在同一張紙上。這個特性叫頻率黏著感（spectral smearin">
+<meta property="og:title" content="AI 音樂為什麼分軌拆不乾淨？是工具沒選對，還是天生就這樣？｜巷弄故事館音樂製作專欄">
+<meta property="og:description" content="先講答案：AI 生成的歌拆出來的分軌會糊，這是它天生的毛病，跟你工具選得對不對關係不大。AI 生成聲音的方式比較像在畫一張圖，一次把整張聲波畫出來，各個聲部從一開始就黏在同一張紙上。這個特性叫頻率黏著感（spectral">
 <meta property="og:url" content="https://mralleys.com/blog/se04-004/">
 <meta property="og:image" content="https://mralleys.com/assets/og-image-v3.png?v=20260429c">
 <meta property="og:locale" content="zh_TW">
@@ -18,28 +18,33 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="https://mralleys.com/blog/feed.xml">
 <link rel="stylesheet" href="/css/blog.css?v=20260904d">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se04-004/#article", "headline": "AI 音樂為什麼分軌拆不乾淨？聊聊它的「基因缺陷」", "description": "想把 AI 生成的歌拆成一軌一軌重混，常常拆出來就是糊的。原因很根本：AI 生成聲音的方式比較像在畫一張圖，它一次把整張聲波畫出來，各個聲部從一開始就黏在同一張紙上。這個特性叫頻率黏著感（spectral smearin", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-03", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se04-004/"}, "keywords": "AI 音樂 分軌, Suno stems, AI 音樂 後製, 陳則皞, 音樂製作, Suno, AI音樂, 分軌", "articleSection": "AI 音樂製作", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "AI 音樂為什麼分軌拆不乾淨？聊聊它的「基因缺陷」", "item": "https://mralleys.com/blog/se04-004/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se04-004/#article", "headline": "AI 音樂為什麼分軌拆不乾淨？是工具沒選對，還是天生就這樣？", "description": "先講答案：AI 生成的歌拆出來的分軌會糊，這是它天生的毛病，跟你工具選得對不對關係不大。AI 生成聲音的方式比較像在畫一張圖，一次把整張聲波畫出來，各個聲部從一開始就黏在同一張紙上。這個特性叫頻率黏著感（spectral", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-05", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se04-004/"}, "keywords": "AI 音樂 分軌, Suno stems 分軌不乾淨, 分軌 拆不開, AI 音樂 後製, 陳則皞, 音樂製作, Suno, AI音樂, 分軌", "articleSection": "AI 音樂製作", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "AI 音樂為什麼分軌拆不乾淨？是工具沒選對，還是天生就這樣？", "item": "https://mralleys.com/blog/se04-004/"}]}]}</script>
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="/blog/">← 專欄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · AI 音樂製作</div>
-  <h1>AI 音樂為什麼分軌拆不乾淨？聊聊它的「基因缺陷」</h1>
+  <h1>AI 音樂為什麼分軌拆不乾淨？是工具沒選對，還是天生就這樣？</h1>
   <div class="meta"><span>陳則皞</span><span>2026-09-04</span><span><a href="/blog/all/#se04">AI 音樂製作</a></span></div>
   <article>
-<p>想把 AI 生成的歌拆成一軌一軌重混，常常拆出來就是糊的。原因很根本：AI 生成聲音的方式比較像在畫一張圖，它一次把整張聲波畫出來，各個聲部從一開始就黏在同一張紙上。這個特性叫頻率黏著感（spectral smearing），是 AI 音樂的基因缺陷，不是你工具沒買對。</p>
-<h3>MIDI 的糊和 AI 的糊，是兩回事</h3>
-<p>同樣聽起來糊，來源差很多。MIDI 做出來的糊是「物理打架」——兩個音撞在一起，你把音量、頻率錯開就解得開，因為每個聲部本來就是獨立存在的。AI 的糊是「基因融合」——它們在生成那一刻就長在一起了，你拿到的分軌只是把同一張畫切成幾塊，切線上永遠帶著對方的殘影。認清這件事很重要，你才不會花三小時想把一個本質上分不開的東西分開。</p>
-<h3>拿到 stems 之後，務實一點</h3>
-<p>Suno 現在能直接下載 stems（分軌），也有 UVR（Ultimate Vocal Remover，人聲分離工具）這種第三方方案。實務上我兩個都用，但心裡有數：分出來的伴奏常留奇怪高頻，人聲邊緣會有殘影。有時候適度 EQ 過的 UVR 伴奏，品質反而比原生 stems 好，這要看歌，沒有標準答案，得一首一首試。</p>
+<p>先講答案：AI 生成的歌拆出來的分軌會糊，這是它天生的毛病，跟你工具選得對不對關係不大。AI 生成聲音的方式比較像在畫一張圖，一次把整張聲波畫出來，各個聲部從一開始就黏在同一張紙上。這個特性叫頻率黏著感（spectral smearing），是 AI 音樂的基因缺陷，你拆不乾淨很正常。</p>
+<p>想拆 Suno 生的歌來重混，先搞懂你耳朵聽到的到底是哪一種糊，再決定要不要硬拆，會少走很多冤枉路。如果你還沒處理過 Suno 那層毛毛的雜訊，先看<a href="/blog/se04-003/">Suno 的歌總有一層毛毛的雜訊</a>，那是另一個常見的問題。</p>
+<h3>先分清楚：你聽到的糊，是哪一種</h3>
+<p>同樣聽起來糊，來源差很多。MIDI 做出來的糊是「物理打架」，兩個音撞在一起，你把音量、頻率錯開就解得開，因為每個聲部本來就是獨立存在的。AI 的糊是「基因融合」，它們在生成那一刻就長在一起了，你拿到的分軌只是把同一張畫切成幾塊，切線上永遠帶著對方的殘影。認清這件事很重要，你才不會花三小時想把一個本質上分不開的東西分開。</p>
+<h3>拿到 stems 之後，務實一點做</h3>
+<p>Suno 現在能直接下載 stems（分軌），也有 UVR（Ultimate Vocal Remover，人聲分離工具）這種第三方方案。實務上我兩個都用，但心裡有數：分出來的伴奏常留奇怪高頻，人聲邊緣會有殘影。有時候適度 EQ 過的 UVR 伴奏，品質反而比原生 stems 好，這要看歌，沒有標準答案，得一首一首試。拿到 stems 之後要進一步混音，我的插件處理順序寫在<a href="/blog/se04-009/">Suno 生成後怎麼混音</a>這篇。</p>
 <h3>與其硬拆，不如重蓋</h3>
 <p>我後來的做法通常是：把 AI 當成一張很好的參考底稿，而不是最終素材。真正要乾淨、要能修改，就在關鍵聲部補真實樂器、換上真人聲，讓「拆不開」的部分退到背景去墊底。這比跟頻譜殘影死磕划算太多，成品也更像人做的。</p>
-<p>寫這篇的人白天在做編曲混音、晚上在寫歌。客製化歌曲、製作、寫歌課都接。</p><p class="btn-row"><a class="btn" href="/services/consult/">找我聊聊 →</a></p>
+<h3>常見問答</h3>
+<p><strong>用 UVR 分出來的人聲軌，邊緣還是有殘影，正常嗎？</strong><br>正常。那是頻率黏著感造成的，不是你操作錯。適度 EQ 修一下高頻，或是接受它、把它墊在背景，比硬清乾淨划算。</p>
+<p><strong>Suno 原生 stems 跟 UVR 分出來的，哪個比較好用？</strong><br>沒有標準答案，要看那首歌。我兩個都會試，有時候原生 stems 的伴奏比較完整，有時候 UVR 過一輪 EQ 後反而更乾淨，一首一首試才知道。</p>
+<p><strong>分軌拆不乾淨，是不是代表這首歌不能用了？</strong><br>不是。你不需要拆到完美乾淨才能用，關鍵聲部換真樂器、真人聲蓋過去，拆不開的部分退到背景墊底就好，這樣做出來反而更像人做的。</p>
+<p>---<br>我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。AI 生成的歌拆軌拆不乾淨，想蓋掉那層基因缺陷做出真正能用的成品，從 <a href="/services/consult/">45 分鐘諮詢</a> 開始；想從頭把一首歌做完整，看 <a href="/services/production/">完整製作流程</a>。</p>
 
   </article>
-  <div class="tags"><span>AI 音樂 分軌</span><span>Suno stems</span><span>AI 音樂 後製</span><span>陳則皞</span><span>音樂製作</span><span>Suno</span><span>AI音樂</span><span>分軌</span></div>
+  <div class="tags"><span>AI 音樂 分軌</span><span>Suno stems 分軌不乾淨</span><span>分軌 拆不開</span><span>AI 音樂 後製</span><span>陳則皞</span><span>音樂製作</span><span>Suno</span><span>AI音樂</span><span>分軌</span></div>
   <div class="cta"><span>看完想把自己的歌做出來？從 45 分鐘諮詢開始，把現況跟下一步一次講清楚。</span><a class="btn" href="/services/consult/">預約諮詢 →</a></div>
-  <nav class="nav2"><a href="/blog/se04-003/">← Suno 的歌總有一層毛毛的雜訊？它從哪來、</a><a href="/blog/se04-005/">AI 歌曲能上架 Spotify、KKBOX →</a></nav>
+  <nav class="nav2"><a href="/blog/se04-003/">← Suno 的歌為什麼有一層毛毛的雜訊？怎麼清</a><a href="/blog/se04-005/">AI 歌曲能上架 Spotify、KKBOX →</a></nav>
   <footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專欄</a> ｜ <a href="/blog/all/">目錄</a></footer>
 </div>
 <a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>

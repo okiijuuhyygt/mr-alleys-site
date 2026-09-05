@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Logic 怎麼把 AI 生的鼓變成可以編的樂器？我做案子的流程｜巷弄故事館音樂製作專欄</title>
-<meta name="description" content="拿 Suno 或任何 AI 生出來的鼓，是一整條混在一起的音檔，你沒辦法一顆一顆改。在一個 Y2K 風格的案子裡，我常用的做法是用 Logic Pro 把它「切片」變成一組取樣樂器，每一個鼓點變成一個 pad，之後就能用">
+<title>Logic 怎麼把 AI 生的鼓拆成可以編的樂器？我做案子的流程｜巷弄故事館音樂製作專欄</title>
+<meta name="description" content="先講答案：拿 Suno 或任何 AI 生出來的鼓，是一整條混在一起的音檔，你沒辦法一顆一顆改，但用 Logic Pro 的「切片變 sampler」功能，可以把它拆成一組取樣樂器，每一個鼓點變成一個 pad，之後就能用 ">
 <link rel="canonical" href="https://mralleys.com/blog/se05-006/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
-<meta property="og:title" content="Logic 怎麼把 AI 生的鼓變成可以編的樂器？我做案子的流程｜巷弄故事館音樂製作專欄">
-<meta property="og:description" content="拿 Suno 或任何 AI 生出來的鼓，是一整條混在一起的音檔，你沒辦法一顆一顆改。在一個 Y2K 風格的案子裡，我常用的做法是用 Logic Pro 把它「切片」變成一組取樣樂器，每一個鼓點變成一個 pad，之後就能用">
+<meta property="og:title" content="Logic 怎麼把 AI 生的鼓拆成可以編的樂器？我做案子的流程｜巷弄故事館音樂製作專欄">
+<meta property="og:description" content="先講答案：拿 Suno 或任何 AI 生出來的鼓，是一整條混在一起的音檔，你沒辦法一顆一顆改，但用 Logic Pro 的「切片變 sampler」功能，可以把它拆成一組取樣樂器，每一個鼓點變成一個 pad，之後就能用 ">
 <meta property="og:url" content="https://mralleys.com/blog/se05-006/">
 <meta property="og:image" content="https://mralleys.com/assets/og-image-v3.png?v=20260429c">
 <meta property="og:locale" content="zh_TW">
@@ -18,33 +18,37 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="https://mralleys.com/blog/feed.xml">
 <link rel="stylesheet" href="/css/blog.css?v=20260904d">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se05-006/#article", "headline": "Logic 怎麼把 AI 生的鼓變成可以編的樂器？我做案子的流程", "description": "拿 Suno 或任何 AI 生出來的鼓，是一整條混在一起的音檔，你沒辦法一顆一顆改。在一個 Y2K 風格的案子裡，我常用的做法是用 Logic Pro 把它「切片」變成一組取樣樂器，每一個鼓點變成一個 pad，之後就能用", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-03", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se05-006/"}, "keywords": "Logic Pro教學, 編曲教學, AI鼓, 鼓編曲, Suno教學, 陳則皞, 音樂製作, Logic Pro, 編曲, 鼓", "articleSection": "錄音室日誌", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Logic 怎麼把 AI 生的鼓變成可以編的樂器？我做案子的流程", "item": "https://mralleys.com/blog/se05-006/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se05-006/#article", "headline": "Logic 怎麼把 AI 生的鼓拆成可以編的樂器？我做案子的流程", "description": "先講答案：拿 Suno 或任何 AI 生出來的鼓，是一整條混在一起的音檔，你沒辦法一顆一顆改，但用 Logic Pro 的「切片變 sampler」功能，可以把它拆成一組取樣樂器，每一個鼓點變成一個 pad，之後就能用 ", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-05", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se05-006/"}, "keywords": "AI鼓 拆軌, Logic Pro 切片鼓, Suno 鼓 重編, Drum Machine Designer 教學, 陳則皞, 音樂製作, Logic Pro, 編曲, 鼓", "articleSection": "錄音室日誌", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Logic 怎麼把 AI 生的鼓拆成可以編的樂器？我做案子的流程", "item": "https://mralleys.com/blog/se05-006/"}]}]}</script>
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="/blog/">← 專欄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · 錄音室日誌</div>
-  <h1>Logic 怎麼把 AI 生的鼓變成可以編的樂器？我做案子的流程</h1>
+  <h1>Logic 怎麼把 AI 生的鼓拆成可以編的樂器？我做案子的流程</h1>
   <div class="meta"><span>陳則皞</span><span>2026-09-04</span><span><a href="/blog/all/#se05">錄音室日誌</a></span></div>
   <article>
-<p>拿 Suno 或任何 AI 生出來的鼓，是一整條混在一起的音檔，你沒辦法一顆一顆改。在一個 Y2K 風格的案子裡，我常用的做法是用 Logic Pro 把它「切片」變成一組取樣樂器，每一個鼓點變成一個 pad，之後就能用 MIDI 隨便重編節奏，想抽掉哪顆、想加什麼都行。</p>
+<p>先講答案：拿 Suno 或任何 AI 生出來的鼓，是一整條混在一起的音檔，你沒辦法一顆一顆改，但用 Logic Pro 的「切片變 sampler」功能，可以把它拆成一組取樣樂器，每一個鼓點變成一個 pad，之後就能用 MIDI 隨便重編節奏，想抽掉哪顆、想加什麼都行。在一個 Y2K 風格的案子裡，我常用的就是這招。</p>
+<p>這篇先講怎麼切、切的時候要注意哪三個設定，再講如果只想換掉某一軌音色（不動節奏）該怎麼做，最後講最常踩的一個雷。</p>
 <h3>核心動作：切片變 sampler</h3>
 <p>Track 選單 → Convert Regions to New Sampler Track，快捷鍵 ⌃E。對話框裡有三個重點：</p>
 <ul><li><strong>Create Zones From 選 Transient Markers</strong>（讓每個鼓點各自變成一顆 sample），不要選 Regions，那會把整條當成一顆。</li><li><strong>Instrument 選 Drum Machine Designer</strong>（Logic 內建的 16 格 pad 鼓組介面）。</li><li><strong>勾 Create 1Shot Zones</strong>，鼓的 sample 播完就停、不會 loop。</li></ul>
-<p>切完之後，Logic 還會順手幫你生一條 MIDI，記錄每個切片原本的時間點，直接播就是重建版的原鼓。這條 MIDI 就是威力所在——你可以拿它改節奏、只留 kick、變速不變調。</p>
+<p>切完之後，Logic 還會順手幫你生一條 MIDI，記錄每個切片原本的時間點，直接播就是重建版的原鼓。這條 MIDI 就是威力所在，你可以拿它改節奏、只留 kick、變速不變調。AI 生的鼓常常是這樣一整條音檔焊死的（這其實跟<a href="/blog/se04-004/">AI 音樂為什麼分軌拆不乾淨</a>是同一個根本問題），切片變 sampler 就是繞過這個限制的做法。</p>
 <h3>想換掉某一軌的音色：Audio 轉 MIDI</h3>
 <p>如果某一軌（例如 hihat）你想保留原本的節奏跟力度，只是想換成更好聽的 sample，用 Track 選單 → Replace or Double Drum Track，快捷鍵 ⌃D。它會分析每個 transient（鼓點的瞬間衝擊）生成 MIDI，而且力度（velocity）會跟著原音的響度走，不是死板板的固定值。</p>
-<p>一個常被忽略的設定：Threshold 要放寬到 -30dB 左右，預設的 -12 太嚴格，小聲的鼓點會偵測不到。</p>
+<p>一個常被忽略的設定：Threshold 要放寬到 −30dB 左右，預設的 −12 太嚴格，小聲的鼓點會偵測不到。</p>
 <h3>常踩的雷：切出來只有一顆</h3>
 <p>如果切完只有一個 pad 有聲、其他全空，幾乎都是 transient 偵測失敗。看對話框那行小字，如果寫「from 1 selected transient markers」，看到那個 1 就中了。</p>
-<p>解法：先把軌道的 Flex 模式打開（任一種都行，Slicing 最常用），雙擊 region 進 Audio File Editor，按 Cmd+T 強制重新偵測一次，marker 對了再回去按 ⌃E。順帶提醒，這兩個對話框會記住你上次的設定，每次切之前都檢查一遍，不要相信它預設就是對的。</p>
-<p>---</p>
-<p>寫這篇的人白天在做編曲混音、晚上在寫歌。客製化歌曲、製作、寫歌課都接。</p><p class="btn-row"><a class="btn" href="/services/consult/">找我聊聊 →</a></p>
+<p>解法：先把軌道的 Flex 模式打開（任一種都行，Slicing 最常用），雙擊 region 進 Audio File Editor，按 Cmd+T 強制重新偵測一次，marker 對了再回去按 ⌃E。順帶提醒，這兩個對話框會記住你上次的設定，每次切之前都檢查一遍，不要相信它預設就是對的。把 AI 生成的東西拆開重編之後，後面要不要再處理人聲或整體質感，可以參考<a href="/blog/se05-003/">Suno 生出來的歌聲很數位、很毛</a>那篇的做法。</p>
+<h3>常見問答</h3>
+<p><strong>切片變 sampler 跟直接錄一組真鼓有什麼不一樣？</strong><br>切片保留了 AI 原本的音色跟細節，只是把節奏解放出來讓你能改；真鼓是完全重做一次力度跟音色。案子趕、只是想調整節奏或抽換幾顆鼓的時候，切片快很多。</p>
+<p><strong>Transient Markers 跟 Regions 選錯了會怎樣？</strong><br>選 Regions 的話整條音檔會被當成一顆 sample，你拖 MIDI 上去也只會整條一起播，跟原本沒兩樣，等於白切。一定要選 Transient Markers 才會逐顆拆開。</p>
+<p><strong>切完的 MIDI 音符對不上原本的鼓點怎麼辦？</strong><br>通常是 transient 偵測本身就抓錯位置，不是切片這步的問題。回到 Audio File Editor 手動拖 marker 對齊，或先把 Threshold 調整過再重新偵測一次，對齊了再切一次通常就準了。</p>
+<p>---<br>我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。手上有一條 AI 生的鼓想拆開重編，從 <a href="/services/consult/">45 分鐘諮詢</a> 開始，帶著專案來聊最快；想從頭把一首歌做完整，看 <a href="/services/production/">完整製作流程</a>。</p>
 
   </article>
-  <div class="tags"><span>Logic Pro教學</span><span>編曲教學</span><span>AI鼓</span><span>鼓編曲</span><span>Suno教學</span><span>陳則皞</span><span>音樂製作</span><span>Logic Pro</span><span>編曲</span><span>鼓</span></div>
+  <div class="tags"><span>AI鼓 拆軌</span><span>Logic Pro 切片鼓</span><span>Suno 鼓 重編</span><span>Drum Machine Designer 教學</span><span>陳則皞</span><span>音樂製作</span><span>Logic Pro</span><span>編曲</span><span>鼓</span></div>
   <div class="cta"><span>看完想把自己的歌做出來？從 45 分鐘諮詢開始，把現況跟下一步一次講清楚。</span><a class="btn" href="/services/consult/">預約諮詢 →</a></div>
-  <nav class="nav2"><a href="/blog/se05-005/">← Reverb（殘響）是什麼？混音時我怎麼用—</a><a href="/blog/se05-007/">808 跟大鼓打架、低頻糊成一團？我的處理順 →</a></nav>
+  <nav class="nav2"><a href="/blog/se05-005/">← Reverb（殘響）要怎麼用？混音時我怎麼決</a><a href="/blog/se05-007/">808 跟大鼓一直打架、低頻糊成一團？我的處 →</a></nav>
   <footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專欄</a> ｜ <a href="/blog/all/">目錄</a></footer>
 </div>
 <a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>

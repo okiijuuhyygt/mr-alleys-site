@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Suno 生成後怎麼混音？我的插件處理順序｜巷弄故事館音樂製作專欄</title>
-<meta name="description" content="處理 AI 加真人聲的混音，順序比你用哪個外掛還重要。我的鐵則是：先去噪、再去齒音、然後才修音準，最後才進常規混音鏈。順序錯了，後面全部歪。這篇把為什麼要這樣排講清楚。">
+<title>Suno 生成後怎麼混音？插件處理順序錯了，後面全部歪｜巷弄故事館音樂製作專欄</title>
+<meta name="description" content="先講答案：處理 AI 加真人聲的混音，順序比你用哪個外掛還重要。我的鐵則是先去噪、再去齒音、然後才修音準，最後才進常規混音鏈。順序錯了，後面全部歪。">
 <link rel="canonical" href="https://mralleys.com/blog/se04-009/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
-<meta property="og:title" content="Suno 生成後怎麼混音？我的插件處理順序｜巷弄故事館音樂製作專欄">
-<meta property="og:description" content="處理 AI 加真人聲的混音，順序比你用哪個外掛還重要。我的鐵則是：先去噪、再去齒音、然後才修音準，最後才進常規混音鏈。順序錯了，後面全部歪。這篇把為什麼要這樣排講清楚。">
+<meta property="og:title" content="Suno 生成後怎麼混音？插件處理順序錯了，後面全部歪｜巷弄故事館音樂製作專欄">
+<meta property="og:description" content="先講答案：處理 AI 加真人聲的混音，順序比你用哪個外掛還重要。我的鐵則是先去噪、再去齒音、然後才修音準，最後才進常規混音鏈。順序錯了，後面全部歪。">
 <meta property="og:url" content="https://mralleys.com/blog/se04-009/">
 <meta property="og:image" content="https://mralleys.com/assets/og-image-v3.png?v=20260429c">
 <meta property="og:locale" content="zh_TW">
@@ -18,28 +18,34 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="https://mralleys.com/blog/feed.xml">
 <link rel="stylesheet" href="/css/blog.css?v=20260904d">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se04-009/#article", "headline": "Suno 生成後怎麼混音？我的插件處理順序", "description": "處理 AI 加真人聲的混音，順序比你用哪個外掛還重要。我的鐵則是：先去噪、再去齒音、然後才修音準，最後才進常規混音鏈。順序錯了，後面全部歪。這篇把為什麼要這樣排講清楚。", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-03", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se04-009/"}, "keywords": "AI 音樂 混音, Suno 後製, 混音 順序, 陳則皞, 音樂製作, Suno, AI音樂, 混音", "articleSection": "AI 音樂製作", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Suno 生成後怎麼混音？我的插件處理順序", "item": "https://mralleys.com/blog/se04-009/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se04-009/#article", "headline": "Suno 生成後怎麼混音？插件處理順序錯了，後面全部歪", "description": "先講答案：處理 AI 加真人聲的混音，順序比你用哪個外掛還重要。我的鐵則是先去噪、再去齒音、然後才修音準，最後才進常規混音鏈。順序錯了，後面全部歪。", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-05", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se04-009/"}, "keywords": "Suno 混音 順序, AI 人聲 混音, 去噪 去齒音, Suno 後製, 陳則皞, 音樂製作, Suno, AI音樂, 混音", "articleSection": "AI 音樂製作", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Suno 生成後怎麼混音？插件處理順序錯了，後面全部歪", "item": "https://mralleys.com/blog/se04-009/"}]}]}</script>
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="/blog/">← 專欄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · AI 音樂製作</div>
-  <h1>Suno 生成後怎麼混音？我的插件處理順序</h1>
+  <h1>Suno 生成後怎麼混音？插件處理順序錯了，後面全部歪</h1>
   <div class="meta"><span>陳則皞</span><span>2026-09-04</span><span><a href="/blog/all/#se04">AI 音樂製作</a></span></div>
   <article>
-<p>處理 AI 加真人聲的混音，順序比你用哪個外掛還重要。我的鐵則是：先去噪、再去齒音、然後才修音準，最後才進常規混音鏈。順序錯了，後面全部歪。這篇把為什麼要這樣排講清楚。</p>
+<p>先講答案：處理 AI 加真人聲的混音，順序比你用哪個外掛還重要。我的鐵則是先去噪、再去齒音、然後才修音準，最後才進常規混音鏈。順序錯了，後面全部歪。</p>
+<p>這篇先講這個順序怎麼排，再講伴奏太滿、鼓太軟這兩個 AI 常見的毛病怎麼救。如果你想先搞懂那層毛毛的雜訊是哪來的，可以看<a href="/blog/se04-003/">這篇</a>。</p>
 <h3>順序：去噪 → 去齒音 → 修音準 → 混音</h3>
-<p>第一步 de-noise（去噪，用 RX 的 Spectral De-noise 清掉 AI 的頻譜殘渣）。第二步 de-ess（去齒音，把「ㄙ、ㄘ」那種刺耳的高頻壓下來）。第三步才上 Melodyne（修音準的工具）。為什麼修音準要放這麼後面？因為 Melodyne 是靠分析音高工作的，你要是先修音準、雜訊還在，它會把雜訊也當成一個音高去抓，修出一堆鬼影。先把髒東西清乾淨，它才看得清人聲真正的音高。這個順序我吃過虧才記牢的。</p>
+<p>第一步 de-noise（去噪，用 RX 的 Spectral De-noise 清掉 AI 的頻譜殘渣）。第二步 de-ess（去齒音，把「ㄙ、ㄘ」那種刺耳的高頻壓下來）。第三步才上 Melodyne（修音準的工具）。</p>
+<p>為什麼修音準要放這麼後面？因為 Melodyne 是靠分析音高工作的，你要是先修音準、雜訊還在，它會把雜訊也當成一個音高去抓，修出一堆鬼影。先把髒東西清乾淨，它才看得清人聲真正的音高。這個順序我吃過虧才記牢的，跳過任何一步都會在後面付出更多時間。</p>
 <h3>給人聲讓路：Mid-Side EQ</h3>
-<p>AI 伴奏最麻煩的是頻率太滿，人聲一進去就被蓋住。我會對伴奏做 Mid-Side EQ（把中間和兩側分開處理的等化器），衰減中間聲道 300Hz 到 2kHz 那段，那正是人聲的家。把中間挖一個位置出來，人聲不用開大聲就浮得上來，整體也不會糊成一團。</p>
+<p>AI 伴奏最麻煩的是頻率太滿，人聲一進去就被蓋住。我會對伴奏做 Mid-Side EQ（把中間和兩側分開處理的等化器），衰減中間聲道 300Hz 到 2kHz 那段，那正是人聲的家。把中間挖一個位置出來，人聲不用開大聲就浮得上來，整體也不會糊成一團。這個做法跟一般編曲替人聲讓位的邏輯是同一件事，只是這次是對著整條 AI 伴奏動刀，而不是單一樂器。</p>
 <h3>讓鼓跳出來、補一層真高頻</h3>
-<p>AI 的鼓常常軟軟的沒有衝勁。我會用 Transient Shaper（瞬態塑形器，專門調整聲音「打」出來那一下的力道）加重鼓的 attack，讓鼓點跳出來。再疊一層真實的 shaker 或 hi-hat——可以是 Splice 的取樣或 Logic 內建的 Drummer——用真高頻蓋在 AI 的假高頻上面，騙過耳朵，整首瞬間有空氣感。這幾招疊起來，AI 味就掉掉一大半。</p>
-<p>這些東西我每天都在做。想把你的故事做成一首歌，或編曲混音卡關想找人看一眼，我在這。</p><p class="btn-row"><a class="btn" href="/services/consult/">找我聊聊 →</a></p>
+<p>AI 的鼓常常軟軟的沒有衝勁。我會用 Transient Shaper（瞬態塑形器，專門調整聲音「打」出來那一下的力道）加重鼓的 attack，讓鼓點跳出來。再疊一層真實的 shaker 或 hi-hat，可以是 Splice 的取樣或 Logic 內建的 Drummer，用真高頻蓋在 AI 的假高頻上面，騙過耳朵，整首瞬間有空氣感。這幾招疊起來，AI 味就掉掉一大半。</p>
+<h3>常見問答</h3>
+<p><strong>照這個順序做，還是覺得人聲怪怪的，是哪裡出錯？</strong><br>回頭檢查去噪那一步有沒有清乾淨。雜訊沒清乾淨就進 Melodyne，後面修音準會修出鬼影，聽起來就是那種說不出哪裡怪的違和感。</p>
+<p><strong>沒有 RX 這類專業去噪外掛，可以跳過去噪直接修音準嗎？</strong><br>可以先試著用內建的降噪或簡單的 EQ 高通把明顯的頻譜殘渣切掉，能清多少算多少，順序不能反。就算工具陽春，先去噪再修音準這個大方向不能省。</p>
+<p><strong>這套順序只適用 Suno，其他 AI 生成的歌也一樣嗎？</strong><br>一樣。只要是 AI 生成人聲，都會有類似的頻譜殘渣跟音準假象問題，去噪、去齒音、修音準、混音這個順序是通用邏輯，不是 Suno 專屬的偏方。</p>
+<p>---<br>我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。手上的 Suno demo 卡在混音這一關，帶著檔案來聊最快，從 <a href="/services/consult/">45 分鐘諮詢</a> 開始；想把它做成完整發行的成品，看 <a href="/services/production/">完整製作流程</a>，人聲部分需要更細的處理可以看 <a href="/services/vocal/">配唱製作</a>。</p>
 
   </article>
-  <div class="tags"><span>AI 音樂 混音</span><span>Suno 後製</span><span>混音 順序</span><span>陳則皞</span><span>音樂製作</span><span>Suno</span><span>AI音樂</span><span>混音</span></div>
+  <div class="tags"><span>Suno 混音 順序</span><span>AI 人聲 混音</span><span>去噪 去齒音</span><span>Suno 後製</span><span>陳則皞</span><span>音樂製作</span><span>Suno</span><span>AI音樂</span><span>混音</span></div>
   <div class="cta"><span>看完想把自己的歌做出來？從 45 分鐘諮詢開始，把現況跟下一步一次講清楚。</span><a class="btn" href="/services/consult/">預約諮詢 →</a></div>
-  <nav class="nav2"><a href="/blog/se04-008/">← AI 幫你生了一個 demo，然後呢？把它變</a><a href="/blog/se04-010/">AI 伴奏配真人聲，為什麼是目前最穩的做法 →</a></nav>
+  <nav class="nav2"><a href="/blog/se04-008/">← AI幫你生了一個demo，然後呢？從demo</a><a href="/blog/se04-010/">AI 伴奏配真人聲，為什麼是目前最穩的做法？ →</a></nav>
   <footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專欄</a> ｜ <a href="/blog/all/">目錄</a></footer>
 </div>
 <a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>

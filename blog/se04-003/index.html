@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Suno 的歌總有一層毛毛的雜訊？它從哪來、怎麼清｜巷弄故事館音樂製作專欄</title>
-<meta name="description" content="Suno 生出來的歌，高頻常有一層毛毛的、沙沙的東西。它跟傳統白噪音的來頭不一樣，學名叫擴散模型的頻譜殘渣（spectral artifacts，模型在高頻隨機填音訊、假裝很亮留下的碎渣）。它麻煩在會跟人聲一起呼吸，所以">
+<title>Suno 的歌為什麼有一層毛毛的雜訊？怎麼清乾淨｜巷弄故事館音樂製作專欄</title>
+<meta name="description" content="先講答案：趕件的話，掛一個低通濾波器把 10 到 12kHz 以上砍掉，疊一層乾淨的 shaker 或 hihat 補回高頻，人耳自己會忽略底下的瑕疵，這是最快的解法。時間夠、想做得乾淨，就得用工具把噪音那一層真的挖掉，">
 <link rel="canonical" href="https://mralleys.com/blog/se04-003/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
-<meta property="og:title" content="Suno 的歌總有一層毛毛的雜訊？它從哪來、怎麼清｜巷弄故事館音樂製作專欄">
-<meta property="og:description" content="Suno 生出來的歌，高頻常有一層毛毛的、沙沙的東西。它跟傳統白噪音的來頭不一樣，學名叫擴散模型的頻譜殘渣（spectral artifacts，模型在高頻隨機填音訊、假裝很亮留下的碎渣）。它麻煩在會跟人聲一起呼吸，所以">
+<meta property="og:title" content="Suno 的歌為什麼有一層毛毛的雜訊？怎麼清乾淨｜巷弄故事館音樂製作專欄">
+<meta property="og:description" content="先講答案：趕件的話，掛一個低通濾波器把 10 到 12kHz 以上砍掉，疊一層乾淨的 shaker 或 hihat 補回高頻，人耳自己會忽略底下的瑕疵，這是最快的解法。時間夠、想做得乾淨，就得用工具把噪音那一層真的挖掉，">
 <meta property="og:url" content="https://mralleys.com/blog/se04-003/">
 <meta property="og:image" content="https://mralleys.com/assets/og-image-v3.png?v=20260429c">
 <meta property="og:locale" content="zh_TW">
@@ -18,29 +18,36 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="https://mralleys.com/blog/feed.xml">
 <link rel="stylesheet" href="/css/blog.css?v=20260904d">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se04-003/#article", "headline": "Suno 的歌總有一層毛毛的雜訊？它從哪來、怎麼清", "description": "Suno 生出來的歌，高頻常有一層毛毛的、沙沙的東西。它跟傳統白噪音的來頭不一樣，學名叫擴散模型的頻譜殘渣（spectral artifacts，模型在高頻隨機填音訊、假裝很亮留下的碎渣）。它麻煩在會跟人聲一起呼吸，所以", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-03", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se04-003/"}, "keywords": "Suno 雜訊, AI 音樂 音質, Suno 去噪, 陳則皞, 音樂製作, Suno, AI音樂, 混音", "articleSection": "AI 音樂製作", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Suno 的歌總有一層毛毛的雜訊？它從哪來、怎麼清", "item": "https://mralleys.com/blog/se04-003/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se04-003/#article", "headline": "Suno 的歌為什麼有一層毛毛的雜訊？怎麼清乾淨", "description": "先講答案：趕件的話，掛一個低通濾波器把 10 到 12kHz 以上砍掉，疊一層乾淨的 shaker 或 hihat 補回高頻，人耳自己會忽略底下的瑕疵，這是最快的解法。時間夠、想做得乾淨，就得用工具把噪音那一層真的挖掉，", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-05", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se04-003/"}, "keywords": "Suno 雜訊 怎麼清, AI 音樂 毛毛的, Suno 音質 差, 去除 AI 雜訊, 陳則皞, 音樂製作, Suno, AI音樂, 混音", "articleSection": "AI 音樂製作", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Suno 的歌為什麼有一層毛毛的雜訊？怎麼清乾淨", "item": "https://mralleys.com/blog/se04-003/"}]}]}</script>
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="/blog/">← 專欄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · AI 音樂製作</div>
-  <h1>Suno 的歌總有一層毛毛的雜訊？它從哪來、怎麼清</h1>
+  <h1>Suno 的歌為什麼有一層毛毛的雜訊？怎麼清乾淨</h1>
   <div class="meta"><span>陳則皞</span><span>2026-09-04</span><span><a href="/blog/all/#se04">AI 音樂製作</a></span></div>
   <article>
-<p>Suno 生出來的歌，高頻常有一層毛毛的、沙沙的東西。它跟傳統白噪音的來頭不一樣，學名叫擴散模型的頻譜殘渣（spectral artifacts，模型在高頻隨機填音訊、假裝很亮留下的碎渣）。它麻煩在會跟人聲一起呼吸，所以硬砍高頻只會讓歌變悶。下面講三種我實際在用的清法，由細到快排。</p>
-<h3>首選：SpectraLayers 拆出噪音層</h3>
-<p>我最常用 SpectraLayers 的 Unmix Components（把聲音拆成三種成分，不是拆樂器）。它會分成 Tonal（旋律類）、Transient（打擊瞬態）、Noise（噪音）三層。我只動 Noise 那層，把它音量拉低約 -10dB，或對它的高頻做 EQ 衰減，鼓和樂器那兩層原封不動。這樣清得乾淨，又不會傷到主體。</p>
-<h3>次選：iZotope RX 精修</h3>
-<p>要更細就上 iZotope RX 的 Spectral De-noise（頻譜降噪），模式切 Adaptive（自動適應，不用 Learn 抓樣本）。Threshold（觸發門檻）抓 -10 到 -20dB,Reduction（衰減量）6 到 8dB 就好。下手太重會出現「水底音」，那種咕嚕咕嚕的假象比雜訊還難聽，寧可留一點也別過。</p>
+<p>先講答案：趕件的話，掛一個低通濾波器把 10 到 12kHz 以上砍掉，疊一層乾淨的 shaker 或 hi-hat 補回高頻，人耳自己會忽略底下的瑕疵，這是最快的解法。時間夠、想做得乾淨，就得用工具把噪音那一層真的挖掉，往下看。</p>
+<h3>先確認：這是不是「毛毛的」那種雜訊</h3>
+<p>Suno 生出來的歌，高頻常有一層毛毛的、沙沙的東西，跟麥克風收到的環境噪音或電流聲不是同一種。它的學名叫擴散模型的頻譜殘渣（spectral artifacts），是模型在高頻隨機填音訊、假裝很亮留下的碎渣。它麻煩在會跟人聲一起呼吸，所以不能當一般白噪音處理，硬砍高頻只會讓整首歌變悶。分清楚是哪一種，才知道該用哪個工具。</p>
 <h3>最快：高頻置換術</h3>
-<p>趕件時我會用這招。伴奏掛一個 LPF（低通濾波器，把某個頻率以上切掉）砍在 10 到 12kHz，聲音會變悶但瞬間乾淨，然後疊一層乾淨的 shaker 或 hi-hat 把高頻補回來。人耳對高頻的解析度本來就低，大腦會自動忽略底下那些瑕疵。</p>
-<p>補一個常被忘記的收尾：清完噪音，人聲高頻會「死」掉，聽起來悶悶的。這時掛一點 saturation（飽和，加好聽的泛音），輕推 presence 那段，用漂亮的諧波把質感填回去，人聲就活過來了。</p>
-<p>這些東西我每天都在做。想把你的故事做成一首歌，或編曲混音卡關想找人看一眼，我在這。</p><p class="btn-row"><a class="btn" href="/services/consult/">找我聊聊 →</a></p>
+<p>趕件時我會用這招。伴奏掛一個 LPF（低通濾波器，把某個頻率以上切掉）砍在 10 到 12kHz，聲音會變悶但瞬間乾淨，然後疊一層乾淨的 shaker 或 hi-hat 把高頻補回來。人耳對高頻的解析度本來就低，大腦會自動忽略底下那些瑕疵，這招快，但騙得過耳朵騙不過細聽。</p>
+<h3>好一點：SpectraLayers 拆出噪音層</h3>
+<p>我最常用的是 SpectraLayers 的 Unmix Components（把聲音拆成三種成分，不是拆樂器）。它會分成 Tonal（旋律類）、Transient（打擊瞬態）、Noise（噪音）三層，我只動 Noise 那層，把它音量拉低約 −10dB，或對它的高頻做 EQ 衰減，鼓和樂器那兩層原封不動。這樣清得乾淨，又不會傷到主體，是我用得最多的方法。</p>
+<h3>最徹底：iZotope RX 精修</h3>
+<p>要更細就上 iZotope RX 的 Spectral De-noise（頻譜降噪），模式切 Adaptive（自動適應，不用 Learn 抓樣本）。Threshold（觸發門檻）抓 −10 到 −20dB，Reduction（衰減量）6 到 8dB 就好。下手太重會出現「水底音」，那種咕嚕咕嚕的假象比雜訊還難聽，寧可留一點也別過頭。混音階段的插件順序我怎麼排，另一篇有講（<a href="/blog/se04-009/">Suno 生成後怎麼混音</a>）。</p>
+<h3>清完之後別忘了補一步</h3>
+<p>清完噪音，人聲高頻常會跟著「死」掉，聽起來悶悶的。這時掛一點 saturation（飽和，加好聽的泛音），輕推 presence 那段，用漂亮的諧波把質感填回去，人聲就活過來了。這個悶悶的問題其實不只 Suno 會有，AI 生成的人聲整體處理，我在另一篇也整理過（<a href="/blog/se05-003/">Suno 生出來的歌聲很數位、很毛</a>）。</p>
+<h3>常見問答</h3>
+<p><strong>這雜訊跟一般收音的底噪是同一種嗎？</strong><br>不是。收音底噪是穩定的環境噪音，Suno 這種是模型在高頻隨機填出來的頻譜殘渣，會跟著人聲的呼吸起伏，不能用同一套降噪邏輯處理。</p>
+<p><strong>用高頻置換術會不會被聽出來偷懶？</strong><br>一般聽眾用手機或耳機聽，幾乎聽不出來，因為人耳對高頻的解析度本來就低。但如果是要上串流、給挑剔的耳朵聽，建議還是用 SpectraLayers 或 iZotope RX 處理得更乾淨。</p>
+<p><strong>降噪之後人聲變悶，是哪裡沒做對？</strong><br>八成是降噪拉得太重，把高頻的細節一起清掉了。先把 Reduction 調輕一點，寧可留一點雜訊；再補一點 saturation 把泛音填回去，人聲就會活過來。</p>
+<p>---<br>我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。Suno 生出來的歌聽起來毛毛的、悶悶的，帶著檔案來聊最快，從 <a href="/services/consult/">45 分鐘諮詢</a> 開始；想從頭把一首歌做完整，看 <a href="/services/production/">完整製作流程</a>。</p>
 
   </article>
-  <div class="tags"><span>Suno 雜訊</span><span>AI 音樂 音質</span><span>Suno 去噪</span><span>陳則皞</span><span>音樂製作</span><span>Suno</span><span>AI音樂</span><span>混音</span></div>
+  <div class="tags"><span>Suno 雜訊 怎麼清</span><span>AI 音樂 毛毛的</span><span>Suno 音質 差</span><span>去除 AI 雜訊</span><span>陳則皞</span><span>音樂製作</span><span>Suno</span><span>AI音樂</span><span>混音</span></div>
   <div class="cta"><span>看完想把自己的歌做出來？從 45 分鐘諮詢開始，把現況跟下一步一次講清楚。</span><a class="btn" href="/services/consult/">預約諮詢 →</a></div>
-  <nav class="nav2"><a href="/blog/se04-002/">← Suno 生出來的曲風跟你想的不一樣？三個常</a><a href="/blog/se04-004/">AI 音樂為什麼分軌拆不乾淨？聊聊它的「基因 →</a></nav>
+  <nav class="nav2"><a href="/blog/se04-002/">← Suno 生出來的曲風跟你要的不一樣？八成是</a><a href="/blog/se04-004/">AI 音樂為什麼分軌拆不乾淨？是工具沒選對， →</a></nav>
   <footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專欄</a> ｜ <a href="/blog/all/">目錄</a></footer>
 </div>
 <a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>

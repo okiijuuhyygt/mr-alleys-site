@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>人聲裡的咂嘴聲、口水音怎麼清？這跟齒音不是同一件事｜巷弄故事館音樂製作專欄</title>
-<meta name="description" content="錄完人聲，句子跟句子中間那些「咂、嘖、啵」的嘴巴雜音跟口水聲，跟齒音（嘶嘶的 S 聲）是兩回事，處理方法也完全不一樣。齒音靠 deesser 壓就好，口水音跟咂嘴聲（mouth click）大多得手動一個一個剪掉或壓掉。">
+<title>人聲有咂嘴聲、口水音怎麼清？跟齒音是不是同一件事｜巷弄故事館音樂製作專欄</title>
+<meta name="description" content="先講答案：人聲裡「咂、嘖、啵」那種嘴巴雜音跟口水聲，跟齒音（嘶嘶的 S 聲）是兩回事，deesser 對它幾乎沒用，得手動剪掉，再搭配前端 EQ 跟空間感一起收尾。這篇講我實際在做的三個做法，照順序做就對了。">
 <link rel="canonical" href="https://mralleys.com/blog/se09-002/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
-<meta property="og:title" content="人聲裡的咂嘴聲、口水音怎麼清？這跟齒音不是同一件事｜巷弄故事館音樂製作專欄">
-<meta property="og:description" content="錄完人聲，句子跟句子中間那些「咂、嘖、啵」的嘴巴雜音跟口水聲，跟齒音（嘶嘶的 S 聲）是兩回事，處理方法也完全不一樣。齒音靠 deesser 壓就好，口水音跟咂嘴聲（mouth click）大多得手動一個一個剪掉或壓掉。">
+<meta property="og:title" content="人聲有咂嘴聲、口水音怎麼清？跟齒音是不是同一件事｜巷弄故事館音樂製作專欄">
+<meta property="og:description" content="先講答案：人聲裡「咂、嘖、啵」那種嘴巴雜音跟口水聲，跟齒音（嘶嘶的 S 聲）是兩回事，deesser 對它幾乎沒用，得手動剪掉，再搭配前端 EQ 跟空間感一起收尾。這篇講我實際在做的三個做法，照順序做就對了。">
 <meta property="og:url" content="https://mralleys.com/blog/se09-002/">
 <meta property="og:image" content="https://mralleys.com/assets/og-image-v3.png?v=20260429c">
 <meta property="og:locale" content="zh_TW">
@@ -18,30 +18,34 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="https://mralleys.com/blog/feed.xml">
 <link rel="stylesheet" href="/css/blog.css?v=20260904d">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se09-002/#article", "headline": "人聲裡的咂嘴聲、口水音怎麼清？這跟齒音不是同一件事", "description": "錄完人聲，句子跟句子中間那些「咂、嘖、啵」的嘴巴雜音跟口水聲，跟齒音（嘶嘶的 S 聲）是兩回事，處理方法也完全不一樣。齒音靠 deesser 壓就好，口水音跟咂嘴聲（mouth click）大多得手動一個一個剪掉或壓掉。", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-03", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se09-002/"}, "keywords": "口水音, 咂嘴聲, 人聲修音, mouth click, 宅錄後製, 陳則皞, 音樂製作, 人聲處理, 修音, 宅錄", "articleSection": "混音進階", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "人聲裡的咂嘴聲、口水音怎麼清？這跟齒音不是同一件事", "item": "https://mralleys.com/blog/se09-002/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se09-002/#article", "headline": "人聲有咂嘴聲、口水音怎麼清？跟齒音是不是同一件事", "description": "先講答案：人聲裡「咂、嘖、啵」那種嘴巴雜音跟口水聲，跟齒音（嘶嘶的 S 聲）是兩回事，deesser 對它幾乎沒用，得手動剪掉，再搭配前端 EQ 跟空間感一起收尾。這篇講我實際在做的三個做法，照順序做就對了。", "inLanguage": "zh-Hant", "datePublished": "2026-09-04", "dateModified": "2026-09-05", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se09-002/"}, "keywords": "口水音, 咂嘴聲, mouth click, 人聲修音, de-esser 沒用, 陳則皞, 音樂製作, 人聲處理, 修音, 宅錄", "articleSection": "混音進階", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "人聲有咂嘴聲、口水音怎麼清？跟齒音是不是同一件事", "item": "https://mralleys.com/blog/se09-002/"}]}]}</script>
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="/blog/">← 專欄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · 混音進階</div>
-  <h1>人聲裡的咂嘴聲、口水音怎麼清？這跟齒音不是同一件事</h1>
+  <h1>人聲有咂嘴聲、口水音怎麼清？跟齒音是不是同一件事</h1>
   <div class="meta"><span>陳則皞</span><span>2026-09-04</span><span><a href="/blog/all/#se09">混音進階</a></span></div>
   <article>
-<p>錄完人聲，句子跟句子中間那些「咂、嘖、啵」的嘴巴雜音跟口水聲，跟齒音（嘶嘶的 S 聲）是兩回事，處理方法也完全不一樣。齒音靠 de-esser 壓就好，口水音跟咂嘴聲（mouth click）大多得手動一個一個剪掉或壓掉。這篇講我實際在做的三個做法。</p>
-<h3>先分清楚：齒音 vs 口水音</h3>
-<p>齒音是 S、ㄘ、ㄒ 那種連續、有音高的高頻嘶嘶聲，用 de-esser（針對某個頻段做動態壓縮的東西）壓下去就對了。口水音跟咂嘴聲不一樣——那是開口前舌頭、嘴唇黏膜分開的「咂、啵」聲，還有句首吸氣、口腔黏液那種 click，短、爆發、沒有固定音高。</p>
-<p>de-esser 對它幾乎沒用，因為它不落在某個固定頻段。搞混的下場是：你狂壓 de-esser，齒音是變鈍了，咂嘴聲一個都沒少，人聲還被你壓得沒神。</p>
-<h3>做法一：手動剪（最土，但最乾淨）</h3>
-<p>這是最費工但最乾淨的做法。把波形放大，找到那個孤立的 click（通常在字跟字中間、氣口附近，看起來是一根很尖的小突起），Ctrl+X 剪開，把那一小段音量拉到接近靜音——我抓 threshold 大概 -15 當參考，比這安靜的雜音直接處理掉。兩端各拉一點 fade in/out（fade 值調 1 左右），避免剪的動作本身又產生新的爆音點。</p>
+<p>先講答案：人聲裡「咂、嘖、啵」那種嘴巴雜音跟口水聲，跟齒音（嘶嘶的 S 聲）是兩回事，de-esser 對它幾乎沒用，得手動剪掉，再搭配前端 EQ 跟空間感一起收尾。這篇講我實際在做的三個做法，照順序做就對了。</p>
+<h3>先分清楚：是齒音，還是口水音</h3>
+<p>齒音是 S、ㄘ、ㄒ 那種連續、有音高的高頻嘶嘶聲，用 de-esser（針對某個頻段做動態壓縮的東西）壓下去就對了，這部分的做法我在<a href="/blog/se01-008/">人聲的「嘶」聲好刺耳怎麼辦</a>裡講過。口水音跟咂嘴聲（mouth click）不一樣，那是開口前舌頭、嘴唇黏膜分開的「咂、啵」聲，還有句首吸氣、口腔黏液那種 click，短、爆發、沒有固定音高。</p>
+<p>問題出在工具選錯，不是設定沒調好。de-esser 只對付連續、有固定音高的高頻嘶嘶聲，咂嘴聲是短促的爆發音，不落在固定頻段，靠 de-esser 壓只會把齒音壓鈍，咂嘴聲一個都沒少，人聲還被你壓得沒神。</p>
+<h3>做法一：手動剪，最土但最乾淨</h3>
+<p>這是最費工但最乾淨的做法。把波形放大，找到那個孤立的 click（通常在字跟字中間、氣口附近，看起來是一根很尖的小突起），Ctrl+X 剪開，把那一小段音量拉到接近靜音，我抓 threshold 大概 -15 當參考，比這安靜的雜音直接處理掉。兩端各拉一點 fade in/out（fade 值調 1 左右），避免剪的動作本身又產生新的爆音點。</p>
 <p>聽起來很累，但其實一首主歌的 click 就那幾個，值得花這個時間。</p>
-<h3>做法二：前端 EQ 先擋一層（de-mouth click）</h3>
+<h3>做法二：前端 EQ 先擋一層</h3>
 <p>進壓縮之前，我會先掛一顆 EQ 做「de-mouth click」：把口腔共鳴那塊（通常落在 1–3kHz 之間，每個人不太一樣，用掃頻找到最刺的那個點）動態地壓一點下去。這樣能先削掉一部分嘴巴雜音的能量，後面手剪的量就少很多，兩個做法是搭配著用的。</p>
 <h3>做法三：留一點給空間去蓋</h3>
-<p>de-ess 這關我寧可砍多一點（狠一點沒關係），因為後面 reverb、delay 的空間會再把高頻補回來，不用怕砍太多變鈍。同樣的道理，少量殘留的氣音、口水音，適度的空間感會幫你「糊」掉一點，聽感上就不明顯了。所以我的順序固定是：先手剪最明顯的 → EQ 擋一層 → 空間收尾。三步下來，人聲乾淨又不會被修到沒有呼吸。</p>
-<p>我是陳則皞，音樂製作人——平常在做編曲、混音、客製化歌曲，也教寫歌。這題你如果正卡著，或想做一首自己的歌，歡迎來找我聊聊。</p><p class="btn-row"><a class="btn" href="/services/consult/">找我聊聊 →</a></p>
+<p>de-ess 這關我寧可砍多一點，狠一點沒關係，因為後面 reverb、delay 的空間會再把高頻補回來，不用怕砍太多變鈍。同樣的道理，少量殘留的氣音、口水音，適度的空間感會幫你「糊」掉一點，聽感上就不明顯了，這部分怎麼疊殘響可以看<a href="/blog/se01-009/">人聲加了 reverb 就糊掉</a>。所以我的順序固定是：先手剪最明顯的，再用 EQ 擋一層，最後靠空間收尾。三步下來，人聲乾淨又不會被修到沒有呼吸。</p>
+<h3>常見問答</h3>
+<p><strong>de-esser 開很兇還是壓不掉咂嘴聲，是設定錯了嗎？</strong><br>問題出在工具選錯，不是設定沒調好。de-esser 只對付連續、有固定音高的高頻嘶嘶聲，咂嘴聲是短促的爆發音，不落在固定頻段，壓再兇也只會把齒音壓鈍，咂嘴聲照樣在。</p>
+<p><strong>手動剪會不會剪出新的爆音？</strong><br>剪的瞬間如果邊界沒處理好，確實會多一個喀一聲的斷點。兩端各拉一點 fade in/out，fade 值抓 1 左右，這個爆音就不會出現。</p>
+<p><strong>每句都要剪嗎，會不會花太多時間？</strong><br>不用每句都剪。一首主歌真正明顯到會被聽出來的 click 通常就那幾個，抓最刺耳的那幾處手剪，其他交給 EQ 跟空間去蓋掉就夠了。</p>
+<p>---<br>我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。人聲修完音還是覺得哪裡毛毛的，從 <a href="/services/consult/">45 分鐘諮詢</a> 開始，帶著你的錄音來聽最快；想從頭把一首歌做完整，看 <a href="/services/production/">完整製作流程</a>。</p>
 
   </article>
-  <div class="tags"><span>口水音</span><span>咂嘴聲</span><span>人聲修音</span><span>mouth click</span><span>宅錄後製</span><span>陳則皞</span><span>音樂製作</span><span>人聲處理</span><span>修音</span><span>宅錄</span></div>
+  <div class="tags"><span>口水音</span><span>咂嘴聲</span><span>mouth click</span><span>人聲修音</span><span>de-esser 沒用</span><span>陳則皞</span><span>音樂製作</span><span>人聲處理</span><span>修音</span><span>宅錄</span></div>
   <div class="cta"><span>看完想把自己的歌做出來？從 45 分鐘諮詢開始，把現況跟下一步一次講清楚。</span><a class="btn" href="/services/consult/">預約諮詢 →</a></div>
   <nav class="nav2"><a href="/blog/se09-001/">← 平行壓縮是什麼？為什麼專業混音都在偷偷疊一軌</a><a href="/blog/se09-003/">為什麼別人的歌又大聲又好聽，我的一推大聲就爛 →</a></nav>
   <footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專欄</a> ｜ <a href="/blog/all/">目錄</a></footer>

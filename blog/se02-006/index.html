@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Logic Pro 突然不能 Undo 了？先看你是不是在 Melodyne 或 Flex 模式｜巷弄故事館音樂製作專欄</title>
-<meta name="description" content="Logic 按 Cmd+Z 沒反應、上一步收不回來，先別急著重開軟體——很可能你人在 Melodyne 或 Flex 這類有「獨立 Undo 堆疊」的模式裡。這些外掛的復原步驟跟 Logic 主系統是分開的，你得先在那個">
+<title>Logic Pro 突然不能 Undo？先看你是不是卡在 Melodyne 或 Flex 模式｜巷弄故事館音樂製作專欄</title>
+<meta name="description" content="先講答案：Logic 按 Cmd+Z 沒反應、上一步收不回來，先別急著重開軟體，很可能你人在 Melodyne 或 Flex 這類有「獨立 Undo 堆疊」的模式裡。這些外掛的復原步驟跟 Logic 主系統是分開的，你得">
 <link rel="canonical" href="https://mralleys.com/blog/se02-006/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="巷弄故事館 · MR. ALLEYS">
-<meta property="og:title" content="Logic Pro 突然不能 Undo 了？先看你是不是在 Melodyne 或 Flex 模式｜巷弄故事館音樂製作專欄">
-<meta property="og:description" content="Logic 按 Cmd+Z 沒反應、上一步收不回來，先別急著重開軟體——很可能你人在 Melodyne 或 Flex 這類有「獨立 Undo 堆疊」的模式裡。這些外掛的復原步驟跟 Logic 主系統是分開的，你得先在那個">
+<meta property="og:title" content="Logic Pro 突然不能 Undo？先看你是不是卡在 Melodyne 或 Flex 模式｜巷弄故事館音樂製作專欄">
+<meta property="og:description" content="先講答案：Logic 按 Cmd+Z 沒反應、上一步收不回來，先別急著重開軟體，很可能你人在 Melodyne 或 Flex 這類有「獨立 Undo 堆疊」的模式裡。這些外掛的復原步驟跟 Logic 主系統是分開的，你得">
 <meta property="og:url" content="https://mralleys.com/blog/se02-006/">
 <meta property="og:image" content="https://mralleys.com/assets/og-image-v3.png?v=20260429c">
 <meta property="og:locale" content="zh_TW">
@@ -18,26 +18,34 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="巷弄故事館 音樂製作專欄" href="https://mralleys.com/blog/feed.xml">
 <link rel="stylesheet" href="/css/blog.css?v=20260904d">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se02-006/#article", "headline": "Logic Pro 突然不能 Undo 了？先看你是不是在 Melodyne 或 Flex 模式", "description": "Logic 按 Cmd+Z 沒反應、上一步收不回來，先別急著重開軟體——很可能你人在 Melodyne 或 Flex 這類有「獨立 Undo 堆疊」的模式裡。這些外掛的復原步驟跟 Logic 主系統是分開的，你得先在那個", "inLanguage": "zh-Hant", "datePublished": "2026-08-04", "dateModified": "2026-09-03", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se02-006/"}, "keywords": "Logic Pro, Logic 無法 undo, Melodyne, Flex, ARA, 陳則皞, 音樂製作, Logic Pro, 修音, 宅錄", "articleSection": "Logic Pro 與 DAW 技巧", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Logic Pro 突然不能 Undo 了？先看你是不是在 Melodyne 或 Flex 模式", "item": "https://mralleys.com/blog/se02-006/"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "@id": "https://mralleys.com/blog/se02-006/#article", "headline": "Logic Pro 突然不能 Undo？先看你是不是卡在 Melodyne 或 Flex 模式", "description": "先講答案：Logic 按 Cmd+Z 沒反應、上一步收不回來，先別急著重開軟體，很可能你人在 Melodyne 或 Flex 這類有「獨立 Undo 堆疊」的模式裡。這些外掛的復原步驟跟 Logic 主系統是分開的，你得", "inLanguage": "zh-Hant", "datePublished": "2026-08-04", "dateModified": "2026-09-05", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mralleys.com/blog/se02-006/"}, "keywords": "Logic 無法 undo, Melodyne undo 失效, Flex undo 不見, ARA undo, Logic 復原, 陳則皞, 音樂製作, Logic Pro, 修音, 宅錄", "articleSection": "Logic Pro 與 DAW 技巧", "author": {"@type": "Person", "name": "陳則皞", "url": "https://mralleys.com/"}, "publisher": {"@type": "Organization", "name": "巷弄故事館 Mr.Alleys", "url": "https://mralleys.com/", "logo": {"@type": "ImageObject", "url": "https://mralleys.com/apple-touch-icon.png"}}, "image": "https://mralleys.com/assets/og-image-v3.png"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "巷弄故事館", "item": "https://mralleys.com/"}, {"@type": "ListItem", "position": 2, "name": "音樂製作專欄", "item": "https://mralleys.com/blog/"}, {"@type": "ListItem", "position": 3, "name": "Logic Pro 突然不能 Undo？先看你是不是卡在 Melodyne 或 Flex 模式", "item": "https://mralleys.com/blog/se02-006/"}]}]}</script>
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="/blog/">← 專欄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · Logic Pro 與 DAW 技巧</div>
-  <h1>Logic Pro 突然不能 Undo 了？先看你是不是在 Melodyne 或 Flex 模式</h1>
+  <h1>Logic Pro 突然不能 Undo？先看你是不是卡在 Melodyne 或 Flex 模式</h1>
   <div class="meta"><span>陳則皞</span><span>2026-08-04</span><span><a href="/blog/all/#se02">Logic Pro 與 DAW 技巧</a></span></div>
   <article>
-<p>Logic 按 Cmd+Z 沒反應、上一步收不回來，先別急著重開軟體——很可能你人在 Melodyne 或 Flex 這類有「獨立 Undo 堆疊」的模式裡。這些外掛的復原步驟跟 Logic 主系統是分開的，你得先在那個外掛裡面 Undo，才回得到你想收的那一步。</p>
-<h3>為什麼會這樣</h3>
-<p>Melodyne 走的是 ARA（讓外掛跟 Logic 共用音軌的技術），它自己記一套操作歷史；Flex（Logic 內建的時間伸縮工具）也有它獨立的編輯狀態。當你的焦點在這些區塊，Cmd+Z 收的是 Logic 主線的動作，收不到你剛在外掛裡做的事，看起來就像「不能 undo」。</p>
-<h3>我的排查順序</h3>
-<p>先確認滑鼠焦點在哪：如果剛在 Melodyne 裡動音準，就把游標移進 Melodyne 視窗再按 Undo，通常就回來了，Flex 同理。確定不是外掛的問題，再回頭想是不是剛做了某個不可逆的動作（像 Bounce、Flatten），那些本來就收不回來，只能靠事前存檔補救。所以我習慣大動作之前先 Cmd+S 存一版，真出事至少退得回去。</p>
-<p>寫這篇的人白天在做編曲混音、晚上在寫歌。客製化歌曲、製作、寫歌課都接。</p><p class="btn-row"><a class="btn" href="/services/consult/">找我聊聊 →</a></p>
+<p>先講答案：Logic 按 Cmd+Z 沒反應、上一步收不回來，先別急著重開軟體，很可能你人在 Melodyne 或 Flex 這類有「獨立 Undo 堆疊」的模式裡。這些外掛的復原步驟跟 Logic 主系統是分開的，你得先在那個外掛裡面 Undo，才回得到你想收的那一步。</p>
+<h3>先看游標焦點在哪</h3>
+<p>遇到 Undo 沒反應，我第一件事先看滑鼠焦點停在哪個視窗，而不是急著查資料。如果剛在 Melodyne 裡動音準，就把游標移進 Melodyne 視窗再按 Undo，通常就回來了；Flex（Logic 內建的時間伸縮工具）也是同一招，先點回 Flex 那個區塊再收。焦點對了，Cmd+Z 才會收到你真正想收的動作。</p>
+<p>如果確認焦點沒錯、還是收不回來，再往下想是不是剛做了某個本來就不可逆的動作，比如 Bounce 或 Flatten，那些本來就沒有 Undo，只能靠事前存檔補救。</p>
+<h3>為什麼會這樣：兩套獨立的記憶</h3>
+<p>Melodyne 走的是 ARA（讓外掛跟 Logic 共用音軌的技術），它自己記一套操作歷史，跟 Logic 主線的歷史分開存在兩本帳上；Flex 也有它獨立的編輯狀態，不會跟 Logic 的其他動作記在同一條時間軸上。當你的焦點在這些區塊，Cmd+Z 收的是 Logic 主線的動作，收不到你剛在外掛裡做的事，看起來就像整個軟體壞了，其實只是你在問錯的那本帳要答案。</p>
+<p>這個坑我自己也踩過，修音修到一半按了幾次 Undo 都沒動靜，慌了一下才發現只是焦點還停在 Melodyne 視窗外面。知道原理之後，遇到這種狀況就不會慌，先換焦點試一次就好。</p>
+<h3>我的排查順序，跟事前預防</h3>
+<p>我自己養成的習慣是：先確認滑鼠焦點在哪個視窗，對應那個視窗按 Undo；確定不是外掛的問題，再回頭想是不是剛做了不可逆的動作。真正治本的做法是事前預防，大動作之前（進 Melodyne 修一大段音準之前、做 Flex 之前、Bounce 之前）我習慣先 Cmd+S 存一版，真出事至少退得回去，不用整段重錄重編。專案檔如果已經越存越肥、開檔越來越慢，可以看看<a href="/blog/se02-003/">我怎麼幫專案瘦身</a>，也是同一種先預防再收拾的邏輯。</p>
+<h3>常見問答</h3>
+<p><strong>Cmd+Z 完全沒反應，是不是軟體壞了？</strong><br>大部分不是，是焦點卡在 Melodyne 或 Flex 這種有獨立 Undo 堆疊的地方。先把游標移進那個外掛的視窗再按一次，九成會回來。</p>
+<p><strong>Melodyne 裡面按 Undo 也沒用怎麼辦？</strong><br>先確認你是真的點進了 Melodyne 的編輯區，還是只是選到那個音軌。如果焦點真的在裡面還是沒反應，可能是 ARA 連結本身出問題了，重新開關一次 ARA 連結通常能解。</p>
+<p><strong>做完 Bounce 才發現手滑，還救得回來嗎？</strong><br>Bounce、Flatten 這類動作本來就不進 Logic 的 Undo 堆疊，存檔之後基本救不回來。唯一的解法是事前養成習慣，大動作前先存一版。</p>
+<p>---<br>我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。Logic 用久了難免遇到這種卡關的小地雷，做案子卡住想直接問，從 <a href="/services/consult/">45 分鐘諮詢</a> 開始；想從頭把一首歌做完整，看 <a href="/services/production/">完整製作流程</a>。</p>
 
   </article>
-  <div class="tags"><span>Logic Pro</span><span>Logic 無法 undo</span><span>Melodyne</span><span>Flex</span><span>ARA</span><span>陳則皞</span><span>音樂製作</span><span>修音</span><span>宅錄</span></div>
+  <div class="tags"><span>Logic 無法 undo</span><span>Melodyne undo 失效</span><span>Flex undo 不見</span><span>ARA undo</span><span>Logic 復原</span><span>陳則皞</span><span>音樂製作</span><span>Logic Pro</span><span>修音</span><span>宅錄</span></div>
   <div class="cta"><span>看完想把自己的歌做出來？從 45 分鐘諮詢開始，把現況跟下一步一次講清楚。</span><a class="btn" href="/services/consult/">預約諮詢 →</a></div>
-  <nav class="nav2"><a href="/blog/se02-005/">← DAW 是什麼？第一次做音樂該選哪一套——一</a><a href="/blog/se02-007/">新裝 Logic 我第一件事會改的幾個偏好設 →</a></nav>
+  <nav class="nav2"><a href="/blog/se02-005/">← DAW 是什麼？第一次做音樂該選哪一套比較好</a><a href="/blog/se02-007/">新裝 Logic 要先改哪些偏好設定？三個小 →</a></nav>
   <footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專欄</a> ｜ <a href="/blog/all/">目錄</a></footer>
 </div>
 <a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>
