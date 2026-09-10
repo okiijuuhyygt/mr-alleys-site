@@ -87,6 +87,19 @@
   ]
 }
 </script>
+<style>
+/* 預覽用：first-screen exit strip */
+.nowplay{border:var(--px) solid var(--ink);background:var(--paper-soft);padding:14px 16px 16px;margin:0 0 18px;box-shadow:var(--px) var(--px) 0 var(--ink)}
+.nowplay__tag{display:inline-block;font-family:var(--pixel-en);font-size:10px;letter-spacing:.18em;color:var(--paper);background:var(--ink);padding:5px 10px;margin-bottom:12px;text-transform:uppercase}
+.nowplay__row{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.nowplay__cover{width:76px;height:76px;object-fit:cover;border:var(--px) solid var(--ink);image-rendering:auto;flex:0 0 76px}
+.nowplay__title{font-family:var(--pixel-tc);font-size:20px;color:var(--ink);line-height:1.25;margin-bottom:6px}
+.nowplay__sub{font-family:var(--mono);font-size:14px;color:var(--ink-mute);line-height:1.4}
+.nowplay__btns{display:flex;gap:10px;flex-wrap:wrap}
+.nowplay__btns .btn{flex:1 1 140px}
+.hero .signal-flow{margin-top:22px;margin-bottom:0}
+@media (max-width:600px){.hero__cta{flex-direction:row!important;align-items:stretch}.hero__cta .btn{flex:1 1 45%}}
+</style>
 </head>
 <body data-scene="loading">
 
@@ -120,13 +133,28 @@
     </h1>
     <p class="hero__sub" id="heroSub">從 demo 到母帶，一條龍陪你做完</p>
 
-    <div class="signal-flow" id="signalFlow"></div>
+    <!-- ▼ 預覽：第一屏出口（最新作品＋直接出去的按鈕）；guild board 往下移 -->
+    <div class="nowplay" id="nowPlay">
+      <div class="nowplay__tag">[ NOW ON AIR ]</div>
+      <div class="nowplay__row">
+        <img class="nowplay__cover" src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84d8b43351c1bd96ba86713b21" alt="巷弄故事館 已上線作品">
+        <div class="nowplay__meta">
+          <div class="nowplay__title" id="nowPlayTitle">已上架歌曲</div>
+          <div class="nowplay__sub" id="nowPlaySub">歌手的故事與錄音室作品</div>
+        </div>
+      </div>
+      <div class="nowplay__btns">
+        <a class="btn btn--primary" href="https://open.spotify.com/playlist/4RXBEgeJiThrAK4wvNJMxf" target="_blank" rel="noopener">▶ SPOTIFY</a>
+        <a class="btn btn--ghost" href="https://youtube.com/playlist?list=PLMDDlXKidQ7Dxdm9wJfUm9sd73J2X4Zoj" target="_blank" rel="noopener">▶ YOUTUBE</a>
+      </div>
+    </div>
 
     <div class="hero__cta">
-      <a href="#services" class="btn btn--primary" id="heroCtaPrimary">▼ 服務項目</a>
-      <a href="#showcase" class="btn btn--ghost" id="heroCtaSecondary">♪ 已上架歌曲</a>
-      <a href="/blog/" class="btn btn--ghost" id="heroCtaBlog">▤ 音樂專欄</a>
+      <a href="#services" class="btn btn--primary" id="heroCtaPrimary">▼ 看委託</a>
+      <a href="/blog/" class="btn btn--ghost" id="heroCtaBlog">▤ 讀專欄</a>
     </div>
+
+    <div class="signal-flow" id="signalFlow"></div>
   </div>
 
   <!-- Decorative VU meter (kept hidden via CSS, dead element) -->
