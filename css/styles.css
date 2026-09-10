@@ -352,7 +352,8 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 }
 
 /* CTA buttons */
-.hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero__cta { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.hero__cta .btn { min-width: 200px; }  /* 2026-09-10 耗耗：直排、短一點、不必對齊上面的軸線 */
 
 .btn {
   display: inline-flex;
@@ -1002,7 +1003,7 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
    Responsive
    ========================================================= */
 @media (max-width: 600px) {
-  .hero__cta { flex-direction: column; align-items: stretch; }
+  .hero__cta { flex-direction: column; align-items: flex-start; }
   .btn { width: 100%; }
   .console-bar { font-size: 6px; padding: 9px 10px; gap: 6px; }
   .console-bar__left, .console-bar__right { gap: 6px; }
@@ -1129,17 +1130,3 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 .modal__includes li.has-detail::before { transition: transform .15s; }
 .modal__includes li.has-detail:has(details[open])::before { transform: rotate(90deg); }
 .modal__includes .inc-detail { margin: 6px 0 4px; font-family: "Noto Sans TC", "PingFang TC", sans-serif; font-size: 14px; line-height: 1.8; color: var(--ink-soft); }
-
-/* =========================================================
-   Hero — 第一屏出口 NOW ON AIR（2026-09-10）
-   ========================================================= */
-.nowplay{border:var(--px) solid var(--ink);background:var(--paper-soft);padding:14px 16px 16px;margin:22px 0 0;box-shadow:var(--px) var(--px) 0 var(--ink)}
-.nowplay__tag{display:inline-block;font-family:var(--pixel-en);font-size:10px;letter-spacing:.18em;color:var(--paper);background:var(--ink);padding:5px 10px;margin-bottom:12px;text-transform:uppercase}
-.nowplay__row{display:flex;gap:14px;align-items:center;margin-bottom:14px}
-.nowplay__cover{width:76px;height:76px;object-fit:cover;border:var(--px) solid var(--ink);flex:0 0 76px}
-.nowplay__title{font-family:var(--pixel-tc);font-size:20px;color:var(--ink);line-height:1.25;margin-bottom:6px}
-.nowplay__sub{font-family:var(--mono);font-size:14px;color:var(--ink-mute);line-height:1.4}
-.nowplay__btns{display:flex;gap:10px;flex-wrap:wrap}
-.nowplay__btns .btn{flex:1 1 140px}
-.hero .nowplay{margin:22px 0 0}
-@media (max-width:600px){.hero__cta{flex-direction:row!important;align-items:stretch}.hero__cta .btn{flex:1 1 45%}}
