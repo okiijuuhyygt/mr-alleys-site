@@ -1129,3 +1129,17 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 .modal__includes li.has-detail::before { transition: transform .15s; }
 .modal__includes li.has-detail:has(details[open])::before { transform: rotate(90deg); }
 .modal__includes .inc-detail { margin: 6px 0 4px; font-family: "Noto Sans TC", "PingFang TC", sans-serif; font-size: 14px; line-height: 1.8; color: var(--ink-soft); }
+
+/* =========================================================
+   Hero — 第一屏出口 NOW ON AIR（2026-09-10）
+   ========================================================= */
+.nowplay{border:var(--px) solid var(--ink);background:var(--paper-soft);padding:14px 16px 16px;margin:0 0 18px;box-shadow:var(--px) var(--px) 0 var(--ink)}
+.nowplay__tag{display:inline-block;font-family:var(--pixel-en);font-size:10px;letter-spacing:.18em;color:var(--paper);background:var(--ink);padding:5px 10px;margin-bottom:12px;text-transform:uppercase}
+.nowplay__row{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.nowplay__cover{width:76px;height:76px;object-fit:cover;border:var(--px) solid var(--ink);flex:0 0 76px}
+.nowplay__title{font-family:var(--pixel-tc);font-size:20px;color:var(--ink);line-height:1.25;margin-bottom:6px}
+.nowplay__sub{font-family:var(--mono);font-size:14px;color:var(--ink-mute);line-height:1.4}
+.nowplay__btns{display:flex;gap:10px;flex-wrap:wrap}
+.nowplay__btns .btn{flex:1 1 140px}
+.hero .signal-flow{margin-top:22px;margin-bottom:0}
+@media (max-width:600px){.hero__cta{flex-direction:row!important;align-items:stretch}.hero__cta .btn{flex:1 1 45%}}
