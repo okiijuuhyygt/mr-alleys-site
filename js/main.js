@@ -590,3 +590,14 @@ function bindReveal() {
 // Go
 // ---------------------------------------------------------
 boot();
+
+// ---------------------------------------------------------
+// GoatCounter 事件：第一屏按鈕／服務卡／專欄連結的點擊（2026-09-10）
+// 之前只有 pageview，沒有任何點擊事件，所以體檢裡的「按鈕 0 點擊」是沒在量，不是沒人點（耗耗 9/10 13:08 抓到）
+// ---------------------------------------------------------
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('.hero__cta a, .service-card, a[href^="/blog"], #showcaseCta, .console-bar a');
+  if (!a || !window.goatcounter || typeof window.goatcounter.count !== 'function') return;
+  const label = (a.id || a.getAttribute('href') || a.textContent || '').trim().slice(0, 40);
+  try { window.goatcounter.count({ path: 'cta/' + label, title: (a.textContent || '').trim().slice(0, 60), event: true }); } catch (_) {}
+}, { passive: true });
