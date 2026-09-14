@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>· · ·</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:"Cubic 11";src:url("/assets/Cubic_11_1.013_R.ttf") format("truetype");font-display:swap}
+:root{
+  --paper:#f3ead4; --paper-soft:#ede2c4; --paper-edge:#c9b88c;
+  --ink:#2a1f12; --ink-soft:#5e4a30; --ink-mute:#8a7556;
+  --brass:#b8801f; --brass-light:#d4a13a; --brass-deep:#6e4d10;
+  --avail:#4a8b3a; --danger:#b83a2a;
+  --pixel-tc:"Cubic 11","Noto Sans TC",monospace;
+  --mono:"VT323",monospace;
+  --sans:"Noto Sans TC","PingFang TC",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+     line-height:1.75;font-size:15px;padding:0 0 120px}
+.wrap{max-width:860px;margin:0 auto;padding:22px 16px}
+h1{font-family:var(--pixel-tc);font-size:20px;letter-spacing:.06em;margin:0 0 4px}
+.sub{color:var(--ink-mute);font-size:13px;margin:0 0 22px}
+.hidden{display:none!important}
+
+/* 登入 */
+.login{max-width:380px;margin:60px auto;text-align:center}
+.login input{width:100%;padding:11px 13px;font-size:15px;font-family:var(--mono);
+  border:2px solid var(--paper-edge);background:#fff;color:var(--ink)}
+.btn{font-family:var(--pixel-tc);font-size:14px;letter-spacing:.04em;color:var(--ink);
+  background:var(--paper-soft);border:2px solid var(--brass);box-shadow:3px 3px 0 var(--brass-deep);
+  padding:9px 18px;cursor:pointer;margin-top:14px}
+.btn:hover:not(:disabled){background:var(--brass-light)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.btn.sm{font-size:12px;padding:6px 12px;box-shadow:2px 2px 0 var(--brass-deep);margin:0}
+.btn.danger{border-color:var(--danger);box-shadow:3px 3px 0 #7d2418;color:var(--danger)}
+.err{color:var(--danger);font-size:13px;margin-top:10px}
+
+/* 規則卡 */
+.rule{border:2px solid var(--paper-edge);background:var(--paper-soft);
+      padding:0;margin-bottom:18px;box-shadow:4px 4px 0 rgba(110,77,16,.18)}
+.rule.off{opacity:.55}
+.rule-head{display:flex;align-items:center;gap:10px;padding:12px 14px;
+      border-bottom:2px solid var(--paper-edge);flex-wrap:wrap}
+.rule-head .nm{font-family:var(--pixel-tc);font-size:14px;flex:1;min-width:160px}
+.rule-body{padding:14px}
+.f{margin-bottom:14px}
+.f label{display:block;font-family:var(--pixel-tc);font-size:12px;color:var(--brass-deep);
+  letter-spacing:.05em;margin-bottom:5px}
+.f .hint{font-size:12px;color:var(--ink-mute);margin:-2px 0 5px;line-height:1.6}
+.f input,.f textarea{width:100%;padding:9px 11px;font-size:14px;font-family:var(--sans);
+  border:2px solid var(--paper-edge);background:#fffdf7;color:var(--ink);line-height:1.7}
+.f textarea{resize:vertical;min-height:64px}
+.f input:focus,.f textarea:focus{outline:none;border-color:var(--brass)}
+.cnt{float:right;font-family:var(--mono);font-size:14px;color:var(--ink-mute)}
+.cnt.over{color:var(--danger);font-weight:700}
+
+.btnrow{display:flex;gap:8px;align-items:flex-end;margin-bottom:9px}
+.btnrow .f{flex:1;margin-bottom:0}
+.sw{display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none}
+.sw input{width:16px;height:16px;accent-color:var(--brass)}
+
+/* 存檔列 */
+.savebar{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:var(--paper);
+  padding:11px 16px;display:flex;align-items:center;gap:14px;justify-content:center;
+  box-shadow:0 -3px 0 var(--brass-deep);z-index:20;flex-wrap:wrap}
+.savebar .info{font-family:var(--mono);font-size:17px}
+.savebar .btn{margin-top:0;background:var(--brass);border-color:var(--brass-light);color:#fff}
+.savebar .btn:hover:not(:disabled){background:var(--brass-light);color:var(--ink)}
+
+.note{border-left:4px solid var(--brass);background:var(--paper-soft);
+  padding:11px 13px;font-size:13px;line-height:1.8;margin-bottom:20px;color:var(--ink-soft)}
+.note b{color:var(--ink)}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.status{font-family:var(--mono);font-size:15px;color:var(--ink-mute)}
+</style>
+</head>
+<body>
+
+<!-- 登入 -->
+<div id="sceneLogin" class="wrap hidden">
+  <div class="login">
+    <h1>IG 私訊後台</h1>
+    <p class="sub">貼上通關碼（跟部落格後台同一組）</p>
+    <form id="loginForm">
+      <input type="password" id="tok" autocomplete="current-password" autofocus>
+      <br><button class="btn" id="btnLogin" type="submit">▶ 登入</button>
+    </form>
+    <div class="err hidden" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- 編輯 -->
+<div id="sceneEditor" class="wrap hidden">
+  <div class="topbar">
+    <div>
+      <h1>IG 留言自動回覆</h1>
+      <p class="sub">有人在 @mr.alleys 的貼文底下留了關鍵字 → 公開回一句 ＋ 私訊一則帶按鈕</p>
+    </div>
+    <button class="btn sm" id="btnLogout">登出</button>
+  </div>
+
+  <div class="note">
+    <b>改完記得按右下角「儲存到網站」。</b>存檔之後最多 <b>10 分鐘</b>小悠那邊就會換成新的內容。<br>
+    停用的規則不會刪掉，只是不會發送——想暫停就把「啟用」關掉就好。<br>
+    <b>這個檔案是公開的</b>（跟部落格原稿一樣），不要在這裡放任何私密資訊。
+  </div>
+
+  <div id="rules"></div>
+  <button class="btn" id="btnAdd">＋ 新增一條規則</button>
+</div>
+
+<div class="savebar hidden" id="savebar">
+  <span class="info" id="saveInfo">沒有變更</span>
+  <button class="btn" id="btnSave" disabled>儲存到網站</button>
+</div>
+
+<script>
+const OWNER='okiijuuhyygt', REPO='mr-alleys-site', PATH='data/ig-rules.json';
+const LS='alleys-admin-token-v1';
+const API='https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+PATH;
+const $=id=>document.getElementById(id);
+let data=null, original='', sha=null;
+
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function show(name){
+  ['sceneLogin','sceneEditor'].forEach(s=>$(s).classList.add('hidden'));
+  $(name).classList.remove('hidden');
+  $('savebar').classList.toggle('hidden', name!=='sceneEditor');
+}
+
+/* ---------- 登入 ---------- */
+async function verify(tok){
+  const r=await fetch(API,{headers:{Authorization:'Bearer '+tok,Accept:'application/vnd.github+json'}});
+  return r.ok ? r.json() : null;
+}
+$('loginForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const tok=$('tok').value.trim(); if(!tok) return;
+  const btn=$('btnLogin'); btn.disabled=true; btn.textContent='驗證中…';
+  $('loginErr').classList.add('hidden');
+  const ok=await verify(tok);
+  btn.disabled=false; btn.textContent='▶ 登入';
+  if(!ok){ $('loginErr').textContent='通關碼無效。'; $('loginErr').classList.remove('hidden');
+           $('tok').value=''; $('tok').focus(); return; }
+  localStorage.setItem(LS,tok);
+  boot();
+});
+$('btnLogout').addEventListener('click',()=>{
+  if(!confirm('登出會清掉這台瀏覽器記住的通關碼。確定？')) return;
+  localStorage.removeItem(LS); location.reload();
+});
+
+/* ---------- 載入 ---------- */
+async function boot(){
+  const tok=localStorage.getItem(LS);
+  if(!tok){ show('sceneLogin'); return; }
+  const meta=await verify(tok);
+  if(!meta){ localStorage.removeItem(LS); show('sceneLogin'); return; }
+  sha=meta.sha;
+  const res=await fetch('/data/ig-rules.json?t='+Date.now());
+  data=await res.json();
+  if(!Array.isArray(data.rules)) data.rules=[];
+  original=JSON.stringify(data);
+  render(); show('sceneEditor'); dirty();
+}
+
+/* ---------- 畫面 ---------- */
+function render(){
+  $('rules').innerHTML = data.rules.map((r,i)=>card(r,i)).join('');
+  bind();
+}
+function card(r,i){
+  const btns=(r['按鈕']||[]).map((b,j)=>`
+    <div class="btnrow" data-i="${i}" data-j="${j}">
+      <div class="f"><label>按鈕文字</label>
+        <input data-k="按鈕文字" value="${esc(b['文字'])}" maxlength="20"></div>
+      <div class="f"><label>按鈕連到哪</label>
+        <input data-k="按鈕連結" value="${esc(b['連結'])}" placeholder="https://…"></div>
+      <button class="btn sm danger" data-act="delbtn">刪</button>
+    </div>`).join('');
+  return `
+  <div class="rule ${r['啟用']?'':'off'}" data-i="${i}">
+    <div class="rule-head">
+      <label class="sw"><input type="checkbox" data-k="啟用" ${r['啟用']?'checked':''}> 啟用</label>
+      <input class="nm" data-k="名稱" value="${esc(r['名稱'])}" style="border:none;background:transparent;padding:2px 4px">
+      <button class="btn sm danger" data-act="delrule">刪掉這條</button>
+    </div>
+    <div class="rule-body">
+      <div class="f"><label>觸發關鍵字</label>
+        <p class="hint">對方要留言留到哪個字才會觸發。多個字用逗號隔開，留任何一個都算。</p>
+        <input data-k="觸發關鍵字" value="${esc((r['觸發關鍵字']||[]).join('，'))}"></div>
+
+      <div class="f"><label>排除關鍵字</label>
+        <p class="hint">留言裡如果有這些字就不觸發（例如想避開「不用診斷」）。沒有就留空。</p>
+        <input data-k="排除關鍵字" value="${esc((r['排除關鍵字']||[]).join('，'))}"></div>
+
+      <div class="f"><label>只在這幾篇貼文生效</label>
+        <p class="hint">留空＝整個帳號任何一篇都算。填了貼文 ID（多個用逗號隔開）＝只有那幾篇底下的留言會觸發。</p>
+        <input data-k="只在這幾篇貼文生效" value="${esc((r['只在這幾篇貼文生效']||[]).join('，'))}"></div>
+
+      <div class="f"><label>公開回覆<span class="cnt" data-for="公開回覆"></span></label>
+        <p class="hint">直接回在他的留言底下，所有人看得到。短一句就好。</p>
+        <input data-k="公開回覆" value="${esc(r['公開回覆'])}"></div>
+
+      <div class="f"><label>私訊標題<span class="cnt" data-for="私訊標題"></span></label>
+        <p class="hint">私訊卡片的主要文字。上限 80 字，超過會被 IG 切掉。</p>
+        <textarea data-k="私訊標題" rows="3">${esc(r['私訊標題'])}</textarea></div>
+
+      <div class="f"><label>私訊副標<span class="cnt" data-for="私訊副標"></span></label>
+        <p class="hint">標題下面那行小字。上限 80 字，可以留空。</p>
+        <textarea data-k="私訊副標" rows="2">${esc(r['私訊副標'])}</textarea></div>
+
+      <div class="f"><label>按鈕</label>
+        <p class="hint">最多 3 顆。按鈕文字上限 20 字。連結一定要能打得開。</p>
+        ${btns}
+        <button class="btn sm" data-act="addbtn" data-i="${i}">＋ 加一顆按鈕</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+const LIMITS={'公開回覆':280,'私訊標題':80,'私訊副標':80};
+function counts(){
+  document.querySelectorAll('.cnt').forEach(el=>{
+    const k=el.dataset.for, i=+el.closest('.rule').dataset.i;
+    const v=(data.rules[i][k]||'').length, max=LIMITS[k];
+    el.textContent=v+'/'+max;
+    el.classList.toggle('over', v>max);
+  });
+}
+
+function bind(){
+  document.querySelectorAll('.rule [data-k]').forEach(el=>{
+    const i=+el.closest('.rule').dataset.i, k=el.dataset.k;
+    if(el.closest('.btnrow')) return;
+    const ev = el.type==='checkbox' ? 'change' : 'input';
+    el.addEventListener(ev,()=>{
+      if(el.type==='checkbox'){ data.rules[i][k]=el.checked; el.closest('.rule').classList.toggle('off',!el.checked); }
+      else if(['觸發關鍵字','排除關鍵字','只在這幾篇貼文生效'].includes(k)){
+        data.rules[i][k]=el.value.split(/[，,、\s]+/).map(s=>s.trim()).filter(Boolean);
+      } else data.rules[i][k]=el.value;
+      counts(); dirty();
+    });
+  });
+  document.querySelectorAll('.btnrow [data-k]').forEach(el=>{
+    const row=el.closest('.btnrow'), i=+row.dataset.i, j=+row.dataset.j;
+    el.addEventListener('input',()=>{
+      data.rules[i]['按鈕'][j][el.dataset.k==='按鈕文字'?'文字':'連結']=el.value;
+      dirty();
+    });
+  });
+  document.querySelectorAll('[data-act]').forEach(b=>{
+    b.addEventListener('click',e=>{
+      e.preventDefault();
+      const act=b.dataset.act;
+      if(act==='delrule'){
+        const i=+b.closest('.rule').dataset.i;
+        if(!confirm('確定刪掉「'+data.rules[i]['名稱']+'」？\n（只是想暫停的話，把「啟用」關掉就好。）')) return;
+        data.rules.splice(i,1);
+      } else if(act==='addbtn'){
+        const i=+b.dataset.i;
+        if((data.rules[i]['按鈕']||[]).length>=3){ alert('IG 最多只吃 3 顆按鈕。'); return; }
+        (data.rules[i]['按鈕'] ||= []).push({'文字':'','連結':''});
+      } else if(act==='delbtn'){
+        const row=b.closest('.btnrow');
+        data.rules[+row.dataset.i]['按鈕'].splice(+row.dataset.j,1);
+      }
+      render(); counts(); dirty();
+    });
+  });
+  counts();
+}
+
+$('btnAdd').addEventListener('click',()=>{
+  data.rules.push({'名稱':'新規則','啟用':false,'觸發關鍵字':[],'排除關鍵字':[],
+    '只在這幾篇貼文生效':[],'公開回覆':'私訊你了，去收件匣看看',
+    '私訊標題':'','私訊副標':'','按鈕':[{'文字':'','連結':''}]});
+  render(); dirty();
+  window.scrollTo(0, document.body.scrollHeight);
+});
+
+/* ---------- 存檔 ---------- */
+function problems(){
+  const p=[];
+  data.rules.forEach((r,i)=>{
+    if(!r['啟用']) return;
+    const tag='第 '+(i+1)+' 條「'+(r['名稱']||'未命名')+'」';
+    if(!(r['觸發關鍵字']||[]).length) p.push(tag+'：沒有觸發關鍵字，永遠不會被觸發');
+    if(!(r['私訊標題']||'').trim())   p.push(tag+'：私訊標題是空的');
+    Object.entries(LIMITS).forEach(([k,max])=>{
+      if((r[k]||'').length>max) p.push(tag+'：'+k+'超過 '+max+' 字，IG 會切掉');
+    });
+    (r['按鈕']||[]).forEach((b,j)=>{
+      if(!b['文字'].trim()||!b['連結'].trim()) p.push(tag+'：第 '+(j+1)+' 顆按鈕有欄位沒填');
+      else if(!/^https?:\/\//.test(b['連結'])) p.push(tag+'：第 '+(j+1)+' 顆按鈕的連結要以 https:// 開頭');
+    });
+  });
+  return p;
+}
+function dirty(){
+  const changed = JSON.stringify(data)!==original;
+  const p=problems();
+  $('saveInfo').textContent = !changed ? '沒有變更'
+      : (p.length ? '⚠ '+p.length+' 個問題要先修' : '有未儲存的變更');
+  $('btnSave').disabled = !changed || p.length>0;
+  $('btnSave').title = p.join('\n');
+}
+$('btnSave').addEventListener('click', async ()=>{
+  const p=problems();
+  if(p.length){ alert('先修這些：\n\n'+p.join('\n')); return; }
+  const tok=localStorage.getItem(LS);
+  const btn=$('btnSave'); btn.disabled=true; btn.textContent='儲存中…';
+  try{
+    const meta=await verify(tok); if(!meta) throw new Error('通關碼過期了，請重新登入');
+    data['更新時間']=new Date().toISOString();
+    const json=JSON.stringify(data,null,1);
+    const b64=btoa(String.fromCharCode(...new TextEncoder().encode(json)));
+    const r=await fetch(API,{method:'PUT',
+      headers:{Authorization:'Bearer '+tok,Accept:'application/vnd.github+json','Content-Type':'application/json'},
+      body:JSON.stringify({message:'ig-admin: 更新 IG 留言自動回覆規則',content:b64,sha:meta.sha})});
+    if(!r.ok) throw new Error('儲存失敗 '+r.status+'：'+(await r.text()).slice(0,120));
+    sha=(await r.json()).content.sha;
+    original=JSON.stringify(data);
+    btn.textContent='✓ 存好了';
+    setTimeout(()=>{ btn.textContent='儲存到網站'; dirty(); },2200);
+  }catch(e){
+    btn.textContent='✗ '+e.message; btn.disabled=false;
+    setTimeout(()=>{ btn.textContent='儲存到網站'; dirty(); },4000);
+  }
+});
+
+boot();
+</script>
+</body>
+</html>
