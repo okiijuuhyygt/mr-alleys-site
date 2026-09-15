@@ -1130,3 +1130,4 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 .modal__includes li.has-detail::before { transition: transform .15s; }
 .modal__includes li.has-detail:has(details[open])::before { transform: rotate(90deg); }
 .modal__includes .inc-detail { margin: 6px 0 4px; font-family: "Noto Sans TC", "PingFang TC", sans-serif; font-size: 14px; line-height: 1.8; color: var(--ink-soft); }
+
