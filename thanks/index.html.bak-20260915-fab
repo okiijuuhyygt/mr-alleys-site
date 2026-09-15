@@ -53,17 +53,5 @@ p{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
 
   <div class="foot">巷弄故事館 Mr.Alleys ｜ <a href="/">mralleys.com</a></div>
 </div>
-<!-- LINE 聊聊浮動鈕（2026-09-15 加；耗耗：「去官網找這個 LINE 還真難找」）
-     跟 /blog 那顆同一個設計：右下固定、往下捲收起、往上捲出現、reduced-motion 不動畫。
-     顏色寫死不吃 CSS 變數，因為這站每頁的 CSS 各自獨立，抄變數會在沒定義的頁面變透明。
-     要拿掉：把這整段刪掉就好，沒有其他檔案依賴它。 -->
-<style>
-.chat-fab{position:fixed;right:14px;bottom:16px;z-index:9;font-family:"Cubic 11","Press Start 2P","Noto Sans TC",monospace;font-size:.86rem;letter-spacing:.06em;color:#2a1f12;background:#ede2c4;border:2px solid #b8801f;box-shadow:3px 3px 0 #6e4d10;padding:9px 14px;text-decoration:none;transition:transform .25s,opacity .25s}
-.chat-fab:hover{background:#d4a13a}
-.chat-fab.hide{transform:translateY(80px);opacity:0;pointer-events:none}
-@media (prefers-reduced-motion:reduce){.chat-fab{transition:none}}
-</style>
-<a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>
-<script>(function(){var f=document.getElementById('chatFab');if(!f)return;var y=window.scrollY||0;window.addEventListener('scroll',function(){var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;},{passive:true});})();</script>
 </body>
 </html>
