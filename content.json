@@ -147,7 +147,7 @@
       ],
       "duration": "依案件規模 1-3 個月",
       "deliverable": "上架 ready + 工程備份",
-      "priceLabel": "依規模報價",
+      "priceLabel": "6 萬起，依規模報價",
       "priceNumeric": null,
       "mode": "quote",
       "checkoutUrl": null,
@@ -332,7 +332,7 @@
       "id": "vocal",
       "slug": "vocal",
       "title": "人聲修整｜Vocal Editing",
-      "metaDescription": "歌已經錄好，需要音準、節拍更到位。巷弄故事館的 Vocal Editing 從音準、拍點、氣口到爆音口水音一條一條修，NT$1,200–3,000 ／首起。",
+      "metaDescription": "歌已經錄好，需要音準、節拍更到位。巷弄故事館的 Vocal Editing 從音準、拍點、氣口到爆音口水音一條一條修，NT$3,000 ／首起。",
       "lead": "當你的歌已經錄好，需要音準、節拍更到位，Vocal Editing 是最小單位的專業服務。不論是為了試水溫、社群短影音，或是完整發行，我們會依需求精準修整。",
       "sections": [
         {
@@ -377,7 +377,7 @@
           "heading": "收費方式",
           "paras": [],
           "list": [
-            "依方案與難度報價，區間 NT$1,200–3,000 ／首起",
+            "依方案與難度報價，NT$3,000 ／首起",
             "諮詢費用可折抵",
             "交付內容包含修整後主唱檔與必要對照檔"
           ],
