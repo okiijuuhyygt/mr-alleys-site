@@ -1131,3 +1131,49 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 .modal__includes li.has-detail:has(details[open])::before { transform: rotate(90deg); }
 .modal__includes .inc-detail { margin: 6px 0 4px; font-family: "Noto Sans TC", "PingFang TC", sans-serif; font-size: 14px; line-height: 1.8; color: var(--ink-soft); }
 
+
+/* ═══════════════════════════════════════════════════════════════
+   桌機兩欄 hero（2026-09-18 耗耗選 A）
+   問題：hero__inner 雖然 max-width:1100 + margin auto 有置中，
+        但內容（副標 560／GUILD BOARD 560／按鈕 200）全靠左，
+        右邊約 450px 空著只有吉祥物 → 視覺上偏左。
+   做法：桌機才把 inner 變兩欄，左欄放原本四個區塊、右欄留給吉祥物。
+   🔴 只用 min-width，手機那套完全沒動（原有 6 條 media query 全是 max-width）。
+   按鈕維持 2026-09-10 的「直排、短一點、不對齊上面軸線」，這次沒改。
+   ═══════════════════════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(260px, 26%, 360px);
+    column-gap: clamp(32px, 4vw, 64px);
+    align-items: center;
+  }
+  /* 四個區塊全部鎖在左欄（grid 預設會把它們一格一格排下去） */
+  .hero__inner > * { grid-column: 1; }
+
+  /* 吉祥物：從右下角的小裝飾，變成右欄的主角。
+     sheet 寬度必須跟著 size 等比放大（4 frames），不然走路動畫會裂。 */
+  .mascot {
+    --mascot-size: 160px;
+    --mascot-sheet-w: 640px;
+    --mascot-walk-distance: 110px;
+    /* 🔴 關鍵：mascot 是相對 .hero（滿版）定位，不是相對 1100 容器。
+       用跟容器同一條算式把它拉進右欄，否則它會貼著視窗邊緣、離文字更遠。
+       視窗窄到容器吃滿時，退回 pad-x 不會突出去。 */
+    right: max(calc((100% - var(--max-w)) / 2 + 40px), var(--pad-x));
+    bottom: 26%;
+  }
+
+  /* 桌機按鈕放大（2026-09-18 耗耗：「沒有人做這麼小的啦」）。
+     🔴 這條推翻 2026-09-10 的「直排、短一點」—— **是他自己 9/18 推翻的**，
+     不要看到上面 .hero__cta 那行舊註解就以為這裡違規。直排保留，只是不再「短」。
+     字級照抄頁面下半部的既有樣本：服務卡 17／18／19、GUILD BOARD 18，
+     而按鈕原本 11px，整整小一個帶 —— 那才是他說「怎麼這麼小」的原因。 */
+  .hero__cta .btn {
+    font-size: 15px;              /* 2026-09-18 耗耗：「比例是我喜歡的，但字太大，等比例縮小」→ 全組 ×0.83，形狀不變 */
+    padding: 13px 20px;
+    min-width: 168px;             /* 18→15、16-24→13-20、200→168，同一個比例縮 */
+    letter-spacing: 0.06em;
+  }
+
+}
