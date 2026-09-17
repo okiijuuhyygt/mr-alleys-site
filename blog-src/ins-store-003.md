@@ -35,4 +35,4 @@ cover: ins-store-003-cover.jpg
 要拿去混音、後製，選 WAV，音質完整不會損失；只是練唱、傳給朋友聽或剪個 vlog，MP3 檔案小、夠用就好。
 
 ---
-我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。〈Muted〉在 https://mralleys.gumroad.com/l/avefw ，WAV+MP3、一首不到 1 美金，其他首在 https://mralleys.gumroad.com。想聊聊你的案子適合怎麼用伴奏或直接做一首歌，從 [45 分鐘諮詢](/services/consult/) 開始；想從頭把一首歌做完整，看 [完整製作流程](/services/production/)。
+我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。〈Muted〉在 https://mralleys.gumroad.com/l/avefw ，WAV+MP3、一首不到 1 美金，其他首在 https://mralleys.gumroad.com。想聊聊你的案子適合怎麼用伴奏或直接做一首歌，從 [45–60 分鐘諮詢](/services/consult/) 開始；想從頭把一首歌做完整，看 [完整製作流程](/services/production/)。

@@ -41,4 +41,4 @@ cover: ins-store-002-cover.jpg
 這條在 Mr.Alleys 的伴奏小店：https://mralleys.gumroad.com/l/fcvug，WAV+MP3、一首 7 美金，cover 跟影片都能用；其他首在 https://mralleys.gumroad.com。都是我做歌時剩下、用得上的底軌，自己修整、做母帶再放上架。
 
 ---
-我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。手上有旋律想錄成 demo、或是想找一條伴奏拍翻唱，從 [45 分鐘諮詢](/services/consult/) 開始聊；想把配唱做到完整成品，看 [配唱製作](/services/vocal/)，想從頭把一首歌做完整，看 [完整製作流程](/services/production/)。
+我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。手上有旋律想錄成 demo、或是想找一條伴奏拍翻唱，從 [45–60 分鐘諮詢](/services/consult/) 開始聊；想把配唱做到完整成品，看 [配唱製作](/services/vocal/)，想從頭把一首歌做完整，看 [完整製作流程](/services/production/)。

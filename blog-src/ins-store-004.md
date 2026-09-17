@@ -37,4 +37,4 @@ cover: ins-store-004-cover.jpg
 編曲是 AI 生成，我自己挑過再做母帶，把音量跟音色統一過，響度也 normalize 過，丟上任何平台音量都不會忽大忽小。
 
 ---
-我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。想找一條現成的伴奏錄 demo 或拍影片，〈Soft Landing〉在這：https://mralleys.gumroad.com/l/lftwvi（WAV+MP3、一首 99 美分），其他首在 https://mralleys.gumroad.com；想從頭把一首歌做完整，看 [完整製作流程](/services/production/)，或先從 [45 分鐘諮詢](/services/consult/) 開始聊。
+我是陳則皞，音樂製作人，平常在做編曲、混音、客製化歌曲，也教寫歌。想找一條現成的伴奏錄 demo 或拍影片，〈Soft Landing〉在這：https://mralleys.gumroad.com/l/lftwvi（WAV+MP3、一首 99 美分），其他首在 https://mralleys.gumroad.com；想從頭把一首歌做完整，看 [完整製作流程](/services/production/)，或先從 [45–60 分鐘諮詢](/services/consult/) 開始聊。
