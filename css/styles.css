@@ -1161,7 +1161,7 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
        用跟容器同一條算式把它拉進右欄，否則它會貼著視窗邊緣、離文字更遠。
        視窗窄到容器吃滿時，退回 pad-x 不會突出去。 */
     right: max(calc((100% - var(--max-w)) / 2 + 40px), var(--pad-x));
-    bottom: 26%;
+    bottom: -60px;                /* 2026-09-18 耗耗：走在 hero 底部那條 brass 線上。sprite 每格 32px 底部有 12px 透明（=37.5%），160px 時腳離框底 60px，所以往下壓 60 才踩得到線 */
   }
 
   /* 桌機按鈕放大（2026-09-18 耗耗：「沒有人做這麼小的啦」）。
