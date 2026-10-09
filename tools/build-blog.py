@@ -247,6 +247,8 @@ def article_page(p, prev, nxt):
 <script>(function(){{var f=document.getElementById('chatFab'),y=window.scrollY||0;window.addEventListener('scroll',function(){{var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;}},{{passive:true}});}})();</script>
 </body>
 </html>'''
+# 2026-10-09 耗耗：目錄進得去還是找不到那篇 → 加標題搜尋（只過濾本頁清單，無外部依賴）
+SEARCH_CSS = '<style>.q{width:100%;box-sizing:border-box;margin:4px 0 6px;padding:10px 12px;font-size:1rem;border:2px solid var(--paper-edge);background:#fbf6ea;color:var(--ink);border-radius:0}.q:focus{outline:none;border-color:var(--brass)}.q-none{color:var(--ink-mute);margin:14px 0 0}</style>\n'
 def all_page(posts):
     url = f'{BASE}/blog/all/'
     groups = {}
@@ -257,17 +259,20 @@ def all_page(posts):
         items = sorted(groups[k], key=lambda x: (x['date'], x['id']), reverse=True)
         secs += f'<section class="series" id="{k}"><h2>{html.escape(SERIES[k])} <span class="d">{len(items)} 篇</span></h2><ul class="list">' + ''.join(f'<li><a href="/blog/{p["id"]}/">{html.escape(p["title"])}</a><span class="d">{p["date"]}</span></li>' for p in items) + '</ul></section>'
     ld = {"@context":"https://schema.org","@type":"CollectionPage","name":"巷弄故事館 音樂製作專欄","url":url,"inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"巷弄故事館 · MR. ALLEYS","url":BASE+"/"},"about":"音樂製作、編曲、混音、錄音、詞曲創作、AI 音樂、客製化歌曲"}
-    return head('專欄目錄｜巷弄故事館音樂製作專欄', f'{len(posts)} 篇音樂製作文章的完整分類目錄：常見問題、編曲混音、錄音、詞曲創作、Logic Pro、AI 音樂、客製化歌曲。', url, f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>\n') + f'''
+    return head('專欄目錄｜巷弄故事館音樂製作專欄', f'{len(posts)} 篇音樂製作文章的完整分類目錄：常見問題、編曲混音、錄音、詞曲創作、Logic Pro、AI 音樂、客製化歌曲。', url, f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>\n' + SEARCH_CSS) + f'''
 <body>
 <div class="wrap">
   <a class="back" href="/blog/">← 回專欄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · 目錄</div>
   <h1>專欄目錄</h1>
   <p class="intro">全部 {len(posts)} 篇，照主題分。不知道從哪讀起，回<a href="/blog/">專欄首頁</a>一篇一篇往下滑。</p>
+  <input class="q" id="q" type="search" placeholder="搜尋文章標題，例：demo、混音、婚禮" aria-label="搜尋文章標題" autocomplete="off">
+  <p class="q-none" id="qNone" hidden>找不到符合的文章，換個關鍵字試試。</p>
 {secs}
   {FOOT}
 </div>
 <a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>
+<script>(function(){{var q=document.getElementById('q'),none=document.getElementById('qNone'),secs=document.querySelectorAll('.series');q.addEventListener('input',function(){{var t=q.value.trim().toLowerCase(),hit=0;secs.forEach(function(sec){{var n=0;sec.querySelectorAll('li').forEach(function(li){{var ok=!t||li.textContent.toLowerCase().indexOf(t)>-1;li.hidden=!ok;if(ok)n++;}});sec.hidden=n===0;hit+=n;}});none.hidden=hit>0;}});}})();</script>
 <script>(function(){{var f=document.getElementById('chatFab'),y=window.scrollY||0;window.addEventListener('scroll',function(){{var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;}},{{passive:true}});}})();</script>
 </body>
 </html>'''
