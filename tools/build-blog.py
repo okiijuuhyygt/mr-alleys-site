@@ -194,7 +194,7 @@ def head(title, desc, url, extra='', image=None):
 <meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{image or (BASE + "/assets/og-image-v3.png?v=20260429c")}">
+<meta property="og:image" content="{image or (BASE + "/assets/og-image-v8.jpg?v=20261030")}">
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.png">
@@ -207,7 +207,7 @@ def article_page(p, prev, nxt):
     url = f'{BASE}/blog/{p["id"]}/'
     ld = {"@context":"https://schema.org","@graph":[
         {"@type":"Article","@id":url+"#article","headline":p['title'],"description":p['desc'],"inLanguage":"zh-Hant","datePublished":p['date'],"dateModified":TODAY,"mainEntityOfPage":{"@type":"WebPage","@id":url},"keywords":", ".join(p['keywords']+p['tags']),"articleSection":p['series'],
-         "author":{"@type":"Person","name":"陳則皞","url":BASE+"/"},"publisher":{"@type":"Organization","name":"巷弄故事館 Mr.Alleys","url":BASE+"/","logo":{"@type":"ImageObject","url":BASE+"/apple-touch-icon.png"}},"image":BASE+"/assets/og-image-v3.png"},
+         "author":{"@type":"Person","name":"陳則皞","url":BASE+"/"},"publisher":{"@type":"Organization","name":"巷弄故事館 Mr.Alleys","url":BASE+"/","logo":{"@type":"ImageObject","url":BASE+"/apple-touch-icon.png"}},"image":BASE+"/assets/og-image-v8.jpg"},
         {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"巷弄故事館","item":BASE+"/"},{"@type":"ListItem","position":2,"name":"音樂製作專欄","item":BASE+"/blog/"},{"@type":"ListItem","position":3,"name":p['title'],"item":url}]}]}
     # 2026-09-06 耗耗定：每篇分享縮圖用痞客邦那張（frontmatter cover:），只進 og:image，不進頁面
     cover_url = None
