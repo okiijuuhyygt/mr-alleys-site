@@ -267,3 +267,17 @@ test('ADMIN_TOKEN 沒設或太短：匯出直接關閉', async () => {
   const h = makeHarness({ ADMIN_TOKEN: 'short' });
   assert.equal((await h.call('GET', '/api/admin/export.csv', { headers: { Authorization: 'Bearer short' } })).status, 503);
 });
+
+test('綠界金鑰沒設：不收單、callback 也不接受（避免用 "undefined" 當金鑰偽造付款）', async () => {
+  const h = makeHarness({ ECPAY_HASH_KEY: '', ECPAY_HASH_IV: '' });
+  const r1 = await h.call('POST', '/api/orders', {
+    headers: fromSite(),
+    body: { email: 'a@example.com', agreeRefund: true },
+  });
+  assert.equal(r1.status, 503);
+  const p = { MerchantID: '3002607', MerchantTradeNo: 'MA000', RtnCode: '1', TradeAmt: '1480' };
+  p.CheckMacValue = await generateCheckMacValue(p, 'undefined', 'undefined');
+  const r2 = await h.call('POST', '/api/ecpay/return', { form: p });
+  assert.equal(r2.status, 503);
+  assert.equal(await r2.text(), '0|not configured');
+});

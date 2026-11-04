@@ -119,10 +119,19 @@ function canWatch(env, email) {
   return preview.includes(email);
 }
 
+/**
+ * 金鑰沒設好就不收單、不收回呼：否則 HashKey 會變成字串 "undefined"，
+ * 任何人都能算出「正確」的 CheckMacValue 偽造付款成功。
+ */
+function ecpayConfigured(env) {
+  return Boolean(env.ECPAY_MERCHANT_ID && env.ECPAY_HASH_KEY && env.ECPAY_HASH_IV);
+}
+
 // ---------------------------------------------------------------- handlers
 
 async function createOrder(request, env, deps) {
   if (env.PREORDER_OPEN !== 'true') return json({ error: 'preorder_closed' }, 403, request, env);
+  if (!ecpayConfigured(env)) return json({ error: 'server_error' }, 503, request, env);
   const body = await readJson(request);
   if (!body) return json({ error: 'bad_request' }, 400, request, env);
 
@@ -175,6 +184,7 @@ async function createOrder(request, env, deps) {
 
 async function ecpayReturn(request, env, ctx, deps) {
   // 綠界送 application/x-www-form-urlencoded；要回純文字 1|OK，否則它會重送
+  if (!ecpayConfigured(env)) return text('0|not configured', 503);
   const params = Object.fromEntries(new URLSearchParams(await request.text()));
   const okSig = await verifyCheckMacValue(params, env.ECPAY_HASH_KEY, env.ECPAY_HASH_IV);
   if (!okSig) {
