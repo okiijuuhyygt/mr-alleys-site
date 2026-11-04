@@ -88,7 +88,7 @@
 
   // 有人用開發者工具把浮水印拿掉，就把影片也拿掉
   new MutationObserver(function () {
-    if (!player.contains(wm) || wm.querySelectorAll('span').length < 3 || getComputedStyle(wm).display === 'none') stopVideo();
+    if (!player.contains(wm) || wm.querySelectorAll('span').length < 3 || getComputedStyle(wm).display === 'none' || getComputedStyle(wm).visibility === 'hidden' || Number(getComputedStyle(wm).opacity) === 0) stopVideo();
   }).observe(player, { childList: true, subtree: true, attributes: true, characterData: true });
 
   function stopVideo(text) {

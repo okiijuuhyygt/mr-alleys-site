@@ -12,7 +12,7 @@
     must_agree: '請先勾選「我已閱讀退款說明」。',
     already_paid: '這個 email 已經預購過了，不用再付一次。如果有問題，寫信到 hao@mralleys.com。',
     preorder_closed: '預購目前沒有開放。',
-    rate_limited: '操作太頻繁了，請過 15 分鐘再試一次。',
+    rate_limited: '操作太頻繁了，請稍等一段時間（最多約 1 小時）再試一次。',
     email_failed: '驗證碼信寄不出去，請過幾分鐘再試；一直不行的話寫信到 hao@mralleys.com。',
     invalid: '驗證碼不對，再檢查一次；或重新寄一組。',
     expired: '這組驗證碼過期了（10 分鐘有效），請重新寄一組。',

@@ -21,7 +21,7 @@
 .crs-sec p:last-child { margin-bottom: 0; }
 .crs-week { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px dashed var(--paper-edge); }
 .crs-week:last-child { border-bottom: none; }
-.crs-week .no { flex: 0 0 64px; color: var(--brass); font-weight: 700; }
+.crs-week .no { flex: 0 0 5.2em; white-space: nowrap; color: var(--brass); font-weight: 700; }
 .crs-week .t b { display: block; }
 .crs-week .t span { color: var(--ink-soft); font-size: .92rem; display: block; }
 .crs-week .t .meta { color: var(--ink-mute); font-size: .84rem; margin-top: 2px; }
