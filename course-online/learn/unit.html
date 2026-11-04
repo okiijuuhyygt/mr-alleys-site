@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>單元｜線上寫歌課｜巷弄故事館 MR. ALLEYS</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="/favicon.png">
+<link rel="stylesheet" href="../../css/service-page.css">
+<link rel="stylesheet" href="../css/course-online.css">
+</head>
+<body>
+<div class="svc-wrap">
+  <div class="lrn-bar">
+    <a class="svc-back" href="index.html" style="margin-bottom:0;">← 回課程首頁</a>
+    <button class="crs-btn alt inline" type="button" id="logoutBtn">登出</button>
+  </div>
+
+  <header class="svc-head">
+    <div class="svc-badge" id="unitNo">MR.ALLEYS · 線上寫歌課</div>
+    <h1 id="unitTitle">載入中……</h1>
+    <p class="crs-tagline" id="unitSummary"></p>
+  </header>
+
+  <div class="crs-msg err" id="kicked" role="alert" hidden></div>
+
+  <div class="lrn-videos" id="videoList"></div>
+
+  <div class="lrn-player" id="player">
+    <div class="empty" id="playerEmpty">選一支影片開始看</div>
+    <div class="lrn-wm" id="wm" aria-hidden="true"></div>
+  </div>
+  <div class="lrn-tools">
+    <button class="crs-btn alt inline" type="button" id="fsBtn" hidden>全螢幕</button>
+  </div>
+
+  <section class="crs-sec">
+    <h2>這個單元的練習</h2>
+    <p id="unitTask"></p>
+  </section>
+
+  <section class="crs-sec" style="background:var(--paper-soft);">
+    <h2>完成檢查點</h2>
+    <label class="crs-check"><input type="checkbox" id="doneBox"><span id="checkpointText"></span></label>
+    <p class="crs-flow">做到了再勾。勾了之後課程首頁會記下你的進度，之後也可以取消。</p>
+  </section>
+
+  <nav class="lrn-nav">
+    <span id="prevLink"></span>
+    <span id="nextLink"></span>
+  </nav>
+
+  <div class="crs-msg err" id="err" role="alert" hidden></div>
+
+  <footer class="svc-foot">影片上的 email 浮水印是購買者本人，請不要轉傳或錄影。｜<a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
+</div>
+
+<script src="../js/api.js"></script>
+<script>
+(function () {
+  var C = window.MACourse;
+  var $ = function (id) { return document.getElementById(id); };
+  var unitId = new URLSearchParams(location.search).get('u') || 'u1';
+  var player = $('player');
+  var wm = $('wm');
+  var email = '';
+  var currentVideo = null;
+  var alive = true;
+
+  $('logoutBtn').addEventListener('click', C.logout);
+
+  function fail(code) { $('err').textContent = C.message(code); $('err').hidden = false; }
+
+  // ---------------- 浮水印：購買者 email，每 15 秒換位置
+  function placeWatermark() {
+    var spans = wm.querySelectorAll('span');
+    for (var i = 0; i < spans.length; i++) {
+      spans[i].style.left = (5 + Math.random() * 55) + '%';
+      spans[i].style.top = (8 + i * 30 + Math.random() * 14) + '%';
+    }
+  }
+  function buildWatermark() {
+    wm.innerHTML = '';
+    for (var i = 0; i < 3; i++) wm.appendChild(C.el('span', null, email));
+    placeWatermark();
+  }
+
+  // 有人用開發者工具把浮水印拿掉，就把影片也拿掉
+  new MutationObserver(function () {
+    if (!player.contains(wm) || wm.querySelectorAll('span').length < 3 || getComputedStyle(wm).display === 'none') stopVideo();
+  }).observe(player, { childList: true, subtree: true, attributes: true, characterData: true });
+
+  function stopVideo(text) {
+    var f = player.querySelector('iframe');
+    if (f) f.remove();
+    $('playerEmpty').hidden = false;
+    if (text) $('playerEmpty').textContent = text;
+  }
+
+  // ---------------- 播放
+  function play(video, btn) {
+    if (!alive) return;
+    var buttons = $('videoList').querySelectorAll('button');
+    for (var i = 0; i < buttons.length; i++) buttons[i].setAttribute('aria-current', 'false');
+    btn.setAttribute('aria-current', 'true');
+    stopVideo('載入影片中……');
+    currentVideo = video.id;
+    C.call('GET', '/api/video?id=' + encodeURIComponent(video.id)).then(function (r) {
+      if (!r.ok) {
+        if (r.status === 401) return kick(r.data && r.data.error);
+        return stopVideo(C.message(r.data && r.data.error));
+      }
+      if (currentVideo !== video.id) return;
+      email = r.data.watermark || email;
+      buildWatermark();
+      var f = document.createElement('iframe');
+      f.src = r.data.embedUrl;
+      f.title = video.title;
+      f.loading = 'eager';
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      // 故意不給 allowfullscreen／picture-in-picture：那兩個會讓影片跳出浮水印的框
+      f.setAttribute('allow', 'autoplay; encrypted-media');
+      $('playerEmpty').hidden = true;
+      player.insertBefore(f, wm);
+    });
+  }
+
+  // ---------------- 全螢幕：放大整個框（含浮水印），不是只放大影片
+  var canFs = player.requestFullscreen || player.webkitRequestFullscreen;
+  if (canFs) {
+    $('fsBtn').hidden = false;
+    $('fsBtn').addEventListener('click', function () {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        canFs.call(player);
+      }
+    });
+  }
+
+  // ---------------- 單一裝置：每 60 秒問一次，被別台登入擠掉就停播
+  function kick(reason) {
+    alive = false;
+    stopVideo('這台裝置已經登出');
+    $('kicked').innerHTML = '';
+    $('kicked').appendChild(document.createTextNode(C.message(reason === 'replaced' ? 'replaced' : 'expired_session') + ' '));
+    var a = C.el('a', null, '重新登入');
+    a.href = 'login.html';
+    $('kicked').appendChild(a);
+    $('kicked').hidden = false;
+  }
+  function heartbeat() {
+    if (!alive) return;
+    C.call('GET', '/api/session').then(function (r) {
+      if (r.status === 401) kick(r.data && r.data.error);
+    });
+  }
+  setInterval(heartbeat, 60 * 1000);
+  setInterval(placeWatermark, 15 * 1000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) heartbeat(); });
+
+  // ---------------- 載入單元
+  C.requireLogin().then(function (s) {
+    email = s.email;
+    if (!s.canWatch) { location.replace('index.html'); return new Promise(function () {}); }
+    return C.call('GET', '/api/course');
+  }).then(function (r) {
+    if (!r.ok) throw new Error((r.data && r.data.error) || 'server_error');
+    var units = r.data.course.units;
+    var idx = units.findIndex(function (u) { return u.id === unitId; });
+    if (idx < 0) { location.replace('index.html'); return; }
+    var u = units[idx];
+
+    document.title = '第 ' + u.no + ' 單元：' + u.title + '｜線上寫歌課｜巷弄故事館 MR. ALLEYS';
+    $('unitNo').textContent = 'MR.ALLEYS · 第 ' + u.no + ' 單元';
+    $('unitTitle').textContent = u.title;
+    $('unitSummary').textContent = u.summary;
+    $('unitTask').textContent = u.task;
+    $('checkpointText').textContent = u.checkpoint;
+    $('doneBox').checked = Boolean(r.data.progress[u.id]);
+    buildWatermark();
+
+    u.videos.forEach(function (v, i) {
+      var b = C.el('button', 'lrn-vbtn', (i + 1) + '. ' + v.title + '（' + v.minutes + ' 分）');
+      b.type = 'button';
+      if (!v.ready) { b.disabled = true; b.title = '影片準備中'; }
+      b.addEventListener('click', function () { play(v, b); });
+      $('videoList').appendChild(b);
+    });
+
+    if (idx > 0) { var p = C.el('a', null, '← 第 ' + units[idx - 1].no + ' 單元'); p.href = 'unit.html?u=' + units[idx - 1].id; $('prevLink').appendChild(p); }
+    if (idx < units.length - 1) { var n = C.el('a', null, '第 ' + units[idx + 1].no + ' 單元 →'); n.href = 'unit.html?u=' + units[idx + 1].id; $('nextLink').appendChild(n); }
+
+    $('doneBox').addEventListener('change', function () {
+      var box = this;
+      C.call('POST', '/api/progress', { unitId: u.id, done: box.checked }).then(function (res) {
+        if (!res.ok) { box.checked = !box.checked; if (res.status === 401) kick(res.data && res.data.error); else fail(res.data && res.data.error); }
+      });
+    });
+  }).catch(function (e) { fail(e.message); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>學員登入｜線上寫歌課｜巷弄故事館 MR. ALLEYS</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.png">
+<link rel="stylesheet" href="../../css/service-page.css">
+<link rel="stylesheet" href="../css/course-online.css">
+</head>
+<body>
+<div class="svc-wrap">
+  <a class="svc-back" href="/course-online/">← 回線上寫歌課</a>
+  <header class="svc-head">
+    <div class="svc-badge">MR.ALLEYS · 線上寫歌課</div>
+    <h1>學員登入</h1>
+  </header>
+
+  <div class="crs-msg" id="notice" hidden></div>
+
+  <section class="crs-sec" id="stepEmail">
+    <h2>1. 輸入你付款時填的 email</h2>
+    <form id="emailForm" novalidate>
+      <div class="crs-field">
+        <label for="email">Email</label>
+        <input class="crs-input" id="email" type="email" autocomplete="email" inputmode="email" required>
+        <span class="hint">我們會寄一組 6 位數驗證碼到這個信箱，不用設密碼。</span>
+      </div>
+      <button class="crs-btn" type="submit" id="sendBtn">寄驗證碼給我</button>
+      <div class="crs-msg err" id="emailMsg" role="alert" hidden></div>
+    </form>
+  </section>
+
+  <section class="crs-sec" id="stepCode" hidden>
+    <h2>2. 輸入信裡的 6 位數驗證碼</h2>
+    <p>如果 <b id="sentTo"></b> 有購買紀錄，驗證碼已經寄出，10 分鐘內有效。沒看到的話，看一下垃圾郵件匣。</p>
+    <form id="codeForm" novalidate>
+      <div class="crs-field">
+        <label for="code">驗證碼</label>
+        <input class="crs-input code" id="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+      </div>
+      <button class="crs-btn" type="submit" id="verifyBtn">登入</button>
+      <div class="crs-msg err" id="codeMsg" role="alert" hidden></div>
+    </form>
+    <p class="crs-flow">
+      <button class="crs-linkbtn" type="button" id="resendBtn">重新寄一組</button>
+      ｜ <button class="crs-linkbtn" type="button" id="changeBtn">換一個 email</button>
+    </p>
+  </section>
+
+  <p class="crs-flow">一個帳號同一時間只能在一台裝置上看；在這裡登入，其他裝置會自動登出。</p>
+
+  <footer class="svc-foot">巷弄故事館 · MR. ALLEYS ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
+</div>
+
+<script src="../js/api.js"></script>
+<script>
+(function () {
+  var C = window.MACourse;
+  var $ = function (id) { return document.getElementById(id); };
+  var email = '';
+  var cooldown = 0;
+  var timer = null;
+
+  function show(id, text) { $(id).textContent = text || ''; $(id).hidden = !text; }
+
+  // 從別頁被踢回來時，講清楚原因
+  var reason = new URLSearchParams(location.search).get('reason');
+  if (reason) show('notice', C.message(reason));
+
+  // 已經登入就直接進課程首頁
+  C.call('GET', '/api/session').then(function (r) { if (r.ok) location.replace('index.html'); });
+
+  function startCooldown() {
+    cooldown = 60;
+    $('resendBtn').disabled = true;
+    clearInterval(timer);
+    timer = setInterval(function () {
+      cooldown -= 1;
+      $('resendBtn').textContent = cooldown > 0 ? '重新寄一組（' + cooldown + ' 秒）' : '重新寄一組';
+      if (cooldown <= 0) { clearInterval(timer); $('resendBtn').disabled = false; }
+    }, 1000);
+  }
+
+  function requestCode(target, errId, btn) {
+    btn.disabled = true;
+    return C.call('POST', '/api/auth/request-code', { email: target }).then(function (r) {
+      btn.disabled = false;
+      if (!r.ok) { show(errId, C.message(r.data && r.data.error)); return false; }
+      email = target;
+      $('sentTo').textContent = target;
+      $('stepEmail').hidden = true;
+      $('stepCode').hidden = false;
+      show('codeMsg', '');
+      $('code').value = '';
+      $('code').focus();
+      startCooldown();
+      return true;
+    });
+  }
+
+  $('emailForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    show('emailMsg', '');
+    var v = $('email').value.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return show('emailMsg', C.message('invalid_email'));
+    requestCode(v, 'emailMsg', $('sendBtn'));
+  });
+
+  $('codeForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    show('codeMsg', '');
+    var code = $('code').value.replace(/\D/g, '');
+    if (code.length !== 6) return show('codeMsg', '驗證碼是 6 位數字。');
+    $('verifyBtn').disabled = true;
+    C.call('POST', '/api/auth/verify', { email: email, code: code }).then(function (r) {
+      $('verifyBtn').disabled = false;
+      if (r.ok) return location.replace('index.html');
+      show('codeMsg', C.message(r.data && r.data.error));
+    });
+  });
+
+  $('resendBtn').addEventListener('click', function () {
+    if (cooldown > 0) return;
+    requestCode(email, 'codeMsg', $('resendBtn'));
+  });
+
+  $('changeBtn').addEventListener('click', function () {
+    $('stepCode').hidden = true;
+    $('stepEmail').hidden = false;
+    $('email').focus();
+  });
+})();
+</script>
+</body>
+</html>
