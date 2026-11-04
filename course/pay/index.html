@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>選擇方案｜一對一寫歌課｜巷弄故事館 MR. ALLEYS</title>
+<!-- 付款前的選方案頁：不進索引 -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://mralleys.com/course/pay/">
+<link rel="icon" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="../../css/service-page.css?v=20261107b">
+<link rel="stylesheet" href="../course.css?v=20261107b">
+</head>
+<body data-page="course-pay">
+<div class="svc-wrap">
+  <a class="svc-back" href="/course/">← 回一對一課程</a>
+
+  <header class="svc-head">
+    <div class="svc-badge">MR.ALLEYS · 一對一寫歌課</div>
+    <h1>選擇方案</h1>
+  </header>
+
+  <section class="crs-sec">
+    <!-- 付款連結是 ECPay 的收款連結（一個方案一條），換連結只改下面兩個 data-pay -->
+    <div class="pay-opts" role="radiogroup" aria-label="選擇方案">
+      <label class="pay-opt">
+        <input type="radio" name="plan" value="p1" data-pay="https://p.ecpay.com.tw/F2A49C2">
+        <span class="body">
+          <span class="name">第一期（四堂）</span>
+          <span class="price">NT$5,800</span>
+          <span class="desc">寫出詞與旋律線。</span>
+        </span>
+      </label>
+      <label class="pay-opt">
+        <input type="radio" name="plan" value="p2" data-pay="https://p.ecpay.com.tw/8FA84DA">
+        <span class="body">
+          <span class="name">兩期一起（八堂）</span>
+          <span class="price">NT$9,800</span>
+          <span class="desc">完成整首歌，錄成 Demo。</span>
+        </span>
+      </label>
+    </div>
+
+    <a class="crs-btn pay-go" id="payGo" href="#" target="_blank" rel="noopener" hidden>前往付款 →</a>
+    <noscript>
+      <a class="crs-btn" href="https://p.ecpay.com.tw/F2A49C2" target="_blank" rel="noopener">前往付款：第一期（四堂） →</a>
+      <a class="crs-btn" href="https://p.ecpay.com.tw/8FA84DA" target="_blank" rel="noopener">前往付款：兩期一起（八堂） →</a>
+    </noscript>
+
+    <p class="crs-flow">付款頁會在新分頁打開。付款後我們會聯絡你，約第一堂的時間。</p>
+    <p class="crs-flow">第一期上完想接第二期，再跟我們說（第一期上完 14 天內追加第二期四堂，NT$4,800）。</p>
+  </section>
+
+  <p class="crs-ask">還有問題？<a href="https://line.me/R/oaMessage/%40285qszgm/?%E5%AF%AB%E6%AD%8C%E8%AA%B2" target="_blank" rel="noopener">加 LINE 問我們</a></p>
+
+  <footer class="svc-foot">
+    巷弄故事館 · MR. ALLEYS ｜ <a href="/">回首頁</a> ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a>
+  </footer>
+</div>
+<script>
+(function () {
+  // 選了方案才出現付款按鈕；按鈕連到那個方案的付款連結
+  var go = document.getElementById('payGo');
+  var opts = document.querySelectorAll('.pay-opt input');
+  function update() {
+    var picked = null;
+    for (var i = 0; i < opts.length; i++) {
+      opts[i].parentNode.classList.toggle('on', opts[i].checked);
+      if (opts[i].checked) picked = opts[i];
+    }
+    if (!picked) { go.hidden = true; return; }
+    go.href = picked.getAttribute('data-pay');
+    go.setAttribute('aria-label', '前往付款：' + picked.parentNode.querySelector('.name').textContent);
+    go.hidden = false;
+  }
+  for (var i = 0; i < opts.length; i++) opts[i].addEventListener('change', update);
+  update(); // 從付款頁按「上一頁」回來時，瀏覽器可能還記得選過的方案
+  window.addEventListener('pageshow', update);
+})();
+</script>
+</body>
+</html>
