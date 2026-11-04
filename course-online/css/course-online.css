@@ -1,0 +1,126 @@
+/* course-online.css — 線上寫歌課（預購頁＋學員區）
+   疊在 /css/service-page.css 上面：顏色、字體、邊框陰影全部沿用那套。
+   crs-* 元件照抄 /course/index.html 的同名樣式，讓兩頁看起來是同一門課。 */
+
+.crs-lede { font-size: 1.02rem; margin-bottom: 18px; }
+.crs-tagline { margin: 10px 0 0; font-size: 1.05rem; line-height: 1.6; opacity: .85; }
+.crs-sec {
+  border: 4px solid var(--ink);
+  background: #fffdf4;
+  box-shadow: 6px 6px 0 var(--shadow);
+  padding: 20px 22px;
+  margin-bottom: 22px;
+}
+.crs-sec h2 {
+  font-size: 1.15rem;
+  color: var(--brass-deep);
+  margin-bottom: 12px;
+  letter-spacing: .05em;
+}
+.crs-sec p { margin-bottom: 10px; }
+.crs-sec p:last-child { margin-bottom: 0; }
+.crs-week { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px dashed var(--paper-edge); }
+.crs-week:last-child { border-bottom: none; }
+.crs-week .no { flex: 0 0 5.2em; white-space: nowrap; color: var(--brass); font-weight: 700; }
+.crs-week .t b { display: block; }
+.crs-week .t span { color: var(--ink-soft); font-size: .92rem; display: block; }
+.crs-week .t .meta { color: var(--ink-mute); font-size: .84rem; margin-top: 2px; }
+.crs-plan {
+  border: 3px solid var(--ink);
+  background: #f6efdc;
+  border-color: var(--brass-deep);
+  padding: 16px 18px;
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+.crs-plan .tag {
+  display: inline-block;
+  font-size: .78rem;
+  padding: 2px 10px;
+  margin-bottom: 8px;
+  color: #fff;
+  background: var(--brass);
+}
+.crs-plan h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.crs-price { margin: 10px 0 4px; }
+.crs-price .now { font-size: 1.5rem; font-weight: 700; color: var(--brass-deep); }
+.crs-price .was { color: var(--ink-mute); text-decoration: line-through; margin-left: 8px; }
+.crs-price .note { display: block; color: var(--ink-soft); font-size: .85rem; }
+.crs-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 3px solid var(--ink);
+  background: var(--brass);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 var(--shadow);
+  cursor: pointer;
+}
+.crs-btn:hover { background: var(--brass-deep); }
+.crs-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--shadow); }
+.crs-btn[disabled] { opacity: .55; cursor: wait; }
+.crs-btn.alt { background: var(--paper); color: var(--quest); }
+.crs-btn.alt:hover { background: var(--paper-soft); }
+.crs-btn.inline { display: inline-block; width: auto; padding: 6px 14px; margin-top: 0; font-size: .9rem; box-shadow: 3px 3px 0 var(--shadow); }
+.crs-faq dt { font-weight: 700; margin-top: 12px; }
+.crs-faq dd { color: var(--ink-soft); margin-left: 0; }
+.crs-flow { color: var(--ink-soft); font-size: .88rem; margin-top: 10px; }
+.crs-list { list-style: none; margin: 6px 0; }
+.crs-list li { padding-left: 1.2em; position: relative; margin-bottom: 4px; }
+.crs-list li::before { content: "▸"; position: absolute; left: 0; color: var(--brass); }
+
+/* ---------- 表單 ---------- */
+.crs-field { margin: 12px 0; }
+.crs-field label { display: block; font-size: .92rem; margin-bottom: 4px; }
+.crs-field .hint { display: block; color: var(--ink-mute); font-size: .82rem; margin-top: 3px; }
+.crs-input {
+  width: 100%;
+  font: inherit;
+  font-size: 1rem;
+  padding: 9px 12px;
+  border: 3px solid var(--ink);
+  background: #fffdf4;
+  color: var(--ink);
+  border-radius: 0;
+}
+.crs-input:focus { outline: 3px solid var(--brass-light); outline-offset: 0; }
+.crs-input.code { letter-spacing: .5em; font-size: 1.4rem; text-align: center; max-width: 260px; }
+.crs-check { display: flex; gap: 8px; align-items: flex-start; margin: 10px 0; font-size: .92rem; }
+.crs-check input { margin-top: .45em; width: 18px; height: 18px; accent-color: var(--brass-deep); flex: 0 0 auto; }
+.crs-msg { margin-top: 12px; padding: 10px 14px; font-size: .92rem; border: 2px dashed var(--brass); background: var(--paper); }
+.crs-msg.err { border-color: #b83a2a; color: #8a2a1e; }
+.crs-msg[hidden] { display: none; }
+.crs-linkbtn { background: none; border: none; padding: 0; font: inherit; color: var(--quest); border-bottom: 2px solid var(--quest); cursor: pointer; }
+.crs-linkbtn[disabled] { color: var(--ink-mute); border-color: var(--ink-mute); cursor: default; }
+
+/* ---------- 學員區 ---------- */
+.lrn-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; font-size: .88rem; color: var(--ink-soft); }
+.lrn-unit { display: block; color: inherit; text-decoration: none; }
+.lrn-unit.locked { opacity: .72; }
+a.lrn-unit:hover .t b { color: var(--quest); }
+.lrn-done { color: #4a8b3a; font-size: .84rem; font-weight: 700; }
+.lrn-progress { height: 12px; border: 3px solid var(--ink); background: var(--paper); margin: 8px 0 4px; }
+.lrn-progress > i { display: block; height: 100%; background: var(--brass); width: 0; }
+
+.lrn-videos { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 14px; }
+.lrn-vbtn { border: 3px solid var(--ink); background: var(--paper); color: var(--ink); font: inherit; font-size: .86rem; padding: 5px 10px; box-shadow: 3px 3px 0 var(--shadow); cursor: pointer; text-align: left; }
+.lrn-vbtn[aria-current="true"] { background: var(--brass-light); }
+.lrn-vbtn[disabled] { opacity: .5; cursor: default; }
+
+/* 播放器＋浮水印：浮水印蓋在 iframe 上面，pointer-events:none 不擋操作。
+   iframe 不給 allowfullscreen／picture-in-picture，全螢幕改用我們自己的按鈕放大整個框，浮水印才會跟著。 */
+.lrn-player { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #1a140b; border: 4px solid var(--ink); box-shadow: 6px 6px 0 var(--shadow); overflow: hidden; }
+.lrn-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.lrn-player .empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--paper-edge); padding: 20px; text-align: center; font-size: .95rem; }
+.lrn-wm { position: absolute; inset: 0; pointer-events: none; z-index: 3; overflow: hidden; user-select: none; -webkit-user-select: none; }
+.lrn-wm span { position: absolute; font-family: "Noto Sans TC", sans-serif; font-size: clamp(11px, 1.6vw, 15px); color: #fff; opacity: .16; white-space: nowrap; transform: rotate(-12deg); text-shadow: 0 0 2px #000; transition: left 1.2s ease, top 1.2s ease; }
+.lrn-player:fullscreen { border: 0; box-shadow: none; aspect-ratio: auto; }
+.lrn-player:-webkit-full-screen { border: 0; box-shadow: none; }
+.lrn-tools { display: flex; justify-content: flex-end; gap: 8px; margin: 10px 0 18px; }
+.lrn-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; }
+.lrn-nav a { color: var(--quest); font-size: .92rem; }
+@media (prefers-reduced-motion: reduce) { .lrn-wm span { transition: none; } }

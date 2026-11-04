@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>我的課程｜線上寫歌課｜巷弄故事館 MR. ALLEYS</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.png">
+<link rel="stylesheet" href="../../css/service-page.css">
+<link rel="stylesheet" href="../css/course-online.css">
+</head>
+<body>
+<div class="svc-wrap">
+  <div class="lrn-bar">
+    <span>登入中：<b id="who">……</b></span>
+    <button class="crs-btn alt inline" type="button" id="logoutBtn">登出</button>
+  </div>
+
+  <header class="svc-head">
+    <div class="svc-badge">MR.ALLEYS · 線上寫歌課</div>
+    <h1 id="courseTitle">寫歌課・線上第一期</h1>
+    <p class="crs-tagline" id="coursePromise">寫出你的第一段詞、錄下你哼的第一段旋律</p>
+  </header>
+
+  <div class="crs-msg" id="notOpen" hidden></div>
+
+  <section class="crs-sec" id="progressBox" hidden>
+    <h2>你的進度</h2>
+    <div class="lrn-progress" aria-hidden="true"><i id="progressBar"></i></div>
+    <p class="crs-flow" id="progressText"></p>
+  </section>
+
+  <section class="crs-sec">
+    <h2>四個單元</h2>
+    <div id="units"><p class="crs-flow">載入中……</p></div>
+  </section>
+
+  <div class="crs-msg err" id="err" role="alert" hidden></div>
+
+  <footer class="svc-foot">巷弄故事館 · MR. ALLEYS ｜ 有問題寫信到 <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
+</div>
+
+<script src="../js/api.js"></script>
+<script>
+(function () {
+  var C = window.MACourse;
+  var $ = function (id) { return document.getElementById(id); };
+  $('logoutBtn').addEventListener('click', C.logout);
+
+  C.requireLogin().then(function (s) {
+    $('who').textContent = s.email;
+    return C.call('GET', '/api/course');
+  }).then(function (r) {
+    if (!r.ok) throw new Error((r.data && r.data.error) || 'server_error');
+    render(r.data);
+  }).catch(function (e) {
+    $('err').textContent = C.message(e.message);
+    $('err').hidden = false;
+  });
+
+  function render(d) {
+    var course = d.course;
+    $('courseTitle').textContent = course.title;
+    $('coursePromise').textContent = course.promise;
+
+    if (!d.canWatch) {
+      $('notOpen').textContent = '你已經完成預購。課程' + d.launchText + '，上線那天會寄信通知你。下面先讓你看看會上到什麼。';
+      $('notOpen').hidden = false;
+    }
+
+    var done = 0;
+    var box = $('units');
+    box.innerHTML = '';
+    course.units.forEach(function (u) {
+      var finished = Boolean(d.progress[u.id]);
+      if (finished) done += 1;
+      var minutes = u.videos.reduce(function (s, v) { return s + v.minutes; }, 0);
+      var row = C.el(d.canWatch ? 'a' : 'div', 'crs-week lrn-unit' + (d.canWatch ? '' : ' locked'));
+      if (d.canWatch) row.href = 'unit.html?u=' + encodeURIComponent(u.id);
+      row.appendChild(C.el('div', 'no', '第 ' + u.no + ' 單元'));
+      var t = C.el('div', 't');
+      t.appendChild(C.el('b', null, u.title));
+      t.appendChild(C.el('span', null, u.summary));
+      var meta = C.el('span', 'meta', u.videos.length + ' 支影片｜約 ' + minutes + ' 分鐘｜檢查點：「' + u.checkpoint + '」');
+      t.appendChild(meta);
+      if (finished) t.appendChild(C.el('span', 'lrn-done', '✓ 已完成'));
+      row.appendChild(t);
+      box.appendChild(row);
+    });
+
+    if (d.canWatch) {
+      $('progressBox').hidden = false;
+      $('progressBar').style.width = Math.round((done / course.units.length) * 100) + '%';
+      $('progressText').textContent = done === course.units.length
+        ? '四個單元都完成了。你的第一段詞和第一段旋律，都在你手上了。'
+        : '已完成 ' + done + ' ／ ' + course.units.length + ' 個單元。';
+    }
+  }
+})();
+</script>
+</body>
+</html>
