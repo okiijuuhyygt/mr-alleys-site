@@ -1,6 +1,7 @@
 /* course-online.css — 線上寫歌課（預購頁＋學員區）
    疊在 /css/service-page.css 上面：顏色、字體、邊框陰影全部沿用那套。
-   crs-* 元件照抄 /course/index.html 的同名樣式，讓兩頁看起來是同一門課。 */
+   crs-* 元件照抄 /course/index.html 的同名樣式，讓兩頁看起來是同一門課。
+   /course-group/（實體小班）與 /course-hub/（寫歌課總覽）也引用這一份，改樣式時三頁都要看。 */
 
 .crs-lede { font-size: 1.02rem; margin-bottom: 18px; }
 .crs-tagline { margin: 10px 0 0; font-size: 1.05rem; line-height: 1.6; opacity: .85; }
@@ -124,3 +125,26 @@ a.lrn-unit:hover .t b { color: var(--quest); }
 .lrn-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; }
 .lrn-nav a { color: var(--quest); font-size: .92rem; }
 @media (prefers-reduced-motion: reduce) { .lrn-wm span { transition: none; } }
+
+/* ---------- 待定標記與小標（預購頁、實體小班頁、總入口共用） ----------
+   .crs-tbd：還沒定案、要老闆決定的地方。定案後把整個 span 換成正式文字。 */
+.crs-tbd { display: inline-block; padding: 0 6px; margin: 0 2px; border: 2px dashed #b83a2a; background: #fff3e6; color: #8a2a1e; font-weight: 700; font-size: .9em; line-height: 1.5; }
+.crs-sub { font-size: 1rem; color: var(--quest); margin: 14px 0 4px; }
+.crs-sub:first-of-type { margin-top: 2px; }
+
+/* 上課資訊：左欄項目、右欄內容；手機一樣兩欄，左欄固定寬 */
+.crs-info { display: grid; grid-template-columns: 4.5em minmax(0, 1fr); gap: 6px 12px; }
+.crs-info dt { color: var(--brass-deep); font-weight: 700; }
+.crs-info dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+
+/* ---------- 總入口卡片（/course-hub/） ---------- */
+.hub-cards { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; margin-bottom: 22px; }
+.hub-cards .crs-plan { display: flex; flex-direction: column; background: var(--paper-soft); border-color: var(--ink); min-width: 0; }
+.hub-cards .crs-plan.main { grid-column: 1 / -1; background: #f6efdc; border-color: var(--brass-deep); }
+.hub-cards .crs-plan .tag { align-self: flex-start; }
+.hub-cards .crs-plan .tag.soft { background: var(--quest); }
+.hub-cards .crs-plan .fit { color: var(--ink-soft); font-size: .95rem; margin-bottom: 6px; }
+.hub-cards .crs-plan .facts { color: var(--ink-mute); font-size: .86rem; }
+.hub-cards .crs-plan .crs-btn { margin-top: auto; }
+.hub-cards .crs-plan .crs-price { margin-bottom: 8px; }
+@media (max-width: 620px) { .hub-cards { grid-template-columns: minmax(0, 1fr); } }

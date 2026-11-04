@@ -234,7 +234,7 @@ CSV 開頭有 BOM（Excel 打開中文不亂碼），會擋公式注入。寄活
 
 **A. 開放預購**
 
-1. 決定並確認文案：退款期限日（目前 2027 年 1 月 31 日）、上線時間文字、上線後的退款與觀看期限規則（`index.html` 退款說明裡有 TODO）。
+1. 決定並確認文案：退款期限日（目前 2027 年 1 月 31 日）、上線時間文字，以及 `index.html` 裡所有標成「待定」（`.crs-tbd`）的地方：預購截止日、上線前自行取消、上線後幾天內可退與條件、觀看期限、影片外流的處理。全部換成正式文字才能開放預購（`grep -n 'class="crs-tbd"' course-online/index.html` 應該沒有結果）。
 2. 完成第 7 節的綠界、Cloudflare、Resend 設定（Bunny 可以晚點）。
 3. 填好 `wrangler.toml` 的 `[env.production]`：`ECPAY_MERCHANT_ID`、`database_id`、`EMAIL_FROM`、`OWNER_NOTIFY_EMAIL`（建議填自己的信箱）。
 4. 設好所有 secret（第 7 節第 5 點）。
