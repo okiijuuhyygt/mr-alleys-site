@@ -8,7 +8,7 @@
     "node": ">=22.13"
   },
   "scripts": {
-    "test": "node --test --test-reporter=spec test/",
+    "test": "node --test --test-reporter=spec \"test/**/*.test.js\"",
     "dev": "wrangler dev",
     "db:migrate:local": "wrangler d1 migrations apply mralleys-course --local",
     "db:migrate:remote": "wrangler d1 migrations apply mralleys-course --remote",
