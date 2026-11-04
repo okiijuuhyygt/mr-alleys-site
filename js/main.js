@@ -442,7 +442,9 @@ function openServiceModal(id) {
 
   if (svc.mode === 'paid' && svc.checkoutUrl && !String(svc.checkoutUrl).startsWith('PLACEHOLDER')) {
     checkout.textContent = svc.ctaLabel || '▶ 前往結帳';
-    checkout.onclick = () => window.open(svc.checkoutUrl, '_blank', 'noopener');
+    // 站內網址（例：寫歌課總入口 /course-hub/）同分頁開；外部結帳／表單照舊開新分頁
+    const internal = /^\/(?!\/)/.test(String(svc.checkoutUrl));
+    checkout.onclick = () => internal ? (location.href = svc.checkoutUrl) : window.open(svc.checkoutUrl, '_blank', 'noopener');
   } else if (svc.mode === 'quote' && svc.quoteFormUrl) {
     checkout.textContent = svc.ctaLabel || '→ 索取報價';
     checkout.onclick = () => window.open(svc.quoteFormUrl, '_blank', 'noopener');
@@ -462,7 +464,8 @@ function openServiceModal(id) {
   // 完整介紹連結（2026-08-11 從 Notion 切成站內子頁 /services/<slug>/，同頁跳轉）
   const notionLink = $('modalNotionLink');
   const detailUrl = svc.detailUrl || svc.notionUrl;
-  if (detailUrl) {
+  // 跟主按鈕同一個網址就不用再放一顆（寫歌課卡片兩顆都是 /course-hub/）
+  if (detailUrl && detailUrl !== svc.checkoutUrl) {
     notionLink.href = detailUrl;
     notionLink.textContent = '📖 看完整介紹';
     notionLink.hidden = false;

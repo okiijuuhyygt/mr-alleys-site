@@ -156,6 +156,7 @@ body {
   margin-bottom: 10px;
 }
 .svc-others-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.svc-course-text { font-size: .92rem; color: var(--ink-soft); margin-bottom: 10px; }
 .svc-other {
   display: inline-block;
   border: 3px solid var(--ink);

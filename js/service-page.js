@@ -73,6 +73,18 @@
       body.appendChild(sec);
     });
 
+    // 寫歌課入口（2026-11-05 加）：放在諮詢 CTA 之後、其他服務之前，跟其他服務同一種按鈕，不搶諮詢
+    const course = el('nav', 'svc-others');
+    course.setAttribute('aria-label', '寫歌課');
+    course.appendChild(el('div', 'svc-others-label', '寫歌課'));
+    course.appendChild(el('p', 'svc-course-text', '沒寫過歌也可以：初學者實體小班、線上影片課、一對一，三種上法。'));
+    const courseRow = el('div', 'svc-others-row');
+    const courseLink = el('a', 'svc-other', '看寫歌課的三種上法 →');
+    courseLink.href = '/course-hub/';
+    courseRow.appendChild(courseLink);
+    course.appendChild(courseRow);
+    (document.getElementById('svcOthers') || body).appendChild(course);
+
     // 其他三個服務的橫向導覽（原本 Notion 頁上也有，留著）
     const nav = el('nav', 'svc-others');
     nav.appendChild(el('div', 'svc-others-label', '其他服務'));
