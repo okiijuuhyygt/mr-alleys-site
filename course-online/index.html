@@ -17,12 +17,12 @@
 <meta property="og:locale" content="zh_TW">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="../css/service-page.css">
-<link rel="stylesheet" href="css/course-online.css?v=20261106a">
+<link rel="stylesheet" href="../css/service-page.css?v=20261107a">
+<link rel="stylesheet" href="css/course-online.css?v=20261107a">
 </head>
 <body data-page="course-online">
 <div class="svc-wrap">
-  <a class="svc-back" href="/">← 回巷弄故事館</a>
+  <a class="svc-back" href="/course-hub/">← 寫歌課總覽</a>
 
   <header class="svc-head">
     <div class="svc-badge">MR.ALLEYS · 線上寫歌課・預購中</div>
@@ -93,7 +93,7 @@
         </div>
         <label class="crs-check"><input type="checkbox" id="agreeRefund" required><span>我已閱讀下方的<a href="#refund">退款說明</a></span></label>
         <label class="crs-check"><input type="checkbox" id="optIn"><span>願意收到巷弄故事館的新課程與活動消息（隨時可以取消）</span></label>
-        <button class="crs-btn" type="submit" id="payBtn">前往綠界付款 NT$2,480 →</button>
+        <button class="crs-btn" type="submit" id="payBtn">前往付款 →</button>
         <div class="crs-msg err" id="formMsg" role="alert" hidden></div>
       </form>
       <div class="crs-flow">信用卡付款由綠界科技 ECPay 處理，我們不會經手你的卡號。</div>
@@ -153,7 +153,7 @@
   </footer>
 </div>
 
-<script src="js/api.js"></script>
+<script src="js/api.js?v=20261107a"></script>
 <script>
 (function () {
   var C = window.MACourse;
@@ -196,7 +196,7 @@
         f.appendChild(i);
       });
       document.body.appendChild(f);
-      btn.textContent = '正在前往綠界……';
+      btn.textContent = '正在前往付款頁……';
       f.submit();
     });
   });
