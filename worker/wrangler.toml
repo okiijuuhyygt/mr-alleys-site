@@ -1,0 +1,81 @@
+# wrangler.toml — 線上寫歌課 API
+#
+# 這份檔「沒有」任何真的金鑰。金鑰一律用 secret 設定，不進 git：
+#   npx wrangler secret put ECPAY_HASH_KEY
+#   npx wrangler secret put ECPAY_HASH_IV
+#   npx wrangler secret put CODE_PEPPER        # 隨機長字串：openssl rand -hex 32
+#   npx wrangler secret put ADMIN_TOKEN        # 隨機長字串（至少 24 字）：openssl rand -hex 24
+#   npx wrangler secret put RESEND_API_KEY
+#   npx wrangler secret put BUNNY_TOKEN_KEY
+# 正式環境要加 --env production（例：npx wrangler secret put ECPAY_HASH_KEY --env production）。
+# 本機開發的值放 worker/.dev.vars（照 .dev.vars.example 複製，已在 .gitignore）。
+#
+# 預設（沒加 --env）= 測試環境：綠界 stage、預購開著、課程還沒開。
+
+name = "mralleys-course-api-staging"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mralleys-course"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"   # npx wrangler d1 create mralleys-course 之後貼上
+migrations_dir = "migrations"
+
+[triggers]
+crons = ["30 19 * * *"]   # 每天台灣時間 03:30 清掉過期的驗證碼與頻率紀錄
+
+[vars]
+SITE_ORIGIN = "https://mralleys.com"
+API_ORIGIN = "https://mralleys-course-api-staging.REPLACE_WITH_WORKERS_SUBDOMAIN.workers.dev"
+ALLOWED_ORIGINS = "https://mralleys.com,http://localhost:8080"
+ECPAY_ENV = "stage"
+ECPAY_MERCHANT_ID = "3002607"      # 綠界公開的測試特店編號（stage 專用）
+PREORDER_OPEN = "true"
+PREORDER_PRICE = "1480"
+LAUNCH_TEXT = "預計 2027 年 1 月上線（以實際公告為準）"
+REFUND_DEADLINE_TEXT = "2027 年 1 月 31 日"
+COURSE_OPEN = "false"
+PREVIEW_EMAILS = ""                # 開課前可以先看影片的 email（逗號分隔），例：老闆自己
+BUNNY_LIBRARY_ID = "REPLACE_WITH_BUNNY_LIBRARY_ID"
+VIDEO_TOKEN_TTL_SEC = "3600"
+EMAIL_FROM = "巷弄故事館 <course@REPLACE_WITH_VERIFIED_DOMAIN>"
+EMAIL_REPLY_TO = "hao@mralleys.com"
+EMAIL_MODE = "send"
+OWNER_NOTIFY_EMAIL = ""
+
+# ---------------------------------------------------------------- 正式環境
+# 部署：npx wrangler deploy --env production
+[env.production]
+name = "mralleys-course-api"
+workers_dev = false
+routes = [{ pattern = "course-api.mralleys.com", custom_domain = true }]
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "mralleys-course"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+[env.production.triggers]
+crons = ["30 19 * * *"]
+
+[env.production.vars]
+SITE_ORIGIN = "https://mralleys.com"
+API_ORIGIN = "https://course-api.mralleys.com"
+ALLOWED_ORIGINS = "https://mralleys.com"
+ECPAY_ENV = "prod"
+ECPAY_MERCHANT_ID = "REPLACE_WITH_REAL_MERCHANT_ID"
+PREORDER_OPEN = "true"
+PREORDER_PRICE = "1480"
+LAUNCH_TEXT = "預計 2027 年 1 月上線（以實際公告為準）"
+REFUND_DEADLINE_TEXT = "2027 年 1 月 31 日"
+COURSE_OPEN = "false"
+PREVIEW_EMAILS = ""
+BUNNY_LIBRARY_ID = "REPLACE_WITH_BUNNY_LIBRARY_ID"
+VIDEO_TOKEN_TTL_SEC = "3600"
+EMAIL_FROM = "巷弄故事館 <course@REPLACE_WITH_VERIFIED_DOMAIN>"
+EMAIL_REPLY_TO = "hao@mralleys.com"
+EMAIL_MODE = "send"
+OWNER_NOTIFY_EMAIL = ""
