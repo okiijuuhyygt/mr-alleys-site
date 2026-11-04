@@ -18,7 +18,7 @@
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="../css/service-page.css?v=20261107b">
-<link rel="stylesheet" href="course.css?v=20261107b">
+<link rel="stylesheet" href="course.css?v=20261107c">
 </head>
 <body data-page="course">
 <div class="svc-wrap">
@@ -48,22 +48,50 @@
     <div class="crs-week"><div class="no">第8堂</div><div class="t"><b>出 Demo</b><span>上完這堂，你帶走一首自己寫、自己唱的歌的 Demo。</span></div></div>
   </section>
 
+  <!-- 收起來的區塊（data-block）不要刪：由 content.json 的 pageBlocks 控制，後台「頁面區塊顯示」可以打開。見 /js/page-blocks.js -->
   <section class="crs-sec" id="price">
-    <h2>上課方式與價格</h2>
-    <div class="crs-plan main">
-      <h3>一對一課程・第一期（四堂）</h3>
-      <ul>
-        <li>一期四堂一對一（線上或面對面，時間地點請透過諮詢詢問）；第一期寫出詞與旋律線，第二期完成整首歌</li>
-        <li>第一期上完，可再追加第二期四堂，完成整首歌</li>
-        <li>每堂 60 分鐘＋課後作業批改（各期皆含）</li>
-        <li>兩期完整上完：含一次專業修音＋帶上完整 Demo</li>
-      </ul>
-      <div class="crs-price big">
-        <span class="now">NT$5,800</span>
-        <span class="note">（兩期一起購課 NT$9,800）</span>
+    <h2 data-block-unless="course.groupInterest">上課方式與價格</h2>
+    <h2 data-block="course.groupInterest" hidden>兩種上法</h2>
+    <div class="crs-plans">
+      <div class="crs-plan main">
+        <h3>一對一課程・第一期（四堂）</h3>
+        <ul>
+          <li>一期四堂一對一（線上或面對面，時間地點請透過諮詢詢問）；第一期寫出詞與旋律線，第二期完成整首歌</li>
+          <li>第一期上完，可再追加第二期四堂，完成整首歌</li>
+          <li>每堂 60 分鐘＋課後作業批改（各期皆含）</li>
+          <li>兩期完整上完：含一次專業修音＋帶上完整 Demo</li>
+        </ul>
+        <div class="crs-price big">
+          <span class="now">NT$5,800</span>
+          <span class="note" data-block-unless="course.priceCompare">（兩期一起購課 NT$9,800）</span>
+          <span data-block="course.priceCompare" hidden>
+            <span class="note" style="margin-top:6px;">第一期（四堂）上完，14 天內追加第二期（四堂）：NT$4,800</span>
+            <span class="note"><b>兩期一次帶走：NT$9,800</b>（定價 12,800・分開買 10,600）</span>
+          </span>
+        </div>
+        <a class="crs-btn" href="/course/pay/">前往付款 →</a>
       </div>
-      <a class="crs-btn" href="/course/pay/">前往付款 →</a>
+      <div class="crs-plan wait" data-block="course.groupInterest" hidden>
+        <span class="tag">意願登記</span>
+        <h3>實體團班（籌備中）</h3>
+        <ul>
+          <li>線下小班面對面，給已經寫過歌、想再往前走一步的人</li>
+          <li>小班制，日期與價格另行公告</li>
+          <li>登記不用錢、不綁約——開班前會先通知你</li>
+        </ul>
+        <div class="crs-price">
+          <span class="note">想跟一群人一起寫歌？先留個名字。</span>
+        </div>
+        <a class="crs-btn alt" href="https://tally.so/r/mVX4vM" target="_blank" rel="noopener">填表單登記意願 →</a>
+        <div class="crs-flow">方案選「團班意願登記」，免費、不綁約</div>
+      </div>
     </div>
+  </section>
+
+  <section class="crs-sec" data-block="course.trial" hidden style="background:var(--paper-soft);">
+    <h2>還不確定？先上一堂體驗課</h2>
+    <p>體驗課就是一對一課程的<b>第一堂正規課</b>：聊你想寫的歌、直接開始跑寫歌方法——不是試聽，是真的開始寫。<b>NT$1,000</b>，上完想繼續，補 NT$4,800 就完成第一期（四堂），這一堂直接算在裡面。</p>
+    <a class="crs-btn alt" style="max-width:280px;" href="https://tally.so/r/mVX4vM" target="_blank" rel="noopener">填表單約體驗課 →</a>
   </section>
 
   <section class="crs-sec">
@@ -80,7 +108,11 @@
     </dl>
   </section>
 
-  <p class="crs-ask">還有問題？<a href="https://line.me/R/oaMessage/%40285qszgm/?%E5%AF%AB%E6%AD%8C%E8%AA%B2" target="_blank" rel="noopener">加 LINE 問我們</a></p>
+  <div class="svc-cta" data-block="course.lineCta" hidden>
+    <div>準備好寫出第一首歌了嗎？</div>
+    <a href="https://line.me/R/oaMessage/%40285qszgm/?%E5%AF%AB%E6%AD%8C%E8%AA%B2" target="_blank" rel="noopener">💬 加 LINE 開始</a>
+  </div>
+  <p class="crs-ask" data-block-unless="course.lineCta">還有問題？<a href="https://line.me/R/oaMessage/%40285qszgm/?%E5%AF%AB%E6%AD%8C%E8%AA%B2" target="_blank" rel="noopener">加 LINE 問我們</a></p>
 
   <footer class="svc-foot">
     巷弄故事館 · MR. ALLEYS ｜ <a href="/">回首頁</a> ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a>
@@ -98,5 +130,6 @@
 </style>
 <a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>
 <script>(function(){var f=document.getElementById('chatFab');if(!f)return;var y=window.scrollY||0;window.addEventListener('scroll',function(){var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;},{passive:true});})();</script>
+<script src="../js/page-blocks.js?v=20261107a" defer></script>
 </body>
 </html>

@@ -901,6 +901,42 @@ function renderEditor() {
     body.appendChild(wrap);
   }
 
+  // ── 頁面區塊顯示（content.json → pageBlocks）2026-11-07 加 ──────────
+  // 頁面上「收起來」的區塊不刪，HTML 裡用 data-block 包著；這裡勾選＝顯示。
+  // 只改 contentData.pageBlocks，存檔走下面同一顆「儲存」（GitHub API 寫 content.json），沒有第二套存法。
+  // 以後新增可收起的區塊：做法寫在 /js/page-blocks.js 開頭，這個面板會自動列出 pageBlocks 的每一筆。
+  if (contentData.pageBlocks && typeof contentData.pageBlocks === 'object') {
+    const wrap = document.createElement('details');
+    wrap.className = 'panel';
+    wrap.innerHTML = '<summary>PAGE BLOCKS · 頁面區塊顯示</summary><div class="panel-body">'
+      + '<p class="lead" style="margin-bottom:12px">勾選＝在網站上顯示，取消勾選＝收起來（內容不會刪掉，隨時可以再打開）。'
+      + '改完按下面的儲存，網站一到三分鐘後更新。<br>'
+      + '要新增可以收起來的區塊，請工程師照 /js/page-blocks.js 開頭的說明加，加好會自動出現在這裡。</p>'
+      + '<div id="pageBlocksEditor"></div></div>';
+    body.appendChild(wrap);
+    const list = wrap.querySelector('#pageBlocksEditor');
+    Object.keys(contentData.pageBlocks).forEach((key) => {
+      const blk = contentData.pageBlocks[key];
+      if (key.startsWith('_') || !blk || typeof blk !== 'object') return;
+      const row = document.createElement('label');
+      row.style.cssText = 'display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--paper-edge);cursor:pointer';
+      const box = document.createElement('input');
+      box.type = 'checkbox';
+      box.style.cssText = 'width:18px;height:18px;margin-top:3px;flex:0 0 auto';
+      box.checked = blk.enabled === true || blk.enabled === 'true';
+      box.addEventListener('change', () => {
+        contentData.pageBlocks[key].enabled = box.checked;
+        updateSaveBar();
+      });
+      const text = document.createElement('span');
+      text.innerHTML = escapeHtml(blk.label || key)
+        + '<br><span style="opacity:.55;font-size:12px">' + escapeHtml(key) + '</span>';
+      row.appendChild(box);
+      row.appendChild(text);
+      list.appendChild(row);
+    });
+  }
+
   // Bind everything
   body.querySelectorAll('input[data-path], textarea[data-path]').forEach(el => {
     bindInput(el, el.dataset.path);

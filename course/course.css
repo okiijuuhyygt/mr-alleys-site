@@ -23,13 +23,15 @@
 .crs-week { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--paper-edge); }
 .crs-week:last-child { border-bottom: none; }
 .crs-week .no {
-  flex: 0 0 42px;
+  flex: 0 0 3.4em;
+  white-space: nowrap;
   color: var(--brass);
   font-weight: 700;
 }
 .crs-week .t b { display: block; }
 .crs-week .t span { color: var(--ink-soft); font-size: .92rem; }
-.crs-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+/* auto-fit：意願登記卡收起來時，一對一那張自動佔滿整行；打開時兩欄並排 */
+.crs-plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px; }
 @media (max-width: 620px) { .crs-plans { grid-template-columns: 1fr; } }
 .crs-plan {
   border: 3px solid var(--ink);
