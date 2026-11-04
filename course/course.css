@@ -1,0 +1,97 @@
+/* course.css — 一對一寫歌課（/course/）與選方案頁（/course/pay/）共用
+   2026-11-07 從 /course/index.html 的 <style> 抽出來；疊在 /css/service-page.css 上面 */
+.crs-lede { font-size: 1.02rem; margin-bottom: 18px; }
+.crs-sec {
+  border: 4px solid var(--ink);
+  background: #fffdf4;
+  box-shadow: 6px 6px 0 var(--shadow);
+  padding: 20px 22px;
+  margin-bottom: 22px;
+}
+.crs-sec h2 {
+  font-size: 1.15rem;
+  color: var(--brass-deep);
+  margin-bottom: 12px;
+  letter-spacing: .05em;
+}
+.crs-tagline{margin:10px 0 0;font-size:1.05rem;line-height:1.6;opacity:.85}
+.crs-phase {
+  color: var(--quest);
+  font-weight: 700;
+  margin: 14px 0 6px;
+}
+.crs-week { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--paper-edge); }
+.crs-week:last-child { border-bottom: none; }
+.crs-week .no {
+  flex: 0 0 3.4em;
+  white-space: nowrap;
+  color: var(--brass);
+  font-weight: 700;
+}
+.crs-week .t b { display: block; }
+.crs-week .t span { color: var(--ink-soft); font-size: .92rem; }
+/* auto-fit：意願登記卡收起來時，一對一那張自動佔滿整行；打開時兩欄並排 */
+.crs-plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px; }
+@media (max-width: 620px) { .crs-plans { grid-template-columns: 1fr; } }
+.crs-plan {
+  border: 3px solid var(--ink);
+  background: var(--paper-soft);
+  padding: 16px 18px;
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+.crs-plan.main { background: #f6efdc; border-color: var(--brass-deep); }
+.crs-plan .tag {
+  display: inline-block;
+  font-size: .78rem;
+  padding: 2px 10px;
+  margin-bottom: 8px;
+  color: #fff;
+  background: var(--brass);
+}
+.crs-plan.wait .tag { background: var(--quest); }
+.crs-plan h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.crs-plan ul { list-style: none; margin: 8px 0; }
+.crs-plan li { padding-left: 1.2em; position: relative; font-size: .95rem; margin-bottom: 4px; }
+.crs-plan li::before { content: "▸"; position: absolute; left: 0; color: var(--brass); }
+.crs-price { margin: 10px 0 4px; }
+.crs-price .now { font-size: 1.5rem; font-weight: 700; color: var(--brass-deep); }
+.crs-price .was { color: var(--ink-mute); text-decoration: line-through; margin-left: 8px; }
+.crs-price .note { display: block; color: var(--ink-soft); font-size: .85rem; }
+.crs-btn {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 3px solid var(--ink);
+  background: var(--brass);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+.crs-btn:hover { background: var(--brass-deep); }
+.crs-btn.alt { background: var(--paper); color: var(--quest); }
+.crs-btn.alt:hover { background: var(--paper-soft); }
+.crs-faq dt { font-weight: 700; margin-top: 12px; }
+.crs-faq dd { color: var(--ink-soft); margin-left: 0; }
+.crs-flow { color: var(--ink-soft); font-size: .9rem; margin-top: 10px; }
+.crs-hubline { margin: -6px 0 16px; font-size: .9rem; color: var(--ink-soft); }
+.crs-hubline a { color: var(--quest); }
+
+/* ---------- 價格（2026-11-07：主價格放大，兩期價格一行小字） ---------- */
+.crs-price.big .now { font-size: 2.2rem; line-height: 1.2; }
+.crs-price.big .note { margin-top: 2px; }
+.crs-ask { text-align: center; color: var(--ink-soft); font-size: .92rem; margin: 6px 0 20px; }
+.crs-ask a { color: var(--quest); }
+
+/* ---------- 選方案（/course/pay/） ---------- */
+.pay-opts { display: grid; gap: 14px; margin: 4px 0 6px; }
+.pay-opt { display: flex; gap: 12px; align-items: flex-start; border: 3px solid var(--ink); background: var(--paper-soft); padding: 14px 16px; box-shadow: 4px 4px 0 var(--shadow); cursor: pointer; }
+.pay-opt input { flex: 0 0 auto; width: 20px; height: 20px; margin-top: .35em; accent-color: var(--brass-deep); }
+.pay-opt .body { min-width: 0; }
+.pay-opt .name { display: block; font-weight: 700; }
+.pay-opt .price { display: block; font-size: 1.35rem; font-weight: 700; color: var(--brass-deep); line-height: 1.4; }
+.pay-opt .desc { display: block; color: var(--ink-soft); font-size: .9rem; }
+.pay-opt.on, .pay-opt:has(input:checked) { background: #f6efdc; border-color: var(--brass-deep); }
+.pay-opt:focus-within { outline: 3px solid var(--brass-light); outline-offset: 2px; }
+.pay-go[hidden] { display: none; }

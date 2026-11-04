@@ -17,85 +17,8 @@
 <meta property="og:locale" content="zh_TW">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="../css/service-page.css?v=20261107a">
-<style>
-/* course 頁自足樣式：沿用 service-page 體系，只補課程專屬元件 */
-.crs-lede { font-size: 1.02rem; margin-bottom: 18px; }
-.crs-sec {
-  border: 4px solid var(--ink);
-  background: #fffdf4;
-  box-shadow: 6px 6px 0 var(--shadow);
-  padding: 20px 22px;
-  margin-bottom: 22px;
-}
-.crs-sec h2 {
-  font-size: 1.15rem;
-  color: var(--brass-deep);
-  margin-bottom: 12px;
-  letter-spacing: .05em;
-}
-.crs-tagline{margin:10px 0 0;font-size:1.05rem;line-height:1.6;opacity:.85}
-.crs-phase {
-  color: var(--quest);
-  font-weight: 700;
-  margin: 14px 0 6px;
-}
-.crs-week { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--paper-edge); }
-.crs-week:last-child { border-bottom: none; }
-.crs-week .no {
-  flex: 0 0 42px;
-  color: var(--brass);
-  font-weight: 700;
-}
-.crs-week .t b { display: block; }
-.crs-week .t span { color: var(--ink-soft); font-size: .92rem; }
-.crs-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 620px) { .crs-plans { grid-template-columns: 1fr; } }
-.crs-plan {
-  border: 3px solid var(--ink);
-  background: var(--paper-soft);
-  padding: 16px 18px;
-  box-shadow: 4px 4px 0 var(--shadow);
-}
-.crs-plan.main { background: #f6efdc; border-color: var(--brass-deep); }
-.crs-plan .tag {
-  display: inline-block;
-  font-size: .78rem;
-  padding: 2px 10px;
-  margin-bottom: 8px;
-  color: #fff;
-  background: var(--brass);
-}
-.crs-plan.wait .tag { background: var(--quest); }
-.crs-plan h3 { font-size: 1.05rem; margin-bottom: 6px; }
-.crs-plan ul { list-style: none; margin: 8px 0; }
-.crs-plan li { padding-left: 1.2em; position: relative; font-size: .95rem; margin-bottom: 4px; }
-.crs-plan li::before { content: "▸"; position: absolute; left: 0; color: var(--brass); }
-.crs-price { margin: 10px 0 4px; }
-.crs-price .now { font-size: 1.5rem; font-weight: 700; color: var(--brass-deep); }
-.crs-price .was { color: var(--ink-mute); text-decoration: line-through; margin-left: 8px; }
-.crs-price .note { display: block; color: var(--ink-soft); font-size: .85rem; }
-.crs-btn {
-  display: block;
-  text-align: center;
-  margin-top: 12px;
-  padding: 12px 14px;
-  border: 3px solid var(--ink);
-  background: var(--brass);
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
-  box-shadow: 4px 4px 0 var(--shadow);
-}
-.crs-btn:hover { background: var(--brass-deep); }
-.crs-btn.alt { background: var(--paper); color: var(--quest); }
-.crs-btn.alt:hover { background: var(--paper-soft); }
-.crs-faq dt { font-weight: 700; margin-top: 12px; }
-.crs-faq dd { color: var(--ink-soft); margin-left: 0; }
-.crs-flow { color: var(--ink-soft); font-size: .9rem; margin-top: 10px; }
-.crs-hubline { margin: -6px 0 16px; font-size: .9rem; color: var(--ink-soft); }
-.crs-hubline a { color: var(--quest); }
-</style>
+<link rel="stylesheet" href="../css/service-page.css?v=20261107b">
+<link rel="stylesheet" href="course.css?v=20261107c">
 </head>
 <body data-page="course">
 <div class="svc-wrap">
@@ -125,31 +48,30 @@
     <div class="crs-week"><div class="no">第8堂</div><div class="t"><b>出 Demo</b><span>上完這堂，你帶走一首自己寫、自己唱的歌的 Demo。</span></div></div>
   </section>
 
-  <section class="crs-sec">
-    <h2>兩種上法</h2>
+  <!-- 收起來的區塊（data-block）不要刪：由 content.json 的 pageBlocks 控制，後台「頁面區塊顯示」可以打開。見 /js/page-blocks.js -->
+  <section class="crs-sec" id="price">
+    <h2 data-block-unless="course.groupInterest">上課方式與價格</h2>
+    <h2 data-block="course.groupInterest" hidden>兩種上法</h2>
     <div class="crs-plans">
       <div class="crs-plan main">
-        <span class="tag">開放報名中</span>
-        <h3>一對一課程（兩期八堂，一期四堂制）</h3>
+        <h3>一對一課程・第一期（四堂）</h3>
         <ul>
           <li>一期四堂一對一（線上或面對面，時間地點請透過諮詢詢問）；第一期寫出詞與旋律線，第二期完成整首歌</li>
           <li>第一期上完，可再追加第二期四堂，完成整首歌</li>
           <li>每堂 60 分鐘＋課後作業批改（各期皆含）</li>
           <li>兩期完整上完：含一次專業修音＋帶上完整 Demo</li>
         </ul>
-        <div class="crs-price">
-          <span class="now">NT$5,800</span><span class="note" style="display:inline;margin-left:6px;">／第一期（四堂）</span>
+        <div class="crs-price big">
+          <span class="now">NT$5,800</span>
+          <span class="note" data-block-unless="course.priceCompare">（兩期一起購課 NT$9,800）</span>
+          <span data-block="course.priceCompare" hidden>
+            <span class="note" style="margin-top:6px;">第一期（四堂）上完，14 天內追加第二期（四堂）：NT$4,800</span>
+            <span class="note"><b>兩期一次帶走：NT$9,800</b>（定價 12,800・分開買 10,600）</span>
+          </span>
         </div>
-        <a class="crs-btn" href="https://p.ecpay.com.tw/F2A49C2" target="_blank" rel="noopener" aria-label="前往付款：第一期（四堂）">前往付款 →</a>
-        <div class="crs-price" style="margin-top:18px;">
-          <span class="now">NT$9,800</span><span class="note" style="display:inline;margin-left:6px;">／兩期一次（八堂）</span>
-          <span class="note">定價 12,800・分開買 10,600</span>
-        </div>
-        <a class="crs-btn" href="https://p.ecpay.com.tw/8FA84DA" target="_blank" rel="noopener" aria-label="前往付款：兩期一次（八堂）">前往付款 →</a>
-        <div class="crs-flow">付款後我們會聯絡你，約第一堂的時間。</div>
-        <div class="crs-flow">第一期上完，14 天內追加第二期（四堂）NT$4,800：上完第一期再跟我們說。</div>
+        <a class="crs-btn" href="/course/pay/">前往付款 →</a>
       </div>
-      <div class="crs-plan wait">
+      <div class="crs-plan wait" data-block="course.groupInterest" hidden>
         <span class="tag">意願登記</span>
         <h3>實體團班（籌備中）</h3>
         <ul>
@@ -166,7 +88,7 @@
     </div>
   </section>
 
-  <section class="crs-sec" style="background:var(--paper-soft);">
+  <section class="crs-sec" data-block="course.trial" hidden style="background:var(--paper-soft);">
     <h2>還不確定？先上一堂體驗課</h2>
     <p>體驗課就是一對一課程的<b>第一堂正規課</b>：聊你想寫的歌、直接開始跑寫歌方法——不是試聽，是真的開始寫。<b>NT$1,000</b>，上完想繼續，補 NT$4,800 就完成第一期（四堂），這一堂直接算在裡面。</p>
     <a class="crs-btn alt" style="max-width:280px;" href="https://tally.so/r/mVX4vM" target="_blank" rel="noopener">填表單約體驗課 →</a>
@@ -186,10 +108,11 @@
     </dl>
   </section>
 
-  <div class="svc-cta">
+  <div class="svc-cta" data-block="course.lineCta" hidden>
     <div>準備好寫出第一首歌了嗎？</div>
     <a href="https://line.me/R/oaMessage/%40285qszgm/?%E5%AF%AB%E6%AD%8C%E8%AA%B2" target="_blank" rel="noopener">💬 加 LINE 開始</a>
   </div>
+  <p class="crs-ask" data-block-unless="course.lineCta">還有問題？<a href="https://line.me/R/oaMessage/%40285qszgm/?%E5%AF%AB%E6%AD%8C%E8%AA%B2" target="_blank" rel="noopener">加 LINE 問我們</a></p>
 
   <footer class="svc-foot">
     巷弄故事館 · MR. ALLEYS ｜ <a href="/">回首頁</a> ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a>
@@ -207,5 +130,6 @@
 </style>
 <a class="chat-fab" id="chatFab" href="https://line.me/R/ti/p/@285qszgm" target="_blank" rel="noopener" aria-label="用 LINE 找製作人聊聊">LINE 聊聊</a>
 <script>(function(){var f=document.getElementById('chatFab');if(!f)return;var y=window.scrollY||0;window.addEventListener('scroll',function(){var n=window.scrollY||0;if(n>y+8&&n>120)f.classList.add('hide');else if(n<y-8)f.classList.remove('hide');y=n;},{passive:true});})();</script>
+<script src="../js/page-blocks.js?v=20261107a" defer></script>
 </body>
 </html>
