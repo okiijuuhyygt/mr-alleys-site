@@ -130,7 +130,7 @@ a.lrn-unit:hover .t b { color: var(--quest); }
    .crs-tbd：還沒定案、要老闆決定的地方。定案後把整個 span 換成正式文字。 */
 .crs-tbd { display: inline-block; padding: 0 6px; margin: 0 2px; border: 2px dashed #b83a2a; background: #fff3e6; color: #8a2a1e; font-weight: 700; font-size: .9em; line-height: 1.5; }
 .crs-sub { font-size: 1rem; color: var(--quest); margin: 14px 0 4px; }
-.crs-sub:first-of-type { margin-top: 2px; }
+.crs-sec > h2 + .crs-sub { margin-top: 2px; }
 
 /* 上課資訊：左欄項目、右欄內容；手機一樣兩欄，左欄固定寬 */
 .crs-info { display: grid; grid-template-columns: 4.5em minmax(0, 1fr); gap: 6px 12px; }

@@ -1,5 +1,8 @@
 // course.js — 線上第一期的課程結構（唯一一份；前端從 /api/course 讀）
 //
+// 單元 title／summary 要跟預購頁 /course-online/ 的四個單元文字一致：只寫概念與學完的收穫，不寫做法。
+// 影片標題、task、checkpoint 只有付費學員登入後看得到，可以寫具體。
+//
 // 影片上傳到 Bunny Stream 後，把每支的 Video ID（GUID）填進 bunnyId。
 // 還沒填的維持 null，前端會顯示「影片準備中」，不會壞掉。
 // 分鐘數是規劃值，錄完照實際長度改。
@@ -12,8 +15,8 @@ export const COURSE = {
     {
       id: 'u1',
       no: 1,
-      title: '文字運鏡：冰山理論',
-      summary: '先學會把感覺寫成看得見的句子。只寫露出水面的那一角，剩下的讓聽的人自己感覺。',
+      title: '冰山理論',
+      summary: '學完這個單元，你寫下的句子會開始有畫面。',
       videos: [
         { id: 'u1v1', title: '這門課怎麼上', minutes: 8, bunnyId: null },
         { id: 'u1v2', title: '冰山理論：只寫露出水面的那一角', minutes: 20, bunnyId: null },
@@ -25,8 +28,8 @@ export const COURSE = {
     {
       id: 'u2',
       no: 2,
-      title: '動作與具體物件、韻腳',
-      summary: '動作比形容詞有力，具體的物件讓句子有重量；再挑一個韻腳，讓詞開始像歌。',
+      title: '詞的重量',
+      summary: '這裡不會有填空式的押韻公式；學完，你會有一段念起來就像歌的詞。',
       videos: [
         { id: 'u2v1', title: '動作比形容詞有力', minutes: 15, bunnyId: null },
         { id: 'u2v2', title: '具體物件：讓句子有重量', minutes: 15, bunnyId: null },
@@ -38,8 +41,8 @@ export const COURSE = {
     {
       id: 'u3',
       no: 3,
-      title: '朗讀即旋律',
-      summary: '不碰樂器。你講話本來就有高低快慢，旋律從你念詞的聲音裡長出來。',
+      title: '旋律入門',
+      summary: '不碰樂器也可以；學完，你會哼出這段詞的第一段旋律。',
       videos: [
         { id: 'u3v1', title: '你講話本來就有旋律', minutes: 15, bunnyId: null },
         { id: 'u3v2', title: '同一句詞，念三種方式', minutes: 12, bunnyId: null },
@@ -51,8 +54,8 @@ export const COURSE = {
     {
       id: 'u4',
       no: 4,
-      title: '動機與點譜法',
-      summary: '用點和線畫出你哼的旋律，不用看懂五線譜，也能看見旋律往哪裡走。',
+      title: '點譜法',
+      summary: '把音樂視覺化；學完，你看得見自己的旋律往哪裡走。',
       videos: [
         { id: 'u4v1', title: '動機：一小段會重複的旋律', minutes: 15, bunnyId: null },
         { id: 'u4v2', title: '點譜法：把哼唱畫成看得見的線', minutes: 20, bunnyId: null },

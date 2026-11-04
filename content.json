@@ -65,7 +65,7 @@
       "ctaLabel": "▶ 預約諮詢",
       "preOrderText": "預約系統建置中，留 email 等通知。",
       "discount": {
-        "enabled": true,
+        "enabled": false,
         "code": "FIRST500",
         "buttonLabel": "🎟️ 我有優惠碼",
         "discountedUrl": "https://p.ecpay.com.tw/15F5890",
@@ -83,23 +83,28 @@
       "code": "CH-02",
       "title": "寫歌課｜實體小班・線上影片課・一對一",
       "subtitle": "沒寫過歌也可以，三種上法選一種",
-      "description": "同一套寫歌方法，三種上法：初學者實體小班、線上影片課（預購中）、一對一。第一期的目標是寫出你的第一段詞、錄下你哼的第一段旋律，不需要樂器，也不用看譜。",
+      "description": "沒寫過歌、不會樂器也可以開始。三種上法的上課方式和能得到的回饋都不一樣，展開下面各項，看哪一種適合你。",
       "includes": [
-        "初學者實體小班：4 堂、每堂 2 小時，台北週五晚上，每人 NT$4,800",
-        "線上影片課：4 個單元、約 3 小時影片，NT$1,980",
-        "一對一：第一期 4 堂、每堂 60 分鐘，NT$5,800，時間跟你喬",
-        "三種上法的第一期教的是同一套東西"
+        "初學者實體小班（推薦）",
+        "線上影片課（預購中）",
+        "一對一"
       ],
-      "duration": "第一期 4 堂（線上課為 4 個單元）",
-      "deliverable": "你的第一段詞＋你哼的第一段旋律",
-      "priceLabel": "NT$ 1,980–5,800",
-      "priceNumeric": 1980,
+      "includesDetails": [
+        "幾個人一起上，很容易上手寫出一首歌。課程中有錄音環節，我們會幫你把這首歌完成成 Demo，這首歌你可以帶回去。上課時也聽得到老師怎麼看其他同學的作品、怎麼調整，同學遇到的問題，你自己寫的時候也可能遇到。4 堂，每人 NT$4,800，滿 4 人開班；時間地點請透過諮詢詢問。",
+        "約 3 小時影片、4 個單元，在家照自己的速度看。可以交作業，我們幫你看 demo，等於送你一次免費諮詢。沒有實體小班的同學作品點評和錄音環節。預購價 NT$2,480，預購滿 5 位才製作。",
+        "每堂都針對你自己的歌討論，照你自己的進度學。分兩期、每期 4 堂，兩期上完會完成整首歌並錄成 Demo。第一期 NT$5,800；線上或面對面，時間地點請透過諮詢詢問。"
+      ],
+      "durationLabel": "上課方式",
+      "duration": "小班・線上影片・一對一",
+      "deliverableLabel": "你會帶走",
+      "deliverable": "自己寫的詞曲，小班與一對一含 Demo",
+      "priceLabel": "依規模報價",
+      "priceNumeric": null,
       "mode": "paid",
       "checkoutUrl": "/course-hub/",
-      "ctaLabel": "→ 看三種上法",
+      "ctaLabel": "詳細說明",
       "preOrderText": "",
-      "detailUrl": "/course-hub/",
-      "includesDetails": []
+      "detailUrl": "/course-hub/"
     },
     {
       "id": "vocal-edit",
@@ -116,7 +121,7 @@
       ],
       "duration": "3-7 個工作天",
       "deliverable": "WAV 乾聲檔 + 工程檔",
-      "priceLabel": "NT$ 3,000 起",
+      "priceLabel": "依規模報價",
       "priceNote": "實際金額依原檔長度與修整難度，諮詢後確認",
       "priceNumeric": 3000,
       "mode": "paid",
@@ -601,7 +606,7 @@
       ],
       "duration": "1 天（8 小時）",
       "deliverable": "可上架成品 + 工程檔",
-      "priceLabel": "NT$ 8,000 起",
+      "priceLabel": "NT$ 8,000",
       "priceNote": "實際內容依你目前程度與檔期，諮詢後確認",
       "priceNumeric": 8000,
       "mode": "paid",

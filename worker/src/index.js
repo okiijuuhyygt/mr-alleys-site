@@ -30,7 +30,7 @@ import { publicCourse, findVideo, findUnit } from './course.js';
 import { toCsv } from './csv.js';
 
 const DEFAULTS = {
-  PREORDER_PRICE: '1980',
+  PREORDER_PRICE: '2480',
   ITEM_NAME: '寫歌課・線上第一期（預購）',
   TRADE_DESC: '巷弄故事館線上寫歌課預購',
   LAUNCH_TEXT: '預計 2027 年 1 月上線（以實際公告為準）',

@@ -414,6 +414,14 @@ function openServiceModal(id) {
   setText('modalDesc', svc.description || '');
   setText('modalDuration', svc.duration || '—');
   setText('modalDeliverable', svc.deliverable || '—');
+  // 彈窗那兩格的標籤預設是「交期／交付」（寫在 index.html）。
+  // 寫歌課卡是給學生的，用 durationLabel／deliverableLabel 換成「上課方式／你會帶走」；沒設的卡照舊。
+  [['modalDuration', svc.durationLabel], ['modalDeliverable', svc.deliverableLabel]].forEach(([id, label]) => {
+    const tag = $(id) && $(id).previousElementSibling;
+    if (!tag) return;
+    if (tag.dataset.defaultLabel == null) tag.dataset.defaultLabel = tag.textContent;
+    tag.textContent = label || tag.dataset.defaultLabel;
+  });
   setText('modalPrice', svc.priceLabel || '—');
   setText('modalPriceNote', svc.priceNote || '');
 

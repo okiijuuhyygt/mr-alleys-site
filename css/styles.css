@@ -910,6 +910,9 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 }
 .modal__meta-row:last-child { border-bottom: none; }
 .modal__meta-row span:first-child {
+  flex: 0 0 auto;        /* 寫歌課卡的標籤是四個字（上課方式／你會帶走），不換行 */
+  white-space: nowrap;
+  margin-right: 12px;
   font-family: var(--pixel-en);
   font-size: 9px;
   letter-spacing: 0.15em;

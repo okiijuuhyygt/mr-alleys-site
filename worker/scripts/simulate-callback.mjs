@@ -5,11 +5,11 @@
 // 簽章用的是綠界公開測試特店的 HashKey/HashIV（跟 .dev.vars.example 同一組）。
 //
 // 用法：
-//   node scripts/simulate-callback.mjs <MerchantTradeNo> [金額=1480] [API=http://localhost:8787]
+//   node scripts/simulate-callback.mjs <MerchantTradeNo> [金額=2480] [API=http://localhost:8787]
 
 import { generateCheckMacValue } from '../src/ecpay.js';
 
-const [tradeNo, amount = '1480', api = 'http://localhost:8787'] = process.argv.slice(2);
+const [tradeNo, amount = '2480', api = 'http://localhost:8787'] = process.argv.slice(2);
 if (!tradeNo) {
   console.error('用法：node scripts/simulate-callback.mjs <MerchantTradeNo> [金額] [API]');
   process.exit(1);

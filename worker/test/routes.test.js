@@ -23,7 +23,7 @@ function makeEnv(over = {}) {
     ECPAY_HASH_KEY: KEY,
     ECPAY_HASH_IV: IV,
     PREORDER_OPEN: 'true',
-    PREORDER_PRICE: '1480',
+    PREORDER_PRICE: '2480',
     COURSE_OPEN: 'false',
     PREVIEW_EMAILS: '',
     BUNNY_LIBRARY_ID: '12345',
@@ -80,7 +80,7 @@ async function paidCallback(h, merchantTradeNo, over = {}) {
     RtnMsg: '交易成功',
     SimulatePaid: '0',
     StoreID: '',
-    TradeAmt: '1480',
+    TradeAmt: '2480',
     TradeDate: '2026/11/04 16:00:10',
     TradeNo: '2611041600104321',
     CustomField1: '',
@@ -115,11 +115,11 @@ test('建預購單：回綠界表單欄位，訂單 pending', async () => {
   const h = makeHarness();
   const o = await preorder(h);
   assert.equal(o.action, 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5');
-  assert.equal(o.fields.TotalAmount, '1480');
+  assert.equal(o.fields.TotalAmount, '2480');
   assert.equal(o.fields.ReturnURL, `${API}/api/ecpay/return`);
   assert.match(o.fields.CheckMacValue, /^[0-9A-F]{64}$/);
   const row = h.env.DB.sqlite.prepare('SELECT email, status, amount FROM orders').get();
-  assert.deepEqual({ ...row }, { email: 'buyer@example.com', status: 'pending', amount: 1480 });
+  assert.deepEqual({ ...row }, { email: 'buyer@example.com', status: 'pending', amount: 2480 });
 });
 
 test('建預購單：要勾退款說明、email 要合法、要從自己網站送出、預購關閉時擋', async () => {
@@ -136,7 +136,7 @@ test('綠界 callback：CheckMacValue 錯就拒絕，訂單不變', async () => 
   const h = makeHarness();
   const o = await preorder(h);
   const res = await h.call('POST', '/api/ecpay/return', {
-    form: { MerchantID: '3002607', MerchantTradeNo: o.merchantTradeNo, RtnCode: '1', TradeAmt: '1480', CheckMacValue: 'A'.repeat(64) },
+    form: { MerchantID: '3002607', MerchantTradeNo: o.merchantTradeNo, RtnCode: '1', TradeAmt: '2480', CheckMacValue: 'A'.repeat(64) },
   });
   assert.equal(res.status, 400);
   assert.equal(h.env.DB.sqlite.prepare('SELECT status FROM orders').get().status, 'pending');
@@ -275,7 +275,7 @@ test('綠界金鑰沒設：不收單、callback 也不接受（避免用 "undefi
     body: { email: 'a@example.com', agreeRefund: true },
   });
   assert.equal(r1.status, 503);
-  const p = { MerchantID: '3002607', MerchantTradeNo: 'MA000', RtnCode: '1', TradeAmt: '1480' };
+  const p = { MerchantID: '3002607', MerchantTradeNo: 'MA000', RtnCode: '1', TradeAmt: '2480' };
   p.CheckMacValue = await generateCheckMacValue(p, 'undefined', 'undefined');
   const r2 = await h.call('POST', '/api/ecpay/return', { form: p });
   assert.equal(r2.status, 503);
