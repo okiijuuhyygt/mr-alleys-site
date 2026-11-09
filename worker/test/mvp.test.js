@@ -410,3 +410,28 @@ test('後台寄測試信：寄到 HOMEWORK_NOTIFY_EMAIL，要 token', async () =
   assert.equal(h.mail.at(-1).to, 'team@example.com');
   assert.match(h.mail.at(-1).subject, /^【測試】/);
 });
+
+test('管理員預覽：帶對的 X-MA-Admin 全部解鎖、影片都拿得到；錯的或沒帶，學生端照舊', async () => {
+  const h = makeHarness({ COURSE_OPEN: 'false', FREE_EPISODES_OPEN: 'false' });
+  const AD = { 'X-MA-Admin': 'admin-token-0123456789abcdef' };
+  const pub = await (await h.call('GET', '/api/course', { headers: AD })).json();
+  assert.equal(pub.adminPreview, true);
+  assert.equal(pub.canWatch, true);
+  assert.equal(pub.member, false, '不算學員');
+  assert.ok(pub.course.units.every((u) => u.episodes.every((e) => e.unlocked && e.title)));
+  assert.ok(pub.course.units[0].task, '看得到練習');
+  assert.ok(!JSON.stringify(pub).includes(fakeYt['u01-B'].videoId), '目錄裡照樣沒有影片 ID');
+  assert.equal((await h.call('GET', '/api/video?id=u01-B', { headers: AD })).status, 200, '付費集');
+  assert.equal((await h.call('GET', '/api/video?id=u01-A', { headers: AD })).status, 200, '預購期間關掉的免費集');
+
+  const bad = { 'X-MA-Admin': 'admin-token-0123456789abcdeX' };
+  const pub2 = await (await h.call('GET', '/api/course', { headers: bad })).json();
+  assert.equal(pub2.adminPreview, false);
+  assert.ok(pub2.course.units[0].episodes.slice(1).every((e) => !e.unlocked && e.title === null));
+  assert.equal((await h.call('GET', '/api/video?id=u01-B', { headers: bad })).status, 401);
+  assert.equal((await h.call('GET', '/api/video?id=u01-A')).status, 401, '學生端：試看關著');
+  const pre = await h.call('OPTIONS', '/api/course', { headers: { Origin: SITE } });
+  assert.match(pre.headers.get('Access-Control-Allow-Headers'), /X-MA-Admin/);
+  // 管理員預覽不能交作業
+  assert.equal((await h.call('POST', '/api/homework', { headers: fromSite(AD), multipart: new FormData() })).status, 401);
+});

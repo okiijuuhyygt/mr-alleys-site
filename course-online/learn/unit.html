@@ -85,10 +85,10 @@
 
   <div class="crs-msg err" id="err" role="alert" hidden></div>
 
-  <footer class="svc-foot"><a href="mailto:hao@mralleys.com">hao@mralleys.com</a><br><a href="/course-online/admin/" style="display:inline-block;margin-top:8px;font-size:.68rem;letter-spacing:.15em;color:#c9bfa8;text-decoration:none">系統登入</a></footer>
+  <footer class="svc-foot"><a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
 </div>
 
-<script src="../js/api.js?v=20261109b"></script>
+<script src="../js/api.js?v=20261109e"></script>
 <script>
 (function () {
   var C = window.MACourse;
@@ -268,6 +268,7 @@
     var d = r.data;
     member = d.member;
     canWatchAll = Boolean(d.canWatch);
+    C.tutorBar(d);
     email = d.email || '';
     var units = d.course.units;
     var idx = units.findIndex(function (u) { return u.id === unitId; });
@@ -295,6 +296,13 @@
     $('unitTitle').textContent = u.title;
     $('unitSummary').textContent = u.summary;
 
+    if (d.adminPreview && !member) {
+      // 導師身份：看得到練習與檢查點文字；交作業要學員帳號
+      $('taskBox').hidden = !u.task;
+      $('unitTask').textContent = u.task || '';
+      $('hwGuest').innerHTML = '';
+      $('hwGuest').appendChild(C.el('p', 'crs-flow', '（導師身份）學員登入後在這裡交作業；交來的作業在後台「學員作業」看。'));
+    }
     if (member) {
       $('taskBox').hidden = false;
       $('unitTask').textContent = u.task;

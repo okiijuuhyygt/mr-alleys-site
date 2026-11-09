@@ -46,10 +46,10 @@
 
   <div class="crs-msg err" id="err" role="alert" hidden></div>
 
-  <footer class="svc-foot">巷弄故事館 · MR. ALLEYS ｜ 有問題寫信到 <a href="mailto:hao@mralleys.com">hao@mralleys.com</a><br><a href="/course-online/admin/" style="display:inline-block;margin-top:8px;font-size:.68rem;letter-spacing:.15em;color:#c9bfa8;text-decoration:none">系統登入</a></footer>
+  <footer class="svc-foot">巷弄故事館 · MR. ALLEYS ｜ 有問題寫信到 <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
 </div>
 
-<script src="../js/api.js?v=20261109b"></script>
+<script src="../js/api.js?v=20261109e"></script>
 <script>
 (function () {
   var C = window.MACourse;
@@ -83,17 +83,18 @@
 
   function render(d) {
     var course = d.course;
+    C.tutorBar(d);
     renderWho(d);
     $('courseTitle').textContent = course.title;
     $('coursePromise').textContent = course.promise;
     $('price').textContent = 'NT$' + Number(d.price).toLocaleString('en-US');
 
-    if (!d.courseOpen && !d.canWatch) {
+    if (!d.courseOpen && !d.canWatch && !d.adminPreview) {
       $('notOpen').textContent = (d.member ? '你已經完成預購。' : '') + '課程' + d.launchText + (d.member ? '，上線那天會寄信通知你。' : '。') + (d.freeOpen ? '標「免費」的集數現在就可以先看。' : '下面先讓你看看會上到什麼。');
       $('notOpen').hidden = false;
     }
     $('freeNote').hidden = !(d.freeOpen && !d.canWatch);
-    $('buyBox').hidden = d.member || !d.purchaseOpen;
+    $('buyBox').hidden = d.member || d.adminPreview || !d.purchaseOpen;
 
     var done = 0;
     var box = $('units');

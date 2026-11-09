@@ -222,6 +222,26 @@ try {
   pub = await (await adm.request.get('http://localhost:8787/api/course')).json();
   must(pub.course.units[0].title === oldTitle && pub.course.units[0].episodes[0].id === 'u01-A' && pub.course.units[0].episodes.length === 9, '後台：改回原標題、刪掉測試集');
 
+  // 11. 導師身份（後台登入過的瀏覽器）→ 切成訪客看 → 切回導師
+  const tctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'zh-TW' });
+  await tctx.addInitScript((t) => { try { localStorage.setItem('ma-course-admin-token-v1', t); } catch (e) {} }, ADMIN_TOKEN);
+  const tp = await tctx.newPage();
+  await tp.goto(`${SITE}/course-online/learn/unit.html?u=u2&ep=u02-C`);
+  await tp.waitForSelector('#tutorBar[data-mode="tutor"]');
+  const tsrc = await waitYoutube(tp);
+  must(tsrc.includes(ytOf['u02-C']) && (await tp.locator('.ep-tag.lock').count()) === 0, '導師身份：付費集直接播、沒有鎖');
+  must(!(await tp.content()).includes(ytOf['u02-D']), '導師身份：頁面原始碼裡沒有其他集的影片 ID');
+  await shot(tp, '13-導師身份.png', false);
+  await tp.click('#tutorToggle');
+  await tp.waitForSelector('#tutorBar[data-mode="visitor"]');
+  await tp.waitForSelector('#lock:not([hidden])');
+  must((await tp.locator('#player iframe').count()) === 0 && (await tp.locator('.ep-tag.lock').count()) > 0, '訪客模式：付費集照鎖');
+  await shot(tp, '14-訪客模式.png', false);
+  await tp.click('#tutorToggle');
+  await tp.waitForSelector('#tutorBar[data-mode="tutor"]');
+  ok('切回導師');
+  await tctx.close();
+
   // ======================================================== 手機 390：版面
   const phone = await browser.newContext({
     viewport: { width: 390, height: 844 },

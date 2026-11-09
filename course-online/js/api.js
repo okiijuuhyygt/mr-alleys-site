@@ -17,10 +17,56 @@
   function setToken(t) {
     try { if (t) localStorage.setItem(TOKEN_KEY, t); else localStorage.removeItem(TOKEN_KEY); } catch (e) {}
   }
+  // 導師身份：這台瀏覽器登入過後台（/course-online/admin/ 存的密碼）就一起帶，API 對了就全部解鎖（只讀，不算學員）
+  // 訪客模式：導師在這個分頁切成「訪客看」＝不帶後台密碼、也不帶學員登入，畫面跟沒買的人一模一樣（存在 sessionStorage，只影響這個分頁）
+  var ADMIN_KEY = 'ma-course-admin-token-v1';
+  var VISITOR_KEY = 'ma-tutor-visitor';
+  function adminToken() {
+    try { return localStorage.getItem(ADMIN_KEY) || ''; } catch (e) { return ''; }
+  }
+  function visitorMode() {
+    try { return sessionStorage.getItem(VISITOR_KEY) === '1'; } catch (e) { return false; }
+  }
+  function setVisitorMode(on) {
+    try { if (on) sessionStorage.setItem(VISITOR_KEY, '1'); else sessionStorage.removeItem(VISITOR_KEY); } catch (e) {}
+    location.reload();
+  }
   function withSession(headers) {
+    if (visitorMode() && adminToken()) return headers; // 訪客模式：什麼身份都不帶
     var t = getToken();
     if (t) headers['X-MA-Session'] = t;
+    var a = adminToken();
+    if (a) headers['X-MA-Admin'] = a;
     return headers;
+  }
+
+  /**
+   * 前台頁面最上面的小字＋切換鈕（學員看不到）：
+   *   API 確認是導師 → 「導師身份：所有集數已解鎖」＋「切成訪客看」
+   *   導師切成訪客 → 「訪客模式」＋「切回導師」
+   * @param {{adminPreview?: boolean}} d /api/course 的回應
+   */
+  function tutorBar(d) {
+    var tutor = Boolean(d && d.adminPreview);
+    var visitor = !tutor && visitorMode() && Boolean(adminToken());
+    if (!tutor && !visitor) return;
+    var old = document.getElementById('tutorBar');
+    if (old) old.remove();
+    var b = document.createElement('div');
+    b.id = 'tutorBar';
+    b.setAttribute('data-mode', tutor ? 'tutor' : 'visitor');
+    b.style.cssText = 'position:sticky;top:0;z-index:20;background:' + (tutor ? '#2a1f12' : '#6e4d10') + ';color:#f3ead4;font-size:13px;line-height:1.4;padding:6px 12px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:center;text-align:center;border-bottom:3px solid #b8801f;';
+    var t = document.createElement('span');
+    t.textContent = tutor ? '導師身份：所有集數已解鎖（學員看不到這條）' : '訪客模式：現在看到的是沒登入、沒購買的訪客畫面（學員看不到這條）';
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'tutorToggle';
+    btn.textContent = tutor ? '切成訪客看' : '切回導師';
+    btn.style.cssText = 'font:inherit;font-size:12px;padding:3px 10px;background:#f3ead4;color:#2a1f12;border:1px solid #d4a13a;cursor:pointer;';
+    btn.addEventListener('click', function () { setVisitorMode(tutor); });
+    b.appendChild(t);
+    b.appendChild(btn);
+    document.body.insertBefore(b, document.body.firstChild);
   }
 
   var MESSAGES = {
@@ -125,5 +171,5 @@
     return n;
   }
 
-  window.MACourse = { API_BASE: API_BASE, setToken: setToken, call: call, upload: upload, admin: admin, message: message, requireLogin: requireLogin, logout: logout, el: el };
+  window.MACourse = { API_BASE: API_BASE, setToken: setToken, tutorBar: tutorBar, call: call, upload: upload, admin: admin, message: message, requireLogin: requireLogin, logout: logout, el: el };
 })();

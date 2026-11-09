@@ -82,7 +82,7 @@ function corsHeaders(request, env) {
     'Access-Control-Allow-Origin': origin,
     'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-MA-Session',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-MA-Session, X-MA-Admin',
     'Access-Control-Max-Age': '600',
     Vary: 'Origin',
   };
@@ -135,6 +135,16 @@ const clientIp = (request) => request.headers.get('CF-Connecting-IP') || 'local'
 /** 會改狀態的請求（POST）必須來自我們自己的網站，擋 CSRF */
 function originOk(request, env) {
   return allowedOrigins(env).includes(request.headers.get('Origin') || '');
+}
+
+/**
+ * 管理員預覽：前台頁面在後台登入過的瀏覽器會帶 X-MA-Admin（後台密碼），對就當成已購買，
+ * 課程目錄全部解鎖、影片都拿得到（含預購期間關掉的免費集）。只影響讀取，不能交作業、不算學員。
+ */
+function isAdminPreview(request, env) {
+  const want = String(env.ADMIN_TOKEN || '');
+  const got = (request.headers.get('X-MA-Admin') || '').trim();
+  return want.length >= 24 && got.length > 0 && timingSafeEqual(got, want);
 }
 
 /**
@@ -362,7 +372,8 @@ async function sessionInfo(request, env, deps) {
 async function courseInfo(request, env, deps) {
   const s = await requireSession(request, env, deps);
   const member = s.ok;
-  const entitled = member && canWatch(env, s.email);
+  const adminPreview = isAdminPreview(request, env);
+  const entitled = adminPreview || (member && canWatch(env, s.email));
   let progress = {};
   if (member) {
     const { results } = await env.DB.prepare('SELECT unit_id, completed_at FROM progress WHERE email = ?').bind(s.email).all();
@@ -372,13 +383,14 @@ async function courseInfo(request, env, deps) {
   return json(
     {
       course: publicCourse(episodes, {
-        member,
+        member: member || adminPreview,
         entitled,
         freeOpen: settings.freeOpen,
         showLockedTitles: settings.showLockedTitles,
         units,
       }),
       member,
+      adminPreview,
       email: member ? s.email : null,
       progress,
       canWatch: entitled,
@@ -419,7 +431,7 @@ async function videoUrl(request, env, deps, url) {
 
   let email = null;
   const { freeOpen } = await loadSettings(env.DB, env);
-  if (!(ep.free && freeOpen)) {
+  if (!(ep.free && freeOpen) && !isAdminPreview(request, env)) {
     const s = await requireSession(request, env, deps);
     // none = 沒登入（前端顯示「購買解鎖」）；replaced／expired… = 這台被登出了
     if (!s.ok) {
