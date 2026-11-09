@@ -107,6 +107,9 @@
   var alive = true;
   var watermarkOn = false;
   var canWatchAll = false;
+  // 已經付款、課程還沒上線的學員：鎖住的集不是「要購買」，是「上線後開放」
+  var preorderMember = false;
+  var preorderNote = '';
 
   function fail(code) { $('err').textContent = C.message(code); $('err').hidden = false; }
 
@@ -152,6 +155,7 @@
     btn.setAttribute('aria-current', 'true');
     $('nowPlaying').textContent = label;
     currentVideo = ep.id;
+    if (!ep.unlocked && preorderMember) return stopVideo(preorderNote);
     if (!ep.unlocked && ep.free && !canWatchAll) return stopVideo(C.message('trial_closed'));
     if (!ep.unlocked) return showLock();
     if (!ep.ready) return stopVideo(C.message('video_not_ready'));
@@ -272,6 +276,8 @@
     var d = r.data;
     member = d.member;
     canWatchAll = Boolean(d.canWatch);
+    preorderMember = Boolean(d.member) && !d.canWatch;
+    preorderNote = '你已經完成預購。課程' + d.launchText + '，上線那天會寄信通知你。';
     C.tutorBar(d);
     email = d.email || '';
     var units = d.course.units;
@@ -332,8 +338,12 @@
       b.type = 'button';
       b.appendChild(C.el('span', 'ep-no', ep.no + '.'));
       var t = C.el('span', 'ep-t', ep.title || ('第 ' + ep.no + ' 集'));
-      if (ep.free && !d.canWatch) t.appendChild(C.el('span', 'ep-tag free', d.freeOpen ? '免費' : '免費（上線後開放）'));
-      if (!ep.unlocked && !ep.free) t.appendChild(C.el('span', 'ep-tag lock', '購買後解鎖'));
+      if (preorderMember) {
+        if (!ep.unlocked) t.appendChild(C.el('span', 'ep-tag lock', '上線後開放'));
+      } else {
+        if (ep.free && !d.canWatch) t.appendChild(C.el('span', 'ep-tag free', d.freeOpen ? '免費' : '免費（上線後開放）'));
+        if (!ep.unlocked && !ep.free) t.appendChild(C.el('span', 'ep-tag lock', '購買後解鎖'));
+      }
       b.appendChild(t);
       b.appendChild(C.el('span', 'ep-m', ep.minutes + ' 分'));
       var label = '第 ' + ep.no + ' 集' + (ep.title ? '：' + ep.title : '');
@@ -343,6 +353,7 @@
       if ((wanted && ep.id === wanted) || (!wanted && !first && ep.unlocked)) first = { ep: ep, b: b, label: label };
     });
     if (first) select(first.ep, first.b, first.label);
+    else if (preorderMember) stopVideo(preorderNote);
     else if (!d.courseOpen && !d.freeOpen && !d.canWatch) stopVideo('課程' + d.launchText + '。預購期間先不開放試看。');
 
     if (idx > 0) { var p = C.el('a', null, '← 第 ' + units[idx - 1].no + ' 單元'); p.href = 'unit.html?u=' + units[idx - 1].id; $('prevLink').appendChild(p); }

@@ -262,6 +262,27 @@ try {
   ok('切回導師');
   await tctx.close();
 
+  // 12. 已付款、課程還沒上線的學員：鎖住的集不能再叫他「購買課程」
+  //     （本機是已開課的設定，這裡把 /api/course 的回應改成預購期的樣子來看前端怎麼顯示）
+  const pctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'zh-TW' });
+  await pctx.route('**/api/course', async (route) => {
+    const resp = await route.fetch();
+    const d = await resp.json();
+    Object.assign(d, { member: true, email: 'preorder@example.com', canWatch: false, courseOpen: false, freeOpen: false });
+    for (const u of d.course.units) for (const e of u.episodes) e.unlocked = false;
+    await route.fulfill({ response: resp, json: d });
+  });
+  const pp = await pctx.newPage();
+  await pp.goto(`${SITE}/course-online/learn/unit.html?u=u1&ep=u01-C`);
+  await pp.waitForSelector('.lrn-ep');
+  await pp.waitForFunction(() => /你已經完成預購/.test(document.getElementById('playerEmpty').textContent));
+  must(await pp.locator('#lock').isHidden(), '預購學員：點鎖住的集不會出現「購買課程」');
+  must((await pp.locator('.ep-tag:has-text("購買後解鎖")').count()) === 0 && (await pp.locator('.ep-tag:has-text("上線後開放")').count()) === 9, '預購學員：每一集標「上線後開放」，不是「購買後解鎖」');
+  await pp.click('.lrn-ep >> nth=0');
+  must(/你已經完成預購/.test(await pp.textContent('#playerEmpty')), '預購學員：點免費集也是「已預購、上線後通知」');
+  await shot(pp, '15-預購學員-未開課.png', false);
+  await pctx.close();
+
   // ======================================================== 手機 390：版面
   const phone = await browser.newContext({
     viewport: { width: 390, height: 844 },
