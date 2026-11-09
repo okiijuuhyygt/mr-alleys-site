@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="svc-wrap">
-  <a class="svc-back" href="/course-online/">← 回線上寫歌課</a>
+  <a class="svc-back" href="index.html" id="backLink">← 課程目錄</a>
   <header class="svc-head">
     <div class="svc-badge">MR.ALLEYS · 線上寫歌課</div>
     <h1>學員登入</h1>
@@ -53,7 +53,7 @@
   <footer class="svc-foot">巷弄故事館 · MR. ALLEYS ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
 </div>
 
-<script src="../js/api.js?v=20261109e"></script>
+<script src="../js/api.js?v=20261109f"></script>
 <script>
 (function () {
   var C = window.MACourse;
@@ -65,11 +65,19 @@
   function show(id, text) { $(id).textContent = text || ''; $(id).hidden = !text; }
 
   // 從別頁被踢回來時，講清楚原因
-  var reason = new URLSearchParams(location.search).get('reason');
+  var qs = new URLSearchParams(location.search);
+  var reason = qs.get('reason');
   if (reason) show('notice', C.message(reason));
 
-  // 已經登入就直接進課程首頁
-  C.call('GET', '/api/session').then(function (r) { if (r.ok) location.replace('index.html'); });
+  // 返回鍵與登入後要去的頁：從哪個上課頁來就回哪裡（只接受 learn/ 底下的目錄或單元頁，擋掉外部網址）
+  var next = qs.get('next') || '';
+  if (!/^(index\.html|unit\.html\?u=u\d+(&ep=[A-Za-z0-9_-]+)?)$/.test(next)) next = 'index.html';
+  var um = next.match(/^unit\.html\?u=u(\d+)/);
+  $('backLink').href = next;
+  $('backLink').textContent = um ? '← 回第 ' + um[1] + ' 單元' : '← 課程目錄';
+
+  // 已經登入就直接回去
+  C.call('GET', '/api/session').then(function (r) { if (r.ok) location.replace(next); });
 
   function startCooldown() {
     cooldown = 60;
@@ -115,7 +123,7 @@
     $('verifyBtn').disabled = true;
     C.call('POST', '/api/auth/verify', { email: email, code: code }).then(function (r) {
       $('verifyBtn').disabled = false;
-      if (r.ok) { C.setToken(r.data && r.data.token); return location.replace('index.html'); }
+      if (r.ok) { C.setToken(r.data && r.data.token); return location.replace(next); }
       show('codeMsg', C.message(r.data && r.data.error));
     });
   });

@@ -242,7 +242,7 @@ select.mini { width: auto; font-size: 14px; padding: 7px 8px; min-height: 40px; 
 </div>
 <div id="toast" class="hidden" role="status"></div>
 
-<script src="../js/api.js?v=20261109e"></script>
+<script src="../js/api.js?v=20261109f"></script>
 <script>
 (function () {
   var C = window.MACourse;
@@ -489,7 +489,7 @@ select.mini { width: auto; font-size: 14px; padding: 7px 8px; min-height: 40px; 
     p.setAttribute('data-unit-panel', u.id);
     return p;
   }
-  var openUnits = { u1: true };
+  var openUnits = {}; // 預設四個單元都收起來，一進來就看得到第 1–4 單元的清單（第 1 單元展開時會把 2–4 推到很下面，看起來像少了第 1 單元）
 
   function epCard(e, idx, eps) {
     var card = el('div', 'ep' + (e.published ? '' : ' unpub') + (e.id ? '' : ' dirty'));

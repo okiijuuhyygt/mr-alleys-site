@@ -88,13 +88,17 @@
   <footer class="svc-foot"><a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
 </div>
 
-<script src="../js/api.js?v=20261109e"></script>
+<script src="../js/api.js?v=20261109f"></script>
 <script>
 (function () {
   var C = window.MACourse;
   var $ = function (id) { return document.getElementById(id); };
   var params = new URLSearchParams(location.search);
   var unitId = params.get('u') || 'u1';
+  // 從單元頁去登入，登入頁的返回鍵和登入後都回到這個單元
+  var loginHref = 'login.html?next=' + encodeURIComponent('unit.html?u=' + unitId + (params.get('ep') ? '&ep=' + params.get('ep') : ''));
+  var staticLogin = document.querySelectorAll('a[href="login.html"]');
+  for (var li = 0; li < staticLogin.length; li++) staticLogin[li].href = loginHref;
   var player = $('player');
   var wm = $('wm');
   var email = '';
@@ -194,7 +198,7 @@
     $('kicked').innerHTML = '';
     $('kicked').appendChild(document.createTextNode(C.message(reason === 'replaced' ? 'replaced' : 'expired_session') + ' '));
     var a = C.el('a', null, '重新登入');
-    a.href = 'login.html';
+    a.href = loginHref;
     $('kicked').appendChild(a);
     $('kicked').hidden = false;
   }
@@ -285,7 +289,7 @@
       who.appendChild(out);
     } else {
       var a = C.el('a', 'crs-btn alt inline', '學員登入');
-      a.href = 'login.html';
+      a.href = loginHref;
       who.appendChild(a);
     }
     $('lockSub').textContent = '購買後（NT$' + Number(d.price).toLocaleString('en-US') + '）全部集數都能看，還可以交作業。';

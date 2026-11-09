@@ -222,6 +222,22 @@ try {
   pub = await (await adm.request.get('http://localhost:8787/api/course')).json();
   must(pub.course.units[0].title === oldTitle && pub.course.units[0].episodes[0].id === 'u01-A' && pub.course.units[0].episodes.length === 9, '後台：改回原標題、刪掉測試集');
 
+  // 10b. 登入頁的返回鍵：從單元頁來就回那個單元；直接開就回課程目錄
+  const bctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'zh-TW' });
+  const bp = await bctx.newPage();
+  await bp.goto(`${SITE}/course-online/learn/unit.html?u=u2&ep=u02-C`);
+  await bp.waitForSelector('#lock:not([hidden])');
+  await bp.click('#lock a[href^="login.html"]');
+  await bp.waitForSelector('#backLink');
+  must((await bp.textContent('#backLink')).includes('回第 2 單元'), '登入頁返回鍵：從單元頁來 → 回第 2 單元');
+  await bp.click('#backLink');
+  await bp.waitForURL(/unit\.html\?u=u2&ep=u02-C/);
+  await bp.goto(`${SITE}/course-online/learn/login.html`);
+  must((await bp.getAttribute('#backLink', 'href')) === 'index.html', '登入頁返回鍵：直接開 → 課程目錄');
+  await bp.goto(`${SITE}/course-online/learn/login.html?next=https://evil.example`);
+  must((await bp.getAttribute('#backLink', 'href')) === 'index.html', '登入頁返回鍵：外部網址不接受');
+  await bctx.close();
+
   // 11. 導師身份（後台登入過的瀏覽器）→ 切成訪客看 → 切回導師
   const tctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'zh-TW' });
   await tctx.addInitScript((t) => { try { localStorage.setItem('ma-course-admin-token-v1', t); } catch (e) {} }, ADMIN_TOKEN);
