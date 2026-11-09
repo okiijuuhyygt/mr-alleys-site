@@ -38,8 +38,8 @@
   </section>
 
   <section class="crs-sec lrn-cta" id="buyBox" hidden>
-    <h2>看完整門課</h2>
-    <p>購買課程後，用付款時填的 email 登入，就能看全部集數；每個單元也可以交作業，我們聽你的 Demo 給回饋。</p>
+    <h2 id="buyTitle">看完整門課</h2>
+    <p id="buyText">購買課程後，用付款時填的 email 登入，就能看全部集數；每個單元也可以交作業，我們聽你的 Demo 給回饋。</p>
     <div class="crs-price"><span class="now" id="price">NT$2,480</span></div>
     <a class="crs-btn" href="/course-online/#preorder" id="buyBtn">購買課程 →</a>
     <p class="crs-flow">已經買了？<a href="login.html">學員登入</a></p>
@@ -107,6 +107,12 @@
     }
     $('freeNote').hidden = !(d.freeOpen && !d.canWatch);
     $('buyBox').hidden = d.member || d.adminPreview || !d.purchaseOpen;
+    if (!d.courseOpen) {
+      // 預購期間：現在付款還不能馬上看，話要講準
+      $('buyTitle').textContent = '預購這門課';
+      $('buyText').textContent = '現在預購，課程上線後用付款時填的 email 登入，就能看全部集數；每個單元也可以交作業，我們聽你的 Demo 給回饋。';
+      $('buyBtn').textContent = '預購課程 →';
+    }
 
     var done = 0;
     var box = $('units');

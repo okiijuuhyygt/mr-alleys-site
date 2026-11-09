@@ -303,7 +303,14 @@
       a.href = loginHref;
       who.appendChild(a);
     }
-    $('lockSub').textContent = '購買後（NT$' + Number(d.price).toLocaleString('en-US') + '）全部集數都能看，還可以交作業。';
+    var priceText = 'NT$' + Number(d.price).toLocaleString('en-US');
+    if (d.courseOpen) {
+      $('lockSub').textContent = '購買後（' + priceText + '）全部集數都能看，還可以交作業。';
+    } else {
+      // 預購期間：現在付款還不能馬上看，話要講準
+      $('lockSub').textContent = '現在預購（' + priceText + '），課程上線後全部集數都能看，還可以交作業。';
+      $('lockBuy').textContent = '預購課程 →';
+    }
     if (!d.purchaseOpen) $('lockBuy').hidden = true;
 
     document.title = '第 ' + u.no + ' 單元：' + u.title + '｜線上寫歌課｜巷弄故事館 MR. ALLEYS';
