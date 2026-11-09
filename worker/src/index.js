@@ -244,6 +244,8 @@ async function ecpayReturn(request, env, ctx, deps) {
   const order = await db.prepare('SELECT * FROM orders WHERE merchant_trade_no = ?').bind(params.MerchantTradeNo).first();
   if (!order) return text('0|order not found', 404);
   if (order.status === 'paid') return text('1|OK'); // 綠界重送：已處理過
+  // 已經退款的訂單是終點：綠界後台補發通知（或任何重送）不能把它改回已付款、把看課權限又打開
+  if (order.status === 'refunded') return text('1|OK');
 
   const simulated = params.SimulatePaid === '1';
   const amountOk = Number(params.TradeAmt) === Number(order.amount);
@@ -264,7 +266,7 @@ async function ecpayReturn(request, env, ctx, deps) {
   const [upd] = await db.batch([
     db
       .prepare(
-        "UPDATE orders SET status = 'paid', paid_at = ?, rtn_code = ?, rtn_msg = ?, ecpay_trade_no = ?, payment_type = ?, payment_date = ?, simulate_paid = ?, raw_callback = ? WHERE merchant_trade_no = ? AND status != 'paid'",
+        "UPDATE orders SET status = 'paid', paid_at = ?, rtn_code = ?, rtn_msg = ?, ecpay_trade_no = ?, payment_type = ?, payment_date = ?, simulate_paid = ?, raw_callback = ? WHERE merchant_trade_no = ? AND status IN ('pending', 'failed')",
       )
       .bind(
         now,
