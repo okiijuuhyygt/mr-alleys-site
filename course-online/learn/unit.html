@@ -8,13 +8,13 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="icon" href="/favicon.png">
 <link rel="stylesheet" href="../../css/service-page.css">
-<link rel="stylesheet" href="../css/course-online.css?v=20261106a">
+<link rel="stylesheet" href="../css/course-online.css?v=20261109a">
 </head>
 <body>
 <div class="svc-wrap">
   <div class="lrn-bar">
-    <a class="svc-back" href="index.html" style="margin-bottom:0;">← 回課程首頁</a>
-    <button class="crs-btn alt inline" type="button" id="logoutBtn">登出</button>
+    <a class="svc-back" href="index.html" style="margin-bottom:0;">← 課程目錄</a>
+    <span id="who"></span>
   </div>
 
   <header class="svc-head">
@@ -25,25 +25,57 @@
 
   <div class="crs-msg err" id="kicked" role="alert" hidden></div>
 
-  <div class="lrn-videos" id="videoList"></div>
-
   <div class="lrn-player" id="player">
-    <div class="empty" id="playerEmpty">選一支影片開始看</div>
+    <div class="empty" id="playerEmpty">選一集開始看</div>
+    <div class="lrn-lock" id="lock" hidden>
+      <b>這一集要購買課程才看得到</b>
+      <span class="sub" id="lockSub">購買後全部集數都能看，還可以交作業。</span>
+      <a class="crs-btn" href="/course-online/#preorder" id="lockBuy">購買課程 →</a>
+      <span class="sub">已經買了？<a href="login.html">學員登入</a></span>
+    </div>
     <div class="lrn-wm" id="wm" aria-hidden="true"></div>
   </div>
+  <p class="lrn-now" id="nowPlaying"></p>
   <div class="lrn-tools">
     <button class="crs-btn alt inline" type="button" id="fsBtn" hidden>全螢幕</button>
   </div>
 
   <section class="crs-sec">
+    <h2>這個單元的集數</h2>
+    <ol class="lrn-eps" id="epList"></ol>
+  </section>
+
+  <section class="crs-sec" id="taskBox" hidden>
     <h2>這個單元的練習</h2>
     <p id="unitTask"></p>
   </section>
 
-  <section class="crs-sec" style="background:var(--paper-soft);">
+  <section class="crs-sec" id="hwBox">
+    <h2>交作業</h2>
+    <div id="hwGuest">
+      <p>購買課程後，可以在這裡交作業：寫的詞、哼的錄音都可以。我們聽你的 Demo 給回饋。</p>
+      <p class="crs-flow">已經買了？<a href="login.html">學員登入</a></p>
+    </div>
+    <form id="hwForm" novalidate hidden>
+      <div class="crs-field">
+        <label for="hwBody">想跟我們說的、寫好的詞（選填）</label>
+        <textarea class="crs-input" id="hwBody" maxlength="5000"></textarea>
+      </div>
+      <div class="crs-field">
+        <label for="hwFile">附一個檔案（選填）</label>
+        <input class="hw-file" id="hwFile" type="file" accept="audio/*,video/*,image/*,.pdf,.txt,.doc,.docx,.pages,.m4a,.mp3,.wav">
+        <span class="hint">手機錄音、影片、照片、PDF、文字檔都可以，20 MB 以內。</span>
+      </div>
+      <button class="crs-btn" type="submit" id="hwBtn">送出作業</button>
+      <div class="crs-msg" id="hwMsg" role="status" hidden></div>
+    </form>
+    <ul class="hw-list" id="hwList"></ul>
+  </section>
+
+  <section class="crs-sec" id="checkBox" style="background:var(--paper-soft);" hidden>
     <h2>完成檢查點</h2>
     <label class="crs-check"><input type="checkbox" id="doneBox"><span id="checkpointText"></span></label>
-    <p class="crs-flow">做到了再勾。勾了之後課程首頁會記下你的進度，之後也可以取消。</p>
+    <p class="crs-flow">做到了再勾。勾了之後課程目錄會記下你的進度，之後也可以取消。</p>
   </section>
 
   <nav class="lrn-nav">
@@ -56,23 +88,25 @@
   <footer class="svc-foot"><a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
 </div>
 
-<script src="../js/api.js"></script>
+<script src="../js/api.js?v=20261109b"></script>
 <script>
 (function () {
   var C = window.MACourse;
   var $ = function (id) { return document.getElementById(id); };
-  var unitId = new URLSearchParams(location.search).get('u') || 'u1';
+  var params = new URLSearchParams(location.search);
+  var unitId = params.get('u') || 'u1';
   var player = $('player');
   var wm = $('wm');
   var email = '';
+  var member = false;
   var currentVideo = null;
   var alive = true;
-
-  $('logoutBtn').addEventListener('click', C.logout);
+  var watermarkOn = false;
+  var canWatchAll = false;
 
   function fail(code) { $('err').textContent = C.message(code); $('err').hidden = false; }
 
-  // ---------------- 浮水印：購買者 email，每 15 秒換位置
+  // ---------------- 浮水印（預設關：API 有回 watermark 才疊）
   function placeWatermark() {
     var spans = wm.querySelectorAll('span');
     for (var i = 0; i < spans.length; i++) {
@@ -80,68 +114,82 @@
       spans[i].style.top = (8 + i * 30 + Math.random() * 14) + '%';
     }
   }
-  function buildWatermark() {
+  function buildWatermark(text) {
     wm.innerHTML = '';
-    for (var i = 0; i < 3; i++) wm.appendChild(C.el('span', null, email));
+    if (!text) return;
+    for (var i = 0; i < 3; i++) wm.appendChild(C.el('span', null, text));
     placeWatermark();
   }
-
-  // 有人用開發者工具把浮水印拿掉，就把影片也拿掉
   new MutationObserver(function () {
+    if (!watermarkOn) return;
     if (!player.contains(wm) || wm.querySelectorAll('span').length < 3 || getComputedStyle(wm).display === 'none' || getComputedStyle(wm).visibility === 'hidden' || Number(getComputedStyle(wm).opacity) === 0) stopVideo();
   }).observe(player, { childList: true, subtree: true, attributes: true, characterData: true });
+  setInterval(function () { if (watermarkOn) placeWatermark(); }, 15 * 1000);
 
   function stopVideo(text) {
     var f = player.querySelector('iframe');
     if (f) f.remove();
+    $('lock').hidden = true;
     $('playerEmpty').hidden = false;
     if (text) $('playerEmpty').textContent = text;
   }
 
+  function showLock() {
+    stopVideo('');
+    $('playerEmpty').hidden = true;
+    $('lock').hidden = false;
+  }
+
   // ---------------- 播放
-  function play(video, btn) {
+  function select(ep, btn, label) {
     if (!alive) return;
-    var buttons = $('videoList').querySelectorAll('button');
+    var buttons = $('epList').querySelectorAll('button');
     for (var i = 0; i < buttons.length; i++) buttons[i].setAttribute('aria-current', 'false');
     btn.setAttribute('aria-current', 'true');
+    $('nowPlaying').textContent = label;
+    currentVideo = ep.id;
+    if (!ep.unlocked && ep.free && !canWatchAll) return stopVideo(C.message('trial_closed'));
+    if (!ep.unlocked) return showLock();
+    if (!ep.ready) return stopVideo(C.message('video_not_ready'));
     stopVideo('載入影片中……');
-    currentVideo = video.id;
-    C.call('GET', '/api/video?id=' + encodeURIComponent(video.id)).then(function (r) {
+    C.call('GET', '/api/video?id=' + encodeURIComponent(ep.id)).then(function (r) {
+      if (currentVideo !== ep.id) return;
       if (!r.ok) {
-        if (r.status === 401) return kick(r.data && r.data.error);
-        return stopVideo(C.message(r.data && r.data.error));
+        var code = r.data && r.data.error;
+        if (code === 'locked') return showLock();
+        if (code === 'trial_closed') return stopVideo(C.message('trial_closed'));
+        if (r.status === 401) return kick(code);
+        return stopVideo(C.message(code));
       }
-      if (currentVideo !== video.id) return;
-      email = r.data.watermark || email;
-      buildWatermark();
+      watermarkOn = Boolean(r.data.watermark);
+      buildWatermark(r.data.watermark);
+      $('fsBtn').hidden = !(watermarkOn && canFs);
       var f = document.createElement('iframe');
       f.src = r.data.embedUrl;
-      f.title = video.title;
+      f.title = ep.title || '影片';
       f.loading = 'eager';
       f.referrerPolicy = 'strict-origin-when-cross-origin';
-      // 故意不給 allowfullscreen／picture-in-picture：那兩個會讓影片跳出浮水印的框
-      f.setAttribute('allow', 'autoplay; encrypted-media');
+      // 有浮水印時不給 allowfullscreen（會跳出浮水印的框），改用我們的全螢幕按鈕
+      f.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture' + (watermarkOn ? '' : '; fullscreen'));
+      if (!watermarkOn) f.allowFullscreen = true;
       $('playerEmpty').hidden = true;
       player.insertBefore(f, wm);
     });
   }
 
-  // ---------------- 全螢幕：放大整個框（含浮水印），不是只放大影片
   var canFs = player.requestFullscreen || player.webkitRequestFullscreen;
-  if (canFs) {
-    $('fsBtn').hidden = false;
-    $('fsBtn').addEventListener('click', function () {
-      if (document.fullscreenElement || document.webkitFullscreenElement) {
-        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-      } else {
-        canFs.call(player);
-      }
-    });
-  }
+  $('fsBtn').addEventListener('click', function () {
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    } else if (canFs) {
+      canFs.call(player);
+    }
+  });
 
-  // ---------------- 單一裝置：每 60 秒問一次，被別台登入擠掉就停播
+  // ---------------- 學員：這台被登出就停播（每 60 秒問一次）
   function kick(reason) {
     alive = false;
+    C.setToken('');
     stopVideo('這台裝置已經登出');
     $('kicked').innerHTML = '';
     $('kicked').appendChild(document.createTextNode(C.message(reason === 'replaced' ? 'replaced' : 'expired_session') + ' '));
@@ -151,53 +199,142 @@
     $('kicked').hidden = false;
   }
   function heartbeat() {
-    if (!alive) return;
+    if (!alive || !member) return;
     C.call('GET', '/api/session').then(function (r) {
       if (r.status === 401) kick(r.data && r.data.error);
     });
   }
   setInterval(heartbeat, 60 * 1000);
-  setInterval(placeWatermark, 15 * 1000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) heartbeat(); });
 
+  // ---------------- 交作業
+  var fmtTime = function (ms) {
+    var d = new Date(Number(ms));
+    var p = function (n) { return String(n).padStart(2, '0'); };
+    return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  };
+  function loadMyHomework() {
+    C.call('GET', '/api/homework?unitId=' + encodeURIComponent(unitId)).then(function (r) {
+      var ul = $('hwList');
+      ul.innerHTML = '';
+      if (!r.ok) return;
+      r.data.homework.forEach(function (h) {
+        var li = C.el('li');
+        li.appendChild(document.createTextNode(fmtTime(h.created_at) + ' 交的作業'));
+        li.appendChild(C.el('span', 'hw-st' + (h.status === 'reviewed' ? ' reviewed' : ''), h.status === 'reviewed' ? '已回覆' : '已收到'));
+        var bits = [];
+        if (h.file_name) bits.push('附檔：' + h.file_name);
+        if (h.body) bits.push('「' + (h.body.length > 40 ? h.body.slice(0, 40) + '……' : h.body) + '」');
+        if (bits.length) { li.appendChild(document.createElement('br')); li.appendChild(document.createTextNode(bits.join('　'))); }
+        ul.appendChild(li);
+      });
+    });
+  }
+  $('hwForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var msg = $('hwMsg');
+    msg.hidden = true;
+    msg.className = 'crs-msg';
+    var body = $('hwBody').value.trim();
+    var file = $('hwFile').files[0];
+    if (!body && !file) { msg.textContent = C.message('homework_empty'); msg.className = 'crs-msg err'; msg.hidden = false; return; }
+    if (file && file.size > 20 * 1024 * 1024) { msg.textContent = C.message('file_too_large'); msg.className = 'crs-msg err'; msg.hidden = false; return; }
+    var fd = new FormData();
+    fd.append('unitId', unitId);
+    fd.append('body', body);
+    if (file) fd.append('file', file);
+    $('hwBtn').disabled = true;
+    $('hwBtn').textContent = file ? '上傳中……' : '送出中……';
+    C.upload('/api/homework', fd).then(function (r) {
+      $('hwBtn').disabled = false;
+      $('hwBtn').textContent = '送出作業';
+      if (!r.ok) {
+        if (r.status === 401) return kick(r.data && r.data.error);
+        msg.textContent = C.message(r.data && r.data.error);
+        msg.className = 'crs-msg err';
+        msg.hidden = false;
+        return;
+      }
+      $('hwForm').reset();
+      msg.textContent = '收到了！我們聽完會回信給你。';
+      msg.hidden = false;
+      loadMyHomework();
+    });
+  });
+
   // ---------------- 載入單元
-  C.requireLogin().then(function (s) {
-    email = s.email;
-    if (!s.canWatch) { location.replace('index.html'); return new Promise(function () {}); }
-    return C.call('GET', '/api/course');
-  }).then(function (r) {
+  C.call('GET', '/api/course').then(function (r) {
     if (!r.ok) throw new Error((r.data && r.data.error) || 'server_error');
-    var units = r.data.course.units;
+    var d = r.data;
+    member = d.member;
+    canWatchAll = Boolean(d.canWatch);
+    email = d.email || '';
+    var units = d.course.units;
     var idx = units.findIndex(function (u) { return u.id === unitId; });
     if (idx < 0) { location.replace('index.html'); return; }
     var u = units[idx];
+
+    var who = $('who');
+    if (member) {
+      who.appendChild(C.el('b', null, email));
+      who.appendChild(document.createTextNode(' '));
+      var out = C.el('button', 'crs-btn alt inline', '登出');
+      out.type = 'button';
+      out.addEventListener('click', C.logout);
+      who.appendChild(out);
+    } else {
+      var a = C.el('a', 'crs-btn alt inline', '學員登入');
+      a.href = 'login.html';
+      who.appendChild(a);
+    }
+    $('lockSub').textContent = '購買後（NT$' + Number(d.price).toLocaleString('en-US') + '）全部集數都能看，還可以交作業。';
+    if (!d.purchaseOpen) $('lockBuy').hidden = true;
 
     document.title = '第 ' + u.no + ' 單元：' + u.title + '｜線上寫歌課｜巷弄故事館 MR. ALLEYS';
     $('unitNo').textContent = 'MR.ALLEYS · 第 ' + u.no + ' 單元';
     $('unitTitle').textContent = u.title;
     $('unitSummary').textContent = u.summary;
-    $('unitTask').textContent = u.task;
-    $('checkpointText').textContent = u.checkpoint;
-    $('doneBox').checked = Boolean(r.data.progress[u.id]);
-    buildWatermark();
 
-    u.videos.forEach(function (v, i) {
-      var b = C.el('button', 'lrn-vbtn', (i + 1) + '. ' + v.title + '（' + v.minutes + ' 分）');
+    if (member) {
+      $('taskBox').hidden = false;
+      $('unitTask').textContent = u.task;
+      $('checkBox').hidden = false;
+      $('checkpointText').textContent = u.checkpoint;
+      $('doneBox').checked = Boolean(d.progress[u.id]);
+      $('hwGuest').hidden = true;
+      $('hwForm').hidden = false;
+      loadMyHomework();
+      $('doneBox').addEventListener('change', function () {
+        var box = this;
+        C.call('POST', '/api/progress', { unitId: u.id, done: box.checked }).then(function (res) {
+          if (!res.ok) { box.checked = !box.checked; if (res.status === 401) kick(res.data && res.data.error); else fail(res.data && res.data.error); }
+        });
+      });
+    }
+
+    var first = null;
+    var wanted = params.get('ep');
+    u.episodes.forEach(function (ep) {
+      var li = C.el('li');
+      var b = C.el('button', 'lrn-ep' + (ep.unlocked ? '' : ' locked'));
       b.type = 'button';
-      if (!v.ready) { b.disabled = true; b.title = '影片準備中'; }
-      b.addEventListener('click', function () { play(v, b); });
-      $('videoList').appendChild(b);
+      b.appendChild(C.el('span', 'ep-no', ep.no + '.'));
+      var t = C.el('span', 'ep-t', ep.title || ('第 ' + ep.no + ' 集'));
+      if (ep.free && !d.canWatch) t.appendChild(C.el('span', 'ep-tag free', d.freeOpen ? '免費' : '免費（上線後開放）'));
+      if (!ep.unlocked && !ep.free) t.appendChild(C.el('span', 'ep-tag lock', '購買後解鎖'));
+      b.appendChild(t);
+      b.appendChild(C.el('span', 'ep-m', ep.minutes + ' 分'));
+      var label = '第 ' + ep.no + ' 集' + (ep.title ? '：' + ep.title : '');
+      b.addEventListener('click', function () { select(ep, b, label); });
+      li.appendChild(b);
+      $('epList').appendChild(li);
+      if ((wanted && ep.id === wanted) || (!wanted && !first && ep.unlocked)) first = { ep: ep, b: b, label: label };
     });
+    if (first) select(first.ep, first.b, first.label);
+    else if (!d.courseOpen && !d.freeOpen && !d.canWatch) stopVideo('課程' + d.launchText + '。預購期間先不開放試看。');
 
     if (idx > 0) { var p = C.el('a', null, '← 第 ' + units[idx - 1].no + ' 單元'); p.href = 'unit.html?u=' + units[idx - 1].id; $('prevLink').appendChild(p); }
     if (idx < units.length - 1) { var n = C.el('a', null, '第 ' + units[idx + 1].no + ' 單元 →'); n.href = 'unit.html?u=' + units[idx + 1].id; $('nextLink').appendChild(n); }
-
-    $('doneBox').addEventListener('change', function () {
-      var box = this;
-      C.call('POST', '/api/progress', { unitId: u.id, done: box.checked }).then(function (res) {
-        if (!res.ok) { box.checked = !box.checked; if (res.status === 401) kick(res.data && res.data.error); else fail(res.data && res.data.error); }
-      });
-    });
   }).catch(function (e) { fail(e.message); });
 })();
 </script>

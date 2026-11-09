@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>我的課程｜線上寫歌課｜巷弄故事館 MR. ALLEYS</title>
+<title>課程目錄｜線上寫歌課｜巷弄故事館 MR. ALLEYS</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="/favicon.png">
 <link rel="stylesheet" href="../../css/service-page.css">
-<link rel="stylesheet" href="../css/course-online.css?v=20261106a">
+<link rel="stylesheet" href="../css/course-online.css?v=20261109a">
 </head>
 <body>
 <div class="svc-wrap">
   <div class="lrn-bar">
-    <span>登入中：<b id="who">……</b></span>
-    <button class="crs-btn alt inline" type="button" id="logoutBtn">登出</button>
+    <a class="svc-back" href="/course-online/" style="margin-bottom:0;">← 線上寫歌課</a>
+    <span id="who"></span>
   </div>
 
   <header class="svc-head">
@@ -32,7 +32,16 @@
 
   <section class="crs-sec">
     <h2>四個單元</h2>
+    <p class="crs-flow" id="freeNote" hidden style="margin-top:0;">標「免費」的集數不用登入就能看。</p>
     <div id="units"><p class="crs-flow">載入中……</p></div>
+  </section>
+
+  <section class="crs-sec lrn-cta" id="buyBox" hidden>
+    <h2>看完整門課</h2>
+    <p>購買課程後，用付款時填的 email 登入，就能看全部集數；每個單元也可以交作業，我們聽你的 Demo 給回饋。</p>
+    <div class="crs-price"><span class="now" id="price">NT$2,480</span></div>
+    <a class="crs-btn" href="/course-online/#preorder" id="buyBtn">購買課程 →</a>
+    <p class="crs-flow">已經買了？<a href="login.html">學員登入</a></p>
   </section>
 
   <div class="crs-msg err" id="err" role="alert" hidden></div>
@@ -40,17 +49,13 @@
   <footer class="svc-foot">巷弄故事館 · MR. ALLEYS ｜ 有問題寫信到 <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
 </div>
 
-<script src="../js/api.js"></script>
+<script src="../js/api.js?v=20261109b"></script>
 <script>
 (function () {
   var C = window.MACourse;
   var $ = function (id) { return document.getElementById(id); };
-  $('logoutBtn').addEventListener('click', C.logout);
 
-  C.requireLogin().then(function (s) {
-    $('who').textContent = s.email;
-    return C.call('GET', '/api/course');
-  }).then(function (r) {
+  C.call('GET', '/api/course').then(function (r) {
     if (!r.ok) throw new Error((r.data && r.data.error) || 'server_error');
     render(r.data);
   }).catch(function (e) {
@@ -58,15 +63,37 @@
     $('err').hidden = false;
   });
 
+  function renderWho(d) {
+    var w = $('who');
+    w.innerHTML = '';
+    if (d.member) {
+      w.appendChild(document.createTextNode('登入中：'));
+      w.appendChild(C.el('b', null, d.email));
+      w.appendChild(document.createTextNode(' '));
+      var out = C.el('button', 'crs-btn alt inline', '登出');
+      out.type = 'button';
+      out.addEventListener('click', C.logout);
+      w.appendChild(out);
+    } else {
+      var a = C.el('a', 'crs-btn alt inline', '學員登入');
+      a.href = 'login.html';
+      w.appendChild(a);
+    }
+  }
+
   function render(d) {
     var course = d.course;
+    renderWho(d);
     $('courseTitle').textContent = course.title;
     $('coursePromise').textContent = course.promise;
+    $('price').textContent = 'NT$' + Number(d.price).toLocaleString('en-US');
 
-    if (!d.canWatch) {
-      $('notOpen').textContent = '你已經完成預購。課程' + d.launchText + '，上線那天會寄信通知你。下面先讓你看看會上到什麼。';
+    if (!d.courseOpen && !d.canWatch) {
+      $('notOpen').textContent = (d.member ? '你已經完成預購。' : '') + '課程' + d.launchText + (d.member ? '，上線那天會寄信通知你。' : '。') + (d.freeOpen ? '標「免費」的集數現在就可以先看。' : '下面先讓你看看會上到什麼。');
       $('notOpen').hidden = false;
     }
+    $('freeNote').hidden = !(d.freeOpen && !d.canWatch);
+    $('buyBox').hidden = d.member || !d.purchaseOpen;
 
     var done = 0;
     var box = $('units');
@@ -74,21 +101,25 @@
     course.units.forEach(function (u) {
       var finished = Boolean(d.progress[u.id]);
       if (finished) done += 1;
-      var minutes = u.videos.reduce(function (s, v) { return s + v.minutes; }, 0);
-      var row = C.el(d.canWatch ? 'a' : 'div', 'crs-week lrn-unit' + (d.canWatch ? '' : ' locked'));
-      if (d.canWatch) row.href = 'unit.html?u=' + encodeURIComponent(u.id);
+      // 單元一律可以點進去看集數（鎖住的只顯示「第 N 集＋長度」）
+      var anyOpen = u.episodes.some(function (e) { return e.unlocked; });
+      var row = C.el(u.episodes.length ? 'a' : 'div', 'crs-week lrn-unit' + (anyOpen ? '' : ' locked'));
+      if (u.episodes.length) row.href = 'unit.html?u=' + encodeURIComponent(u.id);
       row.appendChild(C.el('div', 'no', '第 ' + u.no + ' 單元'));
       var t = C.el('div', 't');
       t.appendChild(C.el('b', null, u.title));
       t.appendChild(C.el('span', null, u.summary));
-      var meta = C.el('span', 'meta', u.videos.length + ' 支影片｜約 ' + minutes + ' 分鐘｜檢查點：「' + u.checkpoint + '」');
-      t.appendChild(meta);
+      var bits = [u.episodes.length + ' 集', '約 ' + u.minutes + ' 分鐘'];
+      var nFree = u.episodes.filter(function (e) { return e.free; }).length;
+      if (!d.canWatch && nFree && d.freeOpen) bits.push(nFree === 1 ? '1 集免費看' : nFree + ' 集免費看');
+      t.appendChild(C.el('span', 'meta', bits.join('｜')));
+      if (d.member && u.checkpoint) t.appendChild(C.el('span', 'meta', '檢查點：「' + u.checkpoint + '」'));
       if (finished) t.appendChild(C.el('span', 'lrn-done', '✓ 已完成'));
       row.appendChild(t);
       box.appendChild(row);
     });
 
-    if (d.canWatch) {
+    if (d.member && d.canWatch) {
       $('progressBox').hidden = false;
       $('progressBar').style.width = Math.round((done / course.units.length) * 100) + '%';
       $('progressText').textContent = done === course.units.length

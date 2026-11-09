@@ -1,0 +1,113 @@
+# wrangler.toml — 線上寫歌課 API
+#
+# 這份檔「沒有」任何真的金鑰。金鑰一律用 secret 設定，不進 git：
+#   npx wrangler secret put ECPAY_HASH_KEY
+#   npx wrangler secret put ECPAY_HASH_IV
+#   npx wrangler secret put CODE_PEPPER        # 隨機長字串：openssl rand -hex 32
+#   npx wrangler secret put ADMIN_TOKEN        # 隨機長字串（至少 24 字）：openssl rand -hex 24
+#   寄信用 Gmail API（EMAIL_PROVIDER = "gmail"）：
+#   npx wrangler secret put GMAIL_CLIENT_ID
+#   npx wrangler secret put GMAIL_CLIENT_SECRET
+#   npx wrangler secret put GMAIL_REFRESH_TOKEN    # scope 只要 https://www.googleapis.com/auth/gmail.send
+#   改用 Resend（EMAIL_PROVIDER = "resend"）才要：npx wrangler secret put RESEND_API_KEY
+# 正式環境要加 --env production（例：npx wrangler secret put ECPAY_HASH_KEY --env production）。
+# 本機開發的值放 worker/.dev.vars（照 .dev.vars.example 複製，已在 .gitignore）。
+#
+# 預設（沒加 --env）= 測試環境：綠界 stage、預購開著、課程還沒開。
+
+name = "mralleys-course-api-staging"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mralleys-course"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"   # npx wrangler d1 create mralleys-course 之後貼上
+migrations_dir = "migrations"
+
+# 交作業的檔案（KV 單一值上限 25 MiB）：npx wrangler kv namespace create HOMEWORK_FILES 之後貼上 id
+[[kv_namespaces]]
+binding = "HOMEWORK_FILES"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[triggers]
+crons = ["30 19 * * *"]   # 每天台灣時間 03:30 清掉過期的驗證碼與頻率紀錄
+
+[vars]
+SITE_ORIGIN = "https://mralleys.com"
+API_ORIGIN = "https://mralleys-course-api-staging.REPLACE_WITH_WORKERS_SUBDOMAIN.workers.dev"
+ALLOWED_ORIGINS = "https://mralleys.com,http://localhost:8080"
+ECPAY_ENV = "stage"
+ECPAY_MERCHANT_ID = "3002607"      # 綠界公開的測試特店編號（stage 專用）
+PREORDER_OPEN = "true"
+PREORDER_PRICE = "2480"
+LAUNCH_TEXT = "預計 2027 年 1 月上線（以實際公告為準）"
+REFUND_DEADLINE_TEXT = "2027 年 1 月 31 日"
+COURSE_OPEN = "false"
+PREVIEW_EMAILS = ""                # 開課前可以先看全部影片的 email（逗號分隔），例：老闆自己
+FREE_EPISODES_OPEN = ""            # "true"：開課前就先放每單元第一集給大家看；空白＝跟 COURSE_OPEN 一樣
+SHOW_LOCKED_TITLES = "false"       # 鎖住的集數要不要顯示標題（預設不顯示：對外不寫做法）
+WATERMARK = "false"                # email 浮水印：邏輯留著、預設關，對外文案不提
+LIVE_RULE = ""                     # live 規則待定（per_unit＝每單元一堂／twice_monthly＝每月兩堂）；目前只帶給前端，沒有解鎖邏輯
+HOMEWORK_MAX_MB = "20"             # 交作業檔案上限（KV 上限 25）
+HOMEWORK_NOTIFY_EMAIL = "hao@mralleys.com"   # 交作業即時通知寄到這裡（沒設就用 OWNER_NOTIFY_EMAIL）
+EMAIL_PROVIDER = "gmail"           # gmail | resend
+EMAIL_FROM = "巷弄故事館 <REPLACE_WITH_GMAIL_SENDER>"
+GMAIL_SENDER = ""                  # Gmail API 寄件地址；空白＝用 EMAIL_FROM
+EMAIL_REPLY_TO = "hao@mralleys.com"
+EMAIL_MODE = "send"                # log／dry-run＝只印不寄（正式環境不准）
+OWNER_NOTIFY_EMAIL = ""
+
+# ---------------------------------------------------------------- 正式環境
+# 部署：npx wrangler deploy --env production
+# 2026-11-09 先放在 workers.dev（不動 mralleys.com 的 DNS）：https://mralleys-course-api.mralleys.workers.dev
+# 之後要換成 course-api.mralleys.com：mralleys.com 的 DNS 要搬到 Cloudflare，再把下面改回 routes＋custom_domain，
+# 並同步改 API_ORIGIN 與 course-online/js/api.js 的 API_BASE。
+# 正式環境的 secret（不進 git）：ECPAY_MERCHANT_ID、ECPAY_HASH_KEY、ECPAY_HASH_IV、CODE_PEPPER、ADMIN_TOKEN、
+#   （寄信）GMAIL_CLIENT_ID、GMAIL_CLIENT_SECRET、GMAIL_REFRESH_TOKEN
+[env.production]
+name = "mralleys-course-api"
+workers_dev = true
+preview_urls = false
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "mralleys-course"
+database_id = "b4816f2a-86f6-4709-a93f-333b3147f9d9"
+migrations_dir = "migrations"
+
+[[env.production.kv_namespaces]]
+binding = "HOMEWORK_FILES"
+id = "cba87435502e4c42af5bf3b3bee99873"
+
+[env.production.triggers]
+crons = ["30 19 * * *"]
+
+[env.production.vars]
+SITE_ORIGIN = "https://mralleys.com"
+API_ORIGIN = "https://mralleys-course-api.mralleys.workers.dev"
+ALLOWED_ORIGINS = "https://mralleys.com,https://www.mralleys.com"
+ECPAY_ENV = "prod"
+# ECPAY_MERCHANT_ID 用 secret 設（跟 HashKey／HashIV 一起，從綠界廠商後台拿）
+PREORDER_OPEN = "true"
+PREORDER_PRICE = "2480"
+LAUNCH_TEXT = "預計 2027 年 1 月上線（以實際公告為準）"
+REFUND_DEADLINE_TEXT = "2027 年 1 月 31 日"
+COURSE_OPEN = "false"
+PREVIEW_EMAILS = ""                # 開課前可以先看全部影片的 email（逗號分隔），例：老闆自己
+FREE_EPISODES_OPEN = "false"       # 預購期間不開放試看（後台「網站開關」可以直接改，後台存過就以後台為準）
+SHOW_LOCKED_TITLES = "false"       # 鎖住的集數只顯示「第 N 集＋長度」（後台也能改）
+WATERMARK = "false"                # email 浮水印：邏輯留著、預設關，對外文案不提
+LIVE_RULE = ""                     # live 不做（2026-11-09）
+HOMEWORK_MAX_MB = "20"             # 交作業檔案上限（KV 上限 25）
+HOMEWORK_NOTIFY_EMAIL = "hao@mralleys.com"   # 交作業即時通知寄到這裡
+EMAIL_PROVIDER = "gmail"           # gmail | resend
+EMAIL_FROM = "巷弄故事館 <mr.alleysmusic@gmail.com>"
+GMAIL_SENDER = ""                  # Gmail API 寄件地址；空白＝用 EMAIL_FROM
+EMAIL_REPLY_TO = "hao@mralleys.com"
+# 寄信授權（Gmail refresh token）還沒拿到：先 dry-run 上線，信只印在 `npx wrangler tail --env production`。
+# 拿到之後：設好三個 GMAIL_* secret，把下面兩行改成 EMAIL_MODE = "send"、刪掉 EMAIL_DRY_RUN_IN_PROD，重新部署。
+EMAIL_MODE = "dry-run"
+EMAIL_DRY_RUN_IN_PROD = "true"
+OWNER_NOTIFY_EMAIL = ""

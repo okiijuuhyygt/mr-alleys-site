@@ -1,0 +1,25 @@
+# 本機開發用（npx wrangler dev 會讀 worker/.dev.vars）
+# 用法：cp .dev.vars.example .dev.vars   ← .dev.vars 已在 .gitignore，不會進 git
+#
+# 下面的 HashKey / HashIV 是綠界「公開的測試特店」（特店編號 3002607），
+# 寫在綠界官方技術文件裡，只能打 payment-stage，收不到真的錢。正式金鑰絕對不要寫在這裡。
+ECPAY_HASH_KEY=pwFHCqoQZGmho4w6
+ECPAY_HASH_IV=EkRm7iFT261dpevs
+
+# 本機用的假值
+CODE_PEPPER=local-dev-pepper-change-me
+ADMIN_TOKEN=local-dev-admin-token-0123456789
+
+# 本機不寄信（dry-run）：驗證碼、交作業通知都直接印在 wrangler dev 的終端機
+EMAIL_MODE=log
+HOMEWORK_NOTIFY_EMAIL=team@example.com
+
+# 本機是 http，cookie 不能用 __Host- 前綴
+COOKIE_INSECURE=true
+SITE_ORIGIN=http://localhost:8080
+API_ORIGIN=http://localhost:8787
+ALLOWED_ORIGINS=http://localhost:8080
+PREVIEW_EMAILS=
+
+# 本機直接開課，才看得到免費集／付費集的差別（正式環境開課前是 false）
+COURSE_OPEN=true

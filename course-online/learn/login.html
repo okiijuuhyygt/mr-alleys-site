@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="/favicon.png">
 <link rel="stylesheet" href="../../css/service-page.css">
-<link rel="stylesheet" href="../css/course-online.css?v=20261106a">
+<link rel="stylesheet" href="../css/course-online.css?v=20261109a">
 </head>
 <body>
 <div class="svc-wrap">
@@ -53,7 +53,7 @@
   <footer class="svc-foot">巷弄故事館 · MR. ALLEYS ｜ <a href="mailto:hao@mralleys.com">hao@mralleys.com</a></footer>
 </div>
 
-<script src="../js/api.js"></script>
+<script src="../js/api.js?v=20261109b"></script>
 <script>
 (function () {
   var C = window.MACourse;
@@ -115,7 +115,7 @@
     $('verifyBtn').disabled = true;
     C.call('POST', '/api/auth/verify', { email: email, code: code }).then(function (r) {
       $('verifyBtn').disabled = false;
-      if (r.ok) return location.replace('index.html');
+      if (r.ok) { C.setToken(r.data && r.data.token); return location.replace('index.html'); }
       show('codeMsg', C.message(r.data && r.data.error));
     });
   });

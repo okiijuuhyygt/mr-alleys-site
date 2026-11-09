@@ -1,0 +1,206 @@
+[
+ {
+  "id": "u01-A",
+  "unit": "u1",
+  "title": "第 1 單元第 1 集",
+  "durationSec": 66
+ },
+ {
+  "id": "u01-B",
+  "unit": "u1",
+  "title": "第 1 單元第 2 集",
+  "durationSec": 161
+ },
+ {
+  "id": "u01-C",
+  "unit": "u1",
+  "title": "第 1 單元第 3 集",
+  "durationSec": 357
+ },
+ {
+  "id": "u01-D",
+  "unit": "u1",
+  "title": "第 1 單元第 4 集",
+  "durationSec": 611
+ },
+ {
+  "id": "u01-E",
+  "unit": "u1",
+  "title": "第 1 單元第 5 集",
+  "durationSec": 326
+ },
+ {
+  "id": "u01-F",
+  "unit": "u1",
+  "title": "第 1 單元第 6 集",
+  "durationSec": 303
+ },
+ {
+  "id": "u01-G",
+  "unit": "u1",
+  "title": "第 1 單元第 7 集",
+  "durationSec": 127
+ },
+ {
+  "id": "u01-H",
+  "unit": "u1",
+  "title": "第 1 單元第 8 集",
+  "durationSec": 147
+ },
+ {
+  "id": "u01-I",
+  "unit": "u1",
+  "title": "第 1 單元第 9 集",
+  "durationSec": 222
+ },
+ {
+  "id": "u02-A",
+  "unit": "u2",
+  "title": "第 2 單元第 1 集",
+  "durationSec": 151
+ },
+ {
+  "id": "u02-B",
+  "unit": "u2",
+  "title": "第 2 單元第 2 集",
+  "durationSec": 212
+ },
+ {
+  "id": "u02-C",
+  "unit": "u2",
+  "title": "第 2 單元第 3 集",
+  "durationSec": 601
+ },
+ {
+  "id": "u02-D",
+  "unit": "u2",
+  "title": "第 2 單元第 4 集",
+  "durationSec": 223
+ },
+ {
+  "id": "u02-E",
+  "unit": "u2",
+  "title": "第 2 單元第 5 集",
+  "durationSec": 236
+ },
+ {
+  "id": "u02-F",
+  "unit": "u2",
+  "title": "第 2 單元第 6 集",
+  "durationSec": 261
+ },
+ {
+  "id": "u02-G",
+  "unit": "u2",
+  "title": "第 2 單元第 7 集",
+  "durationSec": 445
+ },
+ {
+  "id": "u02-H",
+  "unit": "u2",
+  "title": "第 2 單元第 8 集",
+  "durationSec": 157
+ },
+ {
+  "id": "u02-I",
+  "unit": "u2",
+  "title": "第 2 單元第 9 集",
+  "durationSec": 177
+ },
+ {
+  "id": "u03-A",
+  "unit": "u3",
+  "title": "第 3 單元第 1 集",
+  "durationSec": 205
+ },
+ {
+  "id": "u03-B",
+  "unit": "u3",
+  "title": "第 3 單元第 2 集",
+  "durationSec": 399
+ },
+ {
+  "id": "u03-C",
+  "unit": "u3",
+  "title": "第 3 單元第 3 集",
+  "durationSec": 518
+ },
+ {
+  "id": "u03-D",
+  "unit": "u3",
+  "title": "第 3 單元第 4 集",
+  "durationSec": 334
+ },
+ {
+  "id": "u03-E",
+  "unit": "u3",
+  "title": "第 3 單元第 5 集",
+  "durationSec": 271
+ },
+ {
+  "id": "u03-F",
+  "unit": "u3",
+  "title": "第 3 單元第 6 集",
+  "durationSec": 295
+ },
+ {
+  "id": "u03-G",
+  "unit": "u3",
+  "title": "第 3 單元第 7 集",
+  "durationSec": 132
+ },
+ {
+  "id": "u03-H",
+  "unit": "u3",
+  "title": "第 3 單元第 8 集",
+  "durationSec": 183
+ },
+ {
+  "id": "u04-A",
+  "unit": "u4",
+  "title": "第 4 單元第 1 集",
+  "durationSec": 244
+ },
+ {
+  "id": "u04-B",
+  "unit": "u4",
+  "title": "第 4 單元第 2 集",
+  "durationSec": 544
+ },
+ {
+  "id": "u04-C",
+  "unit": "u4",
+  "title": "第 4 單元第 3 集",
+  "durationSec": 359
+ },
+ {
+  "id": "u04-D",
+  "unit": "u4",
+  "title": "第 4 單元第 4 集",
+  "durationSec": 390
+ },
+ {
+  "id": "u04-E",
+  "unit": "u4",
+  "title": "第 4 單元第 5 集",
+  "durationSec": 292
+ },
+ {
+  "id": "u04-F",
+  "unit": "u4",
+  "title": "第 4 單元第 6 集",
+  "durationSec": 184
+ },
+ {
+  "id": "u04-G",
+  "unit": "u4",
+  "title": "第 4 單元第 7 集",
+  "durationSec": 182
+ },
+ {
+  "id": "u04-H",
+  "unit": "u4",
+  "title": "第 4 單元第 8 集",
+  "durationSec": 215
+ }
+]

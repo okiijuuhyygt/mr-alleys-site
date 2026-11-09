@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>· · ·</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<!--
+  線上課後台：長相與操作跟官網後台 /admin.html 一樣（登入框、可收合的面板、底部「儲存到網站」）。
+  差別：官網後台存到 GitHub 的 content.json；這裡存到課程 API（Cloudflare D1），按下儲存馬上生效。
+  密碼＝Worker 的 ADMIN_TOKEN（存在本機 ~/.openclaw/secrets/course-admin-token.txt）。
+-->
+<style>
+@font-face { font-family: "Cubic 11"; src: url("/assets/Cubic_11_1.013_R.ttf") format("truetype"); font-display: swap; }
+:root {
+  --paper: #f3ead4; --paper-soft: #ede2c4; --paper-edge: #c9b88c;
+  --ink: #2a1f12; --ink-soft: #5e4a30; --ink-mute: #8a7556;
+  --brass: #b8801f; --brass-light: #d4a13a; --brass-deep: #6e4d10;
+  --avail: #4a8b3a; --danger: #b83a2a;
+  --pixel-en: "Press Start 2P", monospace;
+  --pixel-tc: "Cubic 11", "Noto Sans TC", monospace;
+  --mono: "VT323", monospace;
+  --sans: "Noto Sans TC", "PingFang TC", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.7; min-height: 100vh;
+  background-image: radial-gradient(circle, rgba(42,31,18,0.08) 1px, transparent 1.5px); background-size: 16px 16px;
+  -webkit-text-size-adjust: 100%;
+}
+.hidden { display: none !important; }
+
+.top-bar {
+  position: sticky; top: 0; z-index: 50; background: var(--ink); color: var(--paper);
+  padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  font-family: var(--pixel-en); font-size: 10px; letter-spacing: 0.15em; border-bottom: 4px solid var(--brass);
+}
+.top-bar .left { display: flex; align-items: center; gap: 10px; }
+.top-bar .logo { color: var(--brass-light); font-family: var(--pixel-tc); font-size: 14px; letter-spacing: .1em; }
+.top-bar .badge { background: var(--brass); color: var(--paper); padding: 4px 8px; font-size: 9px; }
+.top-bar .right { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.top-bar a, .top-bar button {
+  color: var(--paper); background: transparent; border: 1px solid var(--paper-edge); padding: 6px 10px;
+  font-family: var(--sans); font-size: 13px; cursor: pointer; text-decoration: none; letter-spacing: .05em;
+}
+.top-bar a:hover, .top-bar button:hover { background: var(--brass); border-color: var(--brass); }
+
+.wrap { max-width: 800px; margin: 0 auto; padding: 28px 16px 140px; }
+h1 { font-family: var(--pixel-tc); font-size: 26px; font-weight: 400; margin: 0 0 8px; text-shadow: 3px 3px 0 var(--brass-light); -webkit-font-smoothing: none; }
+.lead { font-family: var(--mono); font-size: 18px; color: var(--ink-soft); margin: 0 0 22px; }
+.back { display: inline-block; margin: 0 0 10px; color: var(--brass-deep); }
+
+/* 登入框（跟官網後台同一個） */
+#sceneLogin { display: flex; justify-content: center; }
+.dialog-frame {
+  position: relative; width: 100%; max-width: 420px; margin: 56px auto 24px; padding: 40px 24px 30px;
+  background: var(--paper); border: 3px solid var(--ink); box-shadow: 6px 6px 0 var(--paper-edge); text-align: center;
+}
+.dialog-frame__deco { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); width: 32px; height: 32px; background: var(--brass-light); border: 3px solid var(--ink); }
+.dialog-frame__deco::before, .dialog-frame__deco::after { content: ""; position: absolute; background: var(--ink); }
+.dialog-frame__deco::before { top: 28%; left: 36%; width: 28%; height: 18%; }
+.dialog-frame__deco::after { bottom: 22%; left: 42%; width: 16%; height: 28%; }
+.dialog-frame__title { font-family: var(--pixel-tc); font-weight: 400; font-size: 26px; letter-spacing: 6px; margin: 14px 0 6px; line-height: 1.4; -webkit-font-smoothing: none; text-shadow: 3px 3px 0 var(--brass-light); }
+.dialog-frame__sub { font-family: var(--pixel-en); font-size: 9px; color: var(--ink-soft); letter-spacing: 2px; margin: 0 0 26px; }
+.dialog-frame__field { display: block; margin-bottom: 18px; text-align: left; }
+.dialog-frame__label { display: block; margin-bottom: 8px; font-family: var(--pixel-en); font-size: 11px; letter-spacing: .18em; color: var(--brass-deep); }
+.dialog-frame__field input { width: 100%; padding: 12px 14px; font-family: var(--mono); font-size: 20px; letter-spacing: 2px; background: var(--paper-soft); border: 2px solid var(--ink); color: var(--ink); }
+.dialog-frame__field input:focus { outline: none; background: white; box-shadow: 3px 3px 0 var(--brass-deep); }
+.dialog-frame__submit {
+  display: block; width: 100%; font-family: var(--pixel-tc); font-size: 16px; padding: 15px 18px; background: var(--ink); color: var(--paper);
+  border: 2px solid var(--ink); cursor: pointer; letter-spacing: 3px; text-align: center; text-decoration: none; margin-top: 4px;
+}
+.dialog-frame__submit:hover:not(:disabled) { background: var(--brass-deep); box-shadow: 3px 3px 0 var(--brass-light); }
+.dialog-frame__submit:disabled { opacity: .6; cursor: wait; }
+.error { color: var(--danger); font-family: var(--mono); font-size: 18px; margin-top: 8px; }
+
+/* 面板 */
+.panel { background: var(--paper-soft); border: 3px solid var(--ink); margin-bottom: 18px; box-shadow: 4px 4px 0 var(--ink); }
+.panel > summary {
+  list-style: none; padding: 14px 18px; cursor: pointer; font-family: var(--pixel-tc); font-size: 17px; letter-spacing: .08em;
+  background: var(--paper); border-bottom: 2px solid var(--ink); display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  -webkit-font-smoothing: none;
+}
+.panel > summary::-webkit-details-marker { display: none; }
+.panel > summary::after { content: "▼"; font-size: 10px; color: var(--brass); flex: 0 0 auto; }
+.panel[open] > summary::after { content: "▲"; }
+.panel > summary .sum-meta { font-family: var(--sans); font-size: 13px; color: var(--ink-mute); margin-left: auto; white-space: nowrap; -webkit-font-smoothing: auto; }
+.panel .panel-body { padding: 18px; }
+
+.field { margin-bottom: 14px; }
+.field > label, .field > .lab { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; letter-spacing: .05em; color: var(--brass-deep); }
+.field .hint { font-family: var(--mono); font-size: 15px; color: var(--ink-mute); margin-top: 3px; line-height: 1.3; }
+.field input[type=text], .field input[type=url], .field input:not([type]), .field textarea, .field select, select.mini {
+  width: 100%; font-family: var(--sans); font-size: 16px; padding: 9px 11px; border: 2px solid var(--ink); background: white; color: var(--ink); border-radius: 0;
+}
+.field textarea { resize: vertical; min-height: 70px; line-height: 1.6; }
+.field-row { display: grid; grid-template-columns: 1fr 110px; gap: 12px; }
+@media (max-width: 600px) { .field-row { grid-template-columns: 1fr 90px; } }
+
+.check { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px dashed var(--paper-edge); cursor: pointer; }
+.check input { width: 20px; height: 20px; margin-top: 3px; flex: 0 0 auto; accent-color: var(--brass-deep); }
+.check small { display: block; opacity: .65; font-size: 13px; }
+
+/* 一集一張卡（跟官網後台的 service-block 同款） */
+.ep {
+  background: var(--paper); border: 2px dashed var(--ink); padding: 14px; margin-bottom: 12px;
+}
+.ep.unpub { opacity: .62; border-style: dotted; }
+.ep.dirty { border-color: var(--brass); border-style: solid; }
+.ep-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--paper-edge); }
+.ep-head .no { font-family: var(--pixel-tc); font-size: 17px; -webkit-font-smoothing: none; }
+.ep-head .code { font-family: var(--mono); font-size: 15px; color: var(--ink-mute); }
+.tag { display: inline-block; font-size: 12px; padding: 1px 7px; border: 1px solid currentColor; margin-left: 6px; vertical-align: 2px; }
+.tag.free { color: var(--avail); }
+.tag.off { color: var(--ink-mute); }
+.tag.warn { color: var(--danger); }
+.ep-toggles { display: flex; gap: 18px; flex-wrap: wrap; margin: 2px 0 10px; }
+.ep-toggles label { display: flex; align-items: center; gap: 7px; font-size: 15px; cursor: pointer; }
+.ep-toggles input { width: 20px; height: 20px; accent-color: var(--brass-deep); }
+.ep-acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.btn {
+  font-family: var(--sans); font-size: 14px; padding: 8px 12px; min-height: 40px; background: var(--paper-soft); color: var(--ink);
+  border: 2px solid var(--ink); cursor: pointer; box-shadow: 2px 2px 0 var(--ink); text-decoration: none; display: inline-flex; align-items: center;
+}
+.btn:hover:not(:disabled) { background: var(--brass-light); }
+.btn:disabled { opacity: .35; cursor: default; box-shadow: none; }
+.btn.danger { color: var(--danger); border-color: var(--danger); box-shadow: 2px 2px 0 var(--danger); }
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn.add { width: 100%; justify-content: center; border-style: dashed; box-shadow: none; background: transparent; font-size: 15px; }
+select.mini { width: auto; font-size: 14px; padding: 7px 8px; min-height: 40px; }
+.yt-link { font-size: 13px; color: var(--brass-deep); margin-left: 4px; word-break: break-all; }
+.sub-h { font-family: var(--pixel-tc); font-size: 16px; margin: 18px 0 10px; -webkit-font-smoothing: none; }
+
+.quick-ref { background: var(--paper-soft); border: 2px solid var(--brass); padding: 12px 16px; margin-bottom: 18px; font-size: 14px; }
+.quick-ref b { color: var(--brass-deep); }
+.quick-ref a { color: var(--brass-deep); }
+.quick-ref .row { margin: 3px 0; }
+.st-ok { color: var(--avail); font-weight: 700; }
+.st-no { color: var(--danger); font-weight: 700; }
+
+/* 作業 */
+.hw { background: var(--paper); border: 2px solid var(--ink); padding: 14px; margin-bottom: 12px; }
+.hw.reviewed { opacity: .7; border-style: dashed; }
+.hw-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.hw-meta { font-size: 13px; color: var(--ink-mute); margin: 4px 0 8px; }
+.hw-body { white-space: pre-wrap; background: white; border: 1px solid var(--paper-edge); padding: 10px; margin-bottom: 10px; font-size: 15px; }
+.hw-st { font-size: 12px; padding: 1px 8px; border: 1px solid var(--brass-deep); color: var(--brass-deep); }
+.hw-st.reviewed { border-color: var(--avail); color: var(--avail); }
+
+/* 底部儲存列（跟官網後台一樣） */
+.save-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; background: var(--ink); color: var(--paper);
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  border-top: 4px solid var(--brass); z-index: 30;
+}
+.save-bar #saveInfo { font-family: var(--mono); font-size: 18px; line-height: 1.2; }
+.save-bar #btnSave {
+  font-family: var(--pixel-tc); font-size: 15px; letter-spacing: .1em; background: var(--brass); color: var(--paper); flex: 0 0 auto;
+  border: 2px solid var(--brass-light); padding: 11px 18px; cursor: pointer; box-shadow: 3px 3px 0 var(--brass-deep);
+}
+.save-bar #btnSave:hover:not(:disabled) { background: var(--brass-light); color: var(--ink); }
+.save-bar #btnSave:disabled { background: #444; color: #777; cursor: not-allowed; box-shadow: none; }
+#toast { position: fixed; left: 50%; top: 70px; transform: translateX(-50%); z-index: 60; background: var(--ink); color: var(--paper); padding: 10px 16px; border: 2px solid var(--brass); max-width: calc(100% - 32px); font-size: 15px; }
+#toast.err { background: var(--danger); border-color: var(--ink); }
+.loading { font-family: var(--mono); font-size: 18px; color: var(--ink-soft); padding: 40px 0; text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="left">
+    <span class="logo">線上課後台</span>
+    <span class="badge" id="statusBadge">未登入</span>
+  </div>
+  <div class="right">
+    <a href="/course-online/learn/" target="_blank" rel="noopener">看前台 ↗</a>
+    <button type="button" id="btnLogout" class="hidden">登出</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 登入 -->
+  <section id="sceneLogin" class="hidden">
+    <div class="dialog-frame">
+      <span class="dialog-frame__deco" aria-hidden="true"></span>
+      <h1 class="dialog-frame__title">系統登入</h1>
+      <p class="dialog-frame__sub">mr-alleys · online course</p>
+      <form id="loginForm">
+        <label class="dialog-frame__field">
+          <span class="dialog-frame__label">PASSWORD</span>
+          <input type="password" id="tokenInput" autocomplete="current-password" autocapitalize="off" spellcheck="false">
+        </label>
+        <button type="submit" id="btnLogin" class="dialog-frame__submit">▶ 登入</button>
+        <div class="error hidden" id="loginErr"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- 選單 -->
+  <section id="sceneChooser" class="hidden">
+    <div class="dialog-frame" style="max-width:520px;margin:40px auto;padding:24px">
+      <h2 style="margin:0 0 14px">要改哪裡？</h2>
+      <div style="display:grid;gap:12px">
+        <button type="button" class="dialog-frame__submit" data-go="course">🎬 課程內容（單元、集數、開關）</button>
+        <button type="button" class="dialog-frame__submit" data-go="homework">📮 學員作業<span id="hwCount"></span></button>
+        <a href="/admin.html" class="dialog-frame__submit" style="background:var(--paper-soft);color:var(--ink)">🏠 官網後台</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 課程內容 -->
+  <section id="sceneCourse" class="hidden">
+    <a href="#" class="back" data-go="">← 回選單</a>
+    <h1>課程內容編輯</h1>
+    <p class="lead">改完任一欄位 → 按底部「儲存到網站」。按下去馬上生效，重新整理前台就看得到。</p>
+    <div class="quick-ref" id="quickRef"></div>
+    <div id="courseBody"><div class="loading">讀取中……</div></div>
+  </section>
+
+  <!-- 作業 -->
+  <section id="sceneHomework" class="hidden">
+    <a href="#" class="back" data-go="">← 回選單</a>
+    <h1>學員作業</h1>
+    <p class="lead">學員在單元頁交的作業。看完、回信之後按「標記已回覆」。</p>
+    <label class="check" style="border:none"><input type="checkbox" id="onlyNew"><span>只看還沒回覆的</span></label>
+    <div id="hwList"><div class="loading">讀取中……</div></div>
+  </section>
+
+</main>
+
+<div class="save-bar hidden" id="saveBar">
+  <span id="saveInfo">沒有變更</span>
+  <button type="button" id="btnSave" disabled>儲存到網站</button>
+</div>
+<div id="toast" class="hidden" role="status"></div>
+
+<script src="../js/api.js?v=20261109b"></script>
+<script>
+(function () {
+  var C = window.MACourse;
+  var LS_TOKEN = 'ma-course-admin-token-v1';
+  var $ = function (id) { return document.getElementById(id); };
+  var el = C.el;
+  var token = '';
+  try { token = localStorage.getItem(LS_TOKEN) || ''; } catch (e) {}
+
+  var ERR = {
+    bad_youtube_id: 'YouTube 連結看不懂，再檢查一次（要是 youtu.be/… 或 youtube.com/watch?v=… 的連結）。',
+    title_required: '標題不能空白。',
+    unknown_episode: '有一集已經被刪掉了，重新整理再改一次。',
+    ids_mismatch: '集數清單跟網站上的對不起來，重新整理再改一次。',
+    nothing_to_update: '沒有要存的變更。',
+  };
+  function errText(code) { return ERR[code] || C.message(code); }
+
+  var toastTimer;
+  function toast(text, isErr) {
+    var t = $('toast');
+    t.textContent = text;
+    t.className = isErr ? 'err' : '';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.className = 'hidden'; }, isErr ? 7000 : 3000);
+  }
+
+  function api(method, path, body, raw) {
+    return C.admin(method, path, token, body, raw).then(function (r) {
+      if (!raw && r.status === 401) { signOut(); toast('密碼不對或已經換過，請重新登入。', true); throw new Error('unauthorized'); }
+      return r;
+    });
+  }
+
+  // ---------------------------------------------------------------- 場景
+  var SCENES = ['sceneLogin', 'sceneChooser', 'sceneCourse', 'sceneHomework'];
+  function showScene(id) {
+    SCENES.forEach(function (s) { $(s).classList.toggle('hidden', s !== id); });
+    $('saveBar').classList.toggle('hidden', id !== 'sceneCourse');
+    window.scrollTo(0, 0);
+  }
+  function route() {
+    if (!token) {
+      $('statusBadge').textContent = '未登入';
+      $('btnLogout').classList.add('hidden');
+      showScene('sceneLogin');
+      return;
+    }
+    $('statusBadge').textContent = '已登入';
+    $('btnLogout').classList.remove('hidden');
+    var h = location.hash.replace('#', '');
+    if (h === 'course') { showScene('sceneCourse'); loadCourse(); }
+    else if (h === 'homework') { showScene('sceneHomework'); loadHomework(); }
+    else { showScene('sceneChooser'); countNewHomework(); }
+  }
+  function go(name) {
+    if (location.hash.replace('#', '') === name) return route();
+    if (!name) { history.pushState(null, '', location.pathname); return route(); }
+    location.hash = name; // hashchange 會接著 route()
+  }
+  window.addEventListener('hashchange', function () {
+    if (dirty() && !confirm('有改到一半還沒儲存的內容，確定離開？')) return;
+    route();
+  });
+  window.addEventListener('popstate', route);
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-go]');
+    if (!t) return;
+    e.preventDefault();
+    var to = t.getAttribute('data-go');
+    if (!to && dirty() && !confirm('有改到一半還沒儲存的內容，確定離開？')) return;
+    if (!to) { model = null; }
+    go(to);
+  });
+
+  function signOut() {
+    token = '';
+    try { localStorage.removeItem(LS_TOKEN); } catch (e) {}
+    model = null;
+    route();
+  }
+  $('btnLogout').addEventListener('click', function () {
+    if (!confirm('登出會清掉這台裝置記住的密碼。確定？')) return;
+    signOut();
+  });
+
+  $('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var tok = $('tokenInput').value.trim();
+    if (!tok) return;
+    var btn = $('btnLogin');
+    $('loginErr').classList.add('hidden');
+    btn.disabled = true;
+    btn.textContent = '驗證中...';
+    C.admin('GET', '/api/admin/course', tok).then(function (r) {
+      btn.disabled = false;
+      btn.textContent = '▶ 登入';
+      if (!r.ok) {
+        $('loginErr').textContent = r.status === 401 ? '密碼錯誤' : C.message(r.data && r.data.error);
+        $('loginErr').classList.remove('hidden');
+        $('tokenInput').value = '';
+        $('tokenInput').focus();
+        return;
+      }
+      token = tok;
+      try { localStorage.setItem(LS_TOKEN, tok); } catch (e2) {}
+      $('tokenInput').value = '';
+      route();
+    });
+  });
+
+  // ---------------------------------------------------------------- 課程內容
+  var model = null;     // 畫面上正在改的
+  var original = '';    // 從網站讀到的（比對有沒有改）
+  var status = {};
+  var newSeq = 0;
+
+  function snapshot() { return JSON.stringify(model); }
+  function dirty() { return Boolean(model) && snapshot() !== original; }
+  function updateSaveBar() {
+    var d = dirty();
+    $('btnSave').disabled = !d;
+    $('saveInfo').textContent = d ? '有未儲存的變更' : '沒有變更';
+  }
+  window.addEventListener('beforeunload', function (e) { if (dirty()) { e.preventDefault(); e.returnValue = ''; } });
+
+  function loadCourse() {
+    if (model) { render(); return; }
+    $('courseBody').innerHTML = '<div class="loading">讀取中……</div>';
+    api('GET', '/api/admin/course').then(function (r) {
+      if (!r.ok) { $('courseBody').innerHTML = ''; $('courseBody').appendChild(el('div', 'loading', '讀取失敗：' + C.message(r.data && r.data.error))); return; }
+      var d = r.data;
+      status = d.status || {};
+      model = {
+        units: d.units.map(function (u) { return { id: u.id, no: u.no, title: u.title || '', summary: u.summary || '', task: u.task || '', checkpoint: u.checkpoint || '' }; }),
+        episodes: d.episodes.map(function (e) {
+          return { id: e.id, unitId: e.unit_id, title: e.title, youtube: e.youtube_id ? 'https://youtu.be/' + e.youtube_id : '', durationSec: e.duration_sec || 0, published: Boolean(e.published), free: Boolean(e.free) };
+        }),
+        deleted: [],
+        settings: { freeOpen: Boolean(d.settings.freeOpen), showLockedTitles: Boolean(d.settings.showLockedTitles) },
+      };
+      original = snapshot();
+      render();
+    });
+  }
+
+  function renderQuickRef() {
+    var q = $('quickRef');
+    q.innerHTML = '';
+    function row(label, node) { var r = el('div', 'row'); r.appendChild(el('b', null, label + '：')); r.appendChild(node); q.appendChild(r); }
+    var links = el('span');
+    var a1 = el('a', null, '課程目錄'); a1.href = '/course-online/learn/'; a1.target = '_blank';
+    var a2 = el('a', null, '預購頁'); a2.href = '/course-online/'; a2.target = '_blank';
+    links.appendChild(a1); links.appendChild(document.createTextNode('　')); links.appendChild(a2);
+    row('前台', links);
+    row('付款', el('span', status.paymentReady ? 'st-ok' : 'st-no', status.paymentReady ? '綠界已接上（' + (status.ecpayEnv === 'prod' ? '正式' : '測試') + '）' : '綠界還沒接上：按「前往付款」會顯示付款設定中'));
+    row('寄信', el('span', status.emailMode === 'send' ? 'st-ok' : 'st-no', status.emailMode === 'send' ? '會真的寄出' : '還沒接上（只記錄不寄；交作業照樣收得到，在「學員作業」看）'));
+    row('課程', el('span', null, status.courseOpen ? '已開課（買了的人看得到全部）' : '預購中（還沒開課）'));
+  }
+
+  function epsOf(unitId) { return model.episodes.filter(function (e) { return e.unitId === unitId; }); }
+  function minutesText(sec) { var m = Math.round((sec / 60) * 10) / 10; return String(m); }
+
+  function render() {
+    renderQuickRef();
+    var body = $('courseBody');
+    body.innerHTML = '';
+    body.appendChild(settingsPanel());
+    model.units.forEach(function (u, i) { body.appendChild(unitPanel(u, i)); });
+    updateSaveBar();
+  }
+
+  function settingsPanel() {
+    var p = el('details', 'panel');
+    var s = el('summary', null, '網站開關');
+    p.appendChild(s);
+    var b = el('div', 'panel-body');
+    b.appendChild(el('p', 'lead', '勾選＝打開。改完按下面的「儲存到網站」。'));
+    b.appendChild(check('開放試看', '沒買的人可以看標「免費」的集數。現在是預購期間，預設關著。', model.settings.freeOpen, function (v) { model.settings.freeOpen = v; }));
+    b.appendChild(check('鎖住的集數也顯示標題', '關著＝沒買的人只看到「第 N 集＋長度」。', model.settings.showLockedTitles, function (v) { model.settings.showLockedTitles = v; }));
+    p.appendChild(b);
+    return p;
+  }
+
+  function check(label, hint, value, onChange) {
+    var row = el('label', 'check');
+    var box = el('input'); box.type = 'checkbox'; box.checked = value;
+    box.addEventListener('change', function () { onChange(box.checked); updateSaveBar(); });
+    var t = el('span', null, label);
+    if (hint) t.appendChild(el('small', null, hint));
+    row.appendChild(box); row.appendChild(t);
+    return row;
+  }
+
+  function field(label, value, onInput, o) {
+    o = o || {};
+    var f = el('div', 'field');
+    var id = 'f' + Math.random().toString(36).slice(2, 9);
+    var lab = el('label', null, label); lab.htmlFor = id;
+    f.appendChild(lab);
+    var inp = el(o.multiline ? 'textarea' : 'input');
+    inp.id = id;
+    if (!o.multiline) inp.type = o.type || 'text';
+    if (o.inputMode) inp.inputMode = o.inputMode;
+    if (o.placeholder) inp.placeholder = o.placeholder;
+    if (o.max) inp.maxLength = o.max;
+    inp.value = value == null ? '' : value;
+    inp.addEventListener('input', function () { onInput(inp.value, inp); updateSaveBar(); });
+    f.appendChild(inp);
+    if (o.hint) f.appendChild(el('div', 'hint', o.hint));
+    return f;
+  }
+
+  function unitPanel(u, i) {
+    var eps = epsOf(u.id);
+    var p = el('details', 'panel');
+    p.open = openUnits[u.id] === true;
+    p.addEventListener('toggle', function () { openUnits[u.id] = p.open; });
+    var s = el('summary');
+    s.appendChild(el('span', null, '第 ' + u.no + ' 單元・' + (u.title || '（沒有標題）')));
+    var pubSec = eps.filter(function (e) { return e.published; }).reduce(function (a, e) { return a + e.durationSec; }, 0);
+    s.appendChild(el('span', 'sum-meta', eps.filter(function (e) { return e.published; }).length + ' 集・約 ' + Math.round(pubSec / 60) + ' 分'));
+    p.appendChild(s);
+    var b = el('div', 'panel-body');
+    b.appendChild(field('單元標題', u.title, function (v) { u.title = v; s.firstChild.textContent = '第 ' + u.no + ' 單元・' + (v || '（沒有標題）'); }, { max: 40 }));
+    b.appendChild(field('單元介紹', u.summary, function (v) { u.summary = v; }, { multiline: true, max: 300, hint: '課程目錄和預購頁都會顯示。只寫學完的收穫，不寫做法。' }));
+    b.appendChild(field('這個單元的練習', u.task, function (v) { u.task = v; }, { multiline: true, max: 1000, hint: '只有買了的學員看得到。' }));
+    b.appendChild(field('完成檢查點', u.checkpoint, function (v) { u.checkpoint = v; }, { max: 200, hint: '學員做到了會勾這一句。只有學員看得到。' }));
+
+    b.appendChild(el('div', 'sub-h', '集數（照這個順序播）'));
+    eps.forEach(function (e, idx) { b.appendChild(epCard(e, idx, eps)); });
+    var add = el('button', 'btn add', '＋ 新增一集到這個單元（補片）');
+    add.type = 'button';
+    add.addEventListener('click', function () {
+      newSeq += 1;
+      model.episodes.push({ id: null, key: 'new' + newSeq, unitId: u.id, title: '', youtube: '', durationSec: 0, published: true, free: false });
+      render();
+      var cards = document.querySelectorAll('[data-unit-panel="' + u.id + '"] .ep');
+      var last = cards[cards.length - 1];
+      if (last) { last.scrollIntoView({ block: 'center' }); var t = last.querySelector('input'); if (t) t.focus(); }
+    });
+    b.appendChild(add);
+    p.appendChild(b);
+    p.setAttribute('data-unit-panel', u.id);
+    return p;
+  }
+  var openUnits = { u1: true };
+
+  function epCard(e, idx, eps) {
+    var card = el('div', 'ep' + (e.published ? '' : ' unpub') + (e.id ? '' : ' dirty'));
+    var head = el('div', 'ep-head');
+    var no = el('span', 'no', '第 ' + (idx + 1) + ' 集');
+    if (e.free && e.published) no.appendChild(el('span', 'tag free', '免費'));
+    if (!e.published) no.appendChild(el('span', 'tag off', '下架中'));
+    if (!e.youtube) no.appendChild(el('span', 'tag warn', '還沒有影片'));
+    if (!e.id) no.appendChild(el('span', 'tag warn', '新的，還沒存'));
+    head.appendChild(no);
+    head.appendChild(el('span', 'code', e.id || ''));
+    card.appendChild(head);
+
+    card.appendChild(field('標題', e.title, function (v) { e.title = v; }, { max: 120, placeholder: '這一集的標題' }));
+    var row = el('div', 'field-row');
+    var yt = field('YouTube 連結', e.youtube, function (v) { e.youtube = v.trim(); }, { type: 'url', inputMode: 'url', placeholder: 'https://youtu.be/…', hint: '影片設成「不公開」，把連結貼這裡。' });
+    if (e.youtube) {
+      var a = el('a', 'yt-link', '開來看 ↗'); a.href = e.youtube; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      yt.querySelector('label').appendChild(a);
+    }
+    row.appendChild(yt);
+    row.appendChild(field('分鐘', minutesText(e.durationSec), function (v) {
+      var n = parseFloat(String(v).replace(/[^\d.]/g, ''));
+      e.durationSec = isFinite(n) ? Math.max(0, Math.round(n * 60)) : 0;
+    }, { inputMode: 'decimal' }));
+    card.appendChild(row);
+
+    var tg = el('div', 'ep-toggles');
+    tg.appendChild(toggle('上架', e.published, function (v) { e.published = v; render(); }));
+    tg.appendChild(toggle('免費（沒買也能看）', e.free, function (v) { e.free = v; render(); }));
+    card.appendChild(tg);
+
+    var acts = el('div', 'ep-acts');
+    var up = el('button', 'btn', '↑ 往前'); up.type = 'button'; up.disabled = idx === 0;
+    var dn = el('button', 'btn', '↓ 往後'); dn.type = 'button'; dn.disabled = idx === eps.length - 1;
+    up.addEventListener('click', function () { swap(e, eps[idx - 1]); });
+    dn.addEventListener('click', function () { swap(e, eps[idx + 1]); });
+    acts.appendChild(up); acts.appendChild(dn);
+    var mv = el('select', 'mini');
+    mv.setAttribute('aria-label', '移到別的單元');
+    mv.appendChild(new Option('移到…', ''));
+    model.units.forEach(function (u) { if (u.id !== e.unitId) mv.appendChild(new Option('第 ' + u.no + ' 單元', u.id)); });
+    mv.addEventListener('change', function () {
+      if (!mv.value) return;
+      var i = model.episodes.indexOf(e);
+      model.episodes.splice(i, 1);
+      e.unitId = mv.value;
+      model.episodes.push(e);
+      openUnits[mv.value] = true;
+      render();
+    });
+    acts.appendChild(mv);
+    var del = el('button', 'btn danger', '刪除'); del.type = 'button';
+    del.addEventListener('click', function () {
+      if (!confirm('確定刪除「' + (e.title || '這一集') + '」？\n（只刪網站上的這一集，不會動 YouTube。按「儲存到網站」才會真的刪。）')) return;
+      model.episodes.splice(model.episodes.indexOf(e), 1);
+      if (e.id) model.deleted.push(e.id);
+      render();
+    });
+    acts.appendChild(del);
+    card.appendChild(acts);
+    return card;
+  }
+
+  function toggle(label, value, onChange) {
+    var l = el('label');
+    var c = el('input'); c.type = 'checkbox'; c.checked = value;
+    c.addEventListener('change', function () { onChange(c.checked); });
+    l.appendChild(c); l.appendChild(document.createTextNode(label));
+    return l;
+  }
+
+  function swap(a, b) {
+    var i = model.episodes.indexOf(a), j = model.episodes.indexOf(b);
+    model.episodes[i] = b; model.episodes[j] = a;
+    render();
+  }
+
+  $('btnSave').addEventListener('click', function () {
+    if (!dirty()) return;
+    // 先在這裡擋掉最常見的錯，免得整包被退回
+    for (var i = 0; i < model.units.length; i++) if (!model.units[i].title.trim()) return toast('第 ' + model.units[i].no + ' 單元的標題不能空白。', true);
+    for (var k = 0; k < model.episodes.length; k++) if (!model.episodes[k].title.trim()) { openUnits[model.episodes[k].unitId] = true; render(); return toast('有一集沒有標題（標「新的，還沒存」或標題空白的那集）。', true); }
+    var btn = $('btnSave');
+    btn.disabled = true;
+    $('saveInfo').textContent = '儲存中……';
+    var payload = {
+      units: model.units.map(function (u) { return { id: u.id, title: u.title, summary: u.summary, task: u.task, checkpoint: u.checkpoint }; }),
+      episodes: model.episodes.map(function (e) {
+        return { id: e.id || undefined, unitId: e.unitId, title: e.title, youtubeId: e.youtube, durationSec: e.durationSec, published: e.published, free: e.free };
+      }),
+      deleted: model.deleted,
+      settings: model.settings,
+    };
+    api('POST', '/api/admin/save', payload).then(function (r) {
+      if (!r.ok) {
+        updateSaveBar();
+        var d = r.data || {};
+        return toast('沒有存進去：' + errText(d.error) + (d.detail ? '（' + d.detail + '）' : ''), true);
+      }
+      model = null;
+      toast('已儲存，網站已經更新。');
+      loadCourse();
+    }).catch(function () { updateSaveBar(); });
+  });
+
+  // ---------------------------------------------------------------- 作業
+  var unitTitle = {};
+  function taipei(ms) { return new Date(Number(ms) + 8 * 3600 * 1000).toISOString().replace('T', ' ').slice(0, 16); }
+  function sizeText(n) { return n < 1024 * 1024 ? Math.max(1, Math.round(n / 1024)) + ' KB' : (n / 1024 / 1024).toFixed(1) + ' MB'; }
+
+  function countNewHomework() {
+    api('GET', '/api/admin/homework?status=new').then(function (r) {
+      if (r.ok) $('hwCount').textContent = r.data.homework.length ? '（' + r.data.homework.length + ' 份新的）' : '';
+    }).catch(function () {});
+  }
+
+  $('onlyNew').addEventListener('change', loadHomework);
+  function loadHomework() {
+    var box = $('hwList');
+    api('GET', '/api/admin/course').then(function (c) {
+      if (c.ok) c.data.units.forEach(function (u) { unitTitle[u.id] = '第 ' + u.no + ' 單元・' + u.title; });
+      return api('GET', '/api/admin/homework' + ($('onlyNew').checked ? '?status=new' : ''));
+    }).then(function (r) {
+      box.innerHTML = '';
+      if (!r.ok) return box.appendChild(el('div', 'loading', '讀取失敗：' + C.message(r.data && r.data.error)));
+      if (!r.data.homework.length) return box.appendChild(el('div', 'loading', '目前沒有作業。'));
+      r.data.homework.forEach(function (h) { box.appendChild(hwCard(h)); });
+    });
+  }
+
+  function hwCard(h) {
+    var card = el('div', 'hw' + (h.status === 'reviewed' ? ' reviewed' : ''));
+    var head = el('div', 'hw-head');
+    head.appendChild(el('b', null, (h.name ? h.name + '　' : '') + h.email));
+    head.appendChild(el('span', 'hw-st' + (h.status === 'reviewed' ? ' reviewed' : ''), h.status === 'reviewed' ? '已回覆' : '新作業'));
+    card.appendChild(head);
+    var note = h.notified_at ? '通知信已寄' : h.notify_error === 'dry_run' ? '通知信：寄信還沒接上，沒有寄出' : '通知信沒寄出：' + (h.notify_error || '處理中');
+    card.appendChild(el('div', 'hw-meta', (unitTitle[h.unit_id] || h.unit_id) + '｜' + taipei(h.created_at) + '｜' + note));
+    if (h.body) card.appendChild(el('div', 'hw-body', h.body));
+    var acts = el('div', 'ep-acts');
+    if (h.file_name) {
+      var dl = el('button', 'btn', '⬇ 下載附檔：' + h.file_name + '（' + sizeText(h.file_size || 0) + '）');
+      dl.type = 'button';
+      dl.addEventListener('click', function () { download(h, dl); });
+      acts.appendChild(dl);
+    }
+    var st = el('button', 'btn primary', h.status === 'reviewed' ? '改回「新作業」' : '✓ 標記已回覆');
+    st.type = 'button';
+    st.addEventListener('click', function () {
+      st.disabled = true;
+      api('POST', '/api/admin/homework/status', { id: h.id, status: h.status === 'reviewed' ? 'new' : 'reviewed' }).then(function (r) {
+        if (!r.ok) { st.disabled = false; return toast(C.message(r.data && r.data.error), true); }
+        loadHomework();
+      });
+    });
+    acts.appendChild(st);
+    var mail = el('a', 'btn', '✉ 回信給學員');
+    mail.href = 'mailto:' + encodeURIComponent(h.email) + '?subject=' + encodeURIComponent('你的作業回饋：' + (unitTitle[h.unit_id] || ''));
+    acts.appendChild(mail);
+    card.appendChild(acts);
+    return card;
+  }
+
+  function download(h, btn) {
+    btn.disabled = true;
+    api('GET', '/api/admin/homework/file?id=' + encodeURIComponent(h.id), undefined, true).then(function (res) {
+      btn.disabled = false;
+      if (!res || !res.ok) return toast('下載失敗，請再試一次。', true);
+      return res.blob().then(function (b) {
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(b);
+        a.download = h.file_name || 'file';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+      });
+    });
+  }
+
+  route();
+})();
+</script>
+</body>
+</html>
