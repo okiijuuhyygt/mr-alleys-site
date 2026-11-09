@@ -401,3 +401,12 @@ test('正式環境 dry-run：預設擋，EMAIL_DRY_RUN_IN_PROD=true 才放行（
   const r = await sendEmail({ ECPAY_ENV: 'prod', EMAIL_MODE: 'dry-run', EMAIL_DRY_RUN_IN_PROD: 'true' }, msg);
   assert.equal(r.logged, true);
 });
+
+test('後台寄測試信：寄到 HOMEWORK_NOTIFY_EMAIL，要 token', async () => {
+  const h = makeHarness({ HOMEWORK_NOTIFY_EMAIL: 'team@example.com' });
+  assert.equal((await h.call('POST', '/api/admin/test-email')).status, 401);
+  const r = await h.call('POST', '/api/admin/test-email', { headers: ADMIN });
+  assert.equal(r.status, 200);
+  assert.equal(h.mail.at(-1).to, 'team@example.com');
+  assert.match(h.mail.at(-1).subject, /^【測試】/);
+});

@@ -16,6 +16,7 @@
 //
 // 後台（Authorization: Bearer ADMIN_TOKEN；網頁在 /course-online/admin/）：
 //   GET  /api/admin/course                 後台一次讀全部：單元文字、全部集數（含 YouTube ID）、網站開關
+//   POST /api/admin/test-email             寄一封交作業通知格式的測試信到 HOMEWORK_NOTIFY_EMAIL
 //   POST /api/admin/save                   後台「儲存到網站」：{units, episodes(照順序), deleted, settings} 一次存
 //   GET  /api/admin/episodes               全部集數（含 YouTube ID、未發布的）
 //   POST /api/admin/episodes               新增一集 {unitId, title, youtubeId, minutes, published}
@@ -568,6 +569,31 @@ async function adminRoute(request, env, deps, url) {
       request,
       env,
     );
+  }
+  if (pathname === '/api/admin/test-email' && method === 'POST') {
+    // 寄一封「交作業通知」格式的測試信到 HOMEWORK_NOTIFY_EMAIL，確認寄信有接上
+    const to = env.HOMEWORK_NOTIFY_EMAIL || env.OWNER_NOTIFY_EMAIL;
+    if (!to) return json({ error: 'no_notify_email' }, 400, request, env);
+    const now = deps.now();
+    const mail = homeworkNotifyEmail({
+      id: 'hw_test',
+      email: 'test@example.com',
+      name: '（測試信）',
+      unitNo: 1,
+      unitTitle: '寄信測試',
+      body: '這是後台寄的測試信，不是學員交的作業。收到就代表交作業通知會寄到這裡。',
+      fileName: null,
+      fileSize: null,
+      adminUrl: `${env.SITE_ORIGIN}/course-online/admin/#homework`,
+      createdText: taipeiText(now),
+    });
+    try {
+      const r = await deps.sendEmail(env, { to, ...mail, subject: `【測試】${mail.subject}` });
+      return json({ ok: true, to, dryRun: Boolean(r && r.logged) }, 200, request, env);
+    } catch (e) {
+      console.error('[email] test failed', e);
+      return json({ error: 'email_failed', detail: String(e?.message || e).slice(0, 200) }, 502, request, env);
+    }
   }
   if (pathname === '/api/admin/save' && method === 'POST') {
     const body = await readJson(request);

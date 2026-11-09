@@ -101,7 +101,8 @@ curl -H "Authorization: Bearer local-dev-admin-token-0123456789" \
 - 後台密碼＝Worker secret `ADMIN_TOKEN`，本機存在 `~/.openclaw/secrets/course-admin-token.txt`
 - 部署：`cd worker && npx wrangler deploy --env production`；新 migration：`npx wrangler d1 migrations apply mralleys-course --remote --env production`
 - 登入：API 跟網站不同站，Safari 會擋第三方 cookie，所以登入後 token 存在瀏覽器 localStorage，用 `X-MA-Session` header 帶（cookie 照送，有就用）
-- 還沒接上的：綠界正式金鑰（`ECPAY_MERCHANT_ID`／`ECPAY_HASH_KEY`／`ECPAY_HASH_IV` 三個 secret；沒設時「前往付款」顯示付款設定中）、Gmail 寄信授權（現在 `EMAIL_MODE=dry-run`＋`EMAIL_DRY_RUN_IN_PROD=true`，信只印在 `npx wrangler tail --env production`）
+- 寄信：Gmail API，寄件人 mr.alleysmusic@gmail.com（用本機 gmail MCP 那組現成 OAuth，scope gmail.modify；三個 `GMAIL_*` secret）。測試：`curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" https://mralleys-course-api.mralleys.workers.dev/api/admin/test-email` → 寄一封交作業通知格式的測試信到 hao@mralleys.com
+- 還沒接上的：綠界正式金鑰（`ECPAY_MERCHANT_ID`／`ECPAY_HASH_KEY`／`ECPAY_HASH_IV` 三個 secret；沒設時「前往付款」顯示付款設定中）
 
 ## 常用維運指令（正式環境）
 
