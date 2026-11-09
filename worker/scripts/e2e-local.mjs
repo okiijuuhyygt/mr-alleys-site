@@ -60,6 +60,8 @@ async function waitYoutube(page) {
   await page.waitForTimeout(4000);
   return src;
 }
+// 走查紀錄只記「是從哪個網域嵌的」，不把影片 ID 印出來、寫進 e2e-result.json
+const hostOnly = (src) => new URL(src).host + '/embed/…';
 const noHScroll = (page) => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
 
 // 真的 YouTube ID 不寫在 repo 裡（repo 公開）：從本機後台 API 讀
@@ -84,7 +86,7 @@ try {
   await page.click('a.lrn-unit >> nth=0');
   await page.waitForSelector('.lrn-ep');
   const src1 = await waitYoutube(page);
-  must(src1.includes(`youtube-nocookie.com/embed/${ytOf['u01-A']}`), '免費集：第 1 單元第 1 集直接在站內播（YouTube 嵌入）', src1.split('?')[0]);
+  must(src1.includes(`youtube-nocookie.com/embed/${ytOf['u01-A']}`), '免費集：第 1 單元第 1 集直接在站內播（YouTube 嵌入）', hostOnly(src1));
   await shot(page, '02-免費集可看.png');
 
   // 3. 付費集鎖住
@@ -145,7 +147,7 @@ try {
   // 7. 付費集解鎖
   await page.goto(`${SITE}/course-online/learn/unit.html?u=u1&ep=u01-B`);
   const src2 = await waitYoutube(page);
-  must(src2.includes(`youtube-nocookie.com/embed/${ytOf['u01-B']}`), '付款後：第 2 集解鎖、站內播', src2.split('?')[0]);
+  must(src2.includes(`youtube-nocookie.com/embed/${ytOf['u01-B']}`), '付款後：第 2 集解鎖、站內播', hostOnly(src2));
   must((await page.locator('.ep-tag.lock').count()) === 0, '付款後：目錄沒有任何鎖');
   await shot(page, '08-付費集解鎖.png');
 
@@ -192,6 +194,8 @@ try {
   // 10. 後台編輯：改單元標題＋補一集（貼連結、勾免費、移到第一個）→ 儲存 → 前台看到 → 改回來、刪掉
   await adm.click('#sceneHomework [data-go=""]');
   await adm.click('[data-go="course"]');
+  // 單元預設是收起來的：先點開第 1 單元，集數卡才看得到
+  await adm.click('[data-unit-panel="u1"] > summary');
   await adm.waitForSelector('[data-unit-panel="u1"] .ep');
   const u1p = adm.locator('[data-unit-panel="u1"]');
   const oldTitle = await u1p.locator('.panel-body input >> nth=0').inputValue();
@@ -303,6 +307,7 @@ try {
   await shot(madm, 'm07-後台作業.png');
   await madm.click('#sceneHomework [data-go=""]');
   await madm.click('[data-go="course"]');
+  await madm.click('[data-unit-panel="u1"] > summary');
   await madm.waitForSelector('[data-unit-panel="u1"] .ep');
   must(await noHScroll(madm), '手機 390：後台課程內容沒有橫向捲動');
   await shot(madm, 'm08-後台課程內容.png', false);
