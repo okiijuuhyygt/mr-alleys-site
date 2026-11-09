@@ -60,8 +60,9 @@
     if (!r.ok) throw new Error((r.data && r.data.error) || 'server_error');
     render(r.data);
   }).catch(function (e) {
-    $('err').textContent = C.message(e.message);
-    $('err').hidden = false;
+    // 讀不到：把「載入中……」換成原因（原本「載入中……」會一直掛著，錯誤訊息另外出現在頁面最下面）
+    $('units').innerHTML = '';
+    $('units').appendChild(C.el('p', 'crs-msg err', C.message(e.message)));
   });
 
   function renderWho(d) {

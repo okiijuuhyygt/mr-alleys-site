@@ -363,7 +363,13 @@
 
     if (idx > 0) { var p = C.el('a', null, '← 第 ' + units[idx - 1].no + ' 單元'); p.href = 'unit.html?u=' + units[idx - 1].id; $('prevLink').appendChild(p); }
     if (idx < units.length - 1) { var n = C.el('a', null, '第 ' + units[idx + 1].no + ' 單元 →'); n.href = 'unit.html?u=' + units[idx + 1].id; $('nextLink').appendChild(n); }
-  }).catch(function (e) { fail(e.message); });
+  }).catch(function (e) {
+    // 讀不到：標題不要一直掛著「載入中……」，原因直接寫在播放框裡，空的集數與作業區塊先收起來
+    $('unitTitle').textContent = '這個單元暫時讀不到';
+    stopVideo(C.message(e.message));
+    $('epList').parentNode.hidden = true;
+    $('hwBox').hidden = true;
+  });
 })();
 </script>
 </body>
