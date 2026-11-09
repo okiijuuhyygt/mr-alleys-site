@@ -284,6 +284,8 @@ try {
     await guest.waitForSelector(sel);
     await guest.waitForTimeout(sel.includes('iframe') ? 3500 : 500);
     must(await noHScroll(guest), `手機 390：${file.replace(/^m\d+-|\.png$/g, '')} 沒有橫向捲動`);
+    // 頁尾的淺色「系統登入」（耗耗 11/9 21:10 要的後台入口；曾經被後面的提交整頁蓋掉過）
+    must((await guest.locator('footer a[href="/course-online/admin/"]').count()) === 1, `頁尾有「系統登入」：${file.replace(/^m\d+-|\.png$/g, '')}`);
     await shot(guest, file);
   }
   // 學員（沿用桌機登入的 cookie）
