@@ -106,7 +106,7 @@ EMAIL_PROVIDER = "gmail"           # gmail | resend
 EMAIL_FROM = "巷弄故事館 <mr.alleysmusic@gmail.com>"
 GMAIL_SENDER = ""                  # Gmail API 寄件地址；空白＝用 EMAIL_FROM
 EMAIL_REPLY_TO = "hao@mralleys.com"
-# 寄信：Gmail API，用 mr.alleysmusic@gmail.com 現成的 OAuth（耗耗 2026-11-09 21:11 同意；scope 是 gmail.modify，比只寄信大）。
+# 寄信：Gmail API，寄件人 mr.alleysmusic@gmail.com（耗耗 2026-11-09 21:11 同意）。
 # 三個 GMAIL_* 是 secret。測試：後台 POST /api/admin/test-email。
 EMAIL_MODE = "send"
 OWNER_NOTIFY_EMAIL = ""
