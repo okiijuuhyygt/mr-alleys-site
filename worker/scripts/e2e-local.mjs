@@ -336,6 +336,23 @@ try {
   await shot(madm, 'm08-後台課程內容.png', false);
   await madm.locator('[data-unit-panel="u1"] .ep').nth(1).scrollIntoViewIfNeeded();
   await shot(madm, 'm09-後台集數卡.png', false);
+
+  // 13. 帳號在另一台登入之後，原本這台重新整理：要講清楚原因＋給重新登入，不能只默默變回「購買課程」
+  const staleToken = await page.evaluate(() => localStorage.getItem('ma_course_session'));
+  const jsonPost = (path, body) => fetch('http://localhost:8787' + path, { method: 'POST', headers: { Origin: SITE, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const mark3 = logSize();
+  await jsonPost('/api/auth/request-code', { email: EMAIL });
+  const m3 = await waitLog(mark3, /你的登入驗證碼：(\d{6})/);
+  must(Boolean(m3) && (await jsonPost('/api/auth/verify', { email: EMAIL, code: m3[1] })).ok, '（另一台裝置登入同一個帳號）');
+  await page.goto(`${SITE}/course-online/learn/unit.html?u=u1&ep=u01-B`);
+  await page.waitForSelector('#kicked:not([hidden])');
+  must((await page.textContent('#kicked')).includes('另一台裝置') && (await page.locator('#kicked a').getAttribute('href')).startsWith('login.html'), '被另一台登出後重新整理（單元頁）：講原因＋重新登入');
+  await shot(page, '16-被另一台登出後重新整理.png', false);
+  await page.evaluate((t) => localStorage.setItem('ma_course_session', t), staleToken);
+  await page.goto(`${SITE}/course-online/learn/`);
+  await page.waitForSelector('#stale:not([hidden])');
+  must((await page.textContent('#stale')).includes('另一台裝置'), '被另一台登出後重新整理（課程目錄）：講原因＋重新登入');
+  must((await page.evaluate(() => localStorage.getItem('ma_course_session'))) === null, '被登出後，這台存的舊登入有清掉');
 } finally {
   await browser.close();
   writeFileSync(join(OUT, 'e2e-result.json'), JSON.stringify({ at: new Date().toISOString(), buyer: EMAIL, steps }, null, 1));

@@ -195,16 +195,19 @@
   });
 
   // ---------------- 學員：這台被登出就停播（每 60 秒問一次）
-  function kick(reason) {
-    alive = false;
-    C.setToken('');
-    stopVideo('這台裝置已經登出');
+  function showKicked(code) {
     $('kicked').innerHTML = '';
-    $('kicked').appendChild(document.createTextNode(C.message(reason === 'replaced' ? 'replaced' : 'expired_session') + ' '));
+    $('kicked').appendChild(document.createTextNode(C.message(code) + ' '));
     var a = C.el('a', null, '重新登入');
     a.href = loginHref;
     $('kicked').appendChild(a);
     $('kicked').hidden = false;
+  }
+  function kick(reason) {
+    alive = false;
+    C.setToken('');
+    stopVideo('這台裝置已經登出');
+    showKicked(reason === 'replaced' ? 'replaced' : reason === 'no_access' ? 'no_access' : 'expired_session');
   }
   function heartbeat() {
     if (!alive || !member) return;
@@ -279,6 +282,8 @@
     preorderMember = Boolean(d.member) && !d.canWatch;
     preorderNote = '你已經完成預購。課程' + d.launchText + '，上線那天會寄信通知你。';
     C.tutorBar(d);
+    // 這台之前登入過、現在被登出了（例如在另一台裝置登入）：講清楚，不要只默默變回訪客畫面
+    C.staleLogin(d).then(function (code) { if (code) showKicked(code); });
     email = d.email || '';
     var units = d.course.units;
     var idx = units.findIndex(function (u) { return u.id === unitId; });

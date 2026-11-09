@@ -22,6 +22,7 @@
     <p class="crs-tagline" id="coursePromise">寫出你的第一段詞、錄下你哼的第一段旋律</p>
   </header>
 
+  <div class="crs-msg err" id="stale" role="alert" hidden></div>
   <div class="crs-msg" id="notOpen" hidden></div>
 
   <section class="crs-sec" id="progressBox" hidden>
@@ -84,6 +85,16 @@
   function render(d) {
     var course = d.course;
     C.tutorBar(d);
+    // 這台之前登入過、現在被登出了（例如在另一台裝置登入）：講清楚，不要只默默變回訪客畫面
+    C.staleLogin(d).then(function (code) {
+      if (!code) return;
+      var box = $('stale');
+      box.textContent = C.message(code) + ' ';
+      var a = C.el('a', null, '重新登入');
+      a.href = 'login.html';
+      box.appendChild(a);
+      box.hidden = false;
+    });
     renderWho(d);
     $('courseTitle').textContent = course.title;
     $('coursePromise').textContent = course.promise;

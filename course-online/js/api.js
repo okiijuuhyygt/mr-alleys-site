@@ -160,6 +160,23 @@
     });
   }
 
+  /**
+   * 這台存著登入、但 API 說沒登入：多半是帳號在另一台裝置登入後這台被登出了，或登入過期。
+   * 問一次原因、清掉這台存的登入，回要顯示的訊息代碼（replaced／no_access／expired_session）；不是這種情況回 ''。
+   * 沒有這一步的話，被登出的學員重新整理只會看到「購買課程」，不知道發生什麼事。
+   * @param {{member?: boolean}} d /api/course 的回應
+   * @returns {Promise<string>}
+   */
+  function staleLogin(d) {
+    if (!d || d.member || !getToken() || (visitorMode() && adminToken())) return Promise.resolve('');
+    return call('GET', '/api/session').then(function (r) {
+      if (r.status !== 401) return '';
+      setToken('');
+      var reason = r.data && r.data.error;
+      return reason === 'replaced' ? 'replaced' : reason === 'no_access' ? 'no_access' : 'expired_session';
+    });
+  }
+
   function logout() {
     return call('POST', '/api/auth/logout').then(function () { setToken(''); location.replace('login.html'); });
   }
@@ -171,5 +188,5 @@
     return n;
   }
 
-  window.MACourse = { API_BASE: API_BASE, setToken: setToken, tutorBar: tutorBar, call: call, upload: upload, admin: admin, message: message, requireLogin: requireLogin, logout: logout, el: el };
+  window.MACourse = { API_BASE: API_BASE, setToken: setToken, tutorBar: tutorBar, call: call, upload: upload, admin: admin, message: message, requireLogin: requireLogin, staleLogin: staleLogin, logout: logout, el: el };
 })();
