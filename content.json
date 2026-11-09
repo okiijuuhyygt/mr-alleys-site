@@ -640,7 +640,7 @@
     },
     "home.onlineCourse": {
       "label": "首頁（/）：主視覺的「▶ 線上寫歌課・預購中」按鈕（連到線上課預購頁）",
-      "enabled": true
+      "enabled": false
     }
   },
   "_pageBlocksNote": "頁面上可收起的區塊，後台「頁面區塊顯示」勾選＝顯示。enabled=false 或讀不到 content.json 時一律不顯示。新增可收起的區塊：HTML 包一層 <div data-block=\"key\" hidden>…</div>（要在區塊打開時藏起來的東西用 data-block-unless=\"key\"），頁面載入 /js/page-blocks.js，再在這裡加一筆 {label, enabled}。2026-11-07 加。"
