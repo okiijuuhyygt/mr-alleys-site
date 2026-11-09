@@ -196,3 +196,6 @@ textarea.crs-input { min-height: 8em; resize: vertical; line-height: 1.7; }
   .adm-row .flds { grid-template-columns: minmax(0, 1fr) 5em; }
   .adm-row .flds .yt { grid-column: 1 / -1; grid-row: 2; }
 }
+
+/* hidden 屬性一律藏起來（.crs-btn.inline 的 display 會蓋過 .crs-btn[hidden]，全螢幕鈕因此一直露出來） */
+[hidden] { display: none !important; }
