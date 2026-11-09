@@ -195,6 +195,8 @@ async function createOrder(request, env, deps) {
     .bind(`order:ip:${ip}`, now - 3600 * 1000)
     .first();
   if (Number(rl?.n || 0) >= 20) return json({ error: 'rate_limited' }, 429, request, env);
+  // 每一次嘗試都算一次（包含下面回「已經買過」的那種）：不然可以無限次拿別人的 email 來問「這個人買過沒」
+  await db.prepare('INSERT INTO rate_events (bucket, created_at) VALUES (?, ?)').bind(`order:ip:${ip}`, now).run();
 
   const paid = await db.prepare("SELECT 1 AS x FROM orders WHERE email = ? AND status = 'paid' LIMIT 1").bind(email).first();
   if (paid) return json({ error: 'already_paid' }, 409, request, env);
@@ -203,14 +205,12 @@ async function createOrder(request, env, deps) {
   const itemName = cfgOf(env, 'ITEM_NAME');
   const merchantTradeNo = newMerchantTradeNo(now);
 
-  await db.batch([
-    db.prepare('INSERT INTO rate_events (bucket, created_at) VALUES (?, ?)').bind(`order:ip:${ip}`, now),
-    db
-      .prepare(
-        'INSERT INTO orders (merchant_trade_no, email, name, amount, item, status, marketing_opt_in, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      )
-      .bind(merchantTradeNo, email, name || null, amount, itemName, 'pending', optIn, now),
-  ]);
+  await db
+    .prepare(
+      'INSERT INTO orders (merchant_trade_no, email, name, amount, item, status, marketing_opt_in, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+    )
+    .bind(merchantTradeNo, email, name || null, amount, itemName, 'pending', optIn, now)
+    .run();
 
   const form = await buildAioCheckOut({
     merchantId: env.ECPAY_MERCHANT_ID,
