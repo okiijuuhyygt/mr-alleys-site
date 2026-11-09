@@ -336,7 +336,7 @@ select.mini { width: auto; font-size: 14px; padding: 7px 8px; min-height: 40px; 
     var btn = $('btnLogin');
     $('loginErr').classList.add('hidden');
     btn.disabled = true;
-    btn.textContent = '驗證中...';
+    btn.textContent = '驗證中……';
     C.admin('GET', '/api/admin/course', tok).then(function (r) {
       btn.disabled = false;
       btn.textContent = '▶ 登入';
