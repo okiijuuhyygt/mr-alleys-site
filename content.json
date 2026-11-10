@@ -630,6 +630,10 @@
       "label": "一對一頁（/course/）：「實體團班（籌備中）」意願登記卡",
       "enabled": false
     },
+    "course.groupClass": {
+      "label": "一對一頁（/course/）：「初學者寫歌小班（實體）」報名中小卡（連到 /course-group/；12/6 報名截止後關掉）",
+      "enabled": true
+    },
     "course.priceCompare": {
       "label": "一對一頁（/course/）：價格比較細節（兩期一次帶走 NT$9,800，定價 12,800・分開買 10,600）",
       "enabled": false
