@@ -112,6 +112,10 @@ try {
     await route.fulfill({ response: resp });
   });
   await page.click('#payBtn');
+  // 付款前再確認一次 email
+  await page.waitForSelector('#confirmBox:not([hidden])');
+  must((await page.textContent('#confirmEmail')) === EMAIL, '付款前：再顯示一次 email 讓他確認');
+  await page.click('#confirmPay');
   for (let i = 0; i < 50 && !order; i++) await page.waitForTimeout(200);
   order = order || {};
   must(/^MA\d{12}[A-Z0-9]{4}$/.test(order.merchantTradeNo || ''), '建單：拿到訂單編號＋綠界表單', order.merchantTradeNo);

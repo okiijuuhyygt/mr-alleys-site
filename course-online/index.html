@@ -93,6 +93,12 @@
         <label class="crs-check"><input type="checkbox" id="agreeRefund" required><span>我已閱讀下方的<a href="#refund">退款說明</a></span></label>
         <label class="crs-check"><input type="checkbox" id="optIn"><span>願意收到巷弄故事館的新課程與活動消息（隨時可以取消）</span></label>
         <button class="crs-btn" type="submit" id="payBtn">前往付款 →</button>
+        <div class="crs-msg" id="confirmBox" hidden>
+          <p>再看一次你的 email：<b id="confirmEmail" style="overflow-wrap:anywhere;"></b></p>
+          <p class="crs-flow" style="margin-top:4px;">這就是你的帳號，確認信和之後登入的驗證碼都寄到這裡；打錯的話，付了款也收不到。</p>
+          <button class="crs-btn" type="button" id="confirmPay">沒錯，前往付款 →</button>
+          <p class="crs-flow"><button class="crs-linkbtn" type="button" id="confirmEdit">改一下 email</button></p>
+        </div>
         <div class="crs-msg err" id="formMsg" role="alert" hidden></div>
       </form>
       <div class="crs-flow">信用卡付款由綠界科技 ECPay 處理，我們不會經手你的卡號。</div>
@@ -165,6 +171,9 @@
   var btn = document.getElementById('payBtn');
   var msg = document.getElementById('formMsg');
   var btnText = btn.textContent;
+  var confirmBox = document.getElementById('confirmBox');
+  var confirmBtn = document.getElementById('confirmPay');
+  var confirmText = confirmBtn.textContent;
 
   function show(text) { msg.textContent = text; msg.hidden = !text; }
 
@@ -175,6 +184,27 @@
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return show(C.message('invalid_email'));
     if (!document.getElementById('agreeRefund').checked) return show(C.message('must_agree'));
 
+    // 付款前先讓他再看一次 email（這就是帳號；打錯的話付了款也收不到信、登不進來）
+    document.getElementById('confirmEmail').textContent = email;
+    btn.hidden = true;
+    confirmBox.hidden = false;
+    confirmBtn.focus();
+  });
+
+  function resetConfirm() {
+    confirmBox.hidden = true;
+    btn.hidden = false;
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = confirmText;
+  }
+  document.getElementById('confirmEdit').addEventListener('click', function () { resetConfirm(); document.getElementById('email').focus(); });
+  document.getElementById('email').addEventListener('input', function () { if (!confirmBox.hidden) resetConfirm(); });
+
+  confirmBtn.addEventListener('click', function () {
+    show('');
+    var email = document.getElementById('email').value.trim();
+    var btn = confirmBtn;
+    var btnText = confirmText;
     btn.disabled = true;
     btn.textContent = '正在建立訂單……';
     C.call('POST', '/api/orders', {
@@ -219,7 +249,7 @@
   });
 
   // 從綠界按「上一頁」回來時，按鈕要恢復
-  window.addEventListener('pageshow', function () { btn.disabled = false; btn.textContent = btnText; });
+  window.addEventListener('pageshow', function () { btn.disabled = false; btn.textContent = btnText; resetConfirm(); });
 })();
 </script>
 
