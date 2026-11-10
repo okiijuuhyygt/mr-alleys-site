@@ -109,4 +109,4 @@ EMAIL_REPLY_TO = "hao@mralleys.com"
 # 寄信：Gmail API，寄件人 mr.alleysmusic@gmail.com（耗耗 2026-11-09 21:11 同意）。
 # 三個 GMAIL_* 是 secret。測試：後台 POST /api/admin/test-email。
 EMAIL_MODE = "send"
-OWNER_NOTIFY_EMAIL = ""
+OWNER_NOTIFY_EMAIL = "hao@mralleys.com"   # 有人付款成功時寄一封「線上課預購 +1」到這裡（耗耗 2026-11-10 核可）

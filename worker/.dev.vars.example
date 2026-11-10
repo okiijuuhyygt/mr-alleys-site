@@ -13,6 +13,8 @@ ADMIN_TOKEN=local-dev-admin-token-0123456789
 # 本機不寄信（dry-run）：驗證碼、交作業通知都直接印在 wrangler dev 的終端機
 EMAIL_MODE=log
 HOMEWORK_NOTIFY_EMAIL=team@example.com
+# 有人付款成功時通知店主（本機一樣只印不寄）
+OWNER_NOTIFY_EMAIL=owner@example.com
 
 # 本機是 http，cookie 不能用 __Host- 前綴
 COOKIE_INSECURE=true
