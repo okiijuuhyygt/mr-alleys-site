@@ -106,15 +106,33 @@ try {
   await shot(page, '04-購買表單.png', false);
   // 頁面會馬上跳去綠界，先攔下 /api/orders 的回應記住訂單編號
   let order = null;
+  let orderCalls = 0;
   await page.route('**/api/orders', async (route) => {
+    orderCalls += 1;
     const resp = await route.fetch();
     order = await resp.json();
     await route.fulfill({ response: resp });
   });
+  // 付款前再確認一次 email：先故意打錯一個字，看那一步有沒有擋在建單之前、能不能回去改
+  const TYPO = EMAIL.replace('@example.com', '@exmaple.com');
+  await page.fill('#email', TYPO);
   await page.click('#payBtn');
-  // 付款前再確認一次 email
   await page.waitForSelector('#confirmBox:not([hidden])');
-  must((await page.textContent('#confirmEmail')) === EMAIL, '付款前：再顯示一次 email 讓他確認');
+  must((await page.textContent('#confirmEmail')) === TYPO && (await page.locator('#payBtn').isHidden()), '付款前：把填的 email 再顯示一次（這時還沒去綠界）', TYPO);
+  await page.waitForTimeout(600);
+  must(orderCalls === 0 && /course-online\/(#preorder)?$/.test(page.url()), '付款前：還沒按「沒錯」之前不會建單、不會離開頁面');
+  await shot(page, '04b-付款前確認email.png', false);
+  await page.click('#confirmEdit');
+  must((await page.locator('#confirmBox').isHidden()) && (await page.locator('#payBtn').isVisible()), '付款前：按「改一下 email」回到表單');
+  await page.fill('#email', EMAIL);
+  await page.click('#payBtn');
+  await page.waitForSelector('#confirmBox:not([hidden])');
+  must((await page.textContent('#confirmEmail')) === EMAIL, '付款前：改完再按一次，顯示的是改過的 email');
+  await page.fill('#email', EMAIL + 'x');
+  must((await page.locator('#confirmBox').isHidden()) && orderCalls === 0, '付款前：確認畫面出現後又去動 email，確認畫面會收起來重來');
+  await page.fill('#email', EMAIL);
+  await page.click('#payBtn');
+  await page.waitForSelector('#confirmBox:not([hidden])');
   await page.click('#confirmPay');
   for (let i = 0; i < 50 && !order; i++) await page.waitForTimeout(200);
   order = order || {};
@@ -130,8 +148,13 @@ try {
   }
 
   // 5. 模擬綠界 ReturnURL（本機收不到綠界的伺服器通知）
+  must(orderCalls === 1, '建單：整個過程只建了一張訂單');
+  const markPaid = logSize();
   const cb = execFileSync('node', [join(here, 'simulate-callback.mjs'), order.merchantTradeNo], { encoding: 'utf8' }).trim();
   must(cb === '200 1|OK', '模擬付款成功（綠界 ReturnURL，CheckMacValue 用測試金鑰簽）', cb);
+  // 有人付款 → 通知店主（本機是 dry-run，只印不寄；.dev.vars 的 OWNER_NOTIFY_EMAIL）
+  const ownerMail = await waitLog(markPaid, /\[email:dry-run\] provider=(\w+) to=(\S+) subject=(線上課預購 \+1[^\n]*)\n([^\n]*)\n([^\n]*)\n([^\n]*)/);
+  must(Boolean(ownerMail) && ownerMail[4].includes(EMAIL) && ownerMail[5].includes(order.merchantTradeNo) && ownerMail[6].includes('2480'), '付款成功：通知店主的信（dry-run）有買家 email、訂單編號、金額', ownerMail && `→ ${ownerMail[2]}｜${ownerMail[3]}`);
 
   // 6. 登入（驗證碼從 dry-run 寄信紀錄讀）
   await page.goto(`${SITE}/course-online/learn/login.html`);
@@ -182,6 +205,14 @@ try {
   await adm.click('#btnLogin');
   await adm.waitForSelector('#sceneChooser:not(.hidden)');
   await shot(adm, '10a-後台選單.png', false);
+  // 後台選單：下載訂單紀錄／學員名單（CSV）
+  for (const [type, label, re] of [['orders', '訂單紀錄', new RegExp(`${order.merchantTradeNo},${EMAIL.replace(/\./g, '\\.')},測試學員,2480,paid,`)], ['members', '學員名單', new RegExp(`${EMAIL.replace(/\./g, '\\.')},測試學員,active,`)]]) {
+    const [csvDl] = await Promise.all([adm.waitForEvent('download'), adm.click(`[data-export="${type}"]`)]);
+    const csvPath = join(OUT, 'downloaded-' + csvDl.suggestedFilename());
+    await csvDl.saveAs(csvPath);
+    const csv = readFileSync(csvPath, 'utf8');
+    must(csvDl.suggestedFilename() === `mralleys-course-${type}.csv` && re.test(csv), `後台：下載${label}，裡面有剛付款的那一筆`, `${csvDl.suggestedFilename()}（${csv.trim().split(/\r?\n/).length - 1} 筆）`);
+  }
   await adm.click('[data-go="homework"]');
   await adm.waitForSelector('.hw');
   const first = await adm.textContent('.hw');
