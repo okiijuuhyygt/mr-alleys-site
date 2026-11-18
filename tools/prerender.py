@@ -17,6 +17,11 @@
   - 只改 <!-- 或 id="..." 標記的容器內容，不動版面、class、樣式。
   - 純標準庫，不需要安裝任何東西。
   - 渲染邏輯要跟 js/main.js、js/service-page.js 保持一致；那兩支改了渲染方式，這裡也要跟著改。
+  - 2026-11-19：content.json 的 seo 也由這支寫進 HTML（後台「SEO」面板改）：
+      seo.home       → 首頁 <meta name="description">、<meta name="keywords">、結構化資料的 knowsAbout 與 hasOfferCatalog
+      seo.courseHub  → course-hub/index.html 的 <title> 與 <meta name="description">
+      seo.course     → course/index.html 的 <title> 與 <meta name="description">
+    這幾頁的 og:title／og:description（社群分享預覽）本來就跟搜尋用的字不同，這支不動它們。
 """
 import html, json, os, re, sys
 
@@ -71,6 +76,51 @@ def set_head(doc, title=None, desc=None):
     return doc
 
 
+def set_meta_only(doc, title=None, desc=None, keywords=None):
+    """只改 <title>／<meta name="description">／<meta name="keywords">，不碰 og（og 的字刻意跟搜尋用的不同）。"""
+    if title:
+        doc = re.sub(r'<title>.*?</title>', lambda _: f'<title>{esc(title)}</title>', doc, count=1, flags=re.S)
+    if desc:
+        doc = re.sub(r'(<meta name="description" content=")[^"]*(")', lambda m: m.group(1) + attr(desc) + m.group(2), doc, count=1)
+    if keywords:
+        doc = re.sub(r'(<meta name="keywords" content=")[^"]*(")', lambda m: m.group(1) + attr(', '.join(keywords)) + m.group(2), doc, count=1)
+    return doc
+
+
+def _lines(v):
+    if isinstance(v, str):
+        v = v.splitlines()
+    return [str(x).strip() for x in (v or []) if str(x or '').strip()]
+
+
+def set_home_seo(doc, seo):
+    """seo.home → 首頁 head 的 description／keywords／結構化資料（knowsAbout、hasOfferCatalog）。"""
+    if not seo:
+        return doc
+    doc = set_meta_only(doc, desc=(seo.get('description') or '').strip(), keywords=_lines(seo.get('keywords')))
+    ka = _lines(seo.get('knowsAbout'))
+    if ka:
+        doc = re.sub(r'("knowsAbout": )\[[^\]]*\]', lambda m: m.group(1) + json.dumps(ka, ensure_ascii=False).replace('</', '<\\/'), doc, count=1)
+    offers = [o for o in seo.get('offers') or [] if o.get('name') and o.get('url')]
+    if offers:
+        lines = []
+        for o in offers:
+            j = lambda v: json.dumps(str(v or '').strip(), ensure_ascii=False).replace('</', '<\\/')
+            lines.append('          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": %s, "url": %s, "description": %s } }'
+                         % (j(o['name']), j(o['url']), j(o.get('description'))))
+        doc = re.sub(r'("itemListElement": \[\n).*?(\n\s*\])', lambda m: m.group(1) + ',\n'.join(lines) + m.group(2), doc, count=1, flags=re.S)
+    return doc
+
+
+def render_head_only(rel, seo):
+    """寫歌課兩頁：只換 <title> 與 description，內文不動（那兩頁不是 content.json 畫的）。"""
+    path = os.path.join(SITE, rel)
+    doc = open(path, encoding='utf-8').read()
+    doc = set_meta_only(doc, title=(seo.get('title') or '').strip(), desc=(seo.get('description') or '').strip())
+    open(path, 'w', encoding='utf-8').write(doc)
+    return path, visible_chars(doc)
+
+
 def visible_chars(doc):
     s = re.sub(r'(?is)<(script|style|head|noscript)\b[^>]*>.*?</\1>', ' ', doc)
     t = html.unescape(re.sub(r'<[^>]+>', ' ', s))
@@ -104,6 +154,7 @@ def render_home(c):
     path = os.path.join(SITE, 'index.html')
     doc = open(path, encoding='utf-8').read()
     m = c.get('meta', {}); h = c.get('hero', {})
+    doc = set_home_seo(doc, (c.get('seo') or {}).get('home'))
 
     # console bar
     doc = set_inner(doc, 'brandNameEn', esc(m.get('brandNameEn') or 'MR. ALLEYS'))
@@ -248,6 +299,10 @@ def main():
     pages = c.get('servicePages') or []
     for p in pages:
         results.append(render_service(p, pages))
+    seo = c.get('seo') or {}
+    for key, rel in (('courseHub', 'course-hub/index.html'), ('course', 'course/index.html')):
+        if seo.get(key):
+            results.append(render_head_only(rel, seo[key]))
     for path, n in results:
         print(f'{os.path.relpath(path, SITE):32s} HTML 可讀字數 {n}')
 

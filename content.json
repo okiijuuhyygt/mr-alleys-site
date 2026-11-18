@@ -688,5 +688,77 @@
       "enabled": false
     }
   },
-  "_pageBlocksNote": "頁面上可收起的區塊，後台「頁面區塊顯示」勾選＝顯示。enabled=false 或讀不到 content.json 時一律不顯示。新增可收起的區塊：HTML 包一層 <div data-block=\"key\" hidden>…</div>（要在區塊打開時藏起來的東西用 data-block-unless=\"key\"），頁面載入 /js/page-blocks.js，再在這裡加一筆 {label, enabled}。2026-11-07 加。"
+  "_pageBlocksNote": "頁面上可收起的區塊，後台「頁面區塊顯示」勾選＝顯示。enabled=false 或讀不到 content.json 時一律不顯示。新增可收起的區塊：HTML 包一層 <div data-block=\"key\" hidden>…</div>（要在區塊打開時藏起來的東西用 data-block-unless=\"key\"），頁面載入 /js/page-blocks.js，再在這裡加一筆 {label, enabled}。2026-11-07 加。",
+  "_seoNote": "2026-11-19 加：搜尋引擎／AI 看的字（首頁 description、keywords、結構化資料，寫歌課兩頁的 <title> 與 description）。後台「SEO」面板編輯；存檔後 GitHub Actions 跑 tools/prerender.py 寫進 HTML。og／社群分享預覽的字不在這裡。",
+  "seo": {
+    "home": {
+      "description": "巷弄故事館（Mr. Alleys）— 新店七張的音樂製作工作室，外縣市也能合作。從 demo 到母帶：諮詢、修音與人聲修整（AI 人聲也能修）、Suno／AI demo 重新製作、寫歌課、完整製作流程，一條龍陪你做完。",
+      "keywords": [
+        "音樂製作",
+        "編曲",
+        "混音",
+        "母帶",
+        "人聲修整",
+        "修音",
+        "AI 修人聲",
+        "Vocal Editing",
+        "Suno 歌曲優化",
+        "AI 歌曲優化",
+        "學寫歌",
+        "學作詞作曲",
+        "寫歌課",
+        "音樂製作工作室",
+        "Mr. Alleys",
+        "巷弄故事館",
+        "詞曲",
+        "Suno",
+        "demo"
+      ],
+      "knowsAbout": [
+        "客製化歌曲",
+        "音樂製作",
+        "詞曲創作",
+        "編曲",
+        "混音",
+        "人聲修整",
+        "修音",
+        "AI 人聲修整",
+        "Suno 歌曲優化",
+        "AI demo 重新製作",
+        "母帶後期",
+        "寫歌教學",
+        "作詞作曲教學"
+      ],
+      "offers": [
+        {
+          "name": "音樂製作諮詢",
+          "url": "https://mralleys.com/services/consult/",
+          "description": "45–60 分鐘線上諮詢：看你手上的 demo、歌詞或 Suno 做的歌，講清楚現在缺什麼、下一步做哪一關。"
+        },
+        {
+          "name": "修音・人聲修整 Vocal Editing（含 AI 人聲）",
+          "url": "https://mralleys.com/services/vocal/",
+          "description": "音準、拍點、氣口、齒音、口水音一條一條修；Suno 等 AI 生成的人聲也能修。"
+        },
+        {
+          "name": "完整製作流程（含 Suno／AI demo 重新製作）",
+          "url": "https://mralleys.com/services/production/",
+          "description": "詞曲、編曲、錄音、人聲修整、混音、母帶到上架；AI demo 可重新編曲、真人重錄、重新混音成可發行的作品。"
+        },
+        {
+          "name": "寫歌課（學寫歌、學作詞作曲）",
+          "url": "https://mralleys.com/course-hub/",
+          "description": "初學者實體小班、線上影片課、一對一三種上法，從沒寫過歌的初階到拿自己作品往下走的進階。"
+        }
+      ]
+    },
+    "courseHub": {
+      "title": "寫歌課總覽｜學寫歌、學作詞作曲：初學者小班・線上課・一對一｜巷弄故事館 MR. ALLEYS",
+      "description": "想學寫歌、學作詞作曲？巷弄故事館寫歌課有三種上法：初學者實體小班、線上影片課（預購）、一對一。沒寫過歌從初階開始；已經寫過歌、想往進階走，一對一討論的都是你自己的歌。"
+    },
+    "course": {
+      "title": "一對一寫歌課｜學作詞作曲，從初階到進階｜巷弄故事館 MR. ALLEYS",
+      "description": "一對一學寫歌、學作詞作曲：每堂 90 分鐘都在談你自己的歌。兩期八堂，第一期寫出詞與旋律線，第二期完成整首歌、錄成 Demo；已經寫過歌的人，從你卡住的地方開始。"
+    }
+  }
 }

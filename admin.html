@@ -514,7 +514,7 @@ $('loginForm').addEventListener('submit', async (e) => {
 $('chooseHome').addEventListener('click', () => { location.hash = '#home'; showScene('sceneEditor'); initEditor(); });
 $('backToChooser').addEventListener('click', (e) => { e.preventDefault(); location.hash = ''; showScene('sceneChooser'); });
 $('btnLogout').addEventListener('click', () => {
-  if (!confirm('登出會清掉這台瀏覽器的 Token（GitHub 上的不受影響）。確定?')) return;
+  if (!confirm('登出會清掉這台瀏覽器記住的密碼。確定?')) return;
   localStorage.removeItem(LS_TOKEN);
   location.reload();
 });
@@ -875,6 +875,9 @@ function renderEditor() {
       inner += '<details class="panel" style="margin-bottom:10px"><summary>' + esc(p.title)
         + '　<span style="opacity:.6">/services/' + esc(p.slug) + '/</span></summary><div class="panel-body">'
         + '<div class="field"><label>頁面標題</label><input type="text" data-path="servicePages[' + i + '].title"></div>'
+        + '<div class="field"><label>瀏覽器分頁／Google 搜尋結果的藍色標題</label>'
+        + '<input type="text" data-path="servicePages[' + i + '].docTitle">'
+        + '<div class="hint">留空＝用上面的「頁面標題 · 巷弄故事館 MR. ALLEYS」。</div></div>'
         + '<div class="field"><label>Google 搜尋結果那兩行（建議 80–120 字）</label>'
         + '<textarea rows="2" data-path="servicePages[' + i + '].metaDescription"></textarea></div>'
         + '<div class="field"><label>開場白（黃線那塊，不用就留空）</label>'
@@ -896,6 +899,49 @@ function renderEditor() {
           + '</div>';
       });
       inner += '</div></details>';
+    });
+    inner += '</div>';
+    wrap.innerHTML = inner;
+    body.appendChild(wrap);
+  }
+
+  // ── SEO：搜尋引擎／AI 看的字（content.json → seo）2026-11-19 加 ──────────
+  // 首頁 head 的 description／keywords／結構化資料，和寫歌課兩頁的標題與 description，原本寫死在 HTML。
+  // 搬進 content.json 之後，存檔走同一顆「儲存」；GitHub Actions 跑 tools/prerender.py 把字寫進 HTML。
+  if (contentData.seo && typeof contentData.seo === 'object') {
+    const sd = contentData.seo;
+    const wrap = document.createElement('details');
+    wrap.className = 'panel';
+    let inner = '<summary>SEO · 搜尋結果與 AI 看的字</summary><div class="panel-body">'
+      + '<p class="lead" style="margin-bottom:12px">這裡的字畫面上看不到，是 Google 搜尋結果、ChatGPT 這類 AI 讀網站時看的。'
+      + '改完按下面的儲存，網站一到三分鐘後更新。<br>'
+      + '社群分享（LINE、FB 貼連結跳出來的預覽卡）的字不在這裡。</p>';
+    if (sd.home) {
+      inner += '<details class="panel" style="margin-bottom:10px"><summary>首頁　<span style="opacity:.6">/</span></summary><div class="panel-body">'
+        + '<div class="field"><label>Google 搜尋結果那兩行（建議 80–120 字）</label>'
+        + '<textarea rows="3" data-path="seo.home.description"></textarea></div>'
+        + '<div class="field"><label>關鍵字（一行一個）</label>'
+        + '<textarea rows="6" data-path="seo.home.keywords"></textarea></div>'
+        + '<div class="field"><label>工作室會的事（一行一個）</label>'
+        + '<textarea rows="6" data-path="seo.home.knowsAbout"></textarea>'
+        + '<div class="hint">給 Google／AI 看的「這間工作室專長是什麼」。</div></div>';
+      (sd.home.offers || []).forEach((o, i) => {
+        inner += '<div class="service-block" style="padding:12px;margin-top:10px">'
+          + '<div class="hint" style="margin:0 0 8px">服務清單 ' + (i + 1) + '　' + escapeHtml(o.url || '') + '</div>'
+          + '<div class="field"><label>服務名稱</label><input type="text" data-path="seo.home.offers[' + i + '].name"></div>'
+          + '<div class="field"><label>一句話說明</label><textarea rows="2" data-path="seo.home.offers[' + i + '].description"></textarea></div>'
+          + '</div>';
+      });
+      inner += '</div></details>';
+    }
+    [['courseHub', '寫歌課總覽', '/course-hub/'], ['course', '一對一寫歌課', '/course/']].forEach(([key, name, url]) => {
+      if (!sd[key]) return;
+      inner += '<details class="panel" style="margin-bottom:10px"><summary>' + name + '　<span style="opacity:.6">' + url + '</span></summary><div class="panel-body">'
+        + '<div class="field"><label>瀏覽器分頁／Google 搜尋結果的藍色標題</label>'
+        + '<input type="text" data-path="seo.' + key + '.title"></div>'
+        + '<div class="field"><label>Google 搜尋結果那兩行（建議 80–120 字）</label>'
+        + '<textarea rows="3" data-path="seo.' + key + '.description"></textarea></div>'
+        + '</div></details>';
     });
     inner += '</div>';
     wrap.innerHTML = inner;
@@ -1070,7 +1116,8 @@ $('btnSave').addEventListener('click', async () => {
   } catch (e) {
     $('saveInfo').textContent = '✗ ' + e.message;
   } finally {
-    updateSaveBar();
+    // 2026-11-19：原本這裡呼叫 updateSaveBar()，會把「已儲存」立刻蓋成「沒有變更」，看不到存檔成功的提示。只更新按鈕。
+    $('btnSave').disabled = JSON.stringify(contentData) === originalContent;
   }
 });
 

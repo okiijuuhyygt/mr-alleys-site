@@ -25,8 +25,8 @@ label{display:block;font-size:.85rem;color:var(--ink-soft);margin:0 0 6px}
   <h1>專欄後台</h1>
 
   <div class="box" id="loginBox">
-    <label for="tok">通關碼（跟首頁後台同一組）</label>
-    <input type="password" id="tok" autocomplete="off" placeholder="貼上通關碼">
+    <label for="tok">密碼（跟首頁後台同一組）</label>
+    <input type="password" id="tok" autocomplete="off" placeholder="貼上密碼">
     <div class="row"><button class="btn" id="loginBtn">登入</button></div>
     <div class="msg" id="loginMsg"></div>
   </div>
@@ -47,7 +47,7 @@ const API='https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/';
 const $=s=>document.querySelector(s);
 async function verify(tok){ const r=await fetch(API+'blog-src?ref=main',{headers:{Authorization:'Bearer '+tok,Accept:'application/vnd.github+json'}}); return r.ok?await r.json():null; }
 async function showPanel(tok){
-  const items=await verify(tok); if(!items){ localStorage.removeItem(LS); $('#loginMsg').innerHTML='<span class="err">通關碼無效或已過期，請重新輸入。</span>'; return; }
+  const items=await verify(tok); if(!items){ localStorage.removeItem(LS); $('#loginMsg').innerHTML='<span class="err">密碼無效或已過期，請重新輸入。</span>'; return; }
   $('#loginBox').hidden=true; $('#panel').hidden=false;
   const mds=items.filter(x=>x.name.endsWith('.md')).map(x=>x.name.replace(/\.md$/,''));
   // 標題從 feed 拿不到全部，直接列 id，並抓 blog/index.html 的標題對照
@@ -56,7 +56,7 @@ async function showPanel(tok){
   const render=(q='')=>{ $('#list').innerHTML=mds.filter(id=>!q||(titles[id]||id).includes(q)||id.includes(q)).map(id=>`<li><a href="/blog/edit/?id=${id}">${titles[id]||id}<span class="d">${id}</span></a></li>`).join(''); };
   render(); $('#q').addEventListener('input',e=>render(e.target.value.trim()));
 }
-$('#loginBtn').onclick=async()=>{ const t=$('#tok').value.trim(); if(!t) return; $('#loginMsg').textContent='驗證中…'; const ok=await verify(t); if(ok){ localStorage.setItem(LS,t); $('#loginMsg').textContent=''; showPanel(t);} else $('#loginMsg').innerHTML='<span class="err">通關碼無效。</span>'; };
+$('#loginBtn').onclick=async()=>{ const t=$('#tok').value.trim(); if(!t) return; $('#loginMsg').textContent='驗證中…'; const ok=await verify(t); if(ok){ localStorage.setItem(LS,t); $('#loginMsg').textContent=''; showPanel(t);} else $('#loginMsg').innerHTML='<span class="err">密碼無效。</span>'; };
 $('#tok').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#loginBtn').click(); });
 $('#logoutBtn').onclick=()=>{ localStorage.removeItem(LS); location.reload(); };
 const saved=localStorage.getItem(LS); if(saved) showPanel(saved);

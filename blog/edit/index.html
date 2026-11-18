@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/blog.css?v=20260904b">
 <style>
 label{display:block;font-size:.85rem;color:var(--ink-soft);margin:14px 0 6px}
-input[type=text],textarea{width:100%;font-size:16px;line-height:1.7;padding:12px;border:2px solid var(--ink);background:#fff;font-family:"Noto Sans TC","PingFang TC",sans-serif}
+input[type=text],input[type=date],textarea{width:100%;font-size:16px;line-height:1.7;padding:12px;border:2px solid var(--ink);background:#fff;font-family:"Noto Sans TC","PingFang TC",sans-serif}
 textarea{min-height:62vh;resize:vertical}
 .bar{position:sticky;bottom:0;background:var(--paper);padding:10px 0;border-top:2px solid var(--paper-edge);display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
 .msg{font-size:.9rem;color:var(--ink-soft)}
@@ -24,6 +24,12 @@ textarea{min-height:62vh;resize:vertical}
   <div id="editor" hidden>
     <label for="title">標題</label>
     <input type="text" id="title">
+    <label for="kw">關鍵字（一行一個；會顯示在文章最下面的標籤，也給 Google 看）</label>
+    <textarea id="kw" spellcheck="false" style="min-height:8em"></textarea>
+    <label for="upd">更新日期（內容有實質修改才填；會在發布日期旁顯示「某日 更新」）</label>
+    <input type="date" id="upd" style="width:auto">
+    <button type="button" class="btn" id="updToday" style="margin-left:6px">填今天</button>
+    <button type="button" class="btn" id="updClear" style="margin-left:6px">清空</button>
     <label for="body">內文（Markdown：## 小標、- 清單、**粗體**、[文字](/連結)）</label>
     <textarea id="body" spellcheck="false"></textarea>
     <div class="hint">存檔後約一到兩分鐘網站會自己重建，重新整理文章頁就看得到。標點會在重建時自動轉全形。</div>
@@ -52,19 +58,30 @@ async function load(){
   const m=raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/); if(!m){ $('#h').textContent='檔案格式不對'; return; }
   fmLines=m[1].split('\n'); const t=fmLines.find(l=>l.startsWith('title:'));
   $('#title').value=t?t.slice(6).trim():''; $('#body').value=m[2].replace(/\n$/,'');
+  const k=fmLines.find(l=>l.startsWith('keywords:')); $('#kw').value=k?k.slice(9).trim().replace(/^\[|\]$/g,'').split(',').map(x=>x.trim()).filter(Boolean).join('\n'):'';
+  const u=fmLines.find(l=>l.startsWith('updated:')); $('#upd').value=u?u.slice(8).trim():'';
   $('#h').textContent=$('#title').value; $('#view').href='/blog/'+id+'/'; $('#editor').hidden=false;
 }
 $('#save').onclick=async()=>{
   const title=$('#title').value.trim(); const body=$('#body').value.replace(/\s+$/,'')+'\n';
   if(!title||!body.trim()){ $('#msg').innerHTML='<span class="err">標題跟內文不能空。</span>'; return; }
-  const fm=fmLines.map(l=>l.startsWith('title:')?'title: '+title:l).join('\n');
+  const kws=$('#kw').value.split('\n').map(x=>x.replace(/[,，\[\]]/g,' ').trim()).filter(Boolean);
+  const upd=$('#upd').value.trim();
+  if(upd&&!/^\d{4}-\d{2}-\d{2}$/.test(upd)){ $('#msg').innerHTML='<span class="err">更新日期格式不對。</span>'; return; }
+  // 2026-11-19：關鍵字、更新日期也能改（原本只有標題跟內文）。frontmatter 其他行原樣保留。
+  let lines=fmLines.filter(l=>!l.startsWith('updated:')).map(l=>l.startsWith('title:')?'title: '+title:l.startsWith('keywords:')?'keywords: ['+kws.join(', ')+']':l);
+  if(!lines.some(l=>l.startsWith('keywords:'))&&kws.length) lines.push('keywords: ['+kws.join(', ')+']');
+  if(upd){ const di=lines.findIndex(l=>l.startsWith('date:')); lines.splice(di>=0?di+1:lines.length,0,'updated: '+upd); }
+  const fm=lines.join('\n');
   const content='---\n'+fm+'\n---\n'+body;
   $('#msg').textContent='儲存中…'; $('#save').disabled=true;
   const r=await fetch(API+'blog-src/'+id+'.md',{method:'PUT',headers:{Authorization:'Bearer '+tok,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:'blog: 後台編輯 '+id,content:b64enc(content),sha,branch:'main'})});
   $('#save').disabled=false;
-  if(r.ok){ const j=await r.json(); sha=j.content.sha; $('#msg').textContent='已儲存，網站約一到兩分鐘後更新。'; $('#h').textContent=title; }
+  if(r.ok){ const j=await r.json(); sha=j.content.sha; fmLines=fm.split('\n'); $('#msg').textContent='已儲存，網站約一到兩分鐘後更新。'; $('#h').textContent=title; }
   else { const e=await r.text(); $('#msg').innerHTML='<span class="err">儲存失敗（'+r.status+'）。'+(r.status===409?'這篇剛被別處改過，重新整理再改一次。':'')+'</span>'; console.error(e); }
 };
+$('#updToday').onclick=()=>{ const d=new Date(); $('#upd').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+$('#updClear').onclick=()=>{ $('#upd').value=''; };
 load();
 </script>
 </body>
