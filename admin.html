@@ -347,6 +347,24 @@ code.tok-eg { background: var(--paper-soft); padding: 2px 6px; border: 1px solid
 .dialog-frame__hint > summary::-webkit-details-marker { display: none; }
 .dialog-frame__hint > summary::before { content: "▶  "; color: var(--brass); }
 .dialog-frame__hint[open] > summary::before { content: "▼  "; }
+
+/* ============ 訪客數（2026-11-19）============
+   登入後第一個畫面（要改哪裡？）最上面那塊。讀同站的 stats.json，
+   GitHub Actions（visitor-stats）每天早上自動更新；前台不顯示。外框沿用 .panel。 */
+.stats-panel { max-width: 520px; margin: 40px auto 0; text-align: left; }
+.stats-panel summary { cursor: default; }
+.stats-panel summary::after, .stats-panel[open] summary::after { content: none; }
+.stats-panel summary:hover { background: var(--paper); }
+.stats-hint { font-family: var(--mono); font-size: 15px; color: var(--ink-mute); margin: 0 0 14px; line-height: 1.4; }
+.stats-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stats-tile { background: var(--paper); border: 2px solid var(--ink); padding: 12px 14px; }
+.stats-tile b { display: block; font-family: var(--pixel-en); font-size: 20px; font-weight: 400; color: var(--ink); line-height: 1.4; }
+.stats-tile span { font-size: 12px; color: var(--ink-soft); }
+.stats-t { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; }
+.stats-t th { font-family: var(--pixel-en); font-size: 8px; letter-spacing: 0.12em; font-weight: 400; color: var(--brass-deep); text-align: right; padding: 4px 0 8px; }
+.stats-t th:first-child, .stats-t td:first-child { text-align: left; }
+.stats-t td { padding: 6px 0; border-top: 1px dashed var(--paper-edge); text-align: right; font-variant-numeric: tabular-nums; }
+.stats-t td + td, .stats-t th + th { width: 56px; }
 </style>
 </head>
 <body>
@@ -383,7 +401,14 @@ code.tok-eg { background: var(--paper-soft); padding: 2px 6px; border: 1px solid
 
   <!-- ============ EDITOR SCENE ============ -->
   <section id="sceneChooser" class="hidden">
-    <div class="dialog-frame" style="max-width:520px;margin:40px auto;padding:24px">
+    <details class="panel stats-panel" open>
+      <summary onclick="event.preventDefault()">VISITORS · 訪客數</summary>
+      <div class="panel-body">
+        <p class="stats-hint" id="statsHint">讀取中...</p>
+        <div id="statsBody"></div>
+      </div>
+    </details>
+    <div class="dialog-frame" style="max-width:520px;margin:28px auto 40px;padding:24px">
       <h2 style="margin:0 0 14px">要改哪裡？</h2>
       <div style="display:grid;gap:12px">
         <button type="button" id="chooseHome" class="dialog-frame__submit" style="padding:16px;font-size:16px">🏠 主頁編輯</button>
@@ -463,6 +488,25 @@ function setPath(obj, path, value) {
 function escapeHtml(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+
+// =======================================================
+// 訪客數（2026-11-19）：stats.json 由 GitHub Actions（visitor-stats）每天早上寫，這裡只顯示。
+// GoatCounter 只記「訪客」（同一人一段時間內只算一次），沒有瀏覽數，所以畫面只寫訪客。
+// =======================================================
+function loadStats() {
+  const md = d => { const m = String(d || '').match(/\d{4}-(\d{2})-(\d{2})/); return m ? (+m[1]) + '/' + (+m[2]) : ''; };
+  const n = v => Number(v || 0).toLocaleString('zh-TW');
+  fetch('stats.json?t=' + Date.now()).then(r => { if (!r.ok) throw 0; return r.json(); }).then(st => {
+    $('statsHint').textContent = `每天早上自動更新｜更新時間 ${st.updated_at || '—'}（算到 ${md(st.d7 && st.d7.to)} 為止的整天）`;
+    const tile = (w, label) => `<div class="stats-tile"><b>${n(w && w.visitors)}</b><span>${label}訪客（${md(w && w.from)}–${md(w && w.to)}）</span></div>`;
+    const table = (title, rows) => !rows || !rows.length ? '' :
+      `<table class="stats-t"><tr><th>${title}</th><th>7 天</th><th>30 天</th></tr>` +
+      rows.map(r => `<tr><td>${escapeHtml(r.name)}</td><td>${n(r.d7)}</td><td>${n(r.d30)}</td></tr>`).join('') + '</table>';
+    $('statsBody').innerHTML = `<div class="stats-tiles">${tile(st.d7, '近 7 天')}${tile(st.d30, '近 30 天')}</div>`
+      + table('PAGES · 前 5 名頁面', st.top_pages) + table('CLICKS · 前 5 名按鈕', st.top_clicks);
+  }).catch(() => { $('statsHint').textContent = '還沒有資料（每天早上會自動更新一次）'; });
+}
+loadStats();
 
 // =======================================================
 // ROUTER

@@ -1,0 +1,34 @@
+name: visitor-stats
+# 2026-11-19 耗耗：「我好像也需要訪客數，這樣就不用每次問你了」
+# 每天台灣早上 07:07 拉一次 GoatCounter（官網 mralleys.com），寫 stats.json → 後台 admin.html 最上面那塊「訪客數」讀它。
+# 前台不顯示。token 是 repo secret GOATCOUNTER_TOKEN（GoatCounter 唯讀 token），腳本不印它。
+# ⚠️ GitHub 的排程常常晚 10～60 分鐘，不是壞掉。要馬上更新：Actions → visitor-stats → Run workflow。
+# 用 GITHUB_TOKEN push 的 commit 不會觸發其他 workflow（prerender／build-blog 不會被它叫起來；而且 stats.json 也不在它們的 paths 裡）。
+# 刻意不加 [skip ci]：怕連 GitHub Pages 的部署一起跳過，後台就讀不到新的 stats.json。
+on:
+  schedule:
+    - cron: '7 23 * * *'   # UTC 23:07 = 台灣 07:07
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: visitor-stats, cancel-in-progress: false }
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: pull numbers from GoatCounter
+        env:
+          GOATCOUNTER_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
+        run: |
+          python3 .github/scripts/visitor-stats.py alleys > /tmp/stats.json
+          mv /tmp/stats.json stats.json
+      - name: commit stats.json (only if changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats.json
+          if git diff --cached --quiet; then echo "no changes"; exit 0; fi
+          git commit -m "stats: 每日訪客數"
+          git pull --rebase
+          git push
