@@ -40,7 +40,7 @@
     });
 
   function render(page, allPages) {
-    document.title = page.title + ' · 巷弄故事館 MR. ALLEYS';
+    document.title = page.docTitle || (page.title + ' · 巷弄故事館 MR. ALLEYS');
     $('svcTitle').textContent = page.title;
 
     const body = $('svcBody');
@@ -72,6 +72,11 @@
       if (s.note) sec.appendChild(el('p', 'svc-note', s.note));
       body.appendChild(sec);
     });
+
+    // 2026-11-18：HTML 裡已經有 tools/prerender.py 預先寫好的同一份內容（給不跑 JS 的 AI 爬蟲讀），
+    // 這裡先清掉再畫，不然會疊兩份。svcBody 上面已經 innerHTML='' 過了。
+    const othersBox = document.getElementById('svcOthers');
+    if (othersBox) othersBox.innerHTML = '';
 
     // 寫歌課入口（2026-11-05 加）：放在諮詢 CTA 之後、其他服務之前，跟其他服務同一種按鈕，不搶諮詢
     const course = el('nav', 'svc-others');

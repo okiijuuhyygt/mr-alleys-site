@@ -91,8 +91,8 @@
 <body data-scene="loading">
 
 <!-- ============ Marquee top bar (admin toggleable) ============ -->
-<div class="marquee" id="marquee" hidden>
-  <div class="marquee__track" id="marqueeTrack"></div>
+<div class="marquee" id="marquee">
+  <div class="marquee__track" id="marqueeTrack" style="--marquee-speed: 28s;">從 demo 到上架，陪你一起完成  ●  完成製作 102 首 / 製作中 4 位 / 目標 100 位創作者 完成了(⌯˃̶᷄ ⁻̫ ˂̶᷄⌯)  ●  從 demo 到上架，陪你一起完成  ●  完成製作 102 首 / 製作中 4 位 / 目標 100 位創作者 完成了(⌯˃̶᷄ ⁻̫ ˂̶᷄⌯)  ●  </div>
 </div>
 
 <!-- ============ Console top bar ============ -->
@@ -105,7 +105,7 @@
     </span>
   </div>
   <div class="console-bar__right">
-    <span class="console-bar__est" id="brandEst">EST. 2020</span>
+    <span class="console-bar__est" id="brandEst">EST. 2015</span>
     <span class="console-bar__sep">/</span>
     <span class="console-bar__brand" id="brandNameEn">MR. ALLEYS</span>
   </div>
@@ -118,9 +118,9 @@
       <span class="hero__title-zh" id="heroTitleZh">巷弄故事館</span>
       <span class="hero__title-en" id="heroTitleEn">MR. ALLEYS</span>
     </h1>
-    <p class="hero__sub" id="heroSub">從 demo 到母帶，一條龍陪你做完</p>
+    <p class="hero__sub" id="heroSub">從 demo 到上架，陪你一起完成</p>
 
-    <div class="signal-flow" id="signalFlow"></div>
+    <div class="signal-flow" id="signalFlow"><div class="signal-flow__line">▌ INPUT  — 帶 demo / 想法 / 宅錄 來</div><div class="signal-flow__line">▌ QUEST  — 接案 / 修整 / 製作</div><div class="signal-flow__line">▌ OUTPUT — 上架 ready 的成品</div></div>
 
     <div class="hero__cta">
       <a href="#services" class="btn btn--primary" id="heroCtaPrimary">▼ 服務項目</a>
@@ -152,7 +152,10 @@
   </div>
 
   <div class="services" id="servicesGrid">
-    <!-- Cards rendered by JS -->
+    <button type="button" class="service-card reveal" data-service-id="consult" aria-label="諮詢｜服務入口"><div class="service-card__head"><span class="service-card__code">CH-01</span><span class="service-card__status ">可預約</span></div><h3 class="service-card__title">諮詢｜服務入口</h3><p class="service-card__sub">從想法、demo、宅錄，拆解音樂難題</p><div class="service-card__foot"><span class="service-card__price">NT$ 1,000</span><span class="service-card__cta">▶ 預約諮詢</span></div></button>
+    <button type="button" class="service-card reveal" data-service-id="course" aria-label="寫歌課｜實體小班・線上影片課・一對一"><div class="service-card__head"><span class="service-card__code">CH-02</span><span class="service-card__status ">可預約</span></div><h3 class="service-card__title">寫歌課｜實體小班・線上影片課・一對一</h3><p class="service-card__sub">沒寫過歌也可以，三種上法選一種</p><div class="service-card__foot"><span class="service-card__price">依規模報價</span><span class="service-card__cta">詳細說明</span></div></button>
+    <button type="button" class="service-card reveal" data-service-id="vocal-edit" aria-label="人聲修整｜Vocal Editing"><div class="service-card__head"><span class="service-card__code">CH-03</span><span class="service-card__status service-card__status--quote">諮詢報價</span></div><h3 class="service-card__title">人聲修整｜Vocal Editing</h3><p class="service-card__sub">原創、翻唱、影像配唱的人聲音準與拍子</p><div class="service-card__foot"><span class="service-card__price">依規模報價</span><span class="service-card__cta">→ 透過諮詢預約</span></div></button>
+    <button type="button" class="service-card reveal" data-service-id="full-prod" aria-label="完整製作｜詞曲・編曲・錄音・混音・母帶"><div class="service-card__head"><span class="service-card__code">CH-04</span><span class="service-card__status service-card__status--quote">諮詢報價</span></div><h3 class="service-card__title">完整製作｜詞曲・編曲・錄音・混音・母帶</h3><p class="service-card__sub">全製作流程，從 0 到母帶到上架發行</p><div class="service-card__foot"><span class="service-card__price">依規模報價</span><span class="service-card__cta">→ 索取報價</span></div></button>
   </div>
 </section>
 
@@ -161,7 +164,7 @@
   <div class="section__head">
     <span class="section__rule"></span>
     <h2 class="section__title" id="showcaseHeadline">ALREADY ON AIR</h2>
-    <p class="section__sub" id="showcaseSub">— 已完成案件 —</p>
+    <p class="section__sub" id="showcaseSub">— 已上線 —</p>
   </div>
   <div class="showcase">
     <p class="showcase__intro" id="showcaseIntro"></p>
@@ -173,7 +176,7 @@
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"></iframe>
     </div>
-    <a class="btn btn--ghost" id="showcaseCta" target="_blank" rel="noopener"></a>
+    <a class="btn btn--ghost" id="showcaseCta" target="_blank" rel="noopener" href="https://youtube.com/playlist?list=PLMDDlXKidQ7Dxdm9wJfUm9sd73J2X4Zoj&amp;si=yyhqf-Vii5iRsyKU">→ 在 YouTube 開啟完整 playlist</a>
   </div>
 </section>
 
@@ -185,7 +188,11 @@
     <p class="section__sub" id="processSub">— 製作流程 —</p>
   </div>
   <div class="process" id="processSteps">
-    <!-- Steps rendered by JS -->
+    <div class="process-step reveal process-step--clickable" role="button" tabindex="0"><div class="process-step__num">01</div><h4 class="process-step__title">INPUT</h4><p class="process-step__desc">你寄來 demo / 想法 / 宅錄</p><span class="process-step__more">點一下看說明 ▸</span></div>
+    <div class="process-step reveal process-step--clickable" role="button" tabindex="0"><div class="process-step__num">02</div><h4 class="process-step__title">PRE-CHECK</h4><p class="process-step__desc">我評估範圍 + 報價</p><span class="process-step__more">點一下看說明 ▸</span></div>
+    <div class="process-step reveal process-step--clickable" role="button" tabindex="0"><div class="process-step__num">03</div><h4 class="process-step__title">PRODUCTION</h4><p class="process-step__desc">依服務項目進行製作</p><span class="process-step__more">點一下看說明 ▸</span></div>
+    <div class="process-step reveal process-step--clickable" role="button" tabindex="0"><div class="process-step__num">04</div><h4 class="process-step__title">REVIEW</h4><p class="process-step__desc">你聽 → 提修改 → 我修</p><span class="process-step__more">點一下看說明 ▸</span></div>
+    <div class="process-step reveal process-step--clickable" role="button" tabindex="0"><div class="process-step__num">05</div><h4 class="process-step__title">MASTER</h4><p class="process-step__desc">成品交付 / 上架</p><span class="process-step__more">點一下看說明 ▸</span></div>
   </div>
 </section>
 
@@ -197,8 +204,8 @@
     <p class="section__sub" id="aboutSub">— 關於巷弄 —</p>
   </div>
   <div class="about">
-    <div class="about__manifesto" id="aboutManifesto"></div>
-    <div class="about__stats" id="aboutStats"></div>
+    <div class="about__manifesto" id="aboutManifesto"><p>我是製作人Hao，14歲寫了第一首歌，寫了十年才開始做音樂製作，同時是創作歌手也是製作人。</p><p>巷弄故事館與其說是錄音室或工作室，更像是一條把你的想法接到上架的過程。</p><p>我可以協助您：從 demo 給意見、人聲修整、配唱製作、編曲、混音、母帶、發行上架。</p><p>服務的範圍：100 位創作者完成屬於自己的歌。已經完成 78 首。</p></div>
+    <div class="about__stats" id="aboutStats"><div class="stat-card reveal"><span class="stat-card__label">完成製作</span><div><span class="stat-card__value">102</span><span class="stat-card__unit">首</span></div></div><div class="stat-card reveal"><span class="stat-card__label">製作中</span><div><span class="stat-card__value">4</span><span class="stat-card__unit">位</span></div></div><div class="stat-card reveal"><span class="stat-card__label">目標（已達標）</span><div><span class="stat-card__value">100</span><span class="stat-card__unit">位創作者</span></div></div></div>
   </div>
 </section>
 
@@ -210,8 +217,8 @@
     <p class="section__sub" id="contactSub">— 聯絡 —</p>
   </div>
   <div class="contact">
-    <a class="contact__email" id="contactEmail"></a>
-    <ul class="contact__socials" id="contactSocials"></ul>
+    <a class="contact__email" id="contactEmail" href="mailto:mr.alleysmusic@gmail.com">mr.alleysmusic@gmail.com</a>
+    <ul class="contact__socials" id="contactSocials"><li><a href="https://www.threads.com/@andylin19981111" target="_blank" rel="noopener">→ Threads</a></li><li><a href="https://www.instagram.com/mr.alleys" target="_blank" rel="noopener">→ Instagram</a></li><li><a href="/services/consult/" target="_blank" rel="noopener">→ 服務說明</a></li><li><a href="https://streetvoice.com/Alleysmusic/" target="_blank" rel="noopener">→ StreetVoice 街聲</a></li></ul>
   </div>
 </section>
 
@@ -234,8 +241,8 @@
 </style>
 <!-- QR-CARD END -->
 <footer class="site-footer">
-  <p id="footerCredit"></p>
-  <p class="site-footer__build" id="footerBuild"></p>
+  <p id="footerCredit">© 2026 巷弄故事館 · MR. ALLEYS · 音樂製作 / 詞曲 / 全流程</p>
+  <p class="site-footer__build" id="footerBuild">BUILD v0.2 · MVP · GUILD MODE · static site</p>
   <p><a href="admin.html" class="site-footer__admin">系統登入</a></p>
 </footer>
 
