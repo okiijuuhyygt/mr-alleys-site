@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """tools/build-blog.py — 從 blog-src/*.md 產生 blog/（純標準庫，GitHub Actions 每次 blog-src 變動就跑）。
-來源 frontmatter：id／title／series／series_key／date／keywords／tags／assets。內文 markdown。
+來源 frontmatter：id／title／series／series_key／date／updated（選填）／keywords／tags／assets。內文 markdown。
+2026-11-18：加 updated（實質改過內容才填，格式 YYYY-MM-DD）。dateModified 與 sitemap lastmod 用 updated，沒填就用 date；
+  以前 dateModified 每次 build 都寫成當天，等於「只改日期」，Google 明講這樣沒用，改掉。
 標點：中文脈絡半形→全形，網址／數字／code 不碰。文末裸網址→按鈕。文章頁帶「編輯」鈕（只有存了後台 token 的瀏覽器看得到）。
 """
 import re, os, sys, json, glob, html, shutil, datetime
@@ -206,7 +208,7 @@ FOOT = f'<footer class="foot"><a href="/">回首頁</a> ｜ <a href="/blog/">專
 def article_page(p, prev, nxt):
     url = f'{BASE}/blog/{p["id"]}/'
     ld = {"@context":"https://schema.org","@graph":[
-        {"@type":"Article","@id":url+"#article","headline":p['title'],"description":p['desc'],"inLanguage":"zh-Hant","datePublished":p['date'],"dateModified":TODAY,"mainEntityOfPage":{"@type":"WebPage","@id":url},"keywords":", ".join(p['keywords']+p['tags']),"articleSection":p['series'],
+        {"@type":"Article","@id":url+"#article","headline":p['title'],"description":p['desc'],"inLanguage":"zh-Hant","datePublished":p['date'],"dateModified":p['updated'] or p['date'],"mainEntityOfPage":{"@type":"WebPage","@id":url},"keywords":", ".join(p['keywords']+p['tags']),"articleSection":p['series'],
          "author":{"@type":"Person","name":"陳則皞","url":BASE+"/"},"publisher":{"@type":"Organization","name":"巷弄故事館 Mr.Alleys","url":BASE+"/","logo":{"@type":"ImageObject","url":BASE+"/apple-touch-icon.png"}},"image":BASE+"/assets/og-image-v8.jpg"},
         {"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"巷弄故事館","item":BASE+"/"},{"@type":"ListItem","position":2,"name":"音樂製作專欄","item":BASE+"/blog/"},{"@type":"ListItem","position":3,"name":p['title'],"item":url}]}]}
     # 2026-09-06 耗耗定：每篇分享縮圖用痞客邦那張（frontmatter cover:），只進 og:image，不進頁面
@@ -233,7 +235,7 @@ def article_page(p, prev, nxt):
   <a class="back" href="/blog/">← 專欄</a>
   <div class="badge">MR.ALLEYS · 音樂製作專欄 · {html.escape(p['series'])}</div>
   <h1>{html.escape(p['title'])}</h1>
-  <div class="meta"><span>陳則皞</span><span>{p['date']}</span><span><a href="/blog/all/#{p['pref']}">{html.escape(p['series'])}</a></span></div>
+  <div class="meta"><span>陳則皞</span><span>{p['date']}{'（' + p['updated'] + ' 更新）' if p['updated'] else ''}</span><span><a href="/blog/all/#{p['pref']}">{html.escape(p['series'])}</a></span></div>
   <article>
 {p['html']}
 {figs}
@@ -330,7 +332,7 @@ for f in sorted(glob.glob(f'{SITE}/blog-src/*.md')):
     pid = fm['id']; pref = fm.get('series_key') or re.match(r'([a-z]+\d*)', pid).group(1)
     title = normalize_punct(fm['title'])
     desc = normalize_punct(re.sub(r'\s+', ' ', re.sub(r'[#*`>|\-]', '', body.strip().split('\n\n')[0])))[:110]
-    posts.append(dict(id=pid, pref=pref, series=fm.get('series', '其他'), title=title, date=fm.get('date', TODAY), keywords=listval(fm.get('keywords')), tags=listval(fm.get('tags')), assets=listval(fm.get('assets')), cover=(fm.get('cover') or '').strip() or None, desc=desc, html=md_to_html(body.strip())))
+    posts.append(dict(id=pid, pref=pref, series=fm.get('series', '其他'), title=title, date=fm.get('date', TODAY), updated=(fm.get('updated') or '').strip() or None, keywords=listval(fm.get('keywords')), tags=listval(fm.get('tags')), assets=listval(fm.get('assets')), cover=(fm.get('cover') or '').strip() or None, desc=desc, html=md_to_html(body.strip())))
 SERIES = {p['pref']: p['series'] for p in posts}
 ids = [p['id'] for p in posts]; assert len(set(ids)) == len(ids), '重複 id'
 
@@ -347,7 +349,7 @@ open(f'{SITE}/blog/all/index.html', 'w').write(all_page(posts))
 open(f'{SITE}/blog/feed.xml', 'w').write(rss(posts))
 sm = open(f'{SITE}/sitemap.xml').read()
 sm = re.sub(r'\n\s*<!-- blog:start.*?<!-- blog:end -->', '', sm, flags=re.S)
-blk = '\n  <!-- blog:start（tools/build-blog.py 產生，勿手改）-->\n' + f'  <url><loc>{BASE}/blog/</loc><lastmod>{TODAY}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>\n  <url><loc>{BASE}/blog/all/</loc><lastmod>{TODAY}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>\n' + ''.join(f'  <url><loc>{BASE}/blog/{p["id"]}/</loc><lastmod>{p["date"]}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>\n' for p in ordered) + '  <!-- blog:end -->'
+blk = '\n  <!-- blog:start（tools/build-blog.py 產生，勿手改）-->\n' + f'  <url><loc>{BASE}/blog/</loc><lastmod>{TODAY}</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>\n  <url><loc>{BASE}/blog/all/</loc><lastmod>{TODAY}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>\n' + ''.join(f'  <url><loc>{BASE}/blog/{p["id"]}/</loc><lastmod>{p["updated"] or p["date"]}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>\n' for p in ordered) + '  <!-- blog:end -->'
 sm = sm.replace('</urlset>', blk + '\n</urlset>')
 open(f'{SITE}/sitemap.xml', 'w').write(sm)
 print(f'built {len(ordered)} articles')
