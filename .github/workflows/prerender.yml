@@ -1,0 +1,26 @@
+name: prerender
+# 2026-11-18：後台（admin.html）改 content.json 是透過 GitHub API 直接 commit 到 main，
+# 這支跟著把首頁與服務頁的 HTML 預先寫好的文字同步（給不跑 JS 的 AI 爬蟲讀）。說明見 tools/prerender.py。
+on:
+  push:
+    branches: [main]
+    paths: ['content.json', 'tools/prerender.py', 'index.html', 'services/**']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: prerender, cancel-in-progress: true }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: python tools/prerender.py
+      - name: commit prerendered pages
+        run: |
+          git config user.name "prerender-bot"
+          git config user.email "blog-builder@mralleys.com"
+          git add index.html services
+          git diff --cached --quiet && echo "no changes" || git commit -m "prerender: sync HTML from content.json [skip ci]"
+          git push
