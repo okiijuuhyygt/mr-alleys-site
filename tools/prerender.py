@@ -260,9 +260,13 @@ def render_home(c):
 
 
 # ── 服務頁（對照 js/service-page.js）──────────────────────────────
-COURSE_NAV = ('<nav class="svc-others" aria-label="寫歌課"><div class="svc-others-label">寫歌課</div>'
-              '<p class="svc-course-text">沒寫過歌也可以：初學者實體小班、線上影片課、一對一，三種上法。</p>'
-              '<div class="svc-others-row"><a class="svc-other" href="/course-hub/">看寫歌課的三種上法 →</a></div></nav>')
+# 2026-11-24：線上影片課由 pageBlocks["courseOnline.enabled"] 總開關控制（預設關，跟 js/service-page.js 同一邏輯）。
+# 回台中打開總開關後重跑本支，這裡自動換回三種上法。
+COURSE_NAV_ON = ('<nav class="svc-others" aria-label="寫歌課"><div class="svc-others-label">寫歌課</div>'
+                 '<p class="svc-course-text">沒寫過歌也可以：初學者實體小班、線上影片課、一對一，三種上法。</p>'
+                 '<div class="svc-others-row"><a class="svc-other" href="/course-hub/">看寫歌課的三種上法 →</a></div></nav>')
+COURSE_NAV_OFF = COURSE_NAV_ON.replace('、線上影片課', '').replace('三種上法', '兩種上法')
+COURSE_NAV = COURSE_NAV_OFF  # main() 依開關覆寫
 
 
 def render_service(page, all_pages):
@@ -295,6 +299,9 @@ def render_service(page, all_pages):
 
 def main():
     c = json.load(open(os.path.join(SITE, 'content.json'), encoding='utf-8'))
+    global COURSE_NAV
+    _sw = (c.get('pageBlocks') or {}).get('courseOnline.enabled') or {}
+    COURSE_NAV = COURSE_NAV_ON if str(_sw.get('enabled')).lower() == 'true' else COURSE_NAV_OFF
     results = [render_home(c)]
     pages = c.get('servicePages') or []
     for p in pages:

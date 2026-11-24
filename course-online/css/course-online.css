@@ -154,6 +154,8 @@ a.lrn-unit:hover .t b { color: var(--quest); }
 .hub-cards .crs-plan .facts { color: var(--ink-mute); font-size: .86rem; }
 .hub-cards .crs-plan .crs-btn { margin-top: auto; }
 .hub-cards .crs-plan .crs-price { margin-bottom: 8px; }
+/* 2026-11-24：線上影片課卡片收起來（hidden）時，後面那張（一對一）改成整列寬，不要孤單半張 */
+.hub-cards .crs-plan[hidden] + .crs-plan { grid-column: 1 / -1; }
 @media (max-width: 620px) { .hub-cards { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---------- 集數清單、鎖住的集、交作業、後台（MVP） ---------- */

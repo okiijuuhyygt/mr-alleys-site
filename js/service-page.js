@@ -26,6 +26,7 @@
     .then((data) => {
       const page = (data.servicePages || []).find((p) => p.id === PAGE_ID);
       if (!page) throw new Error('找不到 id=' + PAGE_ID + ' 的頁面資料');
+      pageBlocks = data.pageBlocks || {};
       render(page, data.servicePages);
     })
     .catch((err) => {
@@ -39,6 +40,7 @@
       box.appendChild(w);
     });
 
+  let pageBlocks = {};
   function render(page, allPages) {
     document.title = page.docTitle || (page.title + ' · 巷弄故事館 MR. ALLEYS');
     $('svcTitle').textContent = page.title;
@@ -82,9 +84,14 @@
     const course = el('nav', 'svc-others');
     course.setAttribute('aria-label', '寫歌課');
     course.appendChild(el('div', 'svc-others-label', '寫歌課'));
-    course.appendChild(el('p', 'svc-course-text', '沒寫過歌也可以：初學者實體小班、線上影片課、一對一，三種上法。'));
+    // 2026-11-24：線上影片課整個先收起來，由 content.json 的 pageBlocks["courseOnline.enabled"] 控制（總開關，預設關）。
+    // 回台中打開總開關後，這裡自動換回三種上法；tools/prerender.py 的 render_service 同一邏輯，要一起改。
+    const onlineOn = !!(pageBlocks['courseOnline.enabled'] && String(pageBlocks['courseOnline.enabled'].enabled) === 'true');
+    course.appendChild(el('p', 'svc-course-text', onlineOn
+      ? '沒寫過歌也可以：初學者實體小班、線上影片課、一對一，三種上法。'
+      : '沒寫過歌也可以：初學者實體小班、一對一，兩種上法。'));
     const courseRow = el('div', 'svc-others-row');
-    const courseLink = el('a', 'svc-other', '看寫歌課的三種上法 →');
+    const courseLink = el('a', 'svc-other', onlineOn ? '看寫歌課的三種上法 →' : '看寫歌課的兩種上法 →');
     courseLink.href = '/course-hub/';
     courseRow.appendChild(courseLink);
     course.appendChild(courseRow);

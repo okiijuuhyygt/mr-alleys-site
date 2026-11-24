@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/styles.css?v=20261106a">
+<link rel="stylesheet" href="css/styles.css?v=20261124a">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -59,7 +59,7 @@
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "音樂製作諮詢", "url": "https://mralleys.com/services/consult/", "description": "45–60 分鐘線上諮詢：看你手上的 demo、歌詞或 Suno 做的歌，講清楚現在缺什麼、下一步做哪一關。" } },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "修音・人聲修整 Vocal Editing（含 AI 人聲）", "url": "https://mralleys.com/services/vocal/", "description": "音準、拍點、氣口、齒音、口水音一條一條修；Suno 等 AI 生成的人聲也能修。" } },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "完整製作流程（含 Suno／AI demo 重新製作）", "url": "https://mralleys.com/services/production/", "description": "詞曲、編曲、錄音、人聲修整、混音、母帶到上架；AI demo 可重新編曲、真人重錄、重新混音成可發行的作品。" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "寫歌課（學寫歌、學作詞作曲）", "url": "https://mralleys.com/course-hub/", "description": "初學者實體小班、線上影片課、一對一三種上法，從沒寫過歌的初階到拿自己作品往下走的進階。" } }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "寫歌課（學寫歌、學作詞作曲）", "url": "https://mralleys.com/course-hub/", "description": "初學者實體小班、一對一兩種上法，從沒寫過歌的初階到拿自己作品往下走的進階。" } }
         ]
       },
       "founder": { "@id": "https://mralleys.com/#person" },
@@ -136,7 +136,7 @@
     <div class="hero__cta">
       <a href="#services" class="btn btn--primary" id="heroCtaPrimary">▼ 服務項目</a>
       <!-- 線上寫歌課入口（後台「頁面區塊顯示」可開關：home.onlineCourse） -->
-      <a href="/course-online/" class="btn btn--primary" id="heroCtaOnlineCourse" data-block="home.onlineCourse" hidden>▶ 線上寫歌課・預購中</a>
+      <span data-block="courseOnline.enabled" hidden style="display:contents"><a href="/course-online/" class="btn btn--primary" id="heroCtaOnlineCourse" data-block="home.onlineCourse" hidden>▶ 線上寫歌課・預購中</a></span><!-- 2026-11-24：外層看總開關 courseOnline.enabled，內層看 home.onlineCourse，兩個都開才出現 -->
       <a href="#showcase" class="btn btn--ghost" id="heroCtaSecondary">♪ 已上架歌曲</a>
       <a href="/blog/" class="btn btn--ghost" id="heroCtaBlog">▤ 音樂專欄</a>
     </div>
@@ -164,7 +164,7 @@
 
   <div class="services" id="servicesGrid">
     <button type="button" class="service-card reveal" data-service-id="consult" aria-label="諮詢｜服務入口"><div class="service-card__head"><span class="service-card__code">CH-01</span><span class="service-card__status ">可預約</span></div><h3 class="service-card__title">諮詢｜服務入口</h3><p class="service-card__sub">從想法、demo、宅錄，拆解音樂難題</p><div class="service-card__foot"><span class="service-card__price">NT$ 1,000</span><span class="service-card__cta">▶ 預約諮詢</span></div></button>
-    <button type="button" class="service-card reveal" data-service-id="course" aria-label="寫歌課｜實體小班・線上影片課・一對一"><div class="service-card__head"><span class="service-card__code">CH-02</span><span class="service-card__status ">可預約</span></div><h3 class="service-card__title">寫歌課｜實體小班・線上影片課・一對一</h3><p class="service-card__sub">沒寫過歌也可以，三種上法選一種</p><div class="service-card__foot"><span class="service-card__price">依規模報價</span><span class="service-card__cta">詳細說明</span></div></button>
+    <button type="button" class="service-card reveal" data-service-id="course" aria-label="寫歌課｜實體小班・一對一"><div class="service-card__head"><span class="service-card__code">CH-02</span><span class="service-card__status ">可預約</span></div><h3 class="service-card__title">寫歌課｜實體小班・一對一</h3><p class="service-card__sub">沒寫過歌也可以，兩種上法選一種</p><div class="service-card__foot"><span class="service-card__price">依規模報價</span><span class="service-card__cta">詳細說明</span></div></button>
     <button type="button" class="service-card reveal" data-service-id="vocal-edit" aria-label="人聲修整｜Vocal Editing"><div class="service-card__head"><span class="service-card__code">CH-03</span><span class="service-card__status service-card__status--quote">諮詢報價</span></div><h3 class="service-card__title">人聲修整｜Vocal Editing</h3><p class="service-card__sub">原創、翻唱、影像配唱的人聲音準與拍子</p><div class="service-card__foot"><span class="service-card__price">依規模報價</span><span class="service-card__cta">→ 透過諮詢預約</span></div></button>
     <button type="button" class="service-card reveal" data-service-id="full-prod" aria-label="完整製作｜詞曲・編曲・錄音・混音・母帶"><div class="service-card__head"><span class="service-card__code">CH-04</span><span class="service-card__status service-card__status--quote">諮詢報價</span></div><h3 class="service-card__title">完整製作｜詞曲・編曲・錄音・混音・母帶</h3><p class="service-card__sub">全製作流程，從 0 到母帶到上架發行</p><div class="service-card__foot"><span class="service-card__price">依規模報價</span><span class="service-card__cta">→ 索取報價</span></div></button>
   </div>
