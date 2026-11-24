@@ -145,7 +145,7 @@ figure{margin:18px 0}figure img{max-width:100%;border:2px solid var(--paper-edge
 .tags span{display:inline-block;background:var(--paper-soft);border:1px solid var(--paper-edge);padding:1px 8px;margin:0 6px 6px 0}
 .cta{margin:34px 0 0;padding:16px 18px;border:2px solid var(--brass);background:var(--paper-soft)}
 .cta a{color:var(--brass-deep);font-weight:700}
-.btn,.cta .btn{display:inline-block;font-family:"Cubic 11","Press Start 2P",monospace;font-size:.86rem;letter-spacing:.04em;color:var(--ink);background:var(--paper-soft);border:2px solid var(--brass);box-shadow:3px 3px 0 var(--brass-deep);padding:9px 16px;text-decoration:none;margin:6px 0 2px}
+.btn,.cta .btn{display:inline-block;font-family:"Cubic 11","Press Start 2P",monospace;font-size:.86rem;letter-spacing:.04em;color:var(--ink);background:var(--paper-soft);border:0;margin:4px;box-shadow:inset -3px -3px 0 rgba(0,0,0,.16),inset 3px 3px 0 rgba(255,255,255,.45),4px 0 0 var(--brass),-4px 0 0 var(--brass),0 4px 0 var(--brass),0 -4px 0 var(--brass),8px 4px 0 var(--brass-deep),4px 8px 0 var(--brass-deep);padding:9px 16px;text-decoration:none;margin:6px 0 2px}
 .btn:hover{background:var(--brass-light);color:var(--ink);transform:translate(1px,1px);box-shadow:2px 2px 0 var(--brass-deep)}
 .btn-row{margin:0 0 18px}
 .cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
@@ -177,7 +177,7 @@ figure{margin:18px 0}figure img{max-width:100%;border:2px solid var(--paper-edge
 .feed__all{margin:26px 0 0;text-align:center}
 .intro a{color:var(--quest)}
 /* 讀者浮動鈕（耗耗 9/4 定：只放一個動作＝LINE 聊聊；滑下縮起、滑上出現） */
-.chat-fab{position:fixed;right:14px;bottom:16px;z-index:9;font-family:"Cubic 11","Press Start 2P",monospace;font-size:.86rem;letter-spacing:.06em;color:var(--ink);background:var(--paper-soft);border:2px solid var(--brass);box-shadow:3px 3px 0 var(--brass-deep);padding:9px 14px;text-decoration:none;transition:transform .25s,opacity .25s}
+.chat-fab{position:fixed;right:14px;bottom:16px;z-index:9;font-family:"Cubic 11","Press Start 2P",monospace;font-size:.86rem;letter-spacing:.06em;color:var(--ink);background:var(--paper-soft);border:0;margin:4px;box-shadow:inset -3px -3px 0 rgba(0,0,0,.16),inset 3px 3px 0 rgba(255,255,255,.45),4px 0 0 var(--brass),-4px 0 0 var(--brass),0 4px 0 var(--brass),0 -4px 0 var(--brass),8px 4px 0 var(--brass-deep),4px 8px 0 var(--brass-deep);padding:9px 14px;text-decoration:none;transition:transform .25s,opacity .25s}
 .chat-fab:hover{background:var(--brass-light)}
 .chat-fab.hide{transform:translateY(80px);opacity:0;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.chat-fab{transition:none}}

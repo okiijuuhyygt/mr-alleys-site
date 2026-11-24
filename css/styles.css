@@ -554,9 +554,9 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 .service-card__foot {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 10px;
-  padding-top: 14px;
+  padding-top: 18px;
   border-top: 2px dashed var(--paper-edge);
 }
 .service-card__price {
@@ -566,18 +566,35 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
   color: var(--brass-deep);
   letter-spacing: 0.05em;
 }
+/* 2026-11-24 耗耗：價錢拿掉 → 空出來的位置讓給按鈕；按鈕要像按鈕（像素階梯角、立體、字大、按下去會凹） */
+.service-card__price:empty { display: none; }
 .service-card__cta {
-  font-family: var(--pixel-en);
-  font-size: 9px;
-  letter-spacing: 0.15em;
+  flex: 1 1 auto;
+  display: block;
+  text-align: center;
+  font-family: var(--pixel-tc);
+  font-size: 16px;
+  letter-spacing: 0.12em;
   color: var(--ink);
   background: var(--brass-light);
-  padding: 6px 10px;
-  text-transform: uppercase;
+  padding: 13px 16px 12px;
+  margin: 4px 8px 8px 4px;
+  box-shadow:
+    inset -4px -4px 0 rgba(0,0,0,.18),
+    inset 4px 4px 0 rgba(255,255,255,.40),
+    4px 0 0 var(--ink), -4px 0 0 var(--ink), 0 4px 0 var(--ink), 0 -4px 0 var(--ink),
+    8px 4px 0 var(--brass-deep), 4px 8px 0 var(--brass-deep);
+  transition: transform .06s, box-shadow .06s, background .15s;
+  -webkit-font-smoothing: none;
 }
 .service-card:hover .service-card__cta {
-  background: var(--brass);
-  color: var(--paper);
+  background: #e3b24a;
+}
+.service-card:active .service-card__cta {
+  transform: translate(4px, 4px);
+  box-shadow:
+    inset 4px 4px 0 rgba(0,0,0,.18),
+    4px 0 0 var(--ink), -4px 0 0 var(--ink), 0 4px 0 var(--ink), 0 -4px 0 var(--ink);
 }
 
 /* =========================================================
