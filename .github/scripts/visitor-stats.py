@@ -24,6 +24,8 @@ import json
 import os
 import re
 import sys
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -51,8 +53,17 @@ def api(path, params):
         raise SystemExit("缺 GOATCOUNTER_TOKEN")
     url = f"{BASE}{path}?{urllib.parse.urlencode(params)}"
     req = urllib.request.Request(url, headers={"Authorization": "Bearer " + token})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.load(r)
+    # 2026-11-24：GoatCounter 偶爾回 404／429／5xx（11/22、11/23、11/24 各一次，重跑就好）→ 最多試 4 次，間隔 15／30／45 秒
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                return json.load(r)
+        except (urllib.error.HTTPError, urllib.error.URLError) as e:
+            code = getattr(e, "code", None)
+            if attempt == 3 or (code is not None and code not in (404, 429, 500, 502, 503, 504)):
+                raise
+            print(f"GoatCounter {code or type(e).__name__}，{15 * (attempt + 1)} 秒後重試", file=sys.stderr)
+            time.sleep(15 * (attempt + 1))
 
 
 def hits(start_day, end_day):
