@@ -117,7 +117,7 @@ function renderServices() {
       <h3 class="service-card__title">${svc.title}</h3>
       <p class="service-card__sub">${svc.subtitle || ''}</p>
       <div class="service-card__foot">
-        <span class="service-card__price">${svc.priceLabel || '—'}</span>
+        <span class="service-card__price"></span><!-- 2026-11-24 耗耗：首頁卡片不顯示價錢（原 ${svc.priceLabel}），詳情彈窗照舊 -->
         <span class="service-card__cta">${svc.ctaLabel || '→ 詳情'}</span>
       </div>
     `;

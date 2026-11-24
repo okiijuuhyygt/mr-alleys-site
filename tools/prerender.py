@@ -194,7 +194,7 @@ def render_home(c):
             f'<span class="service-card__status {attr(cls)}">{esc(label)}</span></div>'
             f'<h3 class="service-card__title">{esc(svc.get("title"))}</h3>'
             f'<p class="service-card__sub">{esc(svc.get("subtitle") or "")}</p>'
-            f'<div class="service-card__foot"><span class="service-card__price">{esc(svc.get("priceLabel") or "—")}</span>'
+            f'<div class="service-card__foot"><span class="service-card__price"></span>'
             f'<span class="service-card__cta">{esc(svc.get("ctaLabel") or "→ 詳情")}</span></div></button>')
     doc = set_inner(doc, 'servicesGrid', '\n    ' + '\n    '.join(cards) + '\n  ')
 
