@@ -356,7 +356,7 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 .hero__cta .btn { min-width: 200px; }  /* 2026-09-10 耗耗：直排、短一點、不必對齊上面的軸線 */
 /* 2026-11-26 耗耗（手機截圖）：首頁這三顆要跟服務卡片的「預約諮詢」按鈕一樣大 → 字級、內距抄 .service-card__cta。
    只管手機／平板；桌機 ≥1024 仍照下方 9/18 那條（15px），他沒說要動。 */
-.hero__cta .btn { font-size: 16px; padding: 13px 16px 12px; }
+.hero__cta .btn { font-size: 16px; padding: 13px 16px 12px; line-height: 1.5; }  /* line-height 對齊卡片按鈕（normal≈24px）：高度 52→49 */
 
 .btn {
   display: inline-flex;
