@@ -614,3 +614,28 @@ document.addEventListener('click', (e) => {
   const label = (a.id || a.getAttribute('href') || a.textContent || '').trim().slice(0, 40);
   try { window.goatcounter.count({ path: 'cta/' + label, title: (a.textContent || '').trim().slice(0, 60), event: true }); } catch (_) {}
 }, { passive: true });
+
+/* 2026-11-26 耗耗：「YouTube 那顆怎麼沒有像『找製作』那樣有被壓下去的感覺」→ 照抄 artist 站那段：
+   手機點下去會馬上開新頁，:active 來不及顯示 → 按下時加 .is-press，用手指點的延遲 140ms 再開。滑鼠點照舊。只管 #showcaseCta。 */
+(() => {
+  let lastType = 'mouse';
+  document.addEventListener('touchstart', () => {}, {passive: true});
+  document.addEventListener('pointerdown', e => {
+    lastType = e.pointerType || 'mouse';
+    const b = e.target.closest && e.target.closest('#showcaseCta');
+    if (b) b.classList.add('is-press');
+  });
+  const up = () => setTimeout(() => document.querySelectorAll('#showcaseCta.is-press').forEach(x => x.classList.remove('is-press')), 140);
+  document.addEventListener('pointerup', up);
+  document.addEventListener('pointercancel', up);
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('#showcaseCta');
+    if (!a || lastType !== 'touch') return;
+    const href = a.getAttribute('href');
+    if (!href || href === '#') return;
+    e.preventDefault();
+    a.classList.add('is-press');
+    // 延遲後用 window.open 開新分頁會被手機 Safari 當成彈窗擋掉 → 跟 artist 站一樣原分頁跳（手機上 YouTube App 會接走）
+    setTimeout(() => { location.href = href; }, 140);
+  });
+})();
