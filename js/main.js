@@ -236,9 +236,9 @@ function renderShowcase() {
   const cta = $('showcaseCta');
   if (s.playlistUrl) {
     cta.href = s.playlistUrl;
-    // 2026-11-26：按鈕改成圓形 A 鍵，圓裡固定「聽歌單」，後台 playlistLabel 放下面那行小字（開頭的 ▶／→ 拿掉）
-    const sub = $('showcaseCtaSub');
-    if (sub) sub.textContent = (s.playlistLabel || '在 YouTube 聽完整歌單').replace(/^[▶→]\s*/, '');
+    // 2026-11-26 13:57 耗耗：圓鍵只寫「YouTube」，不要小字 → 圓裡的字＝後台 playlistLabel（開頭的 ▶／→ 拿掉）
+    const key = $('showcaseKey');
+    if (key) key.textContent = (s.playlistLabel || 'YouTube').replace(/^[▶→]\s*/, '');
   } else {
     cta.style.display = 'none';
   }

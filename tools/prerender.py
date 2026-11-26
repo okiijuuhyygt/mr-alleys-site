@@ -236,8 +236,8 @@ def render_home(c):
     doc = set_inner(doc, 'showcaseIntro', esc(s.get('intro') or ''))
     if s.get('playlistUrl'):
         doc = set_attr(doc, 'showcaseCta', 'href', s['playlistUrl'])
-        # 2026-11-26：按鈕改圓形 A 鍵（裡面有 abtn__key／abtn__sub 兩個 span），只寫下面那行小字，不能蓋掉整顆按鈕
-        doc = set_inner(doc, 'showcaseCtaSub', esc(re.sub(r'^[▶→]\s*', '', s.get('playlistLabel') or '在 YouTube 聽完整歌單')))
+        # 2026-11-26：按鈕是圓形 A 鍵，只寫圓裡那個字（showcaseKey），不能蓋掉整顆按鈕
+        doc = set_inner(doc, 'showcaseKey', esc(re.sub(r'^[▶→]\s*', '', s.get('playlistLabel') or 'YouTube')))
 
     # contact
     ct = c.get('contact', {})

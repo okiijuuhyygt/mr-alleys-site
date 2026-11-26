@@ -803,8 +803,7 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
              inset -6px -6px 0 rgba(0,0,0,.2),inset 5px 5px 0 rgba(255,255,255,.22);
   transition:transform .08s steps(1),box-shadow .08s steps(1);
 }
-.abtn__key::after{content:'A';position:absolute;right:-20px;bottom:-4px;
-  font-family:var(--pixel-en);font-size:9px;color:var(--ink-mute);letter-spacing:0}
+/* 機身「A」11/26 13:57 耗耗說拿掉 */
 #showcaseCta:hover .abtn__key{transform:translate(-1px,-1px)}
 #showcaseCta:active .abtn__key,#showcaseCta.is-press .abtn__key{
   transform:translate(3px,3px);box-shadow:0 0 0 3px var(--ink),inset 6px 6px 0 rgba(0,0,0,.2)}
