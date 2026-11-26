@@ -804,6 +804,8 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
   transition:transform .08s steps(1),box-shadow .08s steps(1);
 }
 /* 機身「A」11/26 13:57 耗耗說拿掉 */
+/* 14:02 耗耗：字放大＋粗體（像素粗體＝往右 1px 同色陰影） */
+.abtn__key{font-size:22px;padding:6px;letter-spacing:.02em;line-height:1.2;text-shadow:1px 0 0 currentColor}
 #showcaseCta:hover .abtn__key{transform:translate(-1px,-1px)}
 #showcaseCta:active .abtn__key,#showcaseCta.is-press .abtn__key{
   transform:translate(3px,3px);box-shadow:0 0 0 3px var(--ink),inset 6px 6px 0 rgba(0,0,0,.2)}
