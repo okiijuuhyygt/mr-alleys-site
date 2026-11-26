@@ -357,6 +357,42 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 /* 2026-11-26 耗耗（手機截圖）：首頁這三顆要跟服務卡片的「預約諮詢」按鈕一樣大 → 字級、內距抄 .service-card__cta。
    只管手機／平板；桌機 ≥1024 仍照下方 9/18 那條（15px），他沒說要動。 */
 .hero__cta .btn { font-size: 16px; padding: 13px 16px 12px; line-height: 1.5; }  /* line-height 對齊卡片按鈕（normal≈24px）：高度 52→49 */
+/* 2026-11-26 13:2x 耗耗（截圖圈「預約諮詢」）：「不能一樣嗎」→ 三顆的外觀也照抄 .service-card__cta：
+   黑色像素外框（四向 4px）＋右下 brass-deep 階梯陰影＋上亮下暗內陰影、按下去往右下凹。
+   間距與像素差由小悠拿捏（他授權）：陰影只往右下 8px、外框 4px → 按鈕外側留 4/8/8/4 的位子，
+   三顆之間淨留約 16px 紙色，跟卡片內按鈕到虛線的呼吸差不多。主按鈕金色、另兩顆紙色，結構一樣。 */
+.hero__cta { gap: 16px; }
+.hero__cta .btn {
+  margin: 4px 8px 8px 4px;
+  /* 字型不換成 --pixel-tc：Cubic 11 在前會讓「▤」缺字（實測 11/26），中文本來就落到 Cubic 11，看起來一樣 */
+  letter-spacing: 0.12em;
+  text-transform: none;
+  color: var(--ink);
+  transition: transform .06s, box-shadow .06s, background .15s;
+  -webkit-font-smoothing: none;
+  box-shadow:
+    inset -4px -4px 0 rgba(0,0,0,.18),
+    inset 4px 4px 0 rgba(255,255,255,.40),
+    4px 0 0 var(--ink), -4px 0 0 var(--ink), 0 4px 0 var(--ink), 0 -4px 0 var(--ink),
+    8px 4px 0 var(--brass-deep), 4px 8px 0 var(--brass-deep);
+}
+.hero__cta .btn--primary { background: var(--brass-light); }
+.hero__cta .btn--ghost   { background: var(--paper-soft); }
+.hero__cta .btn--primary:hover { background: #e3b24a; transform: none; }
+.hero__cta .btn--ghost:hover   { background: var(--paper); transform: none; }
+.hero__cta .btn:hover {
+  box-shadow:
+    inset -4px -4px 0 rgba(0,0,0,.18),
+    inset 4px 4px 0 rgba(255,255,255,.40),
+    4px 0 0 var(--ink), -4px 0 0 var(--ink), 0 4px 0 var(--ink), 0 -4px 0 var(--ink),
+    8px 4px 0 var(--brass-deep), 4px 8px 0 var(--brass-deep);
+}
+.hero__cta .btn:active {
+  transform: translate(4px, 4px);
+  box-shadow:
+    inset 4px 4px 0 rgba(0,0,0,.18),
+    4px 0 0 var(--ink), -4px 0 0 var(--ink), 0 4px 0 var(--ink), 0 -4px 0 var(--ink);
+}
 
 .btn {
   display: inline-flex;
@@ -1028,6 +1064,7 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 @media (max-width: 600px) {
   .hero__cta { flex-direction: column; align-items: flex-start; }
   .btn { width: 100%; }
+  .hero__cta .btn { width: calc(100% - 12px); }  /* 2026-11-26：外框＋陰影佔左 4／右 8，扣掉才不會溢出 */
   .console-bar { font-size: 6px; padding: 9px 10px; gap: 6px; }
   .console-bar__left, .console-bar__right { gap: 6px; }
   .console-bar__ver { display: none; }
