@@ -784,39 +784,32 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
   border: none;
 }
 
-/* 2026-11-26 13:39 耗耗：「設成圓形的紅色按鈕？每一個按鈕都這個形狀也不是那麼好看」→ 小悠回：同意（這顆是跳去 YouTube，
-   長得不一樣反而清楚），但不做正圓（塞不下字）→ 像素階梯圓角的紅色膠囊＋白字＋白 ▶。
-   外框與陰影用外層 .yt-wrap 的 drop-shadow 畫（clip-path 會把自己的 box-shadow 切掉），形狀用 clip-path 階梯折線（r=20、格 4px）。 */
-.yt-wrap {
-  display: inline-block;
-  margin: 4px 8px 8px 4px;
-  filter:
-    drop-shadow(4px 0 0 var(--ink)) drop-shadow(-4px 0 0 var(--ink))
-    drop-shadow(0 4px 0 var(--ink)) drop-shadow(0 -4px 0 var(--ink))
-    drop-shadow(4px 4px 0 #6b1712);
-  transition: transform .06s;
+/* 2026-11-26 13:45 耗耗（截 artist 站「找我做歌」）：「不能改成這個嗎？」→ YouTube 歌單鍵照抄 haohao.mralleys.com 的 .abtn：
+   遊戲機 A 鍵的圓鍵（磚紅 #b83a2a、厚墨邊、硬邊位移陰影、按下去凹），圓鍵裡放短字、下面一行小字（後台 playlistLabel）。
+   （13:39 那版紅色像素膠囊他說不好看，已拿掉。） */
+#showcaseCta{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  width:max-content;max-width:100%;margin:8px auto 0;padding:0;
+  text-decoration:none;color:var(--ink);background:none;box-shadow:none;text-transform:none;
+  -webkit-tap-highlight-color:transparent;
 }
-.yt-wrap:active { transform: translate(4px, 4px); filter:
-    drop-shadow(4px 0 0 var(--ink)) drop-shadow(-4px 0 0 var(--ink))
-    drop-shadow(0 4px 0 var(--ink)) drop-shadow(0 -4px 0 var(--ink)); }
-#showcaseCta {
-  display: block;
-  margin: 0;
-  padding: 13px 28px 12px;
-  font-family: var(--pixel-tc);
-  font-size: 16px;
-  line-height: 1.5;
-  letter-spacing: 0.1em;
-  text-transform: none;
-  color: #fff;
-  background: #d0352b;
-  -webkit-font-smoothing: none;
-  clip-path: polygon(0px 12px, 4px 12px, 4px 4px, 12px 4px, 12px 0px, 20px 0px, calc(100% - 20px) 0px, calc(100% - 12px) 0px, calc(100% - 12px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 4px) calc(100% - 12px), calc(100% - 4px) calc(100% - 4px), calc(100% - 12px) calc(100% - 4px), calc(100% - 12px) 100%, calc(100% - 20px) 100%, 20px 100%, 12px 100%, 12px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 12px), 0px calc(100% - 12px));
-  box-shadow: inset 0 -4px 0 rgba(0,0,0,.22), inset 0 4px 0 rgba(255,255,255,.22);
-  transform: none;
+#showcaseCta:hover,#showcaseCta:active{background:none;box-shadow:none;transform:none}
+.abtn__key{
+  position:relative;width:112px;height:112px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;
+  font-family:var(--pixel-tc);font-size:17px;line-height:1.35;letter-spacing:.06em;
+  color:var(--paper);background:#b83a2a;-webkit-font-smoothing:none;
+  box-shadow:var(--px) var(--px) 0 var(--ink),0 0 0 3px var(--ink),
+             inset -6px -6px 0 rgba(0,0,0,.2),inset 5px 5px 0 rgba(255,255,255,.22);
+  transition:transform .08s steps(1),box-shadow .08s steps(1);
 }
-#showcaseCta:hover { background: #e0443a; transform: none; box-shadow: inset 0 -4px 0 rgba(0,0,0,.22), inset 0 4px 0 rgba(255,255,255,.22); }
-#showcaseCta:active { transform: none; box-shadow: inset 0 4px 0 rgba(0,0,0,.22); }
+.abtn__key::after{content:'A';position:absolute;right:-20px;bottom:-4px;
+  font-family:var(--pixel-en);font-size:9px;color:var(--ink-mute);letter-spacing:0}
+#showcaseCta:hover .abtn__key{transform:translate(-1px,-1px)}
+#showcaseCta:active .abtn__key,#showcaseCta.is-press .abtn__key{
+  transform:translate(3px,3px);box-shadow:0 0 0 3px var(--ink),inset 6px 6px 0 rgba(0,0,0,.2)}
+.abtn__sub{font-family:var(--pixel-tc);font-size:13px;color:var(--ink-soft);letter-spacing:.06em;text-align:center}
+.abtn__sub:empty{display:none}
 
 /* =========================================================
    Contact (傳訊)
@@ -1098,8 +1091,7 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 @media (max-width: 600px) {
   .hero__cta { flex-direction: column; align-items: flex-start; }
   .btn { width: 100%; }
-  .hero__cta .btn { width: calc(100% - 12px); }
-  .yt-wrap { width: calc(100% - 12px); }  /* 2026-11-26：外框＋陰影左 4／右 8 */  /* 2026-11-26：外框＋陰影佔左 4／右 8，扣掉才不會溢出 */
+  .hero__cta .btn { width: calc(100% - 12px); }  /* 2026-11-26：外框＋陰影佔左 4／右 8，扣掉才不會溢出 */
   .console-bar { font-size: 6px; padding: 9px 10px; gap: 6px; }
   .console-bar__left, .console-bar__right { gap: 6px; }
   .console-bar__ver { display: none; }
