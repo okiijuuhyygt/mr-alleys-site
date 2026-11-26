@@ -362,9 +362,7 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
    間距與像素差由小悠拿捏（他授權）：陰影只往右下 8px、外框 4px → 按鈕外側留 4/8/8/4 的位子，
    三顆之間淨留約 16px 紙色，跟卡片內按鈕到虛線的呼吸差不多。主按鈕金色、另兩顆紙色，結構一樣。 */
 .hero__cta { gap: 16px; }
-/* 2026-11-26 13:29 耗耗（截圖圈 playlist 那顆）：「這顆也改掉」→ #showcaseCta 套同一套外觀與大小 */
-#showcaseCta { font-size: 16px; padding: 13px 16px 12px; line-height: 1.5; font-family: var(--pixel-tc); }  /* Press Start 2P 的英文太寬，手機會折成兩行；換 Cubic 11＝一行，「→」有字 */
-:is(.hero__cta .btn, #showcaseCta) {
+.hero__cta .btn {
   margin: 4px 8px 8px 4px;
   /* 字型不換成 --pixel-tc：Cubic 11 在前會讓「▤」缺字（實測 11/26），中文本來就落到 Cubic 11，看起來一樣 */
   letter-spacing: 0.12em;
@@ -379,17 +377,17 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
     8px 4px 0 var(--brass-deep), 4px 8px 0 var(--brass-deep);
 }
 .hero__cta .btn--primary { background: var(--brass-light); }
-:is(.hero__cta .btn--ghost, #showcaseCta) { background: var(--paper-soft); }
+.hero__cta .btn--ghost   { background: var(--paper-soft); }
 .hero__cta .btn--primary:hover { background: #e3b24a; transform: none; }
-:is(.hero__cta .btn--ghost, #showcaseCta):hover { background: var(--paper); transform: none; }
-:is(.hero__cta .btn, #showcaseCta):hover {
+.hero__cta .btn--ghost:hover   { background: var(--paper); transform: none; }
+.hero__cta .btn:hover {
   box-shadow:
     inset -4px -4px 0 rgba(0,0,0,.18),
     inset 4px 4px 0 rgba(255,255,255,.40),
     4px 0 0 var(--ink), -4px 0 0 var(--ink), 0 4px 0 var(--ink), 0 -4px 0 var(--ink),
     8px 4px 0 var(--brass-deep), 4px 8px 0 var(--brass-deep);
 }
-:is(.hero__cta .btn, #showcaseCta):active {
+.hero__cta .btn:active {
   transform: translate(4px, 4px);
   box-shadow:
     inset 4px 4px 0 rgba(0,0,0,.18),
@@ -786,6 +784,40 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
   border: none;
 }
 
+/* 2026-11-26 13:39 耗耗：「設成圓形的紅色按鈕？每一個按鈕都這個形狀也不是那麼好看」→ 小悠回：同意（這顆是跳去 YouTube，
+   長得不一樣反而清楚），但不做正圓（塞不下字）→ 像素階梯圓角的紅色膠囊＋白字＋白 ▶。
+   外框與陰影用外層 .yt-wrap 的 drop-shadow 畫（clip-path 會把自己的 box-shadow 切掉），形狀用 clip-path 階梯折線（r=20、格 4px）。 */
+.yt-wrap {
+  display: inline-block;
+  margin: 4px 8px 8px 4px;
+  filter:
+    drop-shadow(4px 0 0 var(--ink)) drop-shadow(-4px 0 0 var(--ink))
+    drop-shadow(0 4px 0 var(--ink)) drop-shadow(0 -4px 0 var(--ink))
+    drop-shadow(4px 4px 0 #6b1712);
+  transition: transform .06s;
+}
+.yt-wrap:active { transform: translate(4px, 4px); filter:
+    drop-shadow(4px 0 0 var(--ink)) drop-shadow(-4px 0 0 var(--ink))
+    drop-shadow(0 4px 0 var(--ink)) drop-shadow(0 -4px 0 var(--ink)); }
+#showcaseCta {
+  display: block;
+  margin: 0;
+  padding: 13px 28px 12px;
+  font-family: var(--pixel-tc);
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-transform: none;
+  color: #fff;
+  background: #d0352b;
+  -webkit-font-smoothing: none;
+  clip-path: polygon(0px 12px, 4px 12px, 4px 4px, 12px 4px, 12px 0px, 20px 0px, calc(100% - 20px) 0px, calc(100% - 12px) 0px, calc(100% - 12px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 4px) calc(100% - 12px), calc(100% - 4px) calc(100% - 4px), calc(100% - 12px) calc(100% - 4px), calc(100% - 12px) 100%, calc(100% - 20px) 100%, 20px 100%, 12px 100%, 12px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 12px), 0px calc(100% - 12px));
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.22), inset 0 4px 0 rgba(255,255,255,.22);
+  transform: none;
+}
+#showcaseCta:hover { background: #e0443a; transform: none; box-shadow: inset 0 -4px 0 rgba(0,0,0,.22), inset 0 4px 0 rgba(255,255,255,.22); }
+#showcaseCta:active { transform: none; box-shadow: inset 0 4px 0 rgba(0,0,0,.22); }
+
 /* =========================================================
    Contact (傳訊)
    ========================================================= */
@@ -1066,7 +1098,8 @@ body:has(.marquee:not([hidden])) .console-bar { top: 32px; }
 @media (max-width: 600px) {
   .hero__cta { flex-direction: column; align-items: flex-start; }
   .btn { width: 100%; }
-  .hero__cta .btn, #showcaseCta { width: calc(100% - 12px); }  /* 2026-11-26：外框＋陰影佔左 4／右 8，扣掉才不會溢出 */
+  .hero__cta .btn { width: calc(100% - 12px); }
+  .yt-wrap { width: calc(100% - 12px); }  /* 2026-11-26：外框＋陰影左 4／右 8 */  /* 2026-11-26：外框＋陰影佔左 4／右 8，扣掉才不會溢出 */
   .console-bar { font-size: 6px; padding: 9px 10px; gap: 6px; }
   .console-bar__left, .console-bar__right { gap: 6px; }
   .console-bar__ver { display: none; }
